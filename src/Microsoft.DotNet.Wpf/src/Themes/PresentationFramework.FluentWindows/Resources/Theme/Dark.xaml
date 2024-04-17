@@ -354,12 +354,12 @@
 
     <!--  Calendar  -->
     <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource TextFillColorPrimary}" />
-    <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
-    <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+    <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource ControlFillColorInputActive}" />
+    <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
-    <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{DynamicResource SystemAccentColorPrimary}" />
-    <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{DynamicResource SystemAccentColorPrimary}" />
-    <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{DynamicResource SystemAccentColorSecondary}" />
+    <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{DynamicResource SystemAccentColorSecondary}" />
+    <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{DynamicResource SystemAccentColorSecondary}" />
     <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
     <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
 

@@ -11,13 +11,13 @@
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <system:String x:Key="CaretUpGlyph">&#xEDDB;</system:String>
-    <system:String x:Key="CaretDownGlyph">&#xEDDC;</system:String>    
+    <system:String x:Key="CaretDownGlyph">&#xEDDC;</system:String>
 
 
     <!--  HINT: Day button style  -->
     <Style x:Key="DefaultCalendarDayButtonStyle" TargetType="CalendarDayButton">
-        <Setter Property="MinWidth" Value="30" />
-        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="MinWidth" Value="40" />
+        <Setter Property="MinHeight" Value="40" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -180,6 +180,19 @@
                             <VisualStateGroup Name="BlackoutDayStates" />
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsToday" Value="True"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="NormalText" Property="TextBlock.Foreground" Value="{DynamicResource CalendarViewTodayForeground}" />
+                            <Setter TargetName="SelectedBackground" Property="Stroke" Value="{DynamicResource CalendarViewTodayForeground}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="NormalText" Property="TextBlock.Foreground" Value="{DynamicResource AccentButtonBackgroundPressed}"/>
+                        </Trigger> 
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -335,7 +348,7 @@
                                     BorderBrush="Transparent"
                                     Focusable="False"
                                     FontSize="14"
-                                    FontWeight="Bold"
+                                    FontWeight="SemiBold"
                                     Foreground="{DynamicResource CalendarViewForeground}" />
                                 <Button
                                     x:Name="PART_PreviousButton"
@@ -462,7 +475,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="12"
-                                FontWeight="Bold"
+                                FontWeight="SemiBold"
                                 Foreground="{DynamicResource CalendarViewForeground}"
                                 Text="{Binding}" />
                         </DataTemplate>
@@ -492,7 +505,7 @@
                         Background="{DynamicResource CalendarViewBackground}"
                         BorderBrush="{DynamicResource CalendarViewBorderBrush}"
                         BorderThickness="1"
-                        CornerRadius="8">
+                        CornerRadius="4">
                         <CalendarItem
                             x:Name="PART_CalendarItem"
                             Margin="0"
