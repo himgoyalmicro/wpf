@@ -240,6 +240,7 @@
                                     <Grid Grid.Column="0" Margin="{TemplateBinding Padding}">
                                         <TextBox
                                             x:Name="PART_EditableTextBox"
+                                            AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             FontSize="{TemplateBinding FontSize}"
