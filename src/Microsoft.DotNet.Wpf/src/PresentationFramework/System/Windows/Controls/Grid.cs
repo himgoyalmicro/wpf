@@ -272,6 +272,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns a ColumnDefinitionCollection of column definitions.
         /// </summary>
+        [TypeConverter(typeof(System.Windows.Controls.ColumnDefinitionsConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
         {
@@ -281,6 +282,11 @@ namespace System.Windows.Controls
                 if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
 
                 return (_data.ColumnDefinitions);
+            }
+            set
+            {
+                _data.ColumnDefinitions = value;
+                
             }
         }
 

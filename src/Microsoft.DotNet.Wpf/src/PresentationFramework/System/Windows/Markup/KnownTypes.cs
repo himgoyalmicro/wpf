@@ -829,7 +829,8 @@ namespace System.Windows.Markup
         XmlLanguageConverter,
         XmlNamespaceMapping,
         ZoomPercentageConverter,
-        MaxElement
+        MaxElement,
+        ColumnDefinitionsConverter
     }
 
     // This enum specifies the IDs we use for known CLR and DP Properties in BAML.

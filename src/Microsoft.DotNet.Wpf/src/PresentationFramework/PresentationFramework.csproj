@@ -547,6 +547,7 @@
     <Compile Include="System\Windows\Controls\CleanUpVirtualizedItemEventArgs.cs" />
     <Compile Include="System\Windows\Controls\ClickMode.cs" />
     <Compile Include="System\Windows\Controls\ColumnDefinition.cs" />
+    <Compile Include="System\Windows\Controls\ColumnDefinitionsConverter.cs" />
     <Compile Include="System\Windows\Controls\ComboBox.cs" />
     <Compile Include="System\Windows\Controls\ComboBoxItem.cs" />
     <Compile Include="System\Windows\Controls\ContainerTracking.cs" />

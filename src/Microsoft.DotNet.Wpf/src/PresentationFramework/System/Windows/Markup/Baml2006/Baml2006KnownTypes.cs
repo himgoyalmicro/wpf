@@ -853,6 +853,7 @@ namespace System.Windows.Baml2006
                     case 757: t = () => typeof(XmlLanguageConverter); break;
                     case 758: t = () => typeof(XmlNamespaceMapping); break;
                     case 759: t = () => typeof(ZoomPercentageConverter); break;
+                    case 760: t = () => typeof(ColumnDefinitionsConverter); break;
                     default: t = () => null; break;
                 }
 
@@ -955,6 +956,7 @@ namespace System.Windows.Baml2006
                     case -722: o = new System.Windows.Media.VectorCollectionConverter(); break;
                     case -723: o = new System.Windows.VectorConverter(); break;
                     case -757: o = new System.Windows.Markup.XmlLanguageConverter(); break;
+                    case -760: o = new System.Windows.Controls.ColumnDefinitionsConverter(); break;
                 }
                 return o;
             }

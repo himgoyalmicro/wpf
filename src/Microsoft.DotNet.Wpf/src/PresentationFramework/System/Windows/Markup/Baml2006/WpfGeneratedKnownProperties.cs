@@ -6404,6 +6404,7 @@ namespace System.Windows.Baml2006
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
             bamlMember.IsWritePrivate = true;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionsConverter);
             bamlMember.Freeze();
             return bamlMember;
         }

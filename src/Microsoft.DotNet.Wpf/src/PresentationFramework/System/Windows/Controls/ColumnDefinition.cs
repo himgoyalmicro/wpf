@@ -14,6 +14,7 @@ using System.Windows.Markup;
 using MS.Internal;
 using System.Reflection;
 using System.ComponentModel;
+using System.Globalization;
 
 using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
 
@@ -51,6 +52,8 @@ namespace System.Windows.Controls
     /// ColumnDefinitionCollection provides public access for ColumnDefinitions
     /// reading and manipulation.
     /// </remarks>
+    
+    [TypeConverter(typeof(System.Windows.Controls.ColumnDefinitionsConverter))]
     public sealed class ColumnDefinitionCollection : IList<ColumnDefinition> , IList
     {
         //------------------------------------------------------
@@ -68,6 +71,29 @@ namespace System.Windows.Controls
         {
             _owner = owner;
             PrivateOnModified();
+            if (!string.IsNullOrEmpty(_definitions))
+            {
+                var rows = _definitions.Split(',');
+                foreach (var row in rows)
+                {
+                    Add(new ColumnDefinition { Width = GridLengthConverter.FromString(row, CultureInfo.InvariantCulture) });
+                }
+            }
+        }
+
+        public ColumnDefinitionCollection(string definitions)
+        {
+            _definitions = definitions;
+            // if (!string.IsNullOrEmpty(definitions))
+            // {
+            //     var rows = definitions.Split(',');
+            //     foreach (var row in rows)
+            //     {
+            //         var value = new ColumnDefinition { Width = GridLengthConverter.FromString(row, CultureInfo.InvariantCulture) };
+            //         PrivateValidateValueForAddition(value);
+            //         PrivateInsert(_size, value);
+            //     }
+            // }
         }
 
         #endregion Constructors
@@ -736,6 +762,7 @@ namespace System.Windows.Controls
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection
         private const int c_defaultCapacity = 4;    //  default capacity of the collection
+        private string _definitions;
         #endregion Private Fields
 
         //------------------------------------------------------

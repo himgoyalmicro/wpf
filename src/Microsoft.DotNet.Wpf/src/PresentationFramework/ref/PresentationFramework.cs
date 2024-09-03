@@ -3616,9 +3616,11 @@ namespace System.Windows.Controls
         public double Offset { get { throw null; } }
         public System.Windows.GridLength Width { get { throw null; } set { } }
     }
+    [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.ColumnDefinitionsConverter))]
     public sealed partial class ColumnDefinitionCollection : System.Collections.Generic.ICollection<System.Windows.Controls.ColumnDefinition>, System.Collections.Generic.IEnumerable<System.Windows.Controls.ColumnDefinition>, System.Collections.Generic.IList<System.Windows.Controls.ColumnDefinition>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
     {
         internal ColumnDefinitionCollection() { }
+        public ColumnDefinitionCollection(string definitions) { }
         public int Count { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public bool IsSynchronized { get { throw null; } }
@@ -3643,6 +3645,15 @@ namespace System.Windows.Controls
         int System.Collections.IList.IndexOf(object value) { throw null; }
         void System.Collections.IList.Insert(int index, object value) { }
         void System.Collections.IList.Remove(object value) { }
+    }
+    
+    public partial class ColumnDefinitionsConverter : System.ComponentModel.TypeConverter
+    {
+        public ColumnDefinitionsConverter() { }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.ComboBox)]
     [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.ComboBoxItem))]
@@ -5115,8 +5126,9 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty RowSpanProperty;
         public static readonly System.Windows.DependencyProperty ShowGridLinesProperty;
         public Grid() { }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.ColumnDefinitionsConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
+        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } set { }}
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
