@@ -31,11 +31,74 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
+using System.Globalization;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
+
+    public class ColumnDefinitionCollectionConverter : TypeConverter
+    {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            if (value is string input)
+            {
+                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+                Grid grid = ipvt?.TargetObject as Grid;
+                var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
+                var converter = new GridLengthConverter();
+
+                foreach (var length in input.Split(','))
+                {
+                    if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
+                    {
+                        ColumnDefinition columnDefinition = new ColumnDefinition { Width = gridLength };
+                        collection.Add(new ColumnDefinition { Width = gridLength });
+                    }
+                }
+
+                return collection;
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+    }
+
+    public class RowDefinitionCollectionConverter : TypeConverter
+    {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            if (value is string input && context?.Instance is Grid grid)
+            {
+                var collection = new RowDefinitionCollection(grid); // Pass Grid instance
+                var converter = new GridLengthConverter();
+
+                foreach (var length in input.Split(','))
+                {
+                    if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
+                    {
+                        collection.Add(new RowDefinition { Height = gridLength });
+                    }
+                }
+
+                return collection;
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+    }
+
     /// <summary>
     /// Grid
     /// </summary>
@@ -60,6 +123,7 @@ namespace System.Windows.Controls
         public Grid()
         {
             SetFlags((bool) ShowGridLinesProperty.GetDefaultValue(DependencyObjectType), Flags.ShowGridLinesPropertyValue);
+            //_data = new ExtendedData(); // Ensure _data is initialize
         }
 
         #endregion Constructors
@@ -250,6 +314,27 @@ namespace System.Windows.Controls
             return ((bool)element.GetValue(IsSharedSizeScopeProperty));
         }
 
+        // private static void OnColumnDefinitionsInlineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        // {
+        //     if (d is Grid grid)
+        //     {
+        //         grid.UpdateColumnDefinitions((ColumnDefinitionCollection)e.NewValue);
+        //     }
+        // }
+        // private void UpdateColumnDefinitions(ColumnDefinitionCollection definitions)
+        // {
+        //     if (_data == null) _data = new ExtendedData();
+        //     if (_data.ColumnDefinitions == null)
+        //     {
+        //         _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
+        //     }
+        //     _data.ColumnDefinitions.Clear();
+        //     foreach (var columnDefinition in definitions)
+        //     {
+        //         _data.ColumnDefinitions.Add(columnDefinition);
+        //     }
+        // }
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -269,35 +354,80 @@ namespace System.Windows.Controls
             set { SetValue(ShowGridLinesProperty, value); }
         }
 
-        /// <summary>
-        /// Returns a ColumnDefinitionCollection of column definitions.
-        /// </summary>
+        [TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
         {
             get
             {
-                if (_data == null) { _data = new ExtendedData(); }
-                if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
-
-                return (_data.ColumnDefinitions);
+                if (_data == null) _data = new ExtendedData();
+                if (_data.ColumnDefinitions == null)
+                {
+                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
+                }
+                return _data.ColumnDefinitions;
+            }
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+                if (_data == null) _data = new ExtendedData();
+                if (_data.ColumnDefinitions == null)
+                {
+                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
+                }
+                _data.ColumnDefinitions.Clear();
+                foreach (var columnDefinition in value)
+                {
+                    _data.ColumnDefinitions.Add(columnDefinition);
+                }
             }
         }
 
-        /// <summary>
-        /// Returns a RowDefinitionCollection of row definitions.
-        /// </summary>
+        [TypeConverter(typeof(RowDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public RowDefinitionCollection RowDefinitions
         {
             get
             {
-                if (_data == null) { _data = new ExtendedData(); }
-                if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
-
-                return (_data.RowDefinitions);
+                if (_data == null) _data = new ExtendedData();
+                if (_data.RowDefinitions == null)
+                {
+                    _data.RowDefinitions = new RowDefinitionCollection(this);
+                }
+                return _data.RowDefinitions;
+            }
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+                if (_data == null) _data = new ExtendedData();
+                if (_data.RowDefinitions == null)
+                {
+                    _data.RowDefinitions = new RowDefinitionCollection(this);
+                }
+                _data.RowDefinitions.Clear();
+                foreach (var rowDefinition in value)
+                {
+                    _data.RowDefinitions.Add(rowDefinition);
+                }
             }
         }
+
+        // Helper method to parse grid lengths from shorthand syntax
+        private static IEnumerable<GridLength> ParseGridLengths(string input)
+        {
+            var converter = new GridLengthConverter(); // Create an instance of the converter
+            var lengths = input.Split(',');
+
+            foreach (var length in lengths)
+            {
+                if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
+                {
+                    yield return gridLength;
+                }
+            }
+        }
+
+
 
         #endregion Public Properties
 
@@ -3487,6 +3617,15 @@ namespace System.Windows.Controls
                       new FrameworkPropertyMetadata(
                               false,
                               new PropertyChangedCallback(DefinitionBase.OnIsSharedSizeScopePropertyChanged)));
+
+        // public static readonly DependencyProperty ColumnDefinitionsProperty  =
+        //         DependencyProperty.RegisterAttached(
+        //               "ColumnDefinitions",
+        //               typeof(ColumnDefinitionCollection),
+        //               typeof(Grid),
+        //               new FrameworkPropertyMetadata(
+        //                       null,
+        //                       OnColumnDefinitionsInlineChanged));
 
         #endregion Properties
 

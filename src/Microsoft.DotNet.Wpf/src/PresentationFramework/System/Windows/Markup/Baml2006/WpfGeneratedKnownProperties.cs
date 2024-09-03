@@ -6403,7 +6403,16 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { var cd = ((System.Windows.Controls.Grid)target).ColumnDefinitions;
+                                                                            var cd2 = (System.Windows.Controls.ColumnDefinitionCollection)value; 
+                                                                            cd.Clear();
+                                                                            foreach (var c in cd2)
+                                                                            {
+                                                                                cd.Add(c);
+                                                                            }};
             bamlMember.IsWritePrivate = true;
+            //bamlMember.DependencyProperty = System.Windows.Controls.Grid.ColumnDefinitionsProperty;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6420,6 +6429,13 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { var cd = ((System.Windows.Controls.Grid)target).RowDefinitions;
+                                                                            var cd2 = (System.Windows.Controls.RowDefinitionCollection)value; 
+                                                                            cd.Clear();
+                                                                            foreach (var c in cd2)
+                                                                            {
+                                                                                cd.Add(c);
+                                                                            }};
             bamlMember.IsWritePrivate = true;
             bamlMember.Freeze();
             return bamlMember;
