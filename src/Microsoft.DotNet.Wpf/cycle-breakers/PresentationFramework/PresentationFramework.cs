@@ -5036,6 +5036,20 @@ namespace System.Windows.Controls
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
     }
+    public partial class ColumnDefinitionCollectionConverter : System.ComponentModel.TypeConverter
+    {
+        public ColumnDefinitionCollectionConverter() { }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+    }
+
+    public partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
+    {
+        public RowDefinitionCollectionConverter() { }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+    }
+
     public partial class Grid : System.Windows.Controls.Panel, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty ColumnProperty;
@@ -5045,9 +5059,11 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty RowSpanProperty;
         public static readonly System.Windows.DependencyProperty ShowGridLinesProperty;
         public Grid() { }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.RowDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
         public bool ShowGridLines { get { throw null; } set { } }
