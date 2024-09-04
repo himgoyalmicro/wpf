@@ -6411,7 +6411,6 @@ namespace System.Windows.Baml2006
                                                                                 cd.Add(c);
                                                                             }};
             bamlMember.IsWritePrivate = true;
-            //bamlMember.DependencyProperty = System.Windows.Controls.Grid.ColumnDefinitionsProperty;
             bamlMember.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
@@ -6437,6 +6436,7 @@ namespace System.Windows.Baml2006
                                                                                 cd.Add(c);
                                                                             }};
             bamlMember.IsWritePrivate = true;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.RowDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
         }

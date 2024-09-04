@@ -51,19 +51,20 @@ namespace System.Windows.Controls
             {
                 IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
                 Grid grid = ipvt?.TargetObject as Grid;
-                var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
-                var converter = new GridLengthConverter();
-
-                foreach (var length in input.Split(','))
+                if(grid != null)
                 {
-                    if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                    {
-                        ColumnDefinition columnDefinition = new ColumnDefinition { Width = gridLength };
-                        collection.Add(new ColumnDefinition { Width = gridLength });
-                    }
-                }
+                    var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
+                    var converter = new GridLengthConverter();
 
-                return collection;
+                    foreach (var length in input.Split(','))
+                    {
+                        if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
+                        {
+                            collection.Add(new ColumnDefinition { Width = gridLength });
+                        }
+                    }
+                    return collection;
+                }
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -79,20 +80,25 @@ namespace System.Windows.Controls
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string input && context?.Instance is Grid grid)
+            if (value is string input)
             {
-                var collection = new RowDefinitionCollection(grid); // Pass Grid instance
-                var converter = new GridLengthConverter();
-
-                foreach (var length in input.Split(','))
+                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+                Grid grid = ipvt?.TargetObject as Grid;
+                if(grid != null)
                 {
-                    if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                    {
-                        collection.Add(new RowDefinition { Height = gridLength });
-                    }
-                }
+                    var collection = new RowDefinitionCollection(grid); // Pass Grid instance
+                    var converter = new GridLengthConverter();
 
-                return collection;
+                    foreach (var length in input.Split(','))
+                    {
+                        if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
+                        {
+                            collection.Add(new RowDefinition { Height = gridLength });
+                        }
+                    }
+
+                    return collection;
+                }
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -123,7 +129,6 @@ namespace System.Windows.Controls
         public Grid()
         {
             SetFlags((bool) ShowGridLinesProperty.GetDefaultValue(DependencyObjectType), Flags.ShowGridLinesPropertyValue);
-            //_data = new ExtendedData(); // Ensure _data is initialize
         }
 
         #endregion Constructors
@@ -314,27 +319,6 @@ namespace System.Windows.Controls
             return ((bool)element.GetValue(IsSharedSizeScopeProperty));
         }
 
-        // private static void OnColumnDefinitionsInlineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        // {
-        //     if (d is Grid grid)
-        //     {
-        //         grid.UpdateColumnDefinitions((ColumnDefinitionCollection)e.NewValue);
-        //     }
-        // }
-        // private void UpdateColumnDefinitions(ColumnDefinitionCollection definitions)
-        // {
-        //     if (_data == null) _data = new ExtendedData();
-        //     if (_data.ColumnDefinitions == null)
-        //     {
-        //         _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
-        //     }
-        //     _data.ColumnDefinitions.Clear();
-        //     foreach (var columnDefinition in definitions)
-        //     {
-        //         _data.ColumnDefinitions.Add(columnDefinition);
-        //     }
-        // }
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -369,7 +353,10 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value == null) throw new ArgumentNullException(nameof(value));
+                if (value == null){
+                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
+                    return;
+                }
                 if (_data == null) _data = new ExtendedData();
                 if (_data.ColumnDefinitions == null)
                 {
@@ -398,7 +385,10 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value == null) throw new ArgumentNullException(nameof(value));
+                if (value == null){
+                     _data.RowDefinitions = new RowDefinitionCollection(this);
+                    return;
+                }
                 if (_data == null) _data = new ExtendedData();
                 if (_data.RowDefinitions == null)
                 {
@@ -408,21 +398,6 @@ namespace System.Windows.Controls
                 foreach (var rowDefinition in value)
                 {
                     _data.RowDefinitions.Add(rowDefinition);
-                }
-            }
-        }
-
-        // Helper method to parse grid lengths from shorthand syntax
-        private static IEnumerable<GridLength> ParseGridLengths(string input)
-        {
-            var converter = new GridLengthConverter(); // Create an instance of the converter
-            var lengths = input.Split(',');
-
-            foreach (var length in lengths)
-            {
-                if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                {
-                    yield return gridLength;
                 }
             }
         }
@@ -3617,15 +3592,6 @@ namespace System.Windows.Controls
                       new FrameworkPropertyMetadata(
                               false,
                               new PropertyChangedCallback(DefinitionBase.OnIsSharedSizeScopePropertyChanged)));
-
-        // public static readonly DependencyProperty ColumnDefinitionsProperty  =
-        //         DependencyProperty.RegisterAttached(
-        //               "ColumnDefinitions",
-        //               typeof(ColumnDefinitionCollection),
-        //               typeof(Grid),
-        //               new FrameworkPropertyMetadata(
-        //                       null,
-        //                       OnColumnDefinitionsInlineChanged));
 
         #endregion Properties
 
