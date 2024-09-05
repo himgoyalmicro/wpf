@@ -5039,15 +5039,19 @@ namespace System.Windows.Controls
     public partial class ColumnDefinitionCollectionConverter : System.ComponentModel.TypeConverter
     {
         public ColumnDefinitionCollectionConverter() { }
-        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
-        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }        
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
 
     public partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
     {
         public RowDefinitionCollectionConverter() { }
-        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
-        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }        
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
 
     public partial class Grid : System.Windows.Controls.Panel, System.Windows.Markup.IAddChild

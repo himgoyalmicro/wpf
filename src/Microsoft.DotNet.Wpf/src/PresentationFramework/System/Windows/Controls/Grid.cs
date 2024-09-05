@@ -36,75 +36,7 @@ using System.Globalization;
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
-{
-
-    public class ColumnDefinitionCollectionConverter : TypeConverter
-    {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            if (value is string input)
-            {
-                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                Grid grid = ipvt?.TargetObject as Grid;
-                if(grid != null)
-                {
-                    var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
-                    var converter = new GridLengthConverter();
-
-                    foreach (var length in input.Split(','))
-                    {
-                        if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                        {
-                            collection.Add(new ColumnDefinition { Width = gridLength });
-                        }
-                    }
-                    return collection;
-                }
-            }
-
-            return base.ConvertFrom(context, culture, value);
-        }
-    }
-
-    public class RowDefinitionCollectionConverter : TypeConverter
-    {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            if (value is string input)
-            {
-                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                Grid grid = ipvt?.TargetObject as Grid;
-                if(grid != null)
-                {
-                    var collection = new RowDefinitionCollection(grid); // Pass Grid instance
-                    var converter = new GridLengthConverter();
-
-                    foreach (var length in input.Split(','))
-                    {
-                        if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                        {
-                            collection.Add(new RowDefinition { Height = gridLength });
-                        }
-                    }
-
-                    return collection;
-                }
-            }
-
-            return base.ConvertFrom(context, culture, value);
-        }
-    }
-
+{ 
     /// <summary>
     /// Grid
     /// </summary>
