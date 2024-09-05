@@ -269,13 +269,21 @@ namespace System.Windows.Controls
 
         private void UpdateColumnDefinitions(string definitions)
         {
-            ColumnDefinitions.Clear();
-            if (!string.IsNullOrEmpty(definitions))
+            if(ColumnDefinitions.Count > 0 && ColumnDefinitions.IsInlineLocked())
             {
-                var columns = definitions.Split(',');
-                foreach (var column in columns)
+                ColumnDefinitionsInline = null;
+                throw new InvalidOperationException("Cannot use both ColumnDefinitionsInline and ColumnDefinitions at the same time.");
+                
+            }
+            else{
+                ColumnDefinitions.Clear();
+                if (!string.IsNullOrEmpty(definitions))
                 {
-                    ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthConverter.FromString(column, CultureInfo.InvariantCulture) });
+                    var columns = definitions.Split(',');
+                    foreach (var column in columns)
+                    {
+                        ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthConverter.FromString(column, CultureInfo.InvariantCulture) });
+                    }
                 }
             }
         }
@@ -347,6 +355,12 @@ namespace System.Windows.Controls
             get { return (string)GetValue(ColumnDefinitionsInlineProperty); }
             set { SetValue(ColumnDefinitionsInlineProperty, value); }
         }
+
+        // public bool ColumnDefinitionsInlineLock
+        // {
+        //     get { return (bool)GetValue(ColumnDefinitionsInlineLockProperty); }
+        //     set { SetValue(ColumnDefinitionsInlineLockProperty, value); }
+        // }
 
         public string RowDefinitionsInline
         {
@@ -3337,6 +3351,8 @@ namespace System.Windows.Controls
         // Stores unrounded values and rounding errors during layout rounding.
         double[] _roundingErrors;
 
+        //private bool IsInlineLocked = false;
+
         #endregion Private Fields
 
         //------------------------------------------------------
@@ -3549,6 +3565,13 @@ namespace System.Windows.Controls
                 typeof(string),
                 typeof(Grid),
                 new FrameworkPropertyMetadata(null, OnColumnDefinitionsInlineChanged));
+
+        // public static readonly DependencyProperty ColumnDefinitionsInlineLockProperty =
+        //     DependencyProperty.Register(
+        //         nameof(ColumnDefinitionsInlineLock),
+        //         typeof(bool),
+        //         typeof(Grid),
+        //         new PropertyMetadata(false));
 
         public static readonly DependencyProperty RowDefinitionsInlineProperty =
             DependencyProperty.Register(

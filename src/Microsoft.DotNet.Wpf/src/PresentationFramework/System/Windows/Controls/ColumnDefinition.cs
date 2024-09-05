@@ -14,6 +14,7 @@ using System.Windows.Markup;
 using MS.Internal;
 using System.Reflection;
 using System.ComponentModel;
+using System.Globalization;
 
 using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
 
@@ -137,6 +138,13 @@ namespace System.Windows.Controls
         /// </remarks>
         int IList.Add(object value)
         {
+            // if(!IsInlineLock){
+            //     UpdateColumnDefinitions("");
+            // // }
+            _isInlineLock = true;
+            if(_owner.ColumnDefinitionsInline != null){
+                throw new XamlParseException("Cannot use both ColumnDefinitionsInline and ColumnDefinitions at the same time.");
+            }
             PrivateVerifyWriteAccess();
             PrivateValidateValueForAddition(value);
             PrivateInsert(_size, value as ColumnDefinition);
@@ -235,6 +243,10 @@ namespace System.Windows.Controls
         /// </remarks>
         void IList.Insert(int index, object value)
         {
+            _isInlineLock = true;
+            if(_owner.ColumnDefinitionsInline != null){
+                throw new XamlParseException("Cannot use both ColumnDefinitionsInline and ColumnDefinitions at the same time.");
+            }
             PrivateVerifyWriteAccess();
             if (index < 0 || index > _size)
             {
@@ -367,6 +379,10 @@ namespace System.Windows.Controls
             return (new Enumerator(this));
         }
 
+        public bool IsInlineLocked(){
+            return _isInlineLock;
+        }
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -482,6 +498,23 @@ namespace System.Windows.Controls
                 PrivateConnectChild(index, value);
             }
         }
+        //public bool ColumnDefinitionsInlineLock{
+            //get
+            //{
+                //return ( _owner.ColumnDefinitionsInline != null );
+            //}
+        //}
+        // {
+        //     get { return (bool)GetValue(ColumnDefinitionsInlineLockProperty); }
+        //     set { SetValue(ColumnDefinitionsInlineLockProperty, value); }
+        // }
+        // public static readonly DependencyProperty ColumnDefinitionsInlineLockProperty =
+        //     DependencyProperty.Register(
+        //         nameof(ColumnDefinitionsInlineLock),
+        //         typeof(bool),
+        //         typeof(ColumnDefinitionCollection),
+        //         new PropertyMetadata(false));
+        
 
         #endregion Public Properties
 
@@ -526,6 +559,8 @@ namespace System.Windows.Controls
         {
             get {   return (_items);    }
         }
+
+        
 
         #endregion Internal Properties
 
@@ -735,6 +770,7 @@ namespace System.Windows.Controls
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection
+        private bool _isInlineLock = false;
         private const int c_defaultCapacity = 4;    //  default capacity of the collection
         #endregion Private Fields
 
