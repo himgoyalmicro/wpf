@@ -36,7 +36,7 @@ using System.Globalization;
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
-{ 
+{
     /// <summary>
     /// Grid
     /// </summary>
@@ -270,6 +270,9 @@ namespace System.Windows.Controls
             set { SetValue(ShowGridLinesProperty, value); }
         }
 
+        /// <summary>
+        /// Returns a ColumnDefinitionCollection of column definitions.
+        /// </summary>
         [TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
@@ -302,6 +305,9 @@ namespace System.Windows.Controls
             }
         }
 
+        /// <summary>
+        /// Returns a RowDefinitionCollection of row definitions.
+        /// </summary>
         [TypeConverter(typeof(RowDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public RowDefinitionCollection RowDefinitions
@@ -333,8 +339,6 @@ namespace System.Windows.Controls
                 }
             }
         }
-
-
 
         #endregion Public Properties
 
