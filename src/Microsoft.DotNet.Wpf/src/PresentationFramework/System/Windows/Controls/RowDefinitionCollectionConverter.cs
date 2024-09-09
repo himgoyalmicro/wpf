@@ -2,29 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: Contains the RowDefinitionCollectionConverter: TypeConverter for the RowDefinitionCollection.
-//
-//
-
-using MS.Internal;
-using MS.Internal.Controls;
-using MS.Internal.PresentationFramework;
-using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Threading;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Markup;
 using System.Globalization;
 
@@ -81,27 +60,32 @@ namespace System.Windows.Controls
         /// <param name="value"> The Thickness to convert. </param>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string input)
-            {
-                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                Grid grid = ipvt?.TargetObject as Grid;
-                if(grid != null)
+            if(value != null){
+                if (value is string input)
                 {
-                    var collection = new RowDefinitionCollection(grid); // Pass Grid instance
-                    var converter = new GridLengthConverter();
-
-                    foreach (var length in input.Split(','))
+                    IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+                    Grid grid = ipvt?.TargetObject as Grid;
+                    if(grid != null)
                     {
-                        if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                        {
-                            collection.Add(new RowDefinition { Height = gridLength });
-                        }
-                    }
-                    return collection;
-                }
-            }
+                        var collection = new RowDefinitionCollection(grid); // Pass Grid instance
+                        var converter = new GridLengthConverter();
 
-            return base.ConvertFrom(context, culture, value);
+                        if(input == ""){
+                            return collection;
+                        }
+                        foreach (var length in input.Split(','))
+                        {
+                            if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
+                            {
+                                collection.Add(new RowDefinition { Height = gridLength });
+                            }
+                        }
+                        return collection;
+                    }
+                }
+                return base.ConvertFrom(context, culture, value);
+            }            
+            throw GetConvertFromException(value);
         }
 
         /// <summary>
@@ -113,16 +97,14 @@ namespace System.Windows.Controls
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        /// An ArgumentException is thrown if the object is not null and is not a Thickness,
-        /// or if the destinationType isn't one of the valid destination types.
-        /// </exception>
         /// <param name="context"> The ITypeDescriptorContext for this call. </param>
         /// <param name="culture"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The RowDefintionCollection to convert. </param>
         /// <param name="destinationType">The type to which to convert the RowDefintionCollection instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(destinationType);
             if (destinationType == typeof(string) && value is RowDefinitionCollection RowDefinitions)
             {
                 var parts = new string[RowDefinitions.Count];

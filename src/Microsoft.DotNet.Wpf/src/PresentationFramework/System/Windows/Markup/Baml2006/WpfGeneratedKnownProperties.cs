@@ -6403,13 +6403,7 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
-            bamlMember.SetDelegate = delegate(object target, object value) { var cd = ((System.Windows.Controls.Grid)target).ColumnDefinitions;
-                                                                            var cd2 = (System.Windows.Controls.ColumnDefinitionCollection)value; 
-                                                                            cd.Clear();
-                                                                            foreach (var c in cd2)
-                                                                            {
-                                                                                cd.Add(c);
-                                                                            }};
+            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).ColumnDefinitions = (System.Windows.Controls.ColumnDefinitionCollection)value; };
             bamlMember.IsWritePrivate = true;
             bamlMember.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter);
             bamlMember.Freeze();
@@ -6428,13 +6422,7 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; };
-            bamlMember.SetDelegate = delegate(object target, object value) { var cd = ((System.Windows.Controls.Grid)target).RowDefinitions;
-                                                                            var cd2 = (System.Windows.Controls.RowDefinitionCollection)value; 
-                                                                            cd.Clear();
-                                                                            foreach (var c in cd2)
-                                                                            {
-                                                                                cd.Add(c);
-                                                                            }};
+            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).RowDefinitions = (System.Windows.Controls.RowDefinitionCollection)value; };
             bamlMember.IsWritePrivate = true;
             bamlMember.TypeConverterType = typeof(System.Windows.Controls.RowDefinitionCollectionConverter);
             bamlMember.Freeze();

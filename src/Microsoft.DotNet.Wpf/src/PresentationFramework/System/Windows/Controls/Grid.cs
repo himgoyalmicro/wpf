@@ -31,8 +31,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
-using System.Globalization;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
@@ -279,12 +277,10 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_data == null) _data = new ExtendedData();
-                if (_data.ColumnDefinitions == null)
-                {
-                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
-                }
-                return _data.ColumnDefinitions;
+                if (_data == null) { _data = new ExtendedData(); }
+                if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
+
+                return (_data.ColumnDefinitions);
             }
             set
             {
@@ -292,16 +288,8 @@ namespace System.Windows.Controls
                     _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
                     return;
                 }
-                if (_data == null) _data = new ExtendedData();
-                if (_data.ColumnDefinitions == null)
-                {
-                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
-                }
-                _data.ColumnDefinitions.Clear();
-                foreach (var columnDefinition in value)
-                {
-                    _data.ColumnDefinitions.Add(columnDefinition);
-                }
+                _data ??= new ExtendedData();
+                _data.ColumnDefinitions = value;
             }
         }
 
@@ -314,12 +302,10 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_data == null) _data = new ExtendedData();
-                if (_data.RowDefinitions == null)
-                {
-                    _data.RowDefinitions = new RowDefinitionCollection(this);
-                }
-                return _data.RowDefinitions;
+                if (_data == null) { _data = new ExtendedData(); }
+                if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
+
+                return (_data.RowDefinitions);
             }
             set
             {
@@ -327,16 +313,8 @@ namespace System.Windows.Controls
                      _data.RowDefinitions = new RowDefinitionCollection(this);
                     return;
                 }
-                if (_data == null) _data = new ExtendedData();
-                if (_data.RowDefinitions == null)
-                {
-                    _data.RowDefinitions = new RowDefinitionCollection(this);
-                }
-                _data.RowDefinitions.Clear();
-                foreach (var rowDefinition in value)
-                {
-                    _data.RowDefinitions.Add(rowDefinition);
-                }
+                _data ??= new ExtendedData();
+                _data.RowDefinitions = value;
             }
         }
 
