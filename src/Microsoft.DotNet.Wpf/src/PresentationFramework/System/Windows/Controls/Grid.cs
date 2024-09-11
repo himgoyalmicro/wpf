@@ -31,6 +31,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
+using System.Globalization;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -250,6 +251,19 @@ namespace System.Windows.Controls
             return ((bool)element.GetValue(IsSharedSizeScopeProperty));
         }
 
+        private void UpdateColumnDefinitions(string definitions)
+        {
+            ColumnDefinitions.Clear();
+            if (!string.IsNullOrEmpty(definitions))
+            {
+                var columns = definitions.Split(',');
+                foreach (var column in columns)
+                {
+                    ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthConverter.FromString(column, CultureInfo.InvariantCulture) });
+                }
+            }
+        }
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -282,6 +296,10 @@ namespace System.Windows.Controls
 
                 return (_data.ColumnDefinitions);
             }
+            // set
+            // {
+
+            // }
         }
 
         /// <summary>
@@ -296,6 +314,16 @@ namespace System.Windows.Controls
                 if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
 
                 return (_data.RowDefinitions);
+            }
+        }
+
+        public string ColumnDefinitionsInline
+        {
+            get { return _columnDefinitionsString; }
+            set 
+            { 
+                _columnDefinitionsString = value;
+                UpdateColumnDefinitions(value);
             }
         }
 
@@ -3275,6 +3303,7 @@ namespace System.Windows.Controls
         private ExtendedData _data;                             //  extended data instantiated on demand, for non-trivial case handling only
         private Flags _flags;                                   //  grid validity / property caches dirtiness flags
         private GridLinesRenderer _gridLinesRenderer;
+        private string _columnDefinitionsString;
 
         // Keeps track of definition indices.
         int[] _definitionIndices;

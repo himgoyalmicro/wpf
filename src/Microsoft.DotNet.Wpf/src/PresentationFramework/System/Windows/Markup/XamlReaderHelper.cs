@@ -28,6 +28,7 @@ using System.Collections.Specialized;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using MS.Internal;
+using System.Threading;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -3227,7 +3228,15 @@ namespace System.Windows.Markup
 
                 if (!propertyCanWrite)
                 {
-                    ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp, attribLocalName));
+                    Console.WriteLine("XamlReaderHelper 3230");
+                    while (!Debugger.IsAttached)
+                    {
+                    Thread.Sleep(1000);
+                    }
+                    Debugger.Break();
+
+                    Debug.WriteLine("XamlReaderHelper 3230");
+                    ThrowExceptionWithLine(SR.Format(SR.ParserResourceKeyType, attribLocalName));
                 }
             }
 
@@ -3945,6 +3954,7 @@ namespace System.Windows.Markup
             out bool needToReadNextTag,
             ref bool endTagHasBeenRead)
         {
+
             int lineNumber = LineNumber;
             int linePosition = LinePosition;
 
@@ -4020,7 +4030,15 @@ namespace System.Windows.Markup
                     if (ControllingXamlParser != null &&
                         !propertyCanWrite)
                     {
-                        ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp,
+                        Console.WriteLine("XamlReaderHelper 4025");
+                        while (!Debugger.IsAttached)
+                        {
+                        Thread.Sleep(1000);
+                        }
+                        Debugger.Break();
+
+                        Debug.WriteLine("XamlReaderHelper 4025");
+                        ThrowExceptionWithLine(SR.Format(SR.ParserResourceKeyType,
                                                dynamicObjectName));
                     }
 
@@ -4062,7 +4080,16 @@ namespace System.Windows.Markup
                         !isList &&
                         !IsAssignableToIXmlSerializable(propertyType))
                     {
-                        ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp,
+                        Console.WriteLine("XamlReaderHelper 4070");
+                        while (!Debugger.IsAttached)
+                        {
+                        Thread.Sleep(1000);
+                        }
+                        Debugger.Break();
+
+                        Debug.WriteLine(dynamicObjectName);
+                        Debug.WriteLine("XamlReaderHelper 4070");
+                        ThrowExceptionWithLine(SR.Format(SR.ParserResourceKeyType,
                                                dynamicObjectName));
                     }
 

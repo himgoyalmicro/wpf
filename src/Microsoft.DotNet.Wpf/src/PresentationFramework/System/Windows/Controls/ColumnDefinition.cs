@@ -14,6 +14,7 @@ using System.Windows.Markup;
 using MS.Internal;
 using System.Reflection;
 using System.ComponentModel;
+using System.Globalization;
 
 using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
 
@@ -347,6 +348,18 @@ namespace System.Windows.Controls
                     _items[i] = _items[i + count];
                     _items[i].Index = i;
                     _items[i + count] = null;
+                }
+            }
+        }
+
+        public void CreateFromString(string definitions){
+            Clear();
+            if (!string.IsNullOrEmpty(definitions))
+            {
+                var columns = definitions.Split(',');
+                foreach (var column in columns)
+                {
+                    Add(new ColumnDefinition { Width = GridLengthConverter.FromString(column, CultureInfo.InvariantCulture) });
                 }
             }
         }

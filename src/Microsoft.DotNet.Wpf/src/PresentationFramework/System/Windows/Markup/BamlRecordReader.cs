@@ -3063,7 +3063,14 @@ namespace System.Windows.Markup
             {
                 // if we reached this case, then we had a read-only IEnumerable property
                 // under a non-IAddChild element.  Throw an exception
-                ThrowException(nameof(SR.ParserReadOnlyProp), holder.PropertyDefinition.Name);
+                Console.WriteLine("BamlRecordReader 3066");
+                while (!Debugger.IsAttached)
+                {
+                Thread.Sleep(1000);
+                }
+                Debugger.Break();
+                Debug.WriteLine("BamlRecordReader 3066");
+                ThrowException(nameof(SR.ParserResourceKeyType), holder.PropertyDefinition.Name);
             }
 
             PushContext(flags | ReaderFlags.CollectionHolder, holder, expectedType, 0);

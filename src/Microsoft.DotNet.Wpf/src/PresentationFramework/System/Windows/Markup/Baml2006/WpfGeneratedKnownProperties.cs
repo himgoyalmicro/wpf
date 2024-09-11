@@ -6403,6 +6403,7 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).ColumnDefinitionsInline =  (System.String)value; };
             bamlMember.IsWritePrivate = true;
             bamlMember.Freeze();
             return bamlMember;
