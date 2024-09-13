@@ -1,12 +1,12 @@
 # Background and motivation
 
-Based on discussion in 5612 and 1739 this proposal is to simplify the definition syntax of Rows and Columns by:
+Based on discussion in 5612 and 1739 this proposal is to simplify the definition syntax of RowDefinitions and ColumnDefinitions by:
 
-- Allowing rows and columns within a Grid to be defined by a collection that is delimited by commas and single quotes.
+- Allowing rows and columns within a Grid to be defined by a collection that is delimited by commas.
 - Creating a Typeconvertor for ColumnDefinitionCollection and RowDefinitionCollection so they can process String as its input.
 
 ## Goal
-The goal of this feature is to make Grid easier and more intuitive to write and learn and minimize the learning curve required to use Grid, one of the most widely used controls.
+The goal of this feature is to make Grid easier and more intuitive to write and learn. 
 
 ## Example
 ### Current Syntax
@@ -57,10 +57,7 @@ namespace System.Windows.Controls
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }        
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
-}
 
-namespace System.Windows.Controls
-{
      public partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
     {
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        
@@ -71,49 +68,21 @@ namespace System.Windows.Controls
 }
 ```
 We will also introduce a setter method for ColumnDefinitons and RowDefinitions of Grid. 
-```csharp
-[TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
+```diff
++[TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
 [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 public ColumnDefinitionCollection ColumnDefinitions
 {
-    get
-    {
-        if (_data == null) { _data = new ExtendedData(); }
-        if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
-
-        return (_data.ColumnDefinitions);
-    }
-    set
-    {
-        if (value == null){
-            _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
-            return;
-        }
-        _data ??= new ExtendedData();
-        _data.ColumnDefinitions = value;
-    }
+    get { ... }
++    set { ... }
 }
 
-[TypeConverter(typeof(RowDefinitionCollectionConverter))]
++[TypeConverter(typeof(RowDefinitionCollectionConverter))]
 [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 public RowDefinitionCollection RowDefinitions
 {
-    get
-    {
-        if (_data == null) { _data = new ExtendedData(); }
-        if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
-
-        return (_data.RowDefinitions);
-    }
-    set
-    {
-        if (value == null){
-             _data.RowDefinitions = new RowDefinitionCollection(this);
-            return;
-        }
-        _data ??= new ExtendedData();
-        _data.RowDefinitions = value;
-    }
+    get { ... }
++    set { ... }
 }
 
 ```
@@ -124,5 +93,34 @@ public RowDefinitionCollection RowDefinitions
 ```
 
 # Alternative design
+We can introduce a new public Dependency property ColumnDefinitionsInline and RowDefinitionsInline to update the RowDefinitions and ColumnDefinitions. 
+
+```csharp
+public string ColumnDefinitionsInline
+{
+    get { ... }
+    set { ... }
+}
+
+public string RowDefinitionsInline
+{
+    get { ... }
+    set { ... }
+}
+
+public static readonly DependencyProperty ColumnDefinitionsInlineProperty =
+    DependencyProperty.Register(
+        nameof(ColumnDefinitionsInline),
+        typeof(string),
+        typeof(Grid),
+        new FrameworkPropertyMetadata(null, OnColumnDefinitionsInlineChanged));
+
+public static readonly DependencyProperty RowDefinitionsInlineProperty =
+    DependencyProperty.Register(
+        nameof(RowDefinitionsInline),
+        typeof(string),
+        typeof(Grid),
+        new FrameworkPropertyMetadata(null, OnRowDefinitionsInlineChanged));
+```
 
 # Risks
