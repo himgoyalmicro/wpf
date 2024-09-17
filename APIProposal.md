@@ -1,6 +1,6 @@
-# Background and motivation
+## Background and motivation
 
-Based on discussion in 5612 and 1739 this proposal is to simplify the definition syntax of RowDefinitions and ColumnDefinitions by:
+Following up on discussion in 5612 and 1739 this proposal is to simplify the definition syntax of RowDefinitions and ColumnDefinitions by:
 
 - Allowing rows and columns within a Grid to be defined by a collection that is delimited by commas.
 - Creating a Typeconvertor for ColumnDefinitionCollection and RowDefinitionCollection so they can process String as its input.
@@ -11,7 +11,7 @@ The goal of this feature is to make Grid markup less verbose, allowing developer
 ## Example
 ### Current Syntax
 Defining columns and rows is overly tedious, repetitive and not very productive, as is shown below:
-```
+```xaml
 <Grid>
     <Grid.ColumnDefinitions>
           <ColumnDefinition Width="1*" />
@@ -31,7 +31,7 @@ Defining columns and rows is overly tedious, repetitive and not very productive,
 ```
 ### Proposed Syntax
 The same functionality as above with the proposed succinct syntax is shown below:
-```
+```xaml
 <Grid ColumnDefinitions="1*, 2*, Auto, *, 300" RowDefinitions="1*, Auto, 25, 14, 20"> </Grid>
 ```
 
@@ -117,35 +117,36 @@ public RowDefinitionCollection RowDefinitions
 ```
 
 # Alternative design
-Introduce new public dependency properties `ColumnDefinitionsInline` and `RowDefinitionsInline` that provide a dedicated place to update the row and column definitions. 
+Introduce new public dependency properties `Columns` and `Rows` that provide a dedicated place to update the row and column definitions. 
 
 ```diff
-+public string ColumnDefinitionsInline
++public string Columns
 +{
 +    get { ... }
 +    set { ... }
 +}
 
-+public string RowDefinitionsInline
++public string Rows
 +{
 +    get { ... }
 +    set { ... }
 +}
 
-+public static readonly DependencyProperty ColumnDefinitionsInlineProperty =
++public static readonly DependencyProperty ColumnsProperty =
 +    DependencyProperty.Register(
-+        nameof(ColumnDefinitionsInline),
++        nameof(Columns),
 +        typeof(string),
 +        typeof(Grid),
-+        new FrameworkPropertyMetadata(null, OnColumnDefinitionsInlineChanged));
++        new FrameworkPropertyMetadata(null, OnColumnsChanged));
 
-+public static readonly DependencyProperty RowDefinitionsInlineProperty =
++public static readonly DependencyProperty RowsProperty =
 +    DependencyProperty.Register(
-+        nameof(RowDefinitionsInline),
++        nameof(Rows),
 +        typeof(string),
 +        typeof(Grid),
-+        new FrameworkPropertyMetadata(null, OnRowDefinitionsInlineChanged));
++        new FrameworkPropertyMetadata(null, OnRowsChanged));
 ```
-
+ 
 ## Remarks
-Setting both properties ColumnDefinitionsInline and ColumnDefinitons simultaneously may lead to unexpected behavior. Therefore we may require to introduce compile time errors or exceptions. 
+ 
+However, this leaves us with two similar properties to set the same things, which is not a clean approach. 
