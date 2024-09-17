@@ -6,7 +6,7 @@ Based on discussion in 5612 and 1739 this proposal is to simplify the definition
 - Creating a Typeconvertor for ColumnDefinitionCollection and RowDefinitionCollection so they can process String as its input.
 
 ## Goal
-The goal of this feature is to simplify providing Grid row and columns. 
+The goal of this feature is to make Grid markup less verbose, allowing developers to create grids with simpler syntax.
 
 ## Example
 ### Current Syntax
@@ -92,6 +92,30 @@ public RowDefinitionCollection RowDefinitions
 <Grid ColumnDefinitions="1*, 2*, Auto, *, 300" RowDefinitions="1*, Auto, 25, 14, 20"> </Grid>
 ```
 
+```xaml
+<Grid RowDefinitions="1*, Auto, 25, 14, 20">
+    <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*" />
+          <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="300" />
+    </Grid.ColumnDefinitions>
+</Grid>
+```
+
+```xaml
+<Grid ColumnDefinitions="1*, 2*, Auto, *, 300">
+    <Grid.RowDefinitions>
+          <RowDefinition Height="1*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="25" />
+          <RowDefinition Height= "14" />
+          <RowDefinition Height="20" />
+    </Grid.RowDefinitions>
+</Grid>
+```
+
 # Alternative design
 Introduce new public dependency properties `ColumnDefinitionsInline` and `RowDefinitionsInline` that provide a dedicated place to update the row and column definitions. 
 
@@ -123,4 +147,5 @@ Introduce new public dependency properties `ColumnDefinitionsInline` and `RowDef
 +        new FrameworkPropertyMetadata(null, OnRowDefinitionsInlineChanged));
 ```
 
-# Risks
+## Remarks
+Setting both properties ColumnDefinitionsInline and ColumnDefinitons simultaneously may lead to unexpected behavior. Therefore we may require to introduce compile time errors or exceptions. 
