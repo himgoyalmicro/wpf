@@ -777,8 +777,6 @@ namespace System.Windows.Baml2006
                 case 757: return Create_BamlType_XmlLanguageConverter(isBamlType, useV3Rules); // type converter
                 case 758: return Create_BamlType_XmlNamespaceMapping(isBamlType, useV3Rules);
                 case 759: return Create_BamlType_ZoomPercentageConverter(isBamlType, useV3Rules);
-                case 760: return Create_BamlType_RowDefinitionCollectionConverter(isBamlType, useV3Rules);
-                case 761: return Create_BamlType_ColumnDefinitionCollectionConverter(isBamlType, useV3Rules);
                 default:
                     throw new InvalidOperationException("Invalid BAML number");
             }
@@ -11850,30 +11848,6 @@ namespace System.Windows.Baml2006
                                               0, "KeyboardNavigation",
                                               typeof(System.Windows.Input.KeyboardNavigation),
                                               isBamlType, useV3Rules);
-            bamlType.Freeze();
-            return bamlType;
-        }
-
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        private WpfKnownType Create_BamlType_RowDefinitionCollectionConverter(bool isBamlType, bool useV3Rules)
-        {
-            var bamlType = new WpfKnownType(this, // SchemaContext
-                                              760, "RowDefinitionCollectionConverter",
-                                              typeof(System.Windows.Controls.RowDefinitionCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.RowDefinitionCollectionConverter(); };
-            bamlType.Freeze();
-            return bamlType;
-        }
-
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        private WpfKnownType Create_BamlType_ColumnDefinitionCollectionConverter(bool isBamlType, bool useV3Rules)
-        {
-            var bamlType = new WpfKnownType(this, // SchemaContext
-                                              761, "ColumnDefinitionCollectionConverter",
-                                              typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ColumnDefinitionCollectionConverter(); };
             bamlType.Freeze();
             return bamlType;
         }

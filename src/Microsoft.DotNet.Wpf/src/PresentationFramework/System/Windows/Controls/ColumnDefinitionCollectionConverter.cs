@@ -12,7 +12,7 @@ using System.Globalization;
 namespace System.Windows.Controls
 {
 
-    public class ColumnDefinitionCollectionConverter : TypeConverter
+    internal class ColumnDefinitionCollectionConverter : TypeConverter
     {
         #region Public Methods
 

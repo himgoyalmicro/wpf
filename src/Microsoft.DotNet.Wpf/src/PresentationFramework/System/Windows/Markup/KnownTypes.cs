@@ -829,9 +829,7 @@ namespace System.Windows.Markup
         XmlLanguageConverter,
         XmlNamespaceMapping,
         ZoomPercentageConverter,
-        MaxElement,
-        RowDefinitionCollectionConverter,
-        ColumnDefinitionCollectionConverter
+        MaxElement
     }
 
     // This enum specifies the IDs we use for known CLR and DP Properties in BAML.
@@ -1672,8 +1670,6 @@ namespace System.Windows.Markup
                 case KnownElements.XmlLanguageConverter: o = new System.Windows.Markup.XmlLanguageConverter();   break;
                 case KnownElements.XmlNamespaceMapping: o = new System.Windows.Data.XmlNamespaceMapping();   break;
                 case KnownElements.ZoomPercentageConverter: o = new System.Windows.Documents.ZoomPercentageConverter();   break;
-                case KnownElements.RowDefinitionCollectionConverter: o = new System.Windows.Controls.RowDefinitionCollectionConverter();   break;
-                case KnownElements.ColumnDefinitionCollectionConverter: o = new System.Windows.Controls.ColumnDefinitionCollectionConverter();   break;
             }
             return o;
         }
@@ -5541,8 +5537,6 @@ namespace System.Windows.Markup
             case KnownElements.DateTimeConverter: t = typeof(DateTimeConverter); break;
             case KnownElements.DateTimeConverter2: t = typeof(DateTimeConverter2); break;
             case KnownElements.UriTypeConverter: t = typeof(UriTypeConverter); break;
-            case KnownElements.RowDefinitionCollectionConverter: t = _asmFramework.GetType("System.Windows.Controls.RowDefinitionCollectionConverter"); break;
-            case KnownElements.ColumnDefinitionCollectionConverter: t = _asmFramework.GetType("System.Windows.Controls.ColumnDefinitionCollectionConverter"); break;
             }
 
             if(t == null)
@@ -6317,8 +6311,6 @@ namespace System.Windows.Markup
             case KnownElements.XmlLanguageConverter: t = typeof(System.Windows.Markup.XmlLanguageConverter); break;
             case KnownElements.XmlNamespaceMapping: t = typeof(System.Windows.Data.XmlNamespaceMapping); break;
             case KnownElements.ZoomPercentageConverter: t = typeof(System.Windows.Documents.ZoomPercentageConverter); break;
-            case KnownElements.RowDefinitionCollectionConverter : t = typeof(System.Windows.Controls.RowDefinitionCollectionConverter); break;
-            case KnownElements.ColumnDefinitionCollectionConverter : t = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter); break;
             }
 
             return t;
