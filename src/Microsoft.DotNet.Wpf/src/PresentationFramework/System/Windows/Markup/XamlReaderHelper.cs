@@ -534,6 +534,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteDocumentStart()
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteDocumentStart");
             AddNodeToCollection(new XamlDocumentStartNode(LineNumber, LinePosition, 0));
         }
 
@@ -542,6 +543,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteDocumentEnd()
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteDocumentEnd");
             AddNodeToCollection(new XamlDocumentEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
 
@@ -553,6 +555,7 @@ namespace System.Windows.Markup
             string tagName,
             int depth)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteUnknownTagStart");
             AddNodeToCollection(new XamlUnknownTagStartNode(LineNumber, LinePosition,
                                                           depth, namespaceUri, tagName));
         }
@@ -600,6 +603,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
             xamlUnknownAttributeNode.OwnerTypeFullName = ownerTypeFullName;
 #endif
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteUnknownAttribute");
             AddNodeToCollection(xamlUnknownAttributeNode);
         }
 
@@ -610,6 +614,7 @@ namespace System.Windows.Markup
         {
             // We pass on the local name and namespace uri because it is used to distinguish
             // between x:Array end tag and Set.Value end tags
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteUnknownTagEnd");
             UnknownData data = CurrentContext.ContextData as UnknownData;
             AddNodeToCollection(new XamlUnknownTagEndNode(LineNumber, LinePosition, XmlReader.Depth,
                 data.LocalName, data.NamespaceURI));
@@ -636,6 +641,7 @@ namespace System.Windows.Markup
 #else
                     typeof(IDictionary).IsAssignableFrom(ParentContext.ContextData as Type));
 #endif
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteElementStart");
             AddNodeToCollection(new XamlElementStartNode(XamlNodeType.ElementStart, LineNumber, LinePosition, depth, assemblyName,
                             typeFullName, elementType, serializerType, XmlReader.IsEmptyElement,
                             needsKey, isInjected));
@@ -655,6 +661,7 @@ namespace System.Windows.Markup
                 depth -= 1;
             }
 
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteElementEnd");
             AddNodeToCollection(new XamlElementEndNode(LineNumber, LinePosition, depth));
 
             //If this element had any content, check for a duplicate setting of that property.
@@ -698,6 +705,7 @@ namespace System.Windows.Markup
             Type converterType,
             int depth)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteText");
             AddNodeToCollection(new XamlTextNode(LineNumber, LinePosition, depth, value, converterType));
         }
 
@@ -719,6 +727,7 @@ namespace System.Windows.Markup
             string propIdName,
             HybridDictionary properties)           // Property collection that contains all complex props
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyComplexStart");
             CheckDuplicateProperty(properties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyComplexStartNode(lineNumber, linePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -730,6 +739,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyComplexEnd()
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyComplexEnd");
             AddNodeToCollection(new
                 XamlPropertyComplexEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -743,6 +753,7 @@ namespace System.Windows.Markup
             int lineNumber,
             int linePosition)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteLiteralContent");
             AddNodeToCollection(
                     new XamlLiteralContentNode(lineNumber, linePosition, depth, textValue));
 
@@ -756,6 +767,7 @@ namespace System.Windows.Markup
             string value,                   // String value of the property
             BamlAttributeUsage usage)       // Defines special usage for this property, such as xml:lang
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteNameProperty");
             AddNodeToCollection(new XamlPropertyNode(
                 LineNumber, LinePosition, XmlReader.Depth, propertyMember,
                 assemblyName, declaringTypeFullName, propertyName, value, usage, false, true), true, true);
@@ -772,6 +784,7 @@ namespace System.Windows.Markup
             string value,                   // String value of the property
             BamlAttributeUsage usage)       // Defines special usage for this property, such as xml:lang
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteProperty");
             bool isName = usage == BamlAttributeUsage.RuntimeName;
             AddNodeToCollection(new XamlPropertyNode(
                 LineNumber, LinePosition, XmlReader.Depth, propertyMember,
@@ -791,6 +804,7 @@ namespace System.Windows.Markup
             bool isValueNestedExtension,
             bool isValueTypeExtension)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyWithExtension");
             MarkupExtensionParser.RemoveEscapes(ref value);
 
             if (extensionTypeId == (short)KnownElements.TypeExtension)
@@ -851,6 +865,7 @@ namespace System.Windows.Markup
             string valueSerializerTypeFullName,     // Name of serializer to use for valueElementType, if present
             string valueSerializerTypeAssemblyName) // Name of assembly that holds the serializer
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyWithType");
             AddNodeToCollection(new XamlPropertyWithTypeNode(
                 LineNumber, LinePosition, XmlReader.Depth, propertyMember,
                 assemblyName, declaringTypeFullName, propertyName, valueTypeFullname,
@@ -872,6 +887,7 @@ namespace System.Windows.Markup
             string value,                   // String value of the property
             BamlAttributeUsage usage)       // Defines special usage for this property, such as xml:lang
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteComplexAsSimpleProperty");
             CheckDuplicateProperty(ParentProperties, propertyName, propertyMember);
 
             // Validate that enum values aren't pure digits.
@@ -900,6 +916,7 @@ namespace System.Windows.Markup
             string declaringTypeFullName,   // Full name of the type where the property is declared
             string propertyName)            // Name of the content property
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteContentProperty");
             AddNodeToCollection(new XamlContentPropertyNode(lineNumber, linePosition, depth,
                 propertyMember, declaringAssemblyName, declaringTypeFullName, propertyName));
         }
@@ -915,6 +932,7 @@ namespace System.Windows.Markup
             string eventName,
             string value)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteRoutedEvent");
             AddNodeToCollection(new XamlRoutedEventNode(LineNumber, LinePosition, XmlReader.Depth, routedEvent,
                     assemblyName, typeFullName, eventName, value));
 
@@ -926,6 +944,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteNamespacePrefix(string prefix, string namespaceUri)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteNamespacePrefix");
             AddNodeToCollection(new XamlXmlnsPropertyNode(LineNumber, LinePosition, XmlReader.Depth,
                         prefix, namespaceUri));
         }
@@ -935,6 +954,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePI(string xmlnsValue, string clrnsValue, string assyValue)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePI");
             AddNodeToCollection(new XamlPIMappingNode(LineNumber, LinePosition, XmlReader.Depth,
                 xmlnsValue, clrnsValue, assyValue));
         }
@@ -944,6 +964,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteClrEvent(string eventName, MemberInfo eventMember, string value)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteClrEvent");
             CheckDuplicateProperty(CurrentProperties, eventName, eventMember);
             AddNodeToCollection(new XamlClrEventNode(LineNumber, LinePosition, XmlReader.Depth,
                     eventName, eventMember, value), true, false);
@@ -959,6 +980,7 @@ namespace System.Windows.Markup
             string declaringTypeFullName,   // Full name of the type where the property is declared
             string propIdName)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyArrayStart");
             CheckDuplicateProperty(ParentProperties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyArrayStartNode(LineNumber, LinePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -969,6 +991,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyArrayEnd()
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyArrayEnd");
             AddNodeToCollection(
                 new XamlPropertyArrayEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -983,6 +1006,7 @@ namespace System.Windows.Markup
                 string declaringTypeFullName,   // Full name of the type where the property is declared
                 string propIdName)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyIListStart");
             CheckDuplicateProperty(ParentProperties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyIListStartNode(LineNumber, LinePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -994,6 +1018,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyIListEnd()
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyIListEnd");
             AddNodeToCollection(
                 new XamlPropertyIListEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -1008,6 +1033,7 @@ namespace System.Windows.Markup
                 string declaringTypeFullName,   // Full name of the type where the property is declared
                 string propIdName)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyIDictionaryStart");
             CheckDuplicateProperty(ParentProperties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyIDictionaryStartNode(LineNumber, LinePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -1019,6 +1045,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyIDictionaryEnd()
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePropertyIDictionaryEnd");
             AddNodeToCollection(
                 new XamlPropertyIDictionaryEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -1028,6 +1055,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteEndAttributes(int depth, bool compact)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteEndAttributes");
             AddNodeToCollection(new XamlEndAttributesNode(LineNumber, LinePosition, depth, compact));
         }
 
@@ -1039,6 +1067,7 @@ namespace System.Windows.Markup
             //!!!Review. This passes out the XmlReader for the compiler to process the
             // def tags. Should package these into records for validation and so
             // don't have to hand out the XmlReader.
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteDefTag");
             AddNodeToCollection(
                 new XamlDefTagNode(LineNumber, LinePosition, XmlReader.Depth,
                                     XmlReader.IsEmptyElement, XmlReader, defTagName));
@@ -1058,6 +1087,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteDefAttribute(string name, string value, BamlAttributeUsage bamlAttributeUsage)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteDefAttribute");
             AddNodeToCollection(new XamlDefAttributeNode(LineNumber, LinePosition, XmlReader.Depth,
                     name, value, bamlAttributeUsage));
         }
@@ -1067,6 +1097,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePresentationOptionsAttribute(string name, string value)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WritePresentationOptionsAttribute");
             AddNodeToCollection(new XamlPresentationOptionsAttributeNode(LineNumber, LinePosition, XmlReader.Depth,
                     name, value));
         }
@@ -1080,6 +1111,7 @@ namespace System.Windows.Markup
             string valueAssemblyName,
             Type valueElementType)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : WriteDefKeyWithType");
             AddNodeToCollection(new XamlDefAttributeKeyTypeNode(LineNumber, LinePosition, XmlReader.Depth,
                  valueTypeFullName, valueAssemblyName, valueElementType));
         }
@@ -1949,6 +1981,7 @@ namespace System.Windows.Markup
             //  - Standard DependencyObjects to put in the Tree
             //  - <x: tags or other tags used by the Compiler
             //  - .net objects
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : ReadElementNode");
 
             // Get the IsEmptyElement value before getting attributes because
             // attribute loop will reset the value.
@@ -2040,7 +2073,7 @@ namespace System.Windows.Markup
 
             // call appropriate handler
             // handler should return still at the current position.
-
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : ReadEndElementNode");
             CompileBamlTag(XmlNodeType.EndElement,
                            ref endTagHasBeenRead);
 
@@ -2065,7 +2098,7 @@ namespace System.Windows.Markup
             // go ahead and call the designer stuff here. should really do this
             // in each context but since they all handle it the same do
             // it here for now.
-
+            Debug.WriteLine($"{LineNumber},{LinePosition} | Method : ReadGenericXmlNode");
             bool endTagHasBeenRead = false;
 
             // if normal then do normal, if skip then just continue.
@@ -2759,6 +2792,7 @@ namespace System.Windows.Markup
                 string unknownTagName,         // non-null if properties belong to unknown tag
                 int depth)                  // Reader depth in xml tree
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | WriteAttributes, parentType: {parentType}, depth: {depth}");
             Debug.Assert(unknownTagName != null || null != parentType);
 
             // Bool used to avoid searching for element-scoped attributes when
@@ -2980,6 +3014,7 @@ namespace System.Windows.Markup
             HybridDictionary resolvedProperties,
             string parentTypeNamespace)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | WriteDefAttributes, attribLocalName: {attribLocalName}, depth: {depth}");
             string runtimePropertyName = GetRuntimeNamePropertyName(parentType);
             string parentName = parentType != null ? parentType.Name : string.Empty;
 
@@ -3186,7 +3221,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != assemblyName, "property without an AssemblyName");
             Debug.Assert(null != declaringTypeFullName, "property without a type name");
             Debug.Assert(null != dynamicObjectName, "property without a field Name");
-
+            Debug.WriteLine($"{lineNumber},{linePosition} | WritePropertyAttribute, attribLocalName: {attribLocalName}, depth: {depth}");
             CheckDuplicateProperty(resolvedProperties, attribLocalName, dynamicObject);
             // Determine if the property is read only or if it was
             // already assigned using xml:lang and complain if so.
@@ -3587,6 +3622,7 @@ namespace System.Windows.Markup
             string namespaceURI = XmlReader.NamespaceURI;
 
             // Handle each type of xml node.
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileBamlTag, xmlNodeType={xmlNodeType}");
             try
             {
                 switch (xmlNodeType)
@@ -3947,7 +3983,7 @@ namespace System.Windows.Markup
         {
             int lineNumber = LineNumber;
             int linePosition = LinePosition;
-
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileComplexProperty, propertyType={propertyType}");
             needToReadNextTag = true;
             endTagHasBeenRead = false;
 
@@ -4176,7 +4212,7 @@ namespace System.Windows.Markup
             // over to a PropertyComplex and set Type to the property info's type.
             CurrentContext.ContextType = ElementContextType.PropertyComplex;
             CurrentContext.ContextData = propertyType;
-
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileComplexPropertySingle, propertyType={propertyType}");
             WritePropertyComplexStart(depth, lineNumber, linePosition, propertyMember,
                                       assemblyName, typeFullName, dynamicObjectName,
                                       ParentProperties);
@@ -4199,6 +4235,7 @@ namespace System.Windows.Markup
             // the existing parent to add children (for IEnumerable)
 
             // For IEnumerables that are not ILists, make sure the parent supports IAddChild.
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileComplexPropertyIList, propertyType={propertyType}");
             if (ControllingXamlParser.StrictParsing &&
 #if PBTCOMPILER
                  ReflectionHelper.GetMscorlibType(typeof(IEnumerable)).IsAssignableFrom(propertyType) &&
@@ -4238,6 +4275,7 @@ namespace System.Windows.Markup
             // use the existing value to add children (if there is one).
             // Note that children (except for style, which is YASC) must
             // have a x:Key to provide a key
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileComplexPropertyIDictionary, propertyType={propertyType}");
             CurrentContext.ContextType = ElementContextType.PropertyIDictionary;
             CurrentContext.ContextData = new DictionaryContextData(propertyType);
             WritePropertyIDictionaryStart(depth, propertyMember, assemblyName,
@@ -4272,6 +4310,7 @@ namespace System.Windows.Markup
                 string typeFullName,        // Type name of the owner or the property
                 string dynamicObjectName)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileComplexPropertyArray, propertyType={propertyType}");
             if (XmlReader.AttributeCount > 0)
             {
                 // The tag for a complex property array is not supposed to
@@ -4327,6 +4366,7 @@ namespace System.Windows.Markup
                 bool isEmptyElement,
             ref bool needToReadNextTag)
         {
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CompileElement, typeFullName={typeFullName}");
             if (null != ParentContext)
             {
                 // Remember the child tag type, in case it is needed for error reporting.
@@ -6386,7 +6426,7 @@ namespace System.Windows.Markup
         /// </summary>
         bool CollapseAndAddTextNode(TextFlowStackData textFlowData, bool stripAllRightWhitespace)
         {
-
+            Debug.WriteLine($"{LineNumber},{LinePosition} | CollapseAndAddTextNode");
             bool addedText = false;
 
             if (null != textFlowData.TextNode && textFlowData.TextNode.Text.Length > 0)
@@ -6426,7 +6466,7 @@ namespace System.Windows.Markup
 
         void AddNodeToCollection(XamlNode xamlNode, bool insert, bool insertAtStart)
         {
-
+            Debug.WriteLine($"{LineNumber},{LinePosition} | AddNodeToCollection, {xamlNode.TokenType}");
             bool addNodeToBuffer = true; // set to false if need to do TextProcessing.
             bool textNodeAdded = false; // need to track if the textNode passed in is going to be in the baml or not
 
