@@ -254,8 +254,8 @@
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlReaderConstants.cs">
       <Link>PresentationFramework\System\Windows\Markup\XamlReaderConstants.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlReaderHelper.cs">
-      <Link>PresentationFramework\System\Windows\Markup\XamlReaderHelper.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlReaderHelper2.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlReaderHelper2.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XmlAttributeProperties.cs">
       <Link>PresentationFramework\System\Windows\Markup\XmlAttributeProperties.cs</Link>

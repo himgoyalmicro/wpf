@@ -1,4 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,20 +34,7 @@ using MS.Internal;
 // you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
-#if !PBTCOMPILER
-
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Shapes;
-
-#endif
-
-#if PBTCOMPILER
 namespace MS.Internal.Markup
-#else
-namespace System.Windows.Markup
-#endif
 {
     /// <summary>
     /// ContextTypes that can be associated with an XmlElement
@@ -235,15 +221,9 @@ namespace System.Windows.Markup
         //Used to determine if a type can hold more than one child.
         private static bool IsACollection(Type type)
         {
-#if PBTCOMPILER
                 return (ReflectionHelper.GetMscorlibType(typeof(IList)).IsAssignableFrom(type)
                         || ReflectionHelper.GetMscorlibType(typeof(IDictionary)).IsAssignableFrom(type)
                         || ReflectionHelper.GetMscorlibType(typeof(Array)).IsAssignableFrom(type));
-#else
-                return (typeof(IList).IsAssignableFrom(type)
-                        || typeof(IDictionary).IsAssignableFrom(type)
-                        || typeof(Array).IsAssignableFrom(type));
-#endif
         }
 
         //Used to determine if a container can hold more than one child.
@@ -283,35 +263,6 @@ namespace System.Windows.Markup
                 return false;
             }
         }
-
-#if !PBTCOMPILER
-        /// <summary>
-        /// Answer the encoding of the underlying xaml stream
-        /// </summary>
-        internal System.Text.Encoding Encoding
-        {
-            get
-            {
-                XmlCompatibilityReader xmlCompatReader = _xmlReader as XmlCompatibilityReader;
-
-                if (xmlCompatReader != null)
-                {
-                    return xmlCompatReader.Encoding;
-                }
-                else
-                {
-                    XmlTextReader textReader = _xmlReader as XmlTextReader;
-                    if (textReader != null)
-                    {
-                        return textReader.Encoding;
-                    }
-                }
-
-                //Can't tell encoding from underlying stream, assume UTF8
-                return new System.Text.UTF8Encoding(true, true);
-            }
-        }
-#endif
 
         /// <summary>
         /// Close the reader so that the underlying stream and / or file is closed.
@@ -358,10 +309,8 @@ namespace System.Windows.Markup
                 return false;
             }
 
-#if PBTCOMPILER || !STRESS
             try // What do we do with Exceptions we catch on this thread?.
             {
-#endif
 
                 // Do any processing specific to the
                 // first time Read is called
@@ -410,7 +359,6 @@ namespace System.Windows.Markup
                     ParseLoopState = ParserState.Done;
                     WriteDocumentEnd();
                 }
-#if PBTCOMPILER || !STRESS
             }
             catch (XamlParseException)
             {
@@ -433,7 +381,6 @@ namespace System.Windows.Markup
                     RethrowAsParseException(e.Message, LineNumber, LinePosition, e);
                 }
             }
-#endif
 
             // see if there is a node in the buffer and if so return it.
             if (TokenReaderNodeCollection.Count > 0)
@@ -509,7 +456,6 @@ namespace System.Windows.Markup
 
 
 
-#if !PBTCOMPILER
         /// <summary>
         /// Get the parse mode from the XamlParser, if present.  Otherwise default to sync
         /// </summary>
@@ -520,7 +466,6 @@ namespace System.Windows.Markup
                 return ControllingXamlParser.XamlParseMode;
             }
         }
-#endif
 
         #endregion CacheCallbacks
 
@@ -534,7 +479,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteDocumentStart()
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteDocumentStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteDocumentStart | Helper2PBT");
             AddNodeToCollection(new XamlDocumentStartNode(LineNumber, LinePosition, 0));
         }
 
@@ -543,7 +488,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteDocumentEnd()
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteDocumentEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteDocumentEnd | Helper2PBT");
             AddNodeToCollection(new XamlDocumentEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
 
@@ -555,7 +500,7 @@ namespace System.Windows.Markup
             string tagName,
             int depth)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteUnknownTagStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteUnknownTagStart | Helper2PBT");
             AddNodeToCollection(new XamlUnknownTagStartNode(LineNumber, LinePosition,
                                                           depth, namespaceUri, tagName));
         }
@@ -573,7 +518,6 @@ namespace System.Windows.Markup
             object dynamicObject,
             HybridDictionary resolvedProperties)
         {
-#if PBTCOMPILER
             bool localAssembly = false;
             string ownerTypeFullName = string.Empty;
 
@@ -587,7 +531,6 @@ namespace System.Windows.Markup
                     ownerTypeFullName = $"{namespaceMaps[0].ClrNamespace}.{parentTypeName}";
                 }
             }
-#endif
 
             string namePropertyName = GetRuntimeNamePropertyName(parentTypeName, parentTypeNamespace);
 
@@ -600,10 +543,8 @@ namespace System.Windows.Markup
             XamlUnknownAttributeNode xamlUnknownAttributeNode = new XamlUnknownAttributeNode(LineNumber, LinePosition, depth,
                                                   namespaceUri, attributeName, attributeValue, attributeUsage);
 
-#if PBTCOMPILER
             xamlUnknownAttributeNode.OwnerTypeFullName = ownerTypeFullName;
-#endif
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteUnknownAttribute");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteUnknownAttribute | Helper2PBT");
             AddNodeToCollection(xamlUnknownAttributeNode);
         }
 
@@ -614,7 +555,7 @@ namespace System.Windows.Markup
         {
             // We pass on the local name and namespace uri because it is used to distinguish
             // between x:Array end tag and Set.Value end tags
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteUnknownTagEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteUnknownTagEnd | Helper2PBT");
             UnknownData data = CurrentContext.ContextData as UnknownData;
             AddNodeToCollection(new XamlUnknownTagEndNode(LineNumber, LinePosition, XmlReader.Depth,
                 data.LocalName, data.NamespaceURI));
@@ -636,12 +577,8 @@ namespace System.Windows.Markup
             bool needsKey =
                    ParentContext != null &&
                    (ParentContext.ContextType == ElementContextType.PropertyIDictionary ||
-#if PBTCOMPILER
                     ReflectionHelper.GetMscorlibType(typeof(IDictionary)).IsAssignableFrom(ParentContext.ContextData as Type));
-#else
-                    typeof(IDictionary).IsAssignableFrom(ParentContext.ContextData as Type));
-#endif
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteElementStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteElementStart | Helper2PBT");
             AddNodeToCollection(new XamlElementStartNode(XamlNodeType.ElementStart, LineNumber, LinePosition, depth, assemblyName,
                             typeFullName, elementType, serializerType, XmlReader.IsEmptyElement,
                             needsKey, isInjected));
@@ -661,7 +598,7 @@ namespace System.Windows.Markup
                 depth -= 1;
             }
 
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteElementEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteElementEnd | Helper2PBT");
             AddNodeToCollection(new XamlElementEndNode(LineNumber, LinePosition, depth));
 
             //If this element had any content, check for a duplicate setting of that property.
@@ -705,7 +642,7 @@ namespace System.Windows.Markup
             Type converterType,
             int depth)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteText");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteText | Helper2PBT");
             AddNodeToCollection(new XamlTextNode(LineNumber, LinePosition, depth, value, converterType));
         }
 
@@ -727,7 +664,7 @@ namespace System.Windows.Markup
             string propIdName,
             HybridDictionary properties)           // Property collection that contains all complex props
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyComplexStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyComplexStart | Helper2PBT");
             CheckDuplicateProperty(properties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyComplexStartNode(lineNumber, linePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -739,7 +676,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyComplexEnd()
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyComplexEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyComplexEnd | Helper2PBT");
             AddNodeToCollection(new
                 XamlPropertyComplexEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -753,7 +690,7 @@ namespace System.Windows.Markup
             int lineNumber,
             int linePosition)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteLiteralContent");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteLiteralContent | Helper2PBT");
             AddNodeToCollection(
                     new XamlLiteralContentNode(lineNumber, linePosition, depth, textValue));
 
@@ -767,7 +704,7 @@ namespace System.Windows.Markup
             string value,                   // String value of the property
             BamlAttributeUsage usage)       // Defines special usage for this property, such as xml:lang
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteNameProperty");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteNameProperty | Helper2PBT");
             AddNodeToCollection(new XamlPropertyNode(
                 LineNumber, LinePosition, XmlReader.Depth, propertyMember,
                 assemblyName, declaringTypeFullName, propertyName, value, usage, false, true), true, true);
@@ -784,7 +721,7 @@ namespace System.Windows.Markup
             string value,                   // String value of the property
             BamlAttributeUsage usage)       // Defines special usage for this property, such as xml:lang
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteProperty");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteProperty | Helper2PBT");
             bool isName = usage == BamlAttributeUsage.RuntimeName;
             AddNodeToCollection(new XamlPropertyNode(
                 LineNumber, LinePosition, XmlReader.Depth, propertyMember,
@@ -804,7 +741,7 @@ namespace System.Windows.Markup
             bool isValueNestedExtension,
             bool isValueTypeExtension)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyWithExtension");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyWithExtension | Helper2PBT");
             MarkupExtensionParser.RemoveEscapes(ref value);
 
             if (extensionTypeId == (short)KnownElements.TypeExtension)
@@ -865,7 +802,7 @@ namespace System.Windows.Markup
             string valueSerializerTypeFullName,     // Name of serializer to use for valueElementType, if present
             string valueSerializerTypeAssemblyName) // Name of assembly that holds the serializer
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyWithType");
+            Debug.WriteLine($" Helper2PBT | {LineNumber},{LinePosition} | Method : WritePropertyWithType");
             AddNodeToCollection(new XamlPropertyWithTypeNode(
                 LineNumber, LinePosition, XmlReader.Depth, propertyMember,
                 assemblyName, declaringTypeFullName, propertyName, valueTypeFullname,
@@ -887,7 +824,7 @@ namespace System.Windows.Markup
             string value,                   // String value of the property
             BamlAttributeUsage usage)       // Defines special usage for this property, such as xml:lang
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteComplexAsSimpleProperty");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteComplexAsSimpleProperty");
             CheckDuplicateProperty(ParentProperties, propertyName, propertyMember);
 
             // Validate that enum values aren't pure digits.
@@ -916,35 +853,17 @@ namespace System.Windows.Markup
             string declaringTypeFullName,   // Full name of the type where the property is declared
             string propertyName)            // Name of the content property
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteContentProperty");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteContentProperty");
             AddNodeToCollection(new XamlContentPropertyNode(lineNumber, linePosition, depth,
                 propertyMember, declaringAssemblyName, declaringTypeFullName, propertyName));
         }
-
-#if !PBTCOMPILER
-        /// <summary>
-        /// Write out a RoutedEvent node.
-        /// </summary>
-        void WriteRoutedEvent(
-            RoutedEvent routedEvent,
-            string assemblyName,
-            string typeFullName,
-            string eventName,
-            string value)
-        {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteRoutedEvent");
-            AddNodeToCollection(new XamlRoutedEventNode(LineNumber, LinePosition, XmlReader.Depth, routedEvent,
-                    assemblyName, typeFullName, eventName, value));
-
-        }
-#endif
 
         /// <summary>
         /// Write out a NamespacePrefix node.
         /// </summary>
         void WriteNamespacePrefix(string prefix, string namespaceUri)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteNamespacePrefix");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteNamespacePrefix");
             AddNodeToCollection(new XamlXmlnsPropertyNode(LineNumber, LinePosition, XmlReader.Depth,
                         prefix, namespaceUri));
         }
@@ -954,7 +873,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePI(string xmlnsValue, string clrnsValue, string assyValue)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePI");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePI");
             AddNodeToCollection(new XamlPIMappingNode(LineNumber, LinePosition, XmlReader.Depth,
                 xmlnsValue, clrnsValue, assyValue));
         }
@@ -964,7 +883,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteClrEvent(string eventName, MemberInfo eventMember, string value)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteClrEvent");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteClrEvent");
             CheckDuplicateProperty(CurrentProperties, eventName, eventMember);
             AddNodeToCollection(new XamlClrEventNode(LineNumber, LinePosition, XmlReader.Depth,
                     eventName, eventMember, value), true, false);
@@ -980,7 +899,7 @@ namespace System.Windows.Markup
             string declaringTypeFullName,   // Full name of the type where the property is declared
             string propIdName)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyArrayStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyArrayStart");
             CheckDuplicateProperty(ParentProperties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyArrayStartNode(LineNumber, LinePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -991,7 +910,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyArrayEnd()
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyArrayEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyArrayEnd");
             AddNodeToCollection(
                 new XamlPropertyArrayEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -1006,7 +925,7 @@ namespace System.Windows.Markup
                 string declaringTypeFullName,   // Full name of the type where the property is declared
                 string propIdName)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyIListStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyIListStart");
             CheckDuplicateProperty(ParentProperties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyIListStartNode(LineNumber, LinePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -1018,7 +937,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyIListEnd()
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyIListEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyIListEnd");
             AddNodeToCollection(
                 new XamlPropertyIListEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -1033,7 +952,7 @@ namespace System.Windows.Markup
                 string declaringTypeFullName,   // Full name of the type where the property is declared
                 string propIdName)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyIDictionaryStart");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyIDictionaryStart");
             CheckDuplicateProperty(ParentProperties, propIdName, propertyMember);
             AddNodeToCollection(new XamlPropertyIDictionaryStartNode(LineNumber, LinePosition, depth,
                         propertyMember, declaringAssemblyName, declaringTypeFullName, propIdName));
@@ -1045,7 +964,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePropertyIDictionaryEnd()
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePropertyIDictionaryEnd");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePropertyIDictionaryEnd");
             AddNodeToCollection(
                 new XamlPropertyIDictionaryEndNode(LineNumber, LinePosition, XmlReader.Depth));
         }
@@ -1055,7 +974,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteEndAttributes(int depth, bool compact)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteEndAttributes");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteEndAttributes");
             AddNodeToCollection(new XamlEndAttributesNode(LineNumber, LinePosition, depth, compact));
         }
 
@@ -1067,7 +986,7 @@ namespace System.Windows.Markup
             //!!!Review. This passes out the XmlReader for the compiler to process the
             // def tags. Should package these into records for validation and so
             // don't have to hand out the XmlReader.
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteDefTag");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteDefTag");
             AddNodeToCollection(
                 new XamlDefTagNode(LineNumber, LinePosition, XmlReader.Depth,
                                     XmlReader.IsEmptyElement, XmlReader, defTagName));
@@ -1087,7 +1006,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WriteDefAttribute(string name, string value, BamlAttributeUsage bamlAttributeUsage)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteDefAttribute");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteDefAttribute");
             AddNodeToCollection(new XamlDefAttributeNode(LineNumber, LinePosition, XmlReader.Depth,
                     name, value, bamlAttributeUsage));
         }
@@ -1097,7 +1016,7 @@ namespace System.Windows.Markup
         /// </summary>
         void WritePresentationOptionsAttribute(string name, string value)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WritePresentationOptionsAttribute");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WritePresentationOptionsAttribute");
             AddNodeToCollection(new XamlPresentationOptionsAttributeNode(LineNumber, LinePosition, XmlReader.Depth,
                     name, value));
         }
@@ -1111,7 +1030,7 @@ namespace System.Windows.Markup
             string valueAssemblyName,
             Type valueElementType)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : WriteDefKeyWithType");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : WriteDefKeyWithType");
             AddNodeToCollection(new XamlDefAttributeKeyTypeNode(LineNumber, LinePosition, XmlReader.Depth,
                  valueTypeFullName, valueAssemblyName, valueElementType));
         }
@@ -1926,17 +1845,6 @@ namespace System.Windows.Markup
                 return contentProperty;
             }
 
-#if !PBTCOMPILER
-            AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
-            if (attributes != null)
-            {
-                ContentPropertyAttribute cpa = attributes[typeof(ContentPropertyAttribute)] as ContentPropertyAttribute;
-                if (cpa != null)
-                {
-                    contentProperty = cpa.Name;
-                }
-            }
-#else
             if (KnownTypes.Types[(int)KnownElements.Application].IsAssignableFrom(type) ||
                 KnownTypes.Types[(int)KnownElements.ResourceDictionary].IsAssignableFrom(type))
             {
@@ -1960,7 +1868,6 @@ namespace System.Windows.Markup
                 contentProperty = ReflectionHelper.GetCustomAttributeData(baseType, attrType, true);
                 baseType = baseType.BaseType;
             }
-#endif
             if (contentProperty == string.Empty)
             {
                 contentProperty = null;
@@ -1981,7 +1888,7 @@ namespace System.Windows.Markup
             //  - Standard DependencyObjects to put in the Tree
             //  - <x: tags or other tags used by the Compiler
             //  - .net objects
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : ReadElementNode");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : ReadElementNode");
 
             // Get the IsEmptyElement value before getting attributes because
             // attribute loop will reset the value.
@@ -2073,7 +1980,7 @@ namespace System.Windows.Markup
 
             // call appropriate handler
             // handler should return still at the current position.
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : ReadEndElementNode");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : ReadEndElementNode");
             CompileBamlTag(XmlNodeType.EndElement,
                            ref endTagHasBeenRead);
 
@@ -2098,7 +2005,7 @@ namespace System.Windows.Markup
             // go ahead and call the designer stuff here. should really do this
             // in each context but since they all handle it the same do
             // it here for now.
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | Method : ReadGenericXmlNode");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | Method : ReadGenericXmlNode");
             bool endTagHasBeenRead = false;
 
             // if normal then do normal, if skip then just continue.
@@ -2411,15 +2318,11 @@ namespace System.Windows.Markup
             {
                 string assemblyName = parser.Assembly;
                 bool isLocalAssembly = assemblyName == null || assemblyName.Length < 1;
-#if PBTCOMPILER
                 if (isLocalAssembly)
                     assemblyName = ReflectionHelper.LocalAssemblyName;
-#endif
                 ClrNamespaceAssemblyPair usingData = new ClrNamespaceAssemblyPair(parser.Namespace, assemblyName);
 
-#if PBTCOMPILER
                 usingData.LocalAssembly = isLocalAssembly;
-#endif
 
                 XamlTypeMapper.PITable.Add(mappingUri, usingData);
             }
@@ -2792,7 +2695,7 @@ namespace System.Windows.Markup
                 string unknownTagName,         // non-null if properties belong to unknown tag
                 int depth)                  // Reader depth in xml tree
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | WriteAttributes, parentType: {parentType}, depth: {depth}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | WriteAttributes, parentType: {parentType}, depth: {depth}");
             Debug.Assert(unknownTagName != null || null != parentType);
 
             // Bool used to avoid searching for element-scoped attributes when
@@ -2927,18 +2830,6 @@ namespace System.Windows.Markup
                                             depth,
                                         ref markupExtensionList);
                                 break;
-#if !PBTCOMPILER
-                            case AttributeContext.RoutedEvent:
-                                Debug.Assert(null != assemblyName, "property without an AssemblyName");
-                                Debug.Assert(null != declaringTypeFullName, "property without a type name");
-                                Debug.Assert(null != dynamicObjectName, "property without a field Name");
-
-                                RoutedEvent routedEvent = (RoutedEvent)dynamicObject;
-                                WriteRoutedEvent(routedEvent, assemblyName,
-                                    declaringTypeFullName, dynamicObjectName, attribValue);
-
-                                break;
-#endif
 
                             case AttributeContext.ClrEvent:
                                 // dynamicObject is either the eventInfo for the event or the methodInfo for the Add{EventName}Handler method
@@ -3014,7 +2905,7 @@ namespace System.Windows.Markup
             HybridDictionary resolvedProperties,
             string parentTypeNamespace)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | WriteDefAttributes, attribLocalName: {attribLocalName}, depth: {depth}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | WriteDefAttributes, attribLocalName: {attribLocalName}, depth: {depth}");
             string runtimePropertyName = GetRuntimeNamePropertyName(parentType);
             string parentName = parentType != null ? parentType.Name : string.Empty;
 
@@ -3154,14 +3045,8 @@ namespace System.Windows.Markup
                 ElementContextType pct = ParentContext.ContextType;
                 Type pType = ParentContext.ContextData as Type;
                 if (ElementContextType.PropertyIDictionary != pct
-#if PBTCOMPILER
                     && (ElementContextType.Unknown != pct)  // Compile 1st pass
-#endif
-#if PBTCOMPILER
                     && !ReflectionHelper.GetMscorlibType(typeof(IDictionary)).IsAssignableFrom(pType))
-#else
-                    && !typeof(IDictionary).IsAssignableFrom(pType))
-#endif
                 {
                     ThrowException(nameof(SR.ParserNoDictionaryName));
                 }
@@ -3221,7 +3106,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != assemblyName, "property without an AssemblyName");
             Debug.Assert(null != declaringTypeFullName, "property without a type name");
             Debug.Assert(null != dynamicObjectName, "property without a field Name");
-            Debug.WriteLine($" HelperPF | {lineNumber},{linePosition} | WritePropertyAttribute, attribLocalName: {attribLocalName}, depth: {depth}");
+            Debug.WriteLine($" Helper2PBT |{lineNumber},{linePosition} | WritePropertyAttribute, attribLocalName: {attribLocalName}, depth: {depth}");
             CheckDuplicateProperty(resolvedProperties, attribLocalName, dynamicObject);
             // Determine if the property is read only or if it was
             // already assigned using xml:lang and complain if so.
@@ -3238,13 +3123,6 @@ namespace System.Windows.Markup
                         propertyCanWrite = propInfo.CanWrite;
                     }
                 }
-#if !PBTCOMPILER
-                else if (dynamicObject is DependencyProperty &&
-                    (parentType != null && KnownTypes.Types[(int)KnownElements.DependencyObject].IsAssignableFrom(parentType)))
-                {
-                    propertyCanWrite = !((DependencyProperty)dynamicObject).ReadOnly;
-                }
-#endif
                 else if (dynamicObject is MethodInfo)
                 {
                     MethodInfo methodInfo = (MethodInfo)dynamicObject;
@@ -3338,11 +3216,7 @@ namespace System.Windows.Markup
                     attributeUsage = BamlAttributeUsage.RuntimeName;
                 }
 
-#if PBTCOMPILER
                 if (propType == ReflectionHelper.GetMscorlibType(typeof(Type)))
-#else
-                if (propType == typeof(Type))
-#endif
                 {
                     // if the property type is typeof(Type), we call WritePropertyWithExtension of the attribute
                     // value in order to convert the attribute value into a type as though it were a TypeExtension.
@@ -3410,11 +3284,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-#if PBTCOMPILER
                     Assembly asmPC = ReflectionHelper.GetAlreadyReflectionOnlyLoadedAssembly("PRESENTATIONCORE");
-#else
-                    Assembly asmPC = ReflectionHelper.GetAlreadyLoadedAssembly("PRESENTATIONCORE");
-#endif
                     if (asmPC == null)
                     {
                         isDefaultAsm = objectType.Assembly.FullName.StartsWith("PresentationCore", StringComparison.OrdinalIgnoreCase);
@@ -3437,21 +3307,6 @@ namespace System.Windows.Markup
 
                 if (!knownName)
                 {
-#if !PBTCOMPILER
-                    object[] attributes = objectType.GetCustomAttributes(KnownTypes.Types[(int)KnownElements.RuntimeNamePropertyAttribute], true);
-
-                    if (attributes != null)
-                    {
-                        for (int i = 0; i < attributes.Length; i++)
-                        {
-                            RuntimeNamePropertyAttribute rName = attributes[i] as RuntimeNamePropertyAttribute;
-                            if (rName != null)
-                            {
-                                return rName.Name;
-                            }
-                        }
-                    }
-#else
                     string propName = null;
                     Type baseType = objectType;
                     Type attrType = KnownTypes.Types[(int)KnownElements.RuntimeNamePropertyAttribute];
@@ -3491,7 +3346,6 @@ namespace System.Windows.Markup
                     }
 
                     return propName;
-#endif
                 }
             }
 
@@ -3566,13 +3420,6 @@ namespace System.Windows.Markup
                     null != methodInfo.DeclaringType.GetMethod($"Set{methodInfo.Name.Substring("Get".Length)}",
                         BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
             }
-
-#if !PBTCOMPILER
-            else if (propertyMember is DependencyProperty)
-            {
-                return !((DependencyProperty)propertyMember).ReadOnly;
-            }
-#endif
             return true;
         }
 
@@ -3627,7 +3474,7 @@ namespace System.Windows.Markup
             string namespaceURI = XmlReader.NamespaceURI;
 
             // Handle each type of xml node.
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileBamlTag, xmlNodeType={xmlNodeType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileBamlTag, xmlNodeType={xmlNodeType}");
             try
             {
                 switch (xmlNodeType)
@@ -3988,7 +3835,7 @@ namespace System.Windows.Markup
         {
             int lineNumber = LineNumber;
             int linePosition = LinePosition;
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileComplexProperty, propertyType={propertyType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileComplexProperty, propertyType={propertyType}");
             needToReadNextTag = true;
             endTagHasBeenRead = false;
 
@@ -4217,7 +4064,7 @@ namespace System.Windows.Markup
             // over to a PropertyComplex and set Type to the property info's type.
             CurrentContext.ContextType = ElementContextType.PropertyComplex;
             CurrentContext.ContextData = propertyType;
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileComplexPropertySingle, propertyType={propertyType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileComplexPropertySingle, propertyType={propertyType}");
             WritePropertyComplexStart(depth, lineNumber, linePosition, propertyMember,
                                       assemblyName, typeFullName, dynamicObjectName,
                                       ParentProperties);
@@ -4240,15 +4087,10 @@ namespace System.Windows.Markup
             // the existing parent to add children (for IEnumerable)
 
             // For IEnumerables that are not ILists, make sure the parent supports IAddChild.
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileComplexPropertyIList, propertyType={propertyType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileComplexPropertyIList, propertyType={propertyType}");
             if (ControllingXamlParser.StrictParsing &&
-#if PBTCOMPILER
                  ReflectionHelper.GetMscorlibType(typeof(IEnumerable)).IsAssignableFrom(propertyType) &&
                  !ReflectionHelper.GetMscorlibType(typeof(IList)).IsAssignableFrom(propertyType) &&
-#else
-                 typeof(IEnumerable).IsAssignableFrom(propertyType) &&
-                 !typeof(IList).IsAssignableFrom(propertyType) &&
-#endif
                 (ParentContext == null ||
                  ParentContext.ContextType != ElementContextType.Default ||
                  !BamlRecordManager.TreatAsIAddChild(ParentContext.ContextDataType)))
@@ -4280,7 +4122,7 @@ namespace System.Windows.Markup
             // use the existing value to add children (if there is one).
             // Note that children (except for style, which is YASC) must
             // have a x:Key to provide a key
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileComplexPropertyIDictionary, propertyType={propertyType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileComplexPropertyIDictionary, propertyType={propertyType}");
             CurrentContext.ContextType = ElementContextType.PropertyIDictionary;
             CurrentContext.ContextData = new DictionaryContextData(propertyType);
             WritePropertyIDictionaryStart(depth, propertyMember, assemblyName,
@@ -4315,7 +4157,7 @@ namespace System.Windows.Markup
                 string typeFullName,        // Type name of the owner or the property
                 string dynamicObjectName)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileComplexPropertyArray, propertyType={propertyType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileComplexPropertyArray, propertyType={propertyType}");
             if (XmlReader.AttributeCount > 0)
             {
                 // The tag for a complex property array is not supposed to
@@ -4371,7 +4213,7 @@ namespace System.Windows.Markup
                 bool isEmptyElement,
             ref bool needToReadNextTag)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CompileElement, typeFullName={typeFullName}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CompileElement, typeFullName={typeFullName}");
             if (null != ParentContext)
             {
                 // Remember the child tag type, in case it is needed for error reporting.
@@ -4545,13 +4387,8 @@ namespace System.Windows.Markup
                 return false;
 
             // check for IList and IDictionary
-#if PBTCOMPILER
             if (ReflectionHelper.GetMscorlibType(typeof(IList)).IsAssignableFrom(parentElementType)
                 && ReflectionHelper.GetMscorlibType(typeof(IDictionary)).IsAssignableFrom(parentElementType))
-#else
-            if (typeof(IList).IsAssignableFrom(parentElementType)
-                && typeof(IDictionary).IsAssignableFrom(parentElementType))
-#endif
             {
                 return false;
             }
@@ -4640,12 +4477,7 @@ namespace System.Windows.Markup
 
             // check to see if content property is accessible\allowed.
             bool allowed = true;
-
-#if PBTCOMPILER
             if (ReflectionHelper.GetMscorlibType(typeof(IList)).IsAssignableFrom(pi.PropertyType))
-#else
-            if (typeof(IList).IsAssignableFrom(pi.PropertyType))
-#endif
             {
                 allowed = XamlTypeMapper.IsAllowedPropertyGet(pi);
             }
@@ -4698,15 +4530,9 @@ namespace System.Windows.Markup
                             ControllingXamlParser.StrictParsing &&
                             !ParentContext.IsContentPropertySet &&
                             !BamlRecordManager.TreatAsIAddChild(parentType) &&
-#if PBTCOMPILER
                             !ReflectionHelper.GetMscorlibType(typeof(IEnumerable)).IsAssignableFrom(parentType) &&
                             !ReflectionHelper.GetMscorlibType(typeof(IList)).IsAssignableFrom(parentType) &&
                             !ReflectionHelper.GetMscorlibType(typeof(IDictionary)).IsAssignableFrom(parentType))
-#else
-                            !typeof(IEnumerable).IsAssignableFrom(parentType) &&
-                            !typeof(IList).IsAssignableFrom(parentType) &&
-                            !typeof(IDictionary).IsAssignableFrom(parentType))
-#endif
                         {
                             ThrowException(nameof(SR.ParserCannotAddAnyChildren), parentType.FullName);
                         }
@@ -4765,22 +4591,13 @@ namespace System.Windows.Markup
                 bool contentText = false;
                 Type contentPropertyType = XamlTypeMapper.GetPropertyType(CurrentContext.ContentPropertyInfo);
 
-#if PBTCOMPILER
                 if ( contentPropertyType == ReflectionHelper.GetMscorlibType(typeof(object)) ||
                     contentPropertyType == ReflectionHelper.GetMscorlibType(typeof(string)) )
-#else
-                if ( contentPropertyType == typeof(object) ||
-                    contentPropertyType == typeof(string) )
-#endif
                 {
                     // This content property takes a string directly
                     contentText = true;
                 }
-#if PBTCOMPILER
                 else if( ReflectionHelper.GetMscorlibType(typeof(IList)).IsAssignableFrom(contentPropertyType) )
-#else
-                else if( typeof(IList).IsAssignableFrom(contentPropertyType) )
-#endif
                 {
                     // This string will go into IList.Add(object)
 
@@ -4801,11 +4618,7 @@ namespace System.Windows.Markup
                 if( contentText &&
                     (!isWhitespace ||
                      IsWhitespaceSignificantAttributePresent(contentPropertyType) ||
-#if PBTCOMPILER
                      contentPropertyType == ReflectionHelper.GetMscorlibType(typeof(string))))
-#else
-                     contentPropertyType == typeof(string)))
-#endif
                 {
                     if(CurrentContext.ContentParserState != ParsingContent.During)
                     {
@@ -4892,15 +4705,9 @@ namespace System.Windows.Markup
 
             // Just like above, if the item type is object or string, then yes,
             // type type accepts text content.
-#if PBTCOMPILER
             if( collectionItemType == ReflectionHelper.GetMscorlibType(typeof(object))
                 ||
                 collectionItemType == ReflectionHelper.GetMscorlibType(typeof(string)) )
-#else
-            if( collectionItemType == typeof(object)
-                ||
-                collectionItemType == typeof(string) )
-#endif
             {
                 return true;
             }
@@ -4934,11 +4741,7 @@ namespace System.Windows.Markup
                 // Make sure this is really ICollection<T> in mscorlib, not an interface with the same
                 // name/namespace.
 
-#if PBTCOMPILER
                 if( iCollectionT.Assembly == ReflectionHelper.GetMscorlibType(typeof(IList)).Assembly )
-#else
-                if( iCollectionT.Assembly == typeof(IList).Assembly )
-#endif
                 {
                     // Return the T
                     return iCollectionT.GetGenericArguments()[0];
@@ -4948,11 +4751,7 @@ namespace System.Windows.Markup
             // If we get here, it's not a valid ICollection<T>, so it's an untyped collection,
             // thus accepts items of type Object.
 
-#if PBTCOMPILER
             return ReflectionHelper.GetMscorlibType(typeof(Object));
-#else
-            return typeof(Object);
-#endif
 
         }
 
@@ -4974,33 +4773,20 @@ namespace System.Windows.Markup
 
             // Get the attribute list
 
-           #if PBTCOMPILER
             IList<CustomAttributeData> attributes = CustomAttributeData.GetCustomAttributes(collectionType);
-           #else
-            AttributeCollection attributes = TypeDescriptor.GetAttributes(collectionType);
-           #endif
 
             for( int i = 0; i < attributes.Count; i++ )
             {
                 // See if this is a ContentWrapperAttribute
 
-               #if PBTCOMPILER
                 // We can't use typeof(ContentWrapper) because it would be in the wrong assembly.
                 // Use KnownTypes instead.
                 if( attributes[i].Constructor.ReflectedType == KnownTypes.Types[(int)KnownElements.ContentWrapperAttribute] )
-               #else
-                ContentWrapperAttribute contentWrapperAttribute = attributes[i] as ContentWrapperAttribute;
-                if( contentWrapperAttribute != null )
-               #endif
                 {
                     // Now look at the type specified in this ContentWrapperAttribute.
                     // E.g. contentWrapper might be typeof(Run)
 
-                   #if PBTCOMPILER
                     contentWrapper = attributes[i].ConstructorArguments[0].Value as Type;
-                   #else
-                    contentWrapper = contentWrapperAttribute.ContentWrapper;
-                   #endif
 
                     // Get the type's content property name
                     string contentPropertyName = GetContentPropertyName(contentWrapper);
@@ -5017,11 +4803,7 @@ namespace System.Windows.Markup
                     }
 
                     // And then see if the CPA accepts string.
-#if PBTCOMPILER
                     if( propertyInfo.PropertyType.IsAssignableFrom(ReflectionHelper.GetMscorlibType(typeof(string))) )
-#else
-                    if( propertyInfo.PropertyType.IsAssignableFrom(typeof(string)) )
-#endif
                     {
                         return true;
                     }
@@ -5751,11 +5533,6 @@ namespace System.Windows.Markup
             if(context.IsWhitespaceSignificantCollectionAttributeKnown)
                 return context.IsWhitespaceSignificantCollectionAttributePresent;
 
-#if !PBTCOMPILER
-            object[] attrs = collectionType.GetCustomAttributes(typeof(WhitespaceSignificantCollectionAttribute), true);
-            if (attrs.Length == 1)
-                returnValue = true;
-#else
             Type baseType = collectionType;
             Type attrType = KnownTypes.Types[(int)KnownElements.WhitespaceSignificantCollectionAttribute];
 
@@ -5770,7 +5547,6 @@ namespace System.Windows.Markup
                 }
                 baseType = baseType.BaseType;
             }
-#endif
 
             context.IsWhitespaceSignificantCollectionAttributePresent = returnValue;
             return returnValue;
@@ -6431,7 +6207,7 @@ namespace System.Windows.Markup
         /// </summary>
         bool CollapseAndAddTextNode(TextFlowStackData textFlowData, bool stripAllRightWhitespace)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | CollapseAndAddTextNode");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | CollapseAndAddTextNode");
             bool addedText = false;
 
             if (null != textFlowData.TextNode && textFlowData.TextNode.Text.Length > 0)
@@ -6471,7 +6247,7 @@ namespace System.Windows.Markup
 
         void AddNodeToCollection(XamlNode xamlNode, bool insert, bool insertAtStart)
         {
-            Debug.WriteLine($" HelperPF | {LineNumber},{LinePosition} | AddNodeToCollection, {xamlNode.TokenType}");
+            Debug.WriteLine($" Helper2PBT |{LineNumber},{LinePosition} | AddNodeToCollection, {xamlNode.TokenType}");
             bool addNodeToBuffer = true; // set to false if need to do TextProcessing.
             bool textNodeAdded = false; // need to track if the textNode passed in is going to be in the baml or not
 
@@ -6823,16 +6599,12 @@ namespace System.Windows.Markup
         {
             if (_typeIXmlSerializable == null)
             {
-#if PBTCOMPILER
                     // in PBT, make sure this is ReflectionOnly
                     Assembly asmXml = ReflectionHelper.GetAlreadyReflectionOnlyLoadedAssembly("SYSTEM.XML");
                     // System.Xml is only in loaded list if it is actually contained in app's link ref list
                     if (asmXml == null)
                         return false;
                     _typeIXmlSerializable = asmXml.GetType("System.Xml.Serialization.IXmlSerializable");
-#else
-                _typeIXmlSerializable = typeof(System.Xml.Serialization.IXmlSerializable);
-#endif
             }
             return _typeIXmlSerializable.IsAssignableFrom(type);
         }

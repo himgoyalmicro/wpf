@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Globalization;
+using System.Diagnostics;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -26,6 +27,7 @@ namespace System.Windows.Controls
         /// <param name="sourceType"> The Type being queried for support. </param>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
+            Debug.WriteLine("ColumnDefinitionCollectionConverter.CanConvertFrom");
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
@@ -39,6 +41,7 @@ namespace System.Windows.Controls
         /// <param name="destinationType"> The Type being queried for support. </param>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
+            Debug.WriteLine("ColumnDefinitionCollectionConverter.CanConvertTo");
             return destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
         }
 
@@ -56,6 +59,7 @@ namespace System.Windows.Controls
         /// <param name="value"> The Thickness to convert. </param>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
+            Debug.WriteLine("ColumnDefinitionCollectionConverter.ConvertFrom"); 
             if(value != null)
             {
                 if (value is string input)
@@ -100,6 +104,7 @@ namespace System.Windows.Controls
         /// <param name="destinationType">The type to which to convert the ColumnDefintionCollection instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
+            Debug.WriteLine("ColumnDefinitionCollectionConverter.ConvertTo");
             ArgumentNullException.ThrowIfNull(value);
             ArgumentNullException.ThrowIfNull(destinationType);
             if (destinationType == typeof(string) && value is ColumnDefinitionCollection columnDefinitions)
