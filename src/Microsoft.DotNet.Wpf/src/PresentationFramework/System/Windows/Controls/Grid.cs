@@ -31,7 +31,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
@@ -272,6 +271,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns a ColumnDefinitionCollection of column definitions.
         /// </summary>
+        [TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
         {
@@ -287,6 +287,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns a RowDefinitionCollection of row definitions.
         /// </summary>
+        [TypeConverter(typeof(RowDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public RowDefinitionCollection RowDefinitions
         {
