@@ -5136,11 +5136,11 @@ namespace System.Windows.Controls
         public Grid() { }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } set { } }
+        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.RowDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } set { } }
+        public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
         public bool ShowGridLines { get { throw null; } set { } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
