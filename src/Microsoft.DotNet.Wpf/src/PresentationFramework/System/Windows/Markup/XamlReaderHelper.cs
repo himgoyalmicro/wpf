@@ -3196,13 +3196,13 @@ namespace System.Windows.Markup
                 bool propertyCanWrite;
                 if (propInfo != null)
                 {
-                    if(propInfo.Name == "ColumnDefinitions" || propInfo.Name == "RowDefinitions")
+                    propertyCanWrite = propInfo.CanWrite;
+                    if(!propertyCanWrite)
                     {
-                        propertyCanWrite = true;
-                    }
-                    else
-                    {
-                        propertyCanWrite = propInfo.CanWrite;
+                        propertyCanWrite = IsACollection(propInfo.PropertyType) 
+                                            && XamlTypeMapper.IsAllowedPropertyGet(propInfo)
+                                            && CustomAttributeData.GetCustomAttributes(propInfo).Count > 0
+                                            && CustomAttributeData.GetCustomAttributes(propInfo)[0].AttributeType.Name == "TypeConverterAttribute";
                     }
                 }
 #if !PBTCOMPILER
@@ -3238,9 +3238,15 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (propInfo != null && propInfo.Name != "ColumnDefinitions" && propInfo.Name != "RowDefinitions" && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
+            if (propInfo != null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
-                ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
+                if(!(IsACollection(propInfo.PropertyType) 
+                     && XamlTypeMapper.IsAllowedPropertyGet(propInfo)
+                     && CustomAttributeData.GetCustomAttributes(propInfo).Count > 0
+                     && CustomAttributeData.GetCustomAttributes(propInfo)[0].AttributeType.Name == "TypeConverterAttribute"))
+                {
+                    ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
+                }
             }
 
             string parentName = parentType != null ? parentType.Name : string.Empty;
