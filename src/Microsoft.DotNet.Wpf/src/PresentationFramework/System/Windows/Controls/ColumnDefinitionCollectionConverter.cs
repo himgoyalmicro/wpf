@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Globalization;
+using MS.Internal;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -56,31 +57,23 @@ namespace System.Windows.Controls
         /// <param name="value"> The Thickness to convert. </param>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if(value != null)
+            if(value != null && value is string input)
             {
-                if (value is string input)
+                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+                Grid grid = ipvt?.TargetObject as Grid;
+                if(grid != null)
                 {
-                    IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                    Grid grid = ipvt?.TargetObject as Grid;
-                    if(grid != null)
-                    {
-                        var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
-                        var converter = new GridLengthConverter();
+                    var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
+                    var converter = new GridLengthConverter();
 
-                        if(input == ""){
-                            return collection;
-                        }
-                        foreach (var length in input.Split(','))
-                        {
-                            if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                            {
-                                collection.Add(new ColumnDefinition { Width = gridLength });
-                            }
-                        }
-                        return collection;
+                    TokenizerHelper th = new TokenizerHelper(input, culture);
+                    while(th.NextToken())
+                    {
+                        collection.Add(new ColumnDefinition { Width = (GridLength)converter.ConvertFromString(th.GetCurrentToken()) });
                     }
+                    
+                    return collection;
                 }
-                return base.ConvertFrom(context, culture, value);
             }
             throw GetConvertFromException(value);
         }
