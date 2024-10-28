@@ -6,13 +6,12 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Globalization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Text;
+using MS.Internal;
 
 namespace System.Windows.Controls
 {
-
-    internal class ColumnDefinitionCollectionConverter : TypeConverter
+    internal sealed class ColumnDefinitionCollectionConverter : TypeConverter
     {
         #region Public Methods
 
@@ -20,13 +19,13 @@ namespace System.Windows.Controls
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// bool - True if this converter can convert from the provided type, false if not.
         /// </returns>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="sourceType"> The Type being queried for support. </param>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+            return sourceType == typeof(string);
         }
 
         /// <summary>
@@ -35,52 +34,43 @@ namespace System.Windows.Controls
         /// <returns>
         /// bool - True if this converter can convert to the provided type, false if not.
         /// </returns>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
-            return destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(string);
         }
 
         /// <summary>
         /// ConvertFrom - Attempt to convert to a ColumnDefinitionCollection from the given object.
         /// </summary>
         /// <returns>
-        /// The object which was constructoed.
+        /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="culture"> The CultureInfo which is respected when converting. </param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The Thickness to convert. </param>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value)
         {
-            if(value != null)
+            if (value is string input)
             {
-                if (value is string input)
+                IProvideValueTarget ipvt = typeDescriptorContext?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+                Grid grid = ipvt?.TargetObject as Grid;
+                if (grid != null)
                 {
-                    IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                    Grid grid = ipvt?.TargetObject as Grid;
-                    if(grid != null)
+                    ColumnDefinitionCollection collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
+                    
+                    TokenizerHelper th = new TokenizerHelper(input, cultureInfo);
+                    while (th.NextToken())
                     {
-                        var collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
-                        var converter = new GridLengthConverter();
-
-                        if(input == ""){
-                            return collection;
-                        }
-                        foreach (var length in input.Split(','))
-                        {
-                            if (converter.ConvertFromString(length.Trim()) is GridLength gridLength)
-                            {
-                                collection.Add(new ColumnDefinition { Width = gridLength });
-                            }
-                        }
-                        return collection;
+                        collection.Add(new ColumnDefinition { Width = GridLengthConverter.FromString(th.GetCurrentToken(), cultureInfo) });
                     }
+
+                    return collection;
                 }
-                return base.ConvertFrom(context, culture, value);
             }
             throw GetConvertFromException(value);
         }
@@ -89,32 +79,37 @@ namespace System.Windows.Controls
         /// ConvertTo - Attempt to convert a ColumnDefinitionCollection to the given type
         /// </summary>
         /// <returns>
-        /// The object which was constructoed.
+        /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="culture"> The CultureInfo which is respected when converting. </param>
-        /// <param name="value"> The ColumnDefintionCollection to convert. </param>
-        /// <param name="destinationType">The type to which to convert the ColumnDefintionCollection instance. </param>
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
+        /// <param name="value"> The ColumnDefinitionCollection to convert. </param>
+        /// <param name="destinationType">The type to which to convert the ColumnDefinitionCollection instance. </param>
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(value);
             ArgumentNullException.ThrowIfNull(destinationType);
             if (destinationType == typeof(string) && value is ColumnDefinitionCollection columnDefinitions)
             {
-                var parts = new string[columnDefinitions.Count];
+                char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
+                StringBuilder sb = new StringBuilder(5 * columnDefinitions.Count);
 
                 for (int i = 0; i < columnDefinitions.Count; i++)
                 {
-                    parts[i] = columnDefinitions[i].Width.ToString();
+                    if (i > 0)
+                    {
+                        sb.Append(listSeparator);
+                    }
+                    sb.Append(GridLengthConverter.ToString(columnDefinitions[i].Width, cultureInfo));
                 }
 
-                return string.Join(",", parts);
+                return sb.ToString();
             }
 
-            return base.ConvertTo(context, culture, value, destinationType);
+            throw GetConvertToException(value, destinationType);
         }
 
         #endregion Public Methods
