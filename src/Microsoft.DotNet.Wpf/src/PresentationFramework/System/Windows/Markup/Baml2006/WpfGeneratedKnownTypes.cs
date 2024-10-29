@@ -2753,6 +2753,7 @@ namespace System.Windows.Baml2006
             bamlType.RuntimeNamePropertyName = "Name";
             bamlType.XmlLangPropertyName = "Language";
             bamlType.IsUsableDuringInit = true;
+            bamlType.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionConverter);
             bamlType.Freeze();
             return bamlType;
         }

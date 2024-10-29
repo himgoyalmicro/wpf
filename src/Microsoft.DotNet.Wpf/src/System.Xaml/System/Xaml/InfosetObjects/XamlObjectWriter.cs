@@ -4,6 +4,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ using System.Diagnostics;
 using System.Text;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
+using MS.Internal;
+using System.Globalization;
 using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
 using MS.Internal.Xaml.Runtime;
@@ -782,6 +785,10 @@ namespace System.Xaml
                                 shouldSetValue = true;
                                 _context.ParentKeyIsUnconverted = true;
                             }
+                            else if(property.Name == "ColumnDefinitions")
+                            {
+                                shouldSetValue = Logic_InitializeCollectionFromString(_context);
+                            }
                             else
                             {
                                 shouldSetValue = Logic_CreatePropertyValueFromValue(_context);
@@ -1381,6 +1388,58 @@ namespace System.Xaml
             }
             ctx.CurrentInstance = inst;
             return true;
+        }
+
+        private bool Logic_InitializeCollectionFromString(ObjectWriterContext ctx){
+            XamlMember property = ctx.ParentProperty;
+            XamlType propertyType = property.Type;
+            object parentInstance = ctx.ParentInstance;
+            // save collection initialization string as value
+            string value = ctx.CurrentInstance as string;
+            if(value == null)
+            {
+                return false;
+            }
+            //ctx.PopScope();  // Text Node Scope
+            // push frame onto stack to hold collection
+            ctx.PushScope();
+
+            // get collection as member from Parent and set as current instance
+            object inst = Runtime.GetValue(parentInstance, property);
+            
+            ctx.CurrentIsObjectFromMember = true;
+            ctx.CurrentType = propertyType;
+            ctx.CurrentInstance = inst;
+            ctx.CurrentCollection = inst;  
+            
+            // get collection item type
+            XamlType collectionItemType = propertyType.ItemType;
+
+            // check if collection item type has typeconverter
+            XamlValueConverter<TypeConverter> converter = collectionItemType.TypeConverter;
+            TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
+
+            object parentCollection = ctx.ParentCollection ?? inst;
+            
+
+            foreach(var length in value.Split(',')){
+                ctx.PushScope();
+                object currentValue = typeConverter.ConvertFrom(length);
+                ctx.CurrentType = collectionItemType;
+                ctx.CurrentInstance = currentValue;
+                Runtime.Add(parentCollection, propertyType, currentValue, collectionItemType);
+                ctx.PopScope();
+            }
+            // TokenizerHelper th = new TokenizerHelper(value, CultureInfo.InvariantCulture);
+            // while (th.NextToken())
+            // {
+            //     ctx.PushScope();
+            //     Runtime.Add(propertyType, collectionItemType, th.GetCurrentToken(), propertyType);
+            //     ctx.PopScope();
+            // }
+            ctx.PopScope();
+            ctx.CurrentInstance = parentCollection;
+            return false;
         }
 
         // For backcompat with 3.x parser, if the compat flag PreferUnconvertedKeys is set,

@@ -3196,7 +3196,14 @@ namespace System.Windows.Markup
                 bool propertyCanWrite;
                 if (propInfo != null)
                 {
-                    propertyCanWrite = propInfo.CanWrite;
+                     if(propInfo.Name == "ColumnDefinitions" || propInfo.Name == "RowDefinitions")
+                    {
+                        propertyCanWrite = true;
+                    }
+                    else
+                    {
+                        propertyCanWrite = propInfo.CanWrite;
+                    }
                 }
 #if !PBTCOMPILER
                 else if (dynamicObject is DependencyProperty &&
@@ -3231,7 +3238,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (propInfo != null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
+            if (propInfo != null && propInfo.Name != "ColumnDefinitions" && propInfo.Name != "RowDefinitions" && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
                 ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
             }
