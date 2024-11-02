@@ -456,6 +456,12 @@ namespace System.Windows.Markup
         {
             return (_xmlDataIslandDepth != -1);
         }
+
+        internal bool CanInitializeCollectionFromString(Type type)
+        {
+            return IsACollection(type) && XamlTypeMapper.GetTypeConverterType(type) == null 
+                && XamlTypeMapper.GetTypeConverterType(GetCollectionItemType(type)) != null;
+        }
         #endregion internalMethods
 
         #region CacheCallbacks
@@ -3196,7 +3202,7 @@ namespace System.Windows.Markup
                 bool propertyCanWrite;
                 if (propInfo != null)
                 {
-                     if(propInfo.Name == "ColumnDefinitions" || propInfo.Name == "RowDefinitions")
+                    if(CanInitializeCollectionFromString(propInfo.PropertyType))
                     {
                         propertyCanWrite = true;
                     }
@@ -3238,7 +3244,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (propInfo != null && propInfo.Name != "ColumnDefinitions" && propInfo.Name != "RowDefinitions" && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
+            if (propInfo != null && !CanInitializeCollectionFromString(propInfo.PropertyType) && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
                 ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
             }

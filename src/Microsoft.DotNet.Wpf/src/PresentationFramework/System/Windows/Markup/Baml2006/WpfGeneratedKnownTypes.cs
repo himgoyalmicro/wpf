@@ -8635,6 +8635,7 @@ namespace System.Windows.Baml2006
             bamlType.RuntimeNamePropertyName = "Name";
             bamlType.XmlLangPropertyName = "Language";
             bamlType.IsUsableDuringInit = true;
+            bamlType.TypeConverterType = typeof(System.Windows.Controls.RowDefinitionConverter);
             bamlType.Freeze();
             return bamlType;
         }

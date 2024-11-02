@@ -785,7 +785,7 @@ namespace System.Xaml
                                 shouldSetValue = true;
                                 _context.ParentKeyIsUnconverted = true;
                             }
-                            else if(property.Name == "ColumnDefinitions")
+                            else if(valueXamlType == XamlLanguage.String && property.Type.IsCollection && property.TypeConverter == null)
                             {
                                 shouldSetValue = Logic_InitializeCollectionFromString(_context);
                             }
@@ -1396,11 +1396,20 @@ namespace System.Xaml
             object parentInstance = ctx.ParentInstance;
             // save collection initialization string as value
             string value = ctx.CurrentInstance as string;
-            if(value == null)
+
+            // get collection item type
+            XamlType collectionItemType = propertyType.ItemType;
+
+            // check if collection item type has typeconverter
+            XamlValueConverter<TypeConverter> converter = collectionItemType.TypeConverter;
+
+            if(converter == null)
             {
-                return false;
+                return Logic_CreatePropertyValueFromValue(ctx);
             }
-            //ctx.PopScope();  // Text Node Scope
+
+            TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
+            
             // push frame onto stack to hold collection
             ctx.PushScope();
 
@@ -1411,16 +1420,8 @@ namespace System.Xaml
             ctx.CurrentType = propertyType;
             ctx.CurrentInstance = inst;
             ctx.CurrentCollection = inst;  
-            
-            // get collection item type
-            XamlType collectionItemType = propertyType.ItemType;
-
-            // check if collection item type has typeconverter
-            XamlValueConverter<TypeConverter> converter = collectionItemType.TypeConverter;
-            TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
 
             object parentCollection = ctx.ParentCollection ?? inst;
-            
 
             foreach(var length in value.Split(',')){
                 ctx.PushScope();
@@ -1430,13 +1431,6 @@ namespace System.Xaml
                 Runtime.Add(parentCollection, propertyType, currentValue, collectionItemType);
                 ctx.PopScope();
             }
-            // TokenizerHelper th = new TokenizerHelper(value, CultureInfo.InvariantCulture);
-            // while (th.NextToken())
-            // {
-            //     ctx.PushScope();
-            //     Runtime.Add(propertyType, collectionItemType, th.GetCurrentToken(), propertyType);
-            //     ctx.PopScope();
-            // }
             ctx.PopScope();
             ctx.CurrentInstance = parentCollection;
             return false;
