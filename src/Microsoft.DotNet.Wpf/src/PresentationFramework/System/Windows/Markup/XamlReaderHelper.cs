@@ -3202,14 +3202,8 @@ namespace System.Windows.Markup
                 bool propertyCanWrite;
                 if (propInfo != null)
                 {
-                    if(CanInitializeCollectionFromString(propInfo.PropertyType))
-                    {
-                        propertyCanWrite = true;
-                    }
-                    else
-                    {
+
                         propertyCanWrite = propInfo.CanWrite;
-                    }
                 }
 #if !PBTCOMPILER
                 else if (dynamicObject is DependencyProperty &&
@@ -3238,7 +3232,7 @@ namespace System.Windows.Markup
                     propertyCanWrite = false;
                 }
 
-                if (!propertyCanWrite)
+                if (!propertyCanWrite && !CanInitializeCollectionFromString(propInfo.PropertyType))
                 {
                     ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp, attribLocalName));
                 }
