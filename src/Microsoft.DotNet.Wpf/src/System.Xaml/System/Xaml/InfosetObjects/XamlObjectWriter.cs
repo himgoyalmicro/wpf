@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -13,8 +12,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
-using MS.Internal;
-using System.Globalization;
 using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
 using MS.Internal.Xaml.Runtime;
@@ -785,7 +782,7 @@ namespace System.Xaml
                                 shouldSetValue = true;
                                 _context.ParentKeyIsUnconverted = true;
                             }
-                            else if(valueXamlType == XamlLanguage.String && property.Type.IsCollection && property.TypeConverter == null)
+                            else if(valueXamlType == XamlLanguage.String && property.Type.IsCollection && property.TypeConverter == null && property.Type.ItemType.TypeConverter != null)
                             {
                                 shouldSetValue = Logic_InitializeCollectionFromString(_context);
                             }
@@ -1394,6 +1391,7 @@ namespace System.Xaml
             XamlMember property = ctx.ParentProperty;
             XamlType propertyType = property.Type;
             object parentInstance = ctx.ParentInstance;
+
             // save collection initialization string as value
             string value = ctx.CurrentInstance as string;
 
@@ -1402,11 +1400,6 @@ namespace System.Xaml
 
             // check if collection item type has typeconverter
             XamlValueConverter<TypeConverter> converter = collectionItemType.TypeConverter;
-
-            if(converter == null)
-            {
-                return Logic_CreatePropertyValueFromValue(ctx);
-            }
 
             TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
             
@@ -1423,9 +1416,10 @@ namespace System.Xaml
 
             object parentCollection = ctx.ParentCollection ?? inst;
 
-            foreach(var length in value.Split(',')){
+            foreach(string length in value.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries)){
+                // push frame to hold instance of new object to add
                 ctx.PushScope();
-                object currentValue = typeConverter.ConvertFrom(length);
+                object currentValue = typeConverter.ConvertFrom(length.Trim());
                 ctx.CurrentType = collectionItemType;
                 ctx.CurrentInstance = currentValue;
                 Runtime.Add(parentCollection, propertyType, currentValue, collectionItemType);
