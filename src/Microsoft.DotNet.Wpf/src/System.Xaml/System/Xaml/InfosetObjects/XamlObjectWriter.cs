@@ -782,7 +782,7 @@ namespace System.Xaml
                                 shouldSetValue = true;
                                 _context.ParentKeyIsUnconverted = true;
                             }
-                            else if(valueXamlType == XamlLanguage.String && property.Type.IsCollection && property.TypeConverter == null && property.Type.ItemType.TypeConverter != null)
+                            else if (valueXamlType == XamlLanguage.String && property.Type.IsCollection && property.TypeConverter == null && property.Type.ItemType.TypeConverter != null)
                             {
                                 shouldSetValue = Logic_InitializeCollectionFromString(_context);
                             }
@@ -1387,7 +1387,8 @@ namespace System.Xaml
             return true;
         }
 
-        private bool Logic_InitializeCollectionFromString(ObjectWriterContext ctx){
+        private bool Logic_InitializeCollectionFromString(ObjectWriterContext ctx)
+        {
             XamlMember property = ctx.ParentProperty;
             XamlType propertyType = property.Type;
             object parentInstance = ctx.ParentInstance;
@@ -1402,21 +1403,22 @@ namespace System.Xaml
             XamlValueConverter<TypeConverter> converter = collectionItemType.TypeConverter;
 
             TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
-            
+
             // push frame onto stack to hold collection
             ctx.PushScope();
 
             // get collection as member from Parent and set as current instance
             object inst = Runtime.GetValue(parentInstance, property);
-            
+
             ctx.CurrentIsObjectFromMember = true;
             ctx.CurrentType = propertyType;
             ctx.CurrentInstance = inst;
-            ctx.CurrentCollection = inst;  
+            ctx.CurrentCollection = inst;
 
             object parentCollection = ctx.ParentCollection ?? inst;
 
-            foreach(string length in value.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries)){
+            foreach (string length in value.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
                 // push frame to hold instance of new object to add
                 ctx.PushScope();
                 object currentValue = typeConverter.ConvertFrom(length.Trim());

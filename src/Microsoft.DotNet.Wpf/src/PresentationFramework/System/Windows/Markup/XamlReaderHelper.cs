@@ -459,7 +459,7 @@ namespace System.Windows.Markup
 
         internal bool CanInitializeCollectionFromString(Type type)
         {
-            return IsACollection(type) && XamlTypeMapper.GetTypeConverterType(type) == null 
+            return IsACollection(type) && XamlTypeMapper.GetTypeConverterType(type) == null
                 && XamlTypeMapper.GetTypeConverterType(GetCollectionItemType(type)) != null;
         }
         #endregion internalMethods
@@ -3202,8 +3202,7 @@ namespace System.Windows.Markup
                 bool propertyCanWrite;
                 if (propInfo != null)
                 {
-
-                        propertyCanWrite = propInfo.CanWrite;
+                    propertyCanWrite = propInfo.CanWrite;
                 }
 #if !PBTCOMPILER
                 else if (dynamicObject is DependencyProperty &&
