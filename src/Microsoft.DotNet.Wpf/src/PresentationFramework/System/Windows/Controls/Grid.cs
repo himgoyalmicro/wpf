@@ -291,7 +291,11 @@ namespace System.Windows.Controls
                     _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
                     return;
                 }
-                _data.ColumnDefinitions = value;
+                _data.ColumnDefinitions.Clear();
+                foreach (ColumnDefinition colDef in value)
+                {
+                    _data.ColumnDefinitions.Add(new ColumnDefinition{ Width = colDef.Width });
+                }
             }
         }
 
