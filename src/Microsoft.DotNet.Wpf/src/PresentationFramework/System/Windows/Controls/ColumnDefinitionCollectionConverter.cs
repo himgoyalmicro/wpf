@@ -57,8 +57,8 @@ namespace System.Windows.Controls
         {
             if (value is string input)
             {
-                Grid grid = new Grid(); // Create a dummy Grid instance
-                ColumnDefinitionCollection collection = new ColumnDefinitionCollection(grid); // Pass Grid instance
+                //Grid grid = new Grid(); // Create a dummy Grid instance
+                ColumnDefinitionCollection collection = new ColumnDefinitionCollection(); // Pass null Grid instance
 
                 TokenizerHelper th = new TokenizerHelper(input, cultureInfo);
                 while (th.NextToken())
