@@ -64,15 +64,10 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal ColumnDefinitionCollection(Grid owner)
+        internal ColumnDefinitionCollection(Grid owner=null)
         {
             _owner = owner;
             PrivateOnModified();
-        }
-
-        internal ColumnDefinitionCollection()
-        {
-
         }
 
         #endregion Constructors
@@ -157,35 +152,6 @@ namespace System.Windows.Controls
             PrivateValidateValueForAddition(value);
             PrivateInsert(_size, value);
         }
-
-        // internal void AddInternal(ColumnDefinition value)
-        // {
-        //     int index = _size;
-        //     if (_items == null)
-        //     {
-        //         PrivateSetCapacity(c_defaultCapacity);
-        //     }
-        //     else if (_size == _items.Length)
-        //     {
-        //         PrivateSetCapacity(Math.Max(_items.Length * 2, c_defaultCapacity));
-        //     }
-
-        //     for (int i = _size - 1; i >= index; --i)
-        //     {
-        //         Debug.Assert(   _items[i] != null
-        //                     &&  _items[i].Parent == _owner );
-
-        //         _items[i + 1] = _items[i];
-        //         _items[i].Index = i + 1;
-        //     }
-
-        //     _items[index] = null;
-
-        //     _size++;
-
-        //     _items[index] = value;
-        //     value.Index = index;
-        // }
 
         /// <summary>
         ///     <see cref="ICollection<T>.Clear"/>
@@ -552,29 +518,6 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Internal Properties
-
-        internal Grid Owner
-        {
-            get { return (_owner); }
-            set 
-            {
-                if(_owner != null)
-                {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
-                }
-                if(value == null)
-                {
-                    return;
-                }
-                _owner = value;
-                for (int i = 0; i < _size; i++)
-                {
-                    //_items[i].Parent = value;
-                    _owner.AddLogicalChild(_items[i]);
-                    _items[i].OnEnterParentTree();
-                }              
-            }
-        }
 
         /// <summary>
         ///     Internal version of Count.
