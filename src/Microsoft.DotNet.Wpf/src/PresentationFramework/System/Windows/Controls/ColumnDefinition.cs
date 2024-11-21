@@ -748,7 +748,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields
-        private Grid _owner;      //  owner of the collection
+        private readonly Grid _owner;      //  owner of the collection
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection

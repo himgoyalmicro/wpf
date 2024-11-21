@@ -292,13 +292,18 @@ namespace System.Windows.Controls
                 {
                     return;
                 }
+                List<ColumnDefinition> columnDefs = new List<ColumnDefinition>();
                 foreach (ColumnDefinition colDef in value)
                 {
                     if (colDef.Parent != null)
                     {
                         throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
                     }
-                    colDef.Index = -1;
+                    columnDefs.Add(colDef);
+                }
+                value.Clear();
+                foreach (ColumnDefinition colDef in columnDefs)
+                {
                     _data.ColumnDefinitions.Add(colDef);
                 }
             }
