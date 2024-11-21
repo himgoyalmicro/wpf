@@ -64,7 +64,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal ColumnDefinitionCollection(Grid owner=null)
+        internal ColumnDefinitionCollection(Grid owner = null)
         {
             _owner = owner;
             PrivateOnModified();
@@ -393,9 +393,9 @@ namespace System.Windows.Controls
         {
             get
             {
-                if(_owner == null)
+                if (_owner == null)
                 {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                    return false;
                 }
                 return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
@@ -410,7 +410,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if(_owner == null)
+                if (_owner == null)
                 {
                     return false;
                 }
@@ -612,11 +612,11 @@ namespace System.Windows.Controls
             _items[index] = value;
             value.Index = index;
 
-            if(_owner != null)
+            if (_owner != null)
             {
                 _owner.AddLogicalChild(value);
                 value.OnEnterParentTree();
-            }            
+            }
         }
 
         /// <summary>
@@ -634,7 +634,7 @@ namespace System.Windows.Controls
             _items[value.Index] = null;
             value.Index = -1;
 
-            if(_owner != null)
+            if (_owner != null)
             {
                 _owner.RemoveLogicalChild(value);
             }

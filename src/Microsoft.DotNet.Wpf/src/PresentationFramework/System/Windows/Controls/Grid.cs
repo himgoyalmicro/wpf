@@ -288,8 +288,17 @@ namespace System.Windows.Controls
                 _data ??= new ExtendedData();
                 _data.ColumnDefinitions ??= new ColumnDefinitionCollection(this);
                 _data.ColumnDefinitions.Clear();
+                if (value == null)
+                {
+                    return;
+                }
                 foreach (ColumnDefinition colDef in value)
                 {
+                    if (colDef.Parent != null)
+                    {
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                    }
+                    colDef.Index = -1;
                     _data.ColumnDefinitions.Add(colDef);
                 }
             }
