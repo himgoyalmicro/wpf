@@ -272,6 +272,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns a ColumnDefinitionCollection of column definitions.
         /// </summary>
+        [TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
         {
@@ -282,11 +283,31 @@ namespace System.Windows.Controls
 
                 return (_data.ColumnDefinitions);
             }
+            set
+            {
+                _data ??= new ExtendedData();
+                _data.ColumnDefinitions ??= new ColumnDefinitionCollection(this);
+                _data.ColumnDefinitions.Clear();
+                if (value == null)
+                {
+                    return;
+                }
+                foreach (ColumnDefinition colDef in value)
+                {
+                    if (colDef.Parent != null)
+                    {
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                    }
+                    colDef.Index = -1;
+                    _data.ColumnDefinitions.Add(colDef);
+                }
+            }
         }
 
         /// <summary>
         /// Returns a RowDefinitionCollection of row definitions.
         /// </summary>
+        [TypeConverter(typeof(RowDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public RowDefinitionCollection RowDefinitions
         {
@@ -296,6 +317,25 @@ namespace System.Windows.Controls
                 if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
 
                 return (_data.RowDefinitions);
+            }
+            set
+            {
+                _data ??= new ExtendedData();
+                _data.RowDefinitions ??= new RowDefinitionCollection(this);
+                _data.RowDefinitions.Clear();
+                if (value == null)
+                {
+                    return;
+                }
+                foreach (RowDefinition rowDef in value)
+                {
+                    if (rowDef.Parent != null)
+                    {
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
+                    }
+                    rowDef.Index = -1;
+                    _data.RowDefinitions.Add(rowDef);
+                }
             }
         }
 

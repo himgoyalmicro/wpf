@@ -64,7 +64,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal ColumnDefinitionCollection(Grid owner)
+        internal ColumnDefinitionCollection(Grid owner = null)
         {
             _owner = owner;
             PrivateOnModified();
@@ -393,6 +393,10 @@ namespace System.Windows.Controls
         {
             get
             {
+                if (_owner == null)
+                {
+                    return false;
+                }
                 return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
             }
@@ -406,6 +410,10 @@ namespace System.Windows.Controls
         {
             get
             {
+                if (_owner == null)
+                {
+                    return false;
+                }
                 return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
             }
@@ -604,7 +612,7 @@ namespace System.Windows.Controls
             _items[index] = value;
             value.Index = index;
 
-            _owner.AddLogicalChild(value);
+            _owner?.AddLogicalChild(value);
             value.OnEnterParentTree();
         }
 
@@ -623,7 +631,7 @@ namespace System.Windows.Controls
             _items[value.Index] = null;
             value.Index = -1;
 
-            _owner.RemoveLogicalChild(value);
+            _owner?.RemoveLogicalChild(value);
         }
 
         /// <summary>
@@ -696,8 +704,11 @@ namespace System.Windows.Controls
         private void PrivateOnModified()
         {
             _version++;
-            _owner.ColumnDefinitionCollectionDirty = true;
-            _owner.Invalidate();
+            if (_owner != null)
+            {
+                _owner.ColumnDefinitionCollectionDirty = true;
+                _owner.Invalidate();
+            }
         }
 
         /// <summary>
