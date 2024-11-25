@@ -292,18 +292,13 @@ namespace System.Windows.Controls
                 {
                     return;
                 }
-                List<ColumnDefinition> columnDefs = new List<ColumnDefinition>();
                 foreach (ColumnDefinition colDef in value)
                 {
                     if (colDef.Parent != null)
                     {
                         throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
                     }
-                    columnDefs.Add(colDef);
-                }
-                value.Clear();
-                foreach (ColumnDefinition colDef in columnDefs)
-                {
+                    colDef.Index = -1;
                     _data.ColumnDefinitions.Add(colDef);
                 }
             }
@@ -326,12 +321,21 @@ namespace System.Windows.Controls
             set
             {
                 _data ??= new ExtendedData();
+                _data.RowDefinitions ??= new RowDefinitionCollection(this);
+                _data.RowDefinitions.Clear();
                 if (value == null)
                 {
-                    _data.RowDefinitions = new RowDefinitionCollection(this);
                     return;
                 }
-                _data.RowDefinitions = value;
+                foreach (RowDefinition rowDef in value)
+                {
+                    if (rowDef.Parent != null)
+                    {
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
+                    }
+                    rowDef.Index = -1;
+                    _data.RowDefinitions.Add(rowDef);
+                }
             }
         }
 

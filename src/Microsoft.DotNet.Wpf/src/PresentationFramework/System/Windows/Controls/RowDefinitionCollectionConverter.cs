@@ -61,20 +61,15 @@ namespace System.Windows.Controls
         {
             if (value is string input)
             {
-                IProvideValueTarget ipvt = typeDescriptorContext?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                Grid grid = ipvt?.TargetObject as Grid;
-                if (grid != null)
+                RowDefinitionCollection collection = new RowDefinitionCollection(); // Pass Grid instance
+
+                TokenizerHelper th = new TokenizerHelper(input, cultureInfo);
+                while (th.NextToken())
                 {
-                    RowDefinitionCollection collection = new RowDefinitionCollection(grid); // Pass Grid instance
-
-                    TokenizerHelper th = new TokenizerHelper(input, cultureInfo);
-                    while (th.NextToken())
-                    {
-                        collection.Add(new RowDefinition { Height = GridLengthConverter.FromString(th.GetCurrentToken(), cultureInfo) });
-                    }
-
-                    return collection;
+                    collection.Add(new RowDefinition { Height = GridLengthConverter.FromString(th.GetCurrentToken(), cultureInfo) });
                 }
+
+                return collection;
             }
             throw GetConvertFromException(value);
         }

@@ -615,8 +615,8 @@ namespace System.Windows.Controls
             if (_owner != null)
             {
                 _owner.AddLogicalChild(value);
-                value.OnEnterParentTree();
             }
+            value.OnEnterParentTree();
         }
 
         /// <summary>
