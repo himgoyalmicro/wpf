@@ -163,7 +163,7 @@ namespace System.Windows.Ink
         {
             if (this.Contains(id))
             {
-                throw new ArgumentException(SR.EPExists, "id");
+                throw new ArgumentException(SR.EPExists, nameof(id));
             }
 
             ExtendedProperty extendedProperty = new ExtendedProperty(id, value);
@@ -181,7 +181,7 @@ namespace System.Windows.Ink
         {
             if (!Contains(id))
             {
-                throw new ArgumentException(SR.EPGuidNotFound, "id");
+                throw new ArgumentException(SR.EPGuidNotFound, nameof(id));
             }
 
             ExtendedProperty propertyToRemove = GetExtendedPropertyById(id);
@@ -241,7 +241,7 @@ namespace System.Windows.Ink
                 ExtendedProperty ep = GetExtendedPropertyById(attributeId);
                 if (ep == null)
                 {
-                    throw new ArgumentException(SR.EPNotFound, "attributeId");
+                    throw new ArgumentException(SR.EPNotFound, nameof(attributeId));
                 }
                 return ep.Value;
             }

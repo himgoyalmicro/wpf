@@ -62,7 +62,7 @@ namespace System.Windows.Media.TextFormatting
                 else
                 {
                     // invalid style
-                    throw new ArgumentException(SR.Format(SR.Enum_Invalid, typeof(TextMarkerStyle)), "style");
+                    throw new ArgumentException(SR.Format(SR.Enum_Invalid, typeof(TextMarkerStyle)), nameof(style));
                 }
 
                 _textSource = new TextMarkerSource(

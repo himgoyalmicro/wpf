@@ -722,7 +722,7 @@ namespace MS.Internal.TextFormatting
                 }
 
                 if (collapsingPropertiesList == null || collapsingPropertiesList.Length == 0)
-                    throw new ArgumentNullException("collapsingPropertiesList");
+                    throw new ArgumentNullException(nameof(collapsingPropertiesList));
 
                 TextCollapsingProperties collapsingProp = collapsingPropertiesList[0];
                 double constraintWidth = collapsingProp.Width;

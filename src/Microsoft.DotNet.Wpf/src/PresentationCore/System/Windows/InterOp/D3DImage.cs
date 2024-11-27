@@ -145,7 +145,7 @@ namespace System.Windows.Interop
             // In case the user passed in something like "(D3DResourceType)-1"
             if (backBufferType != D3DResourceType.IDirect3DSurface9)
             {
-                throw new ArgumentOutOfRangeException("backBufferType");
+                throw new ArgumentOutOfRangeException(nameof(backBufferType));
             }
 
             // Early-out if the current back buffer equals the new one. If the front buffer
@@ -247,7 +247,7 @@ namespace System.Windows.Interop
 
             if (timeout == Duration.Automatic)
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
 
             return LockImpl(timeout);
@@ -311,7 +311,7 @@ namespace System.Windows.Interop
                 throw new InvalidOperationException(SR.D3DImage_MustHaveBackBuffer);
             }
 
-            dirtyRect.ValidateForDirtyRect("dirtyRect", PixelWidth, PixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), PixelWidth, PixelHeight);
             if (dirtyRect.HasArea)
             {
                 // Unmanaged code will make sure that the rect is well-formed

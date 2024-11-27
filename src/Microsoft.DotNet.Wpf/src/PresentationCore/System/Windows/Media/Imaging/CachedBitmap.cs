@@ -134,7 +134,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             int elementSize = -1;
 
@@ -415,7 +415,7 @@ namespace System.Windows.Media.Imaging
             {
                 throw new System.ArgumentException(
                         SR.Format(SR.Effect_PixelFormat, pixelFormat),
-                        "pixelFormat"
+                        nameof(pixelFormat)
                         );
             }
 

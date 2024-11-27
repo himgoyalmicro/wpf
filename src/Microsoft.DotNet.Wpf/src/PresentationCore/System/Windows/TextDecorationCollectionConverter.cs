@@ -80,7 +80,7 @@ namespace System.Windows
             
             if (null == value)
             {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "input");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(input));
             }                       
                         
             return ConvertFromString(value);            

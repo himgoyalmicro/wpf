@@ -175,7 +175,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, nameof(strokes));
             }
             VerifyAccess();
             VerifyDisposed();

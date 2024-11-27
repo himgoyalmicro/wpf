@@ -320,7 +320,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (0 == arrayElement.Length)
                     throw new ArgumentException(
-                        SR.PathHasEmptyElement, "backSlashPath");
+                        SR.PathHasEmptyElement, nameof(backSlashPath));
             }
 
             // No empty strings, this array should be fine.
@@ -459,11 +459,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             CheckStringAgainstNullAndEmpty(testString, testStringIdentifier);
 
-            if (testString.IndexOf(PathSeparator) != -1)
+            if (testString.Contains(PathSeparator))
                 throw new ArgumentException(
                     SR.Format(SR.NameCanNotHaveDelimiter,
                         testStringIdentifier,
-                        PathSeparator), "testString");
+                        PathSeparator), nameof(testString));
         }
 
 #endif

@@ -243,7 +243,7 @@ namespace MS.Internal.Printing.Configuration
                                       PrintSchemaTags.Framework.PrintTicketRoot,
                                       PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                                       errorMsg),
-                                      "printTicket");
+                                      nameof(printTicket));
                     }
                     else
                     {
@@ -509,7 +509,7 @@ namespace MS.Internal.Printing.Configuration
                               PrintSchemaTags.Framework.PrintTicketRoot,
                               PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                               errorMsg),
-                              "printTicket");
+                              nameof(printTicket));
             }
 
             throw new PrintQueueException((int)hResult,

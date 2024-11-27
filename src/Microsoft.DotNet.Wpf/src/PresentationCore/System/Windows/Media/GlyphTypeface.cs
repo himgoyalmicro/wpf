@@ -122,7 +122,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(typefaceSource);
 
             if (!typefaceSource.IsAbsoluteUri)
-                throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(typefaceSource));
 
             // remember the original Uri that contains face index
             _originalUri = typefaceSource;
@@ -235,10 +235,10 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(glyphs);
 
             if (glyphs.Count <= 0)
-                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphs");
+                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, nameof(glyphs));
 
             if (glyphs.Count > ushort.MaxValue)
-                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
+                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), nameof(glyphs));
 
             UnmanagedMemoryStream pinnedFontSource = FontSource.GetUnmanagedStream();
 
@@ -1068,7 +1068,7 @@ namespace System.Windows.Media
             try
             {
                 if (glyphIndex >= fontFaceDWrite.GlyphCount)
-                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
+                    throw new ArgumentOutOfRangeException(nameof(glyphIndex), SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
 
                 glyphMetrics = new MS.Internal.Text.TextInterface.GlyphMetrics();
 

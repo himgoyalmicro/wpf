@@ -16,7 +16,7 @@ namespace MS.Internal.Printing
         {
             if(maxEntries <= 0)
             {
-                throw new ArgumentOutOfRangeException("maxEntries", maxEntries, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(maxEntries), maxEntries, string.Empty);
             }
             
             this._dictionary = new Dictionary<K, Entry>(maxEntries);

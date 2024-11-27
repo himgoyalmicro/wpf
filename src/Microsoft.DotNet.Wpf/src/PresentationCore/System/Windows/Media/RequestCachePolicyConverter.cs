@@ -82,7 +82,7 @@ namespace System.Windows.Media
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
             }
 
             HttpRequestCacheLevel level = Enum.Parse<HttpRequestCacheLevel>(s, true);

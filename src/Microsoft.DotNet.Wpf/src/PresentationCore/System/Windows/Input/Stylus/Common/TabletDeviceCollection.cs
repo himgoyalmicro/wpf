@@ -74,7 +74,7 @@ namespace System.Windows.Input
             get
             {
                 if (index >= Count || index < 0)
-                    throw new ArgumentException(SR.Format(SR.Stylus_IndexOutOfRange, index.ToString(System.Globalization.CultureInfo.InvariantCulture)), "index");
+                    throw new ArgumentException(SR.Format(SR.Stylus_IndexOutOfRange, index.ToString(System.Globalization.CultureInfo.InvariantCulture)), nameof(index));
 
                 return TabletDevices[index];
             }

@@ -219,7 +219,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             cb = SerializationHelper.Decode(isfStream, out count);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "isfStream");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), nameof(isfStream));
 
             cbTotal -= cb;
             if (0 == count)
@@ -233,12 +233,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint bytesRead = StrokeCollectionSerializer.ReliableRead(isfStream, inputdata, cb);
             if (cb != bytesRead)
             {
-                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), "isfStream");
+                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), nameof(isfStream));
             }
             cbTotal -= cb;
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "isfStream");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), nameof(isfStream));
 
             return cbSize;
         }
@@ -396,7 +396,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                             localBytesDecoded = SerializationHelper.Decode(inputStream, out bytesDecodedInCurrentTag);
                             if (remainingBytesInStream < (localBytesDecoded + bytesDecodedInCurrentTag))
                             {
-                                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "inputStream");
+                                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), nameof(inputStream));
                             }
 
                             remainingBytesInStream -= localBytesDecoded;
@@ -840,12 +840,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint cb = SerializationHelper.Decode(strm, out cbDA);
 
             if (cbSize < cb)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
             cbTotal -= cb;
             if (cbTotal < cbDA)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
 
@@ -858,7 +858,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             // Load the stream into this attribute
             if (cbSize < cbDA)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
             cbTotal -= cbDA;
@@ -868,7 +868,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         }
 
         if (0 != cbTotal)
-            throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+            throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
         return cbSize;
@@ -900,7 +900,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             cb = SerializationHelper.Decode(strm, out uiTag);
             tag = (KnownTagCache.KnownTagIndex)uiTag;
             if (cb > cbBlock)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             cbBlock -= cb;
             descr.Template.Add(tag);
@@ -913,7 +913,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // Read the no. of buttons first
                 cb = SerializationHelper.Decode(strm, out cbButton);
                 if (cb > cbBlock)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
                 cbBlock -= cb;
                 descr.Template.Add((KnownTagCache.KnownTagIndex)cbButton);
@@ -923,7 +923,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                     cb = SerializationHelper.Decode(strm, out dw);
                     if (cb > cbBlock)
-                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
                     cbBlock -= cb;
                     cbButton--;
@@ -940,7 +940,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                     cb = SerializationHelper.Decode(strm, out dw);
                     if (cb > cbBlock)
-                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
                     cbBlock -= cb;
                     descr.Template.Add((KnownTagCache.KnownTagIndex)dw);
@@ -949,7 +949,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbBlock)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             return cbSize;
         }
@@ -972,7 +972,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint cbRead = DecodeStrokeDescriptor(strm, cbSize, out descr);
 
             if (cbRead != cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             _strokeDescriptorTable.Add(descr);
             return cbRead;
@@ -1002,12 +1002,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = SerializationHelper.Decode(strm, out cbBlock);
                 if (cb > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 cbTotal -= cb;
                 if (cbBlock > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
 
@@ -1015,7 +1015,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = DecodeStrokeDescriptor(strm, cbBlock, out descr);
                 if (cb != cbBlock)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 cbTotal -= cb;
@@ -1025,7 +1025,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
             return cbSize;
@@ -1057,7 +1057,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = SerializationHelper.Decode(strm, out dw);
                 if (cb + dw > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 cbTotal -= cb;
@@ -1066,7 +1066,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = DecodeMetricBlock(strm, dw, out newblock);
                 if (cb != dw)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 cbTotal -= cb;
@@ -1074,7 +1074,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
             return cbSize;
@@ -1106,7 +1106,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = SerializationHelper.Decode(strm, out dw);
                 if (cb > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 cbTotal -= cb;
@@ -1114,7 +1114,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // Next read the size of the metric data
                 cb = SerializationHelper.Decode(strm, out size);
                 if (cb + size > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 cbTotal -= cb;
@@ -1141,7 +1141,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
             return cbSize;
@@ -1179,7 +1179,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cb = SerializationHelper.Decode(strm, out uiTag);
                 tag = (KnownTagCache.KnownTagIndex)uiTag;
                 if (cb > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
                 cbTotal -= cb;
 
@@ -1200,7 +1200,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             return cbSize;
         }
@@ -1273,7 +1273,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cbRead = SerializationHelper.Decode(strm, out angle);
                 if (cbRead > cbSize)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 xform.Transform[0] = (double)angle;
@@ -1308,7 +1308,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
 
                 if (cbRead > cbSize)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
 
                 for (int i = 0; i < xform.Size; i++)
@@ -1344,46 +1344,46 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //Left
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.X = data;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             //Top
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.Y = data;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             //Right
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.Width = data - _inkSpaceRectangle.Left;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             //Bottom
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.Height = data - _inkSpaceRectangle.Top;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),nameof(strm));
 
             return cbRead;
         }
@@ -1600,7 +1600,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                             Guid guid = guidList.FindGuid(strd.Template[cTags]);
                             if (guid == Guid.Empty)
                             {
-                                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Button guid tag embedded in ISF stream does not match guid table"),"strd");
+                                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Button guid tag embedded in ISF stream does not match guid table"),nameof(strd));
                             }
 
                             buttonguids[(int)u] = guid;
@@ -1616,7 +1616,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         if (KnownTagCache.KnownTagIndex.NoX == tag ||
                             KnownTagCache.KnownTagIndex.NoY == tag)
                         {
-                            throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Invalid ISF with NoX or NoY specified"), "strd");
+                            throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Invalid ISF with NoX or NoY specified"), nameof(strd));
                         }
 
                         tags.Add(strd.Template[cTags]);
@@ -1640,7 +1640,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     Guid guid = guidList.FindGuid(tags[i]);
                     if (guid == Guid.Empty)
                     {
-                        throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Packet Description Property tag embedded in ISF stream does not match guid table"), "strd");
+                        throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Packet Description Property tag embedded in ISF stream does not match guid table"), nameof(strd));
                     }
                     if (pressureIndex == -1 && guid == StylusPointPropertyIds.NormalPressure)
                     {

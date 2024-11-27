@@ -145,7 +145,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, nameof(buffer));
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -254,7 +254,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                         }
                 }
             }

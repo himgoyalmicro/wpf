@@ -324,7 +324,7 @@ namespace System.Windows.Media
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), nameof(value));
             }
             return s;
         }
@@ -337,7 +337,7 @@ namespace System.Windows.Media
             {
                 ArgumentNullException.ThrowIfNull(key);
 
-                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), nameof(key));
             }
             return language;
         }

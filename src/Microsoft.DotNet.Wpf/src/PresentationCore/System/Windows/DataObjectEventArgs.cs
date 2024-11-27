@@ -52,7 +52,7 @@ namespace System.Windows
         {
             if (routedEvent != DataObject.CopyingEvent && routedEvent != DataObject.PastingEvent && routedEvent != DataObject.SettingDataEvent)
             {
-                throw new ArgumentOutOfRangeException("routedEvent");
+                throw new ArgumentOutOfRangeException(nameof(routedEvent));
             }
 
             RoutedEvent = routedEvent;

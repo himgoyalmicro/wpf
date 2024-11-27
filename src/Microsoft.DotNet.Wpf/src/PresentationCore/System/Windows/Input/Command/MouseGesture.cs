@@ -94,7 +94,7 @@ namespace System.Windows.Input
                 if (_mouseAction != value)
                 {
                     _mouseAction = (MouseAction)value;
-                    OnPropertyChanged("MouseAction");
+                    OnPropertyChanged(nameof(MouseAction));
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace System.Windows.Input
                 if (_modifiers != value)
                 {
                     _modifiers = (ModifierKeys)value;
-                    OnPropertyChanged("Modifiers");
+                    OnPropertyChanged(nameof(Modifiers));
                 }
             }
         }

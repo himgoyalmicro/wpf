@@ -93,7 +93,7 @@ namespace System.Windows.Media.Imaging
             {
                 throw new ArgumentException(
                     SR.Format(SR.Image_GuidEmpty, "containerFormat"),
-                    "containerFormat"
+                    nameof(containerFormat)
                     );
             }
             else if (containerFormat == MILGuidData.GUID_ContainerFormatBmp)

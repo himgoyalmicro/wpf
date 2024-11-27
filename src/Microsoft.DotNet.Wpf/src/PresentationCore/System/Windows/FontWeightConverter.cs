@@ -78,7 +78,7 @@ namespace System.Windows
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
             }
             
             FontWeight fontWeight = new FontWeight();

@@ -220,7 +220,7 @@ namespace System.Windows.Media.Animation
 
             if (newValue < 0 || newValue > 1 || double.IsNaN(newValue))
             {
-                throw new ArgumentException(SR.Timing_InvalidArgAccelAndDecel, "value");
+                throw new ArgumentException(SR.Timing_InvalidArgAccelAndDecel, nameof(value));
             }
 
             return true;
@@ -609,7 +609,7 @@ namespace System.Windows.Media.Animation
 
             if (newValue <= 0 || newValue > double.MaxValue || double.IsNaN(newValue))
             {
-                throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, "value");
+                throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, nameof(value));
             }
 
             return true;

@@ -423,7 +423,7 @@ namespace System.Windows.Markup
         {
             if (parserContext == null)
             {
-                throw new ArgumentNullException( "parserContext" );
+                throw new ArgumentNullException(nameof(parserContext));
             }
 
             XmlNamespaceManager xmlnsMgr = new XmlNamespaceManager(new NameTable());

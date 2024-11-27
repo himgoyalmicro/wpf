@@ -319,7 +319,7 @@ namespace MS.Internal.FontFace
             get { return _baseline; }
             set 
             {
-                CompositeFontParser.VerifyNonNegativeMultiplierOfEm("Baseline", ref value);
+                CompositeFontParser.VerifyNonNegativeMultiplierOfEm(nameof(Baseline), ref value);
                 _baseline = value;
             }
         }
@@ -333,7 +333,7 @@ namespace MS.Internal.FontFace
             get { return _lineSpacing; }
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("LineSpacing", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(LineSpacing), ref value);
                 _lineSpacing = value;
             }
         }

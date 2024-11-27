@@ -57,7 +57,7 @@ namespace System.Windows.Media.Imaging
             {
                 throw new System.ArgumentException(
                         SR.Format(SR.Effect_PixelFormat, pixelFormat),
-                        "pixelFormat"
+                        nameof(pixelFormat)
                         );
             }
 

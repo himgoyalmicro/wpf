@@ -60,7 +60,7 @@ namespace System.Windows.Media.Converters
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
             }
 
             return ConvertFromCore(td, ci, s);            

@@ -60,7 +60,7 @@ namespace System.Windows.Input
                 if (!isButton)
                 {
                     //error, this is a known button
-                    throw new ArgumentException(SR.InvalidIsButtonForId, "isButton");
+                    throw new ArgumentException(SR.InvalidIsButtonForId, nameof(isButton));
                 }
             }
             else
@@ -68,7 +68,7 @@ namespace System.Windows.Input
                 if (StylusPointPropertyIds.IsKnownId(identifier) && isButton)
                 {
                     //error, this is a known guid that is NOT a button
-                    throw new ArgumentException(SR.InvalidIsButtonForId2, "isButton");
+                    throw new ArgumentException(SR.InvalidIsButtonForId2, nameof(isButton));
                 }
             }
 

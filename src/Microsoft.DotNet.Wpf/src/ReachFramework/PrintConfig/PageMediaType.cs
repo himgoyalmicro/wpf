@@ -258,7 +258,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageMediaTypeEnumMin ||
                     value > PrintSchema.PageMediaTypeEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

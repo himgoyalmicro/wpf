@@ -178,12 +178,12 @@ namespace System.Windows.Input.StylusPlugIns
 
             if (null == plugIn)
             {
-                throw new ArgumentNullException("plugIn", SR.Stylus_PlugInIsNull);
+                throw new ArgumentNullException(nameof(plugIn), SR.Stylus_PlugInIsNull);
             }
 
             if (IndexOf(plugIn) != -1)
             {
-                throw new ArgumentException(SR.Stylus_PlugInIsDuplicated, "plugIn");
+                throw new ArgumentException(SR.Stylus_PlugInIsDuplicated, nameof(plugIn));
             }
 
             // Disable processing of the queue during blocking operations to prevent unrelated reentrancy

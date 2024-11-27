@@ -82,7 +82,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, "uri");
+                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, nameof(uri));
                 }
 
                 return decoder.Frames[0];
@@ -99,7 +99,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, "stream");
+                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, nameof(stream));
                 }
 
                 return decoder.Frames[0];

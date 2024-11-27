@@ -55,7 +55,7 @@ namespace System.Windows.Input
             {
                 if (Double.IsInfinity(value) || Double.IsNaN(value))
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _isDesiredDecelerationSet = true;
@@ -75,7 +75,7 @@ namespace System.Windows.Input
             {
                 if (Double.IsInfinity(value) || Double.IsNaN(value))
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _isDesiredDisplacementSet = true;

@@ -183,7 +183,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 #pragma warning restore 6503
@@ -207,7 +207,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
         }

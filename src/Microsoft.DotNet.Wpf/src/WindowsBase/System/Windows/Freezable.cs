@@ -1111,7 +1111,7 @@ namespace System.Windows
             // Make sure we actually removed something - if not throw an exception
             if (failed)
             {
-                throw new ArgumentException(SR.Freezable_NotAContext, "context");
+                throw new ArgumentException(SR.Freezable_NotAContext, nameof(context));
             }
         }
 
@@ -1471,7 +1471,7 @@ namespace System.Windows
 
             if (failed)
             {
-                throw new ArgumentException(SR.Freezable_UnregisteredHandler, "handler");
+                throw new ArgumentException(SR.Freezable_UnregisteredHandler, nameof(handler));
             }
         }
 

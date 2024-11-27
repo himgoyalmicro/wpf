@@ -162,7 +162,7 @@ namespace System.Windows.Ink
         {
             if ( oldProperty == null && newProperty == null )
             {
-                throw new ArgumentNullException("oldProperty");
+                throw new ArgumentNullException(nameof(oldProperty));
             }
             _oldProperty = oldProperty;
             _newProperty = newProperty;

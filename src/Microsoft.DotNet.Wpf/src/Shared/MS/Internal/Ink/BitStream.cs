@@ -64,7 +64,7 @@ namespace MS.Internal.Ink
         {
             if (bufferLengthInBits > (buffer.Length * Native.BitsPerByte))
             {
-                throw new ArgumentOutOfRangeException("bufferLengthInBits", SR.InvalidBufferLength);
+                throw new ArgumentOutOfRangeException(nameof(bufferLengthInBits), SR.InvalidBufferLength);
             }
 
             _bufferLengthInBits = bufferLengthInBits;
@@ -78,7 +78,7 @@ namespace MS.Internal.Ink
             // we only support 1-64 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerLong || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
             }
             long retVal = 0;
             while (countOfBits > 0)
@@ -107,7 +107,7 @@ namespace MS.Internal.Ink
             // we only support 1-16 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerShort || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             ushort retVal = 0;
@@ -135,7 +135,7 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerShort|| countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             ushort retVal = 0;
@@ -165,7 +165,7 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerInt || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             uint retVal = 0;
@@ -193,7 +193,7 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerInt || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             uint retVal = 0;
@@ -244,12 +244,12 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerByte || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             if (countOfBits > _bufferLengthInBits)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsGreatThanRemainingBits);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsGreatThanRemainingBits);
             }
 
             _bufferLengthInBits -= (uint)countOfBits;
@@ -378,7 +378,7 @@ namespace MS.Internal.Ink
         {
             // validate that a subset of the bits in a single byte are being written
             if (countOfBits <= 0 || countOfBits > Native.BitsPerInt)
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
 
 
             // calculate the number of full bytes
@@ -417,7 +417,7 @@ namespace MS.Internal.Ink
         {
             // validate that a subset of the bits in a single byte are being written
             if (countOfBits <= 0 || countOfBits > Native.BitsPerInt)
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
 
             // calculate the number of full bytes
             //   Example: 10 bits would require 1 full byte
@@ -446,7 +446,7 @@ namespace MS.Internal.Ink
         {
             // validate that a subset of the bits in a single byte are being written
             if (countOfBits <= 0 || countOfBits > Native.BitsPerByte)
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(countOfBits), countOfBits, SR.CountOfBitsOutOfRange);
 
             byte buffer;
                 // if there is remaining bits in the last byte in the stream

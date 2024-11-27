@@ -92,7 +92,7 @@ namespace System.Windows.Media.Imaging
             if (pixelFormat.Format == PixelFormatEnum.Extended)
             {
                 // We don't support third-party pixel formats yet.
-                throw new ArgumentException(SR.Effect_PixelFormat, "pixelFormat");
+                throw new ArgumentException(SR.Effect_PixelFormat, nameof(pixelFormat));
             }
 
             if (pixelWidth < 0)
@@ -181,7 +181,7 @@ namespace System.Windows.Media.Imaging
             //
             // Sanitize the dirty rect.
             //
-            dirtyRect.ValidateForDirtyRect("dirtyRect", _pixelWidth, _pixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), _pixelWidth, _pixelHeight);
             if (dirtyRect.HasArea)
             {
                 MILSwDoubleBufferedBitmap.AddDirtyRect(
@@ -245,7 +245,7 @@ namespace System.Windows.Media.Imaging
             TimeSpan timeoutSpan;
             if (timeout == Duration.Automatic)
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
             else if (timeout == Duration.Forever)
             {
@@ -892,7 +892,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Image_InsufficientBufferSize, "sourceBufferSize");
+                        throw new ArgumentException(SR.Image_InsufficientBufferSize, nameof(sourceBufferSize));
                     }
                 }
 

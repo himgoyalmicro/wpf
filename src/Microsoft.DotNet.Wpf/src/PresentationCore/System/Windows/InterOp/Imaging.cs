@@ -59,7 +59,7 @@ namespace System.Windows.Interop
         {
             if (bitmap == IntPtr.Zero)
             {
-                throw new ArgumentNullException("bitmap");
+                throw new ArgumentNullException(nameof(bitmap));
             }
 
             return new InteropBitmap(bitmap, palette, sourceRect, sizeOptions, alphaOptions); // use the critical version
@@ -82,7 +82,7 @@ namespace System.Windows.Interop
 
             if (icon == IntPtr.Zero)
             {
-                throw new ArgumentNullException("icon");
+                throw new ArgumentNullException(nameof(icon));
             }
 
             return new InteropBitmap(icon, sourceRect, sizeOptions);
@@ -111,7 +111,7 @@ namespace System.Windows.Interop
 
             if (section == IntPtr.Zero)
             {
-                throw new ArgumentNullException("section");
+                throw new ArgumentNullException(nameof(section));
             }
 
             return new InteropBitmap(section, pixelWidth, pixelHeight, format, stride, offset);

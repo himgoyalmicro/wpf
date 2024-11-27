@@ -31,7 +31,7 @@ namespace MS.Internal.Printing.Configuration
                     return null;
                 }
 
-                throw new ArgumentOutOfRangeException("srid", srid, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(srid), srid, string.Empty);
             }
 
             SafeModuleHandle handle = EnsureModuleHandle();

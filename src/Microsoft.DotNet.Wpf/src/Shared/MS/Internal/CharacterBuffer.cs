@@ -384,7 +384,7 @@ namespace MS.Internal
         {
             if (characterString == null)
             {
-                throw new ArgumentNullException("characterString");
+                throw new ArgumentNullException(nameof(characterString));
             }
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);

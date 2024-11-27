@@ -105,7 +105,7 @@ namespace System.Windows.Media
             get { return _underlinePosition ; }
             set
             {
-                CompositeFontParser.VerifyMultiplierOfEm("UnderlinePosition", ref value);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(UnderlinePosition), ref value);
                 VerifyChangeable();
                 _underlinePosition = value;
             }
@@ -120,7 +120,7 @@ namespace System.Windows.Media
             get { return _underlineThickness; }
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("UnderlineThickness", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(UnderlineThickness), ref value);
                 VerifyChangeable();
                 _underlineThickness = value;
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Media
             get { return _strikeThroughPosition;  }
             set
             {
-                CompositeFontParser.VerifyMultiplierOfEm("StrikethroughPosition", ref value);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(StrikethroughPosition), ref value);
                 VerifyChangeable();
                 _strikeThroughPosition = value;
             }
@@ -150,7 +150,7 @@ namespace System.Windows.Media
             get { return _strikeThroughThickness;  }
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("StrikethroughThickness", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(StrikethroughThickness), ref value);
                 VerifyChangeable();
                 _strikeThroughThickness = value;
             }
@@ -165,7 +165,7 @@ namespace System.Windows.Media
             get { return _capsHeight;  }
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("CapsHeight", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(CapsHeight), ref value);
                 VerifyChangeable();
                 _capsHeight = value;
             }
@@ -179,7 +179,7 @@ namespace System.Windows.Media
             get { return _xHeight;  }
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("XHeight", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(XHeight), ref value);
                 VerifyChangeable();
                 _xHeight = value;
             }

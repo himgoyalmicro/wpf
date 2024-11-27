@@ -76,7 +76,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.PaginatorNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.PaginatorNegativePageNumber);
             }
 
             page = GetPage(pageNumber);

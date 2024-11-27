@@ -127,7 +127,7 @@ namespace MS.Internal.TextFormatting
             {
                 throw new ArgumentException(
                     SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
-                    "array");                
+                    nameof(array));                
             }
 
             ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
@@ -139,7 +139,7 @@ namespace MS.Internal.TextFormatting
                         SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
                         "arrayIndex", 
                         "array"),
-                    "arrayIndex");
+                    nameof(arrayIndex));
             }
 
             if ((array.Length - Count - arrayIndex) < 0)

@@ -114,7 +114,7 @@ namespace System.Windows.Media.Effects
             // if we don't have the input set, we should not be calling the output property
             if (input.Input == null)
             {
-                throw new ArgumentException(SR.Effect_No_InputSource, "input");
+                throw new ArgumentException(SR.Effect_No_InputSource, nameof(input));
             }
 
             if (input.Input == BitmapEffectInput.ContextInputSource)

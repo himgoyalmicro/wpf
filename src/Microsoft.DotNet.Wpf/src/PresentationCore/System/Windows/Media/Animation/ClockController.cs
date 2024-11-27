@@ -290,7 +290,7 @@ namespace System.Windows.Media.Animation
             {
                 if (value < 0 || value > double.MaxValue || double.IsNaN(value))
                 {
-                    throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, "value");
+                    throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, nameof(value));
                 }
 
                 _owner.InternalSetSpeedRatio(value);

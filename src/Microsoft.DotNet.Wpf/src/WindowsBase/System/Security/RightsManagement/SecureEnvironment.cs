@@ -81,7 +81,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
+                throw new ArgumentOutOfRangeException(nameof(user), SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
             
             using (ClientSession userClientSession = new ClientSession(user))
@@ -103,7 +103,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
+                throw new ArgumentOutOfRangeException(nameof(user), SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
 
             // Generic client session to enumerate user certificates 
@@ -257,7 +257,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user");
+                throw new ArgumentOutOfRangeException(nameof(user));
             }
 
             if (!IsUserActivated(user))
@@ -290,13 +290,13 @@ namespace System.Security.RightsManagement
             if ((authentication != AuthenticationType.Windows) && 
                  (authentication != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("authentication");
+                throw new ArgumentOutOfRangeException(nameof(authentication));
             }
 
             if ((userActivationMode != UserActivationMode.Permanent) &&
                  (userActivationMode != UserActivationMode.Temporary))
             {
-                throw new ArgumentOutOfRangeException("userActivationMode");            
+                throw new ArgumentOutOfRangeException(nameof(userActivationMode));            
             }
 
             //build user with the given authnetication type and a default name 

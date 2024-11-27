@@ -48,22 +48,22 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(width) || Double.IsInfinity(width) || width < DrawingAttributes.MinWidth || width > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
             }
 
             if (Double.IsNaN(height) || Double.IsInfinity(height) || height < DrawingAttributes.MinHeight || height > DrawingAttributes.MaxHeight)
             {
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
             }
 
             if (Double.IsNaN(rotation) || Double.IsInfinity(rotation))
             {
-                throw new ArgumentOutOfRangeException("rotation");
+                throw new ArgumentOutOfRangeException(nameof(rotation));
             }
 
             if (!StylusTipHelper.IsDefined(tip))
             {
-                throw new ArgumentOutOfRangeException("tip");
+                throw new ArgumentOutOfRangeException(nameof(tip));
             }
 
 

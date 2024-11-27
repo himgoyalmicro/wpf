@@ -34,7 +34,7 @@ namespace System.Windows.Input.StylusPlugIns
             ArgumentNullException.ThrowIfNull(report);
             if (tabletToElementTransform.Inverse == null)
             {
-                throw new ArgumentException(SR.Stylus_MatrixNotInvertable, "tabletToElementTransform");
+                throw new ArgumentException(SR.Stylus_MatrixNotInvertable, nameof(tabletToElementTransform));
             }
             ArgumentNullException.ThrowIfNull(targetPlugInCollection);
 
@@ -108,11 +108,11 @@ namespace System.Windows.Input.StylusPlugIns
             if (!StylusPointDescription.AreCompatible(  stylusPoints.Description,
                                                         _report.StylusPointDescription))
             {
-                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, nameof(stylusPoints));
             }
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.Stylus_StylusPointsCantBeEmpty, "stylusPoints");
+                throw new ArgumentException(SR.Stylus_StylusPointsCantBeEmpty, nameof(stylusPoints));
             }
 
             _stylusPoints = stylusPoints.Clone();

@@ -278,7 +278,7 @@ namespace System.Windows.Interop
             // should be invalidated.
             if (dirtyRect.HasValue)
             {
-                dirtyRect.Value.ValidateForDirtyRect("dirtyRect", _pixelWidth, _pixelHeight);
+                dirtyRect.Value.ValidateForDirtyRect(nameof(dirtyRect), _pixelWidth, _pixelHeight);
             
                 if (!dirtyRect.Value.HasArea)
                 {

@@ -63,7 +63,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(stylusPoints);
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount, "stylusPoints");
+                throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount, nameof(stylusPoints));
             }
             ArgumentNullException.ThrowIfNull(drawingAttributes);
 
@@ -157,15 +157,15 @@ namespace System.Windows.Ink
 
             if (!transformMatrix.HasInverse)
             {
-                throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
+                throw new ArgumentException(SR.MatrixNotInvertible, nameof(transformMatrix));
             }
             else if ( MatrixHelper.ContainsNaN(transformMatrix))
             {
-                throw new ArgumentException(SR.InvalidMatrixContainsNaN, "transformMatrix");
+                throw new ArgumentException(SR.InvalidMatrixContainsNaN, nameof(transformMatrix));
             }
             else if ( MatrixHelper.ContainsInfinity(transformMatrix))
             {
-                throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "transformMatrix");
+                throw new ArgumentException(SR.InvalidMatrixContainsInfinity, nameof(transformMatrix));
             }
             else
             {
@@ -599,7 +599,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (DrawingAttributesChanged != null)
@@ -630,7 +630,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (StylusPointsReplaced != null)
@@ -645,7 +645,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (StylusPointsChanged != null)
@@ -662,7 +662,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (PropertyDataChanged != null)
@@ -680,7 +680,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (Invalidated != null)

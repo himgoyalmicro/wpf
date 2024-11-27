@@ -37,7 +37,7 @@ namespace System.Windows.Media.Animation
         {
             if (percent < 0.0 || percent > 1.0)
             {
-                throw new ArgumentOutOfRangeException("percent", SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
+                throw new ArgumentOutOfRangeException(nameof(percent), SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
             }
 
             KeyTime keyTime = new KeyTime();
@@ -56,7 +56,7 @@ namespace System.Windows.Media.Animation
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentOutOfRangeException("timeSpan", SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
+                throw new ArgumentOutOfRangeException(nameof(timeSpan), SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
             }
 
             KeyTime keyTime = new KeyTime();

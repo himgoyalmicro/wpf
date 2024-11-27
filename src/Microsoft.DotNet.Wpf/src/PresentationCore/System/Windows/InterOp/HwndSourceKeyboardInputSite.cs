@@ -23,7 +23,7 @@ namespace System.Windows.Interop
             ArgumentNullException.ThrowIfNull(sink);
             if (!(sink is UIElement))
             {
-                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, "sink");
+                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, nameof(sink));
             }
             
             _source = source;

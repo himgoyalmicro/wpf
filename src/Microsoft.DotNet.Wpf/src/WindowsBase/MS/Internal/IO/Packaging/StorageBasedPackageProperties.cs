@@ -747,7 +747,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     throw new ArgumentException(
                                 SR.Format(SR.InvalidDocumentPropertyType, propVal.GetType().ToString()),
-                                "propVal");
+                                nameof(propVal));
                 }
 
                 //
@@ -840,7 +840,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            "propId"
+                            nameof(propId)
                             );
                 }
             }
@@ -859,7 +859,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            "propId"
+                            nameof(propId)
                             );
                 }
             }
@@ -867,7 +867,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new ArgumentException(
                     SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                    "fmtid"
+                    nameof(fmtid)
                     );
             }
         }

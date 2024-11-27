@@ -149,7 +149,7 @@ namespace System.Windows.Media
 
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("Scale", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(Scale), ref value);
                 _scaleInEm = value;
             }
         }

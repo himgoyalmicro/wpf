@@ -71,12 +71,12 @@ namespace System.Windows.Media
         {
             if (sourceProfile == null || sourceProfile.IsInvalid)
             {
-                throw new ArgumentNullException("sourceProfile");
+                throw new ArgumentNullException(nameof(sourceProfile));
             }
 
             if (destinationProfile == null || destinationProfile.IsInvalid)
             {
-                throw new ArgumentNullException("destinationProfile");
+                throw new ArgumentNullException(nameof(destinationProfile));
             }
 
             IntPtr[] handles = new IntPtr[2];

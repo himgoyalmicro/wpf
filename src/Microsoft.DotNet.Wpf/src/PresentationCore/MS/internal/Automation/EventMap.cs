@@ -121,7 +121,7 @@ namespace MS.Internal.Automation
                 case AutomationEvents.ActiveTextPositionChanged:                            eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent; break;
 
                 default:
-                    throw new ArgumentException(SR.Automation_InvalidEventId, "eventId");
+                    throw new ArgumentException(SR.Automation_InvalidEventId, nameof(eventId));
             }
 
             if ((eventObject != null) && (!_eventsTable.ContainsKey(eventObject.Id)))
