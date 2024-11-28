@@ -170,7 +170,7 @@ internal class CFStream : Stream
                 translatedSeekOrigin = SafeNativeCompoundFileConstants.STREAM_SEEK_SET;
                 if( 0 > offset )
                 {
-                    throw new ArgumentOutOfRangeException("offset",
+                    throw new ArgumentOutOfRangeException(nameof(offset),
                         SR.SeekNegative);
                 }
                 break;
@@ -208,7 +208,7 @@ internal class CFStream : Stream
 
         if( 0 > newLength )
         {
-            throw new ArgumentOutOfRangeException("newLength",
+            throw new ArgumentOutOfRangeException(nameof(newLength),
                 SR.StreamLengthNegative);
         }
         

@@ -240,11 +240,11 @@ namespace MS.Win32
         {
             if(hwnd == IntPtr.Zero)
             {
-                throw new ArgumentNullException("hwnd");
+                throw new ArgumentNullException(nameof(hwnd));
             }
             if(subclass == IntPtr.Zero)
             {
-                throw new ArgumentNullException("subclass");
+                throw new ArgumentNullException(nameof(subclass));
             }
 
             int iForce = force ? 1 : 0;
@@ -395,7 +395,7 @@ namespace MS.Win32
         {
             if(hwnd == IntPtr.Zero)
             {
-                throw new ArgumentNullException("hwnd");
+                throw new ArgumentNullException(nameof(hwnd));
             }
             if(_bond != Bond.Unattached)
             {

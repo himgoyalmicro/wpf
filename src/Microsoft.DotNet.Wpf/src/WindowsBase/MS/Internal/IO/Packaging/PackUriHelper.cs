@@ -148,7 +148,7 @@ namespace MS.Internal.IO.Packaging
             partUriString = String.Empty;
 
             if (partUri == null)
-                return new ArgumentNullException("partUri");
+                return new ArgumentNullException(nameof(partUri));
 
             Exception argumentException = null;
 

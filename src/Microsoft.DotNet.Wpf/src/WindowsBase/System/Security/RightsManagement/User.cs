@@ -43,7 +43,7 @@ namespace System.Security.RightsManagement
 
             if (name.Trim().Length == 0)
             {
-                throw new ArgumentOutOfRangeException("name");
+                throw new ArgumentOutOfRangeException(nameof(name));
             }
 
             if ((authenticationType != AuthenticationType.Windows) &&
@@ -51,7 +51,7 @@ namespace System.Security.RightsManagement
                 (authenticationType != AuthenticationType.WindowsPassport) &&
                 (authenticationType != AuthenticationType.Internal))
             {
-                throw new ArgumentOutOfRangeException("authenticationType");
+                throw new ArgumentOutOfRangeException(nameof(authenticationType));
             }
 
             // We only support Anyone for the internal mode at the moment
@@ -60,7 +60,7 @@ namespace System.Security.RightsManagement
                 if (!CompareToAnyone(name) && !CompareToOwner(name))
                 {
                     // we only support Anyone as internal user 
-                    throw new ArgumentOutOfRangeException("name");
+                    throw new ArgumentOutOfRangeException(nameof(name));
                 }
             }
 

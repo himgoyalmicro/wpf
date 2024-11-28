@@ -265,11 +265,11 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
             }
 
             Add(item.Key, item.Value);
@@ -279,7 +279,7 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
             return ContainsKey(item.Key);
         }
