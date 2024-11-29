@@ -520,6 +520,31 @@ namespace System.Windows.Controls
         #region Internal Properties
 
         /// <summary>
+        ///    Owner property.
+        /// </summary>
+        internal Grid Owner
+        {
+            get { return (_owner); }
+            set 
+            {
+                if(_owner != null && _owner != value)
+                {
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                }
+                if(value == null)
+                {
+                    return;
+                }
+                _owner = value;
+                for (int i = 0; i < _size; i++)
+                {
+                    _owner.AddLogicalChild(_items[i]);
+                    _items[i].OnEnterParentTree();
+                }              
+            }
+        }
+
+        /// <summary>
         ///     Internal version of Count.
         /// </summary>
         internal int InternalCount
@@ -742,7 +767,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields
-        private readonly Grid _owner;      //  owner of the collection
+        private Grid _owner;      //  owner of the collection
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection

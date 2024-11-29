@@ -285,21 +285,16 @@ namespace System.Windows.Controls
             }
             set
             {
-                _data ??= new ExtendedData();
-                _data.ColumnDefinitions ??= new ColumnDefinitionCollection(this);
-                _data.ColumnDefinitions.Clear();
-                if (value == null)
+                if (value?.Owner is not null)
                 {
-                    return;
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
                 }
-                foreach (ColumnDefinition colDef in value)
+                _data ??= new ExtendedData();
+                _data.ColumnDefinitions?.Clear();
+                if (value is not null)
                 {
-                    if (colDef.Parent != null)
-                    {
-                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
-                    }
-                    colDef.Index = -1;
-                    _data.ColumnDefinitions.Add(colDef);
+                    value.Owner = this;
+                    _data.ColumnDefinitions = value;
                 }
             }
         }
