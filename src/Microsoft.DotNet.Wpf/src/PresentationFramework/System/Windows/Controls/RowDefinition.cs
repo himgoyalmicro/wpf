@@ -907,6 +907,7 @@ namespace System.Windows.Controls
     ///     RowDefinition is a FrameworkContentElement used by Grid
     ///     to hold column / row specific properties.
     /// </summary>
+    [TypeConverter(typeof(RowDefinitionConverter))]
     public class RowDefinition : DefinitionBase
     {
         //------------------------------------------------------

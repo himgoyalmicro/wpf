@@ -456,6 +456,12 @@ namespace System.Windows.Markup
         {
             return (_xmlDataIslandDepth != -1);
         }
+
+        internal bool CanInitializeCollectionFromString(Type type)
+        {
+            return IsACollection(type) && XamlTypeMapper.GetTypeConverterType(type) == null
+                && XamlTypeMapper.GetTypeConverterType(GetCollectionItemType(type)) != null;
+        }
         #endregion internalMethods
 
         #region CacheCallbacks
@@ -3225,13 +3231,13 @@ namespace System.Windows.Markup
                     propertyCanWrite = false;
                 }
 
-                if (!propertyCanWrite)
+                if (!propertyCanWrite && !CanInitializeCollectionFromString(propInfo.PropertyType))
                 {
                     ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp, attribLocalName));
                 }
             }
 
-            if (propInfo != null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
+            if (propInfo != null && !CanInitializeCollectionFromString(propInfo.PropertyType) && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
                 ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
             }

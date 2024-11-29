@@ -782,6 +782,10 @@ namespace System.Xaml
                                 shouldSetValue = true;
                                 _context.ParentKeyIsUnconverted = true;
                             }
+                            else if (valueXamlType == XamlLanguage.String && property.Type.IsCollection && property.TypeConverter == null && property.Type.ItemType.TypeConverter != null)
+                            {
+                                shouldSetValue = Logic_InitializeCollectionFromString(_context);
+                            }
                             else
                             {
                                 shouldSetValue = Logic_CreatePropertyValueFromValue(_context);
@@ -1381,6 +1385,51 @@ namespace System.Xaml
             }
             ctx.CurrentInstance = inst;
             return true;
+        }
+
+        private bool Logic_InitializeCollectionFromString(ObjectWriterContext ctx)
+        {
+            XamlMember property = ctx.ParentProperty;
+            XamlType propertyType = property.Type;
+            object parentInstance = ctx.ParentInstance;
+
+            // save collection initialization string as value
+            string value = ctx.CurrentInstance as string;
+
+            // get collection item type
+            XamlType collectionItemType = propertyType.ItemType;
+
+            // check if collection item type has typeconverter
+            XamlValueConverter<TypeConverter> converter = collectionItemType.TypeConverter;
+
+            TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
+
+            // push frame onto stack to hold collection
+            ctx.PushScope();
+
+            // get collection as member from Parent and set as current instance
+            object inst = Runtime.GetValue(parentInstance, property);
+
+            ctx.CurrentIsObjectFromMember = true;
+            ctx.CurrentType = propertyType;
+            ctx.CurrentInstance = inst;
+            ctx.CurrentCollection = inst;
+
+            object parentCollection = ctx.ParentCollection ?? inst;
+
+            foreach (string length in value.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                // push frame to hold instance of new object to add
+                ctx.PushScope();
+                object currentValue = typeConverter.ConvertFrom(length.Trim());
+                ctx.CurrentType = collectionItemType;
+                ctx.CurrentInstance = currentValue;
+                Runtime.Add(parentCollection, propertyType, currentValue, collectionItemType);
+                ctx.PopScope();
+            }
+            ctx.PopScope();
+            ctx.CurrentInstance = parentCollection;
+            return false;
         }
 
         // For backcompat with 3.x parser, if the compat flag PreferUnconvertedKeys is set,

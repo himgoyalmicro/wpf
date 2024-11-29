@@ -907,6 +907,7 @@ namespace System.Windows.Controls
     ///     ColumnDefinition is a FrameworkContentElement used by Grid
     ///     to hold column / row specific properties.
     /// </summary>
+    [TypeConverter(typeof(ColumnDefinitionConverter))]
     public class ColumnDefinition : DefinitionBase
     {
         //------------------------------------------------------
