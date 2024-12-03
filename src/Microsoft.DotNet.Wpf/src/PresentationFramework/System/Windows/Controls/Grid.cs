@@ -285,7 +285,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value.Owner == this)
+                if (value?.Owner == this)
                 {
                     return;
                 }
