@@ -285,6 +285,10 @@ namespace System.Windows.Controls
             }
             set
             {
+                if (value.Owner == this)
+                {
+                    return;
+                }
                 if (value?.Owner is not null)
                 {
                     throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
