@@ -531,7 +531,7 @@ namespace System.Windows.Controls
                 {
                     throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
                 }
-                if(value == null)
+                if (value == null || _owner == value)
                 {
                     return;
                 }
