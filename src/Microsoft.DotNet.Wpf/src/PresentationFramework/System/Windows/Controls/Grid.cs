@@ -329,21 +329,30 @@ namespace System.Windows.Controls
             }
             set
             {
-                _data ??= new ExtendedData();
-                _data.RowDefinitions ??= new RowDefinitionCollection(this);
-                _data.RowDefinitions.Clear();
-                if (value == null)
+                if (value?.Owner == this)
                 {
                     return;
                 }
-                foreach (RowDefinition rowDef in value)
+
+                if (value?.Owner is not null)
                 {
-                    if (rowDef.Parent != null)
-                    {
-                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
-                    }
-                    rowDef.Index = -1;
-                    _data.RowDefinitions.Add(rowDef);
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
+                }
+
+                _data ??= new ExtendedData();
+                if (_data?.RowDefinitions is { } rd)
+                {
+                    rd.Owner = null;
+                }
+
+                if (value is null)
+                {
+                    _data.RowDefinitions = new RowDefinitionCollection(this);
+                }
+                else
+                {
+                    value.Owner = this;
+                    _data.RowDefinitions = value;
                 }
             }
         }
