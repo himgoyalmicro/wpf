@@ -289,13 +289,23 @@ namespace System.Windows.Controls
                 {
                     return;
                 }
+
                 if (value?.Owner is not null)
                 {
                     throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
                 }
+
                 _data ??= new ExtendedData();
-                _data.ColumnDefinitions?.Clear();
-                if (value is not null)
+                if (_data?.ColumnDefinitions is { } cd)
+                {
+                    cd.Owner = null;
+                }
+                
+                if (value is null)
+                {
+                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
+                }
+                else
                 {
                     value.Owner = this;
                     _data.ColumnDefinitions = value;

@@ -525,22 +525,37 @@ namespace System.Windows.Controls
         internal Grid Owner
         {
             get { return (_owner); }
-            set 
+            set
             {
-                if(_owner != null && _owner != value)
-                {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
-                }
-                if (value == null || _owner == value)
+                if (_owner == value)
                 {
                     return;
                 }
-                _owner = value;
-                for (int i = 0; i < _size; i++)
+
+                if (_owner == null)
                 {
-                    _owner.AddLogicalChild(_items[i]);
-                    _items[i].OnEnterParentTree();
-                }              
+                    _owner = value;
+                    PrivateOnModified();
+                    for (int i = 0; i < _size; i++)
+                    {
+                        _owner.AddLogicalChild(_items[i]);
+                        _items[i].OnEnterParentTree();
+                    }
+                }
+                else if (value == null)
+                {
+                    PrivateOnModified();
+                    for (int i = 0; i < _size; i++)
+                    {
+                        _items[i].OnExitParentTree();
+                        _owner.RemoveLogicalChild(_items[i]);
+                    }
+                    _owner = null;
+                }
+                else
+                {
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                }
             }
         }
 
