@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -117,7 +117,7 @@ namespace MS.Internal.Automation
 
         // We need to treat MSAA's FOCUS winevents differently depending on the OBJID -
         // OBJID_CLIENT gets routed to the proxies; _MENU and _SYSMENU get speical treatment.
-        private AutomationElement GetFocusedElementFromWinEvent(IntPtr hwnd, int idObject, int idChild)
+        private static AutomationElement GetFocusedElementFromWinEvent(IntPtr hwnd, int idObject, int idChild)
         {
             try
             {

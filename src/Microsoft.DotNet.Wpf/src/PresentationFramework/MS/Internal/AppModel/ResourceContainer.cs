@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -292,7 +292,7 @@ namespace MS.Internal.AppModel
             }
         }
 
-        private void UpdateCachedRMW(string key, Assembly assembly)
+        private static void UpdateCachedRMW(string key, Assembly assembly)
         {
             if (_registeredResourceManagers.ContainsKey(key))
             {
@@ -313,7 +313,7 @@ namespace MS.Internal.AppModel
         // <param name="partName">The name of the file in the resource manager</param>
         // <param name="isContentFile">A flag to indicate that this path is a known loose file at compile time</param>
         // <returns></returns>
-        private ResourceManagerWrapper GetResourceManagerWrapper(Uri uri, out string partName, out bool isContentFile)
+        private static ResourceManagerWrapper GetResourceManagerWrapper(Uri uri, out string partName, out bool isContentFile)
         {
             string assemblyName;
             string assemblyVersion;

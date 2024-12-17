@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -479,7 +479,7 @@ namespace System.Windows.Markup
                 BamlElementStartRecord startRecord = bamlRecord as BamlElementStartRecord;
                 if (startRecord != null)
                 {
-                    if (!MapTable.HasSerializerForTypeId(startRecord.TypeId))
+                    if (!BamlMapTable.HasSerializerForTypeId(startRecord.TypeId))
                     {
                         elementDepth++;
                     }
@@ -878,7 +878,7 @@ namespace System.Windows.Markup
 
         // Sets the ReaderFlags based on whether the elementType passed in is one of the special
         // collection types and whether the type is a DependencyObject or not.
-        protected ReaderFlags GetFlagsFromType(Type elementType)
+        protected static ReaderFlags GetFlagsFromType(Type elementType)
         {
             ReaderFlags flags = (typeof(DependencyObject).IsAssignableFrom(elementType) ? ReaderFlags.DependencyObject :
                                                                                           ReaderFlags.ClrObject);
@@ -1137,7 +1137,7 @@ namespace System.Windows.Markup
             // Check if the type of this element has a serializer associated with it.  If so then
             // we have to create a serializer and pass off processing to it.  Otherwise, continue
             // with default processing.
-            bool hasSerializer = MapTable.HasSerializerForTypeId(bamlElementRecord.TypeId);
+            bool hasSerializer = BamlMapTable.HasSerializerForTypeId(bamlElementRecord.TypeId);
             if (hasSerializer)
             {
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose, EventTrace.Event.WClientParseRdrCrInstBegin);
@@ -4156,7 +4156,7 @@ namespace System.Windows.Markup
         /// <returns>
         ///  The resource value, if found.  Otherwise DependencyProperty.UnsetValue.
         /// </returns>
-        private object FindResourceInRootOrAppOrTheme(
+        private static object FindResourceInRootOrAppOrTheme(
             object  resourceNameObject,
             bool    allowDeferredResourceReference,
             bool    mustReturnDeferredResourceReference)
@@ -5059,7 +5059,7 @@ namespace System.Windows.Markup
             // ID less than 0 means a known serializer in PresentationFramework.
             if (typeWithSerializerInfo.SerializerTypeId < 0)
             {
-                return (XamlSerializer)MapTable.CreateKnownTypeFromId(
+                return (XamlSerializer)BamlMapTable.CreateKnownTypeFromId(
                                     typeWithSerializerInfo.SerializerTypeId);
             }
             else
@@ -5146,7 +5146,7 @@ namespace System.Windows.Markup
         // Helper method to get the OwnerType.PropertyName string from a
         // attribute info record or PropertyInfo.  This is used
         // primarily for error reporting
-        private string GetPropNameFrom(object PiOrAttribInfo)
+        private static string GetPropNameFrom(object PiOrAttribInfo)
         {
             BamlAttributeInfoRecord attribInfo = PiOrAttribInfo as BamlAttributeInfoRecord;
             if (attribInfo != null)
@@ -5262,7 +5262,7 @@ namespace System.Windows.Markup
                     {
                         if (typeId < 0)
                         {
-                            instance = MapTable.CreateKnownTypeFromId(typeId);
+                            instance = BamlMapTable.CreateKnownTypeFromId(typeId);
                         }
                         else if (publicOnly)
                         {
@@ -5780,7 +5780,7 @@ namespace System.Windows.Markup
 
                 if (_attributeInfo.AttachedPropertyGetter == null)
                 {
-                    _reader.XamlTypeMapper.UpdateAttachedPropertyGetter(_attributeInfo);
+                    XamlTypeMapper.UpdateAttachedPropertyGetter(_attributeInfo);
                 }
 
                 return _attributeInfo.AttachedPropertyGetter;
@@ -5799,7 +5799,7 @@ namespace System.Windows.Markup
                 if (_attributeInfo.AttachedPropertySetter == null)
                 {
                     // Note we update both Setter and Getter in one call; and detect the need of it by Getter==null
-                    _reader.XamlTypeMapper.UpdateAttachedPropertySetter(_attributeInfo);
+                    XamlTypeMapper.UpdateAttachedPropertySetter(_attributeInfo);
                 }
 
                 return _attributeInfo.AttachedPropertySetter;

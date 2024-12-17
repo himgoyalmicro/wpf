@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1242,7 +1242,7 @@ namespace System.Windows.Controls
         #region Internal Methods
 
         // Helper function called by ComboBoxItem when it receives a MouseDown
-        internal void NotifyComboBoxItemMouseDown(ComboBoxItem comboBoxItem)
+        internal static void NotifyComboBoxItemMouseDown(ComboBoxItem comboBoxItem)
         {
         }
 
@@ -1577,7 +1577,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool IsSelectableHelper(object o)
+        private static bool IsSelectableHelper(object o)
         {
             DependencyObject d = o as DependencyObject;
             // If o is not a DependencyObject, it is just a plain

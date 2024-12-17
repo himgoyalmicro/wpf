@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -309,8 +309,7 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        internal
-        PackagingAction
+        internal static PackagingAction
         GetAddType( INode n )
         {
             PackagingAction action = PackagingAction.None;
@@ -533,8 +532,7 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// Tests wether a part can be flushed with out being committed
         /// </summary>       
-        private
-        bool
+        private static bool
         IsPartialFlushAllowed( InterleavingNode n )
         {
             bool ret = false;

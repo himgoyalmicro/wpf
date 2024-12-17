@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -257,7 +257,7 @@ namespace MS.Internal.AutomationProxies
 
         // turns a single event or an array of properties into an array of automation ids so either case
         // can be treated uniformly.
-        private AutomationIdentifier[] EventKeys(AutomationEvent eventId, AutomationProperty[] properties)
+        private static AutomationIdentifier[] EventKeys(AutomationEvent eventId, AutomationProperty[] properties)
         {
             return eventId == AutomationElement.AutomationPropertyChangedEvent ? properties : new AutomationIdentifier[] { eventId };
         }
@@ -269,7 +269,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // fire the element seleceted event if there is a client listening for it.
-        private void MaybeFireSelectionItemEvent(AutomationEvent eventId, Hashtable eventTable, IntPtr hwnd, int idObject, int idChild)
+        private static void MaybeFireSelectionItemEvent(AutomationEvent eventId, Hashtable eventTable, IntPtr hwnd, int idObject, int idChild)
         {
             // if the 2-nd level table contains an entry for this property
             if (eventTable.ContainsKey(eventId))
@@ -288,7 +288,7 @@ namespace MS.Internal.AutomationProxies
 
         // fire the property change event if there is a client listening for it.
         // pattern is the pattern that the property belongs to. the provider is tested to ensure it supports that pattern.
-        private void MaybeFirePropertyChangeEvent(AutomationPattern pattern, AutomationProperty property, Hashtable eventTable, IntPtr hwnd, int idObject, int idChild, bool clientToo)
+        private static void MaybeFirePropertyChangeEvent(AutomationPattern pattern, AutomationProperty property, Hashtable eventTable, IntPtr hwnd, int idObject, int idChild, bool clientToo)
         {
             // if the 2-nd level table contains an entry for this property and the root element should be included (or not)
             if (eventTable.ContainsKey(property) && (clientToo || !IsClientObject(idObject, idChild)))
@@ -309,7 +309,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // fire the structure change event if there is a client listening for it.
-        private void MaybeFireStructureChangeEvent(int eventId, Hashtable eventTable, IntPtr hwnd, int idObject, int idChild)
+        private static void MaybeFireStructureChangeEvent(int eventId, Hashtable eventTable, IntPtr hwnd, int idObject, int idChild)
         {
             // if the 2-nd level table contains an entry for this event and element is not the root 
             // (the host hwnd provider takes care of structure changed events for the root.)

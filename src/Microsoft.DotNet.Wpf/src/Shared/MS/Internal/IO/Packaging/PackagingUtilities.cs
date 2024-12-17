@@ -774,7 +774,7 @@ namespace MS.Internal.IO.Packaging
             // Note:  For workaround, nothing is needed here;
             // Of the 6 convenience methods around ISF.GetStore, only
             // GetUserStoreForApplication uses the problematic locking.
-            private IsolatedStorageFile GetCurrentStore()
+            private static IsolatedStorageFile GetCurrentStore()
             {
                 if (_userHasProfile)
                 {

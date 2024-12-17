@@ -147,7 +147,7 @@ namespace MS.Internal.Xaml.Context
             }
         }
 
-        private void ShowFrame(StringBuilder sb, T iteratorFrame)
+        private static void ShowFrame(StringBuilder sb, T iteratorFrame)
         {
             if (iteratorFrame is null)
                 return;

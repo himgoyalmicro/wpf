@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -126,7 +126,7 @@ namespace System.Windows.Controls
         // Validate against two rules
         //  1. targetType must not null
         //  2. targetType must be a Control or a subclass of it
-        private void ValidateTargetType(Type targetType, string argName)
+        private static void ValidateTargetType(Type targetType, string argName)
         {
             if (targetType == null)
             {

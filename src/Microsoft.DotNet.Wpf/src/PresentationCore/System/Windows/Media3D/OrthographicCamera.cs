@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -145,7 +145,7 @@ namespace System.Windows.Media.Media3D
             //          transformed scene bounds that determines the near
             //          plane distance.
 
-            double zn2 = - AddEpsilon(transformedBoundingBox.Z+transformedBoundingBox.SizeZ);
+            double zn2 = -AddEpsilon(transformedBoundingBox.Z+transformedBoundingBox.SizeZ);
 
             if (zn2 > zn)
             {
@@ -214,7 +214,7 @@ namespace System.Windows.Media.Media3D
         //
         //------------------------------------------------------
 
-        private double AddEpsilon(double x)
+        private static double AddEpsilon(double x)
         {
             //
             // x is either close to 0 or not. If it's close to 0, then 1.0 is

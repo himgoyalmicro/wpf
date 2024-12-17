@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -392,7 +392,7 @@ namespace System.Windows.Documents
         /// </summary>
         /// <exception cref="ArgumentNullException">contentPosition is NULL.</exception>
         /// <exception cref="ArgumentException">ContentPosition does not exist within this element?s tree.</exception>
-        internal int GetPageNumber(ContentPosition contentPosition)
+        internal static int GetPageNumber(ContentPosition contentPosition)
         {
 //             Dispatcher.VerifyAccess();
 
@@ -505,7 +505,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// <see cref="DynamicDocumentPaginator.GetPagePosition"/>
         /// </summary>
-        internal ContentPosition GetPagePosition(DocumentPage page)
+        internal static ContentPosition GetPagePosition(DocumentPage page)
         {
             FixedDocumentPage docPage = page as FixedDocumentPage;
             if (docPage == null)

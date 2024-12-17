@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1467,7 +1467,7 @@ namespace MS.Internal.PtsHost
         /// <param name="rowVisualsCollection">Collection to synchromize.</param>
         /// <param name="firstIndex">Index to start syncronization from.</param>
         /// <param name="row">Row that still alive.</param>
-        private void SynchronizeRowVisualsCollection(
+        private static void SynchronizeRowVisualsCollection(
             VisualCollection rowVisualsCollection,
             int firstIndex,
             TableRow row)
@@ -1494,7 +1494,7 @@ namespace MS.Internal.PtsHost
         /// <param name="cellVisualsCollection">Collection to synchromize.</param>
         /// <param name="firstIndex">Index to start syncronization from.</param>
         /// <param name="visual">Visual that still alive.</param>
-        private void SynchronizeCellVisualsCollection(
+        private static void SynchronizeCellVisualsCollection(
             VisualCollection cellVisualsCollection,
             int firstIndex,
             Visual visual)

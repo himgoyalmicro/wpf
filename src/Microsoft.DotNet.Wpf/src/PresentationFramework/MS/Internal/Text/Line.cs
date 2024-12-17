@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -494,7 +494,7 @@ namespace MS.Internal.Text
         //
         // Returns: Line collapsing properties.
         // ------------------------------------------------------------------
-        protected TextCollapsingProperties GetCollapsingProps(double wrappingWidth, LineProperties paraProperties)
+        protected static TextCollapsingProperties GetCollapsingProps(double wrappingWidth, LineProperties paraProperties)
         {
             Debug.Assert(paraProperties.TextTrimming != TextTrimming.None, "Text trimming must be enabled.");
             TextCollapsingProperties collapsingProps;

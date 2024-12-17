@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -777,12 +777,12 @@ namespace System.Windows.Controls
         }
 
 #else
-        internal double HorizontalGridLineThickness
+        internal static double HorizontalGridLineThickness
         {
             get { return 1.0; }
         }
 
-        internal double VerticalGridLineThickness
+        internal static double VerticalGridLineThickness
         {
             get { return 1.0; }
         }
@@ -3872,7 +3872,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool IsNewItemPlaceholder(object item)
+        private static bool IsNewItemPlaceholder(object item)
         {
             return (item == CollectionView.NewItemPlaceholder) || (item == DataGrid.NewItemPlaceholder);
         }
@@ -5594,7 +5594,7 @@ namespace System.Windows.Controls
                         {
                             // KeyboardNavigation will move the focus out of the DataGrid
                             DependencyObject nextFocusTarget = this.PredictFocus(KeyToTraversalDirection(e.Key));
-                            if (nextFocusTarget != null && !keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
+                            if (nextFocusTarget != null && !KeyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                             {
                                 Keyboard.Focus(nextFocusTarget as IInputElement);
                             }
@@ -5708,7 +5708,7 @@ namespace System.Windows.Controls
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
                                                 treeViewNavigation: false, considerDescendants: false);
-                                            if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
+                                            if (nextFocusTarget != null && KeyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
                                             }
@@ -5754,7 +5754,7 @@ namespace System.Windows.Controls
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
                                                 treeViewNavigation: false, considerDescendants: false);
-                                            if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
+                                            if (nextFocusTarget != null && KeyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
                                             }
@@ -5788,7 +5788,7 @@ namespace System.Windows.Controls
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
                                                 treeViewNavigation: false, considerDescendants: false);
-                                            if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
+                                            if (nextFocusTarget != null && KeyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
                                             }
@@ -5823,7 +5823,7 @@ namespace System.Windows.Controls
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
                                                 treeViewNavigation: false, considerDescendants: false);
-                                            if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
+                                            if (nextFocusTarget != null && KeyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
                                             }

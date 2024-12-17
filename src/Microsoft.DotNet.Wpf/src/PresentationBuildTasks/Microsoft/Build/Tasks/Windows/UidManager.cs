@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -258,15 +258,30 @@ namespace Microsoft.Build.Tasks.Windows
                                     }
                                 }
 
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                 // backup source file by renaming it. Expect to be (close to) atomic op.
                                 RenameFile(inputFile.ItemSpec, backupFile);
 
                                 // rename the uid output onto the source file. Expect to be (close to) atomic op.
                                 RenameFile(tempFile, inputFile.ItemSpec);
+After:
+                                    // backup source file by renaming it. Expect to be (close to) atomic op.
+                                    RenameFile(inputFile.ItemSpec, backupFile);
 
-                                // remove the temp files
-                                RemoveFile(tempFile);
-                                RemoveFile(backupFile);
+                                    // rename the uid output onto the source file. Expect to be (close to) atomic op.
+                                    RenameFile(tempFile, inputFile.ItemSpec);
+*/
+                                    // backup source file by renaming it. Expect to be (close to) atomic op.
+                                    UidManager.RenameFile(inputFile.ItemSpec, backupFile);
+
+                                    // rename the uid output onto the source file. Expect to be (close to) atomic op.
+                                    UidManager.RenameFile(tempFile, inputFile.ItemSpec);
+
+                                    // remove the temp files
+                                    RemoveFile(tempFile);
+                                    RemoveFile(backupFile);
 
                                 countGoodFiles++;
                             }
@@ -312,15 +327,30 @@ namespace Microsoft.Build.Tasks.Windows
                                     }
                                 }
 
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                 // rename the source file to the backup file name. Expect to be (close to) atomic op.
                                 RenameFile(inputFile.ItemSpec, backupFile);
 
                                 // rename the output file over to the source file. Expect to be (close to) atomic op.
                                 RenameFile(tempFile, inputFile.ItemSpec);
+After:
+                                    // rename the source file to the backup file name. Expect to be (close to) atomic op.
+                                    RenameFile(inputFile.ItemSpec, backupFile);
 
-                                // remove the temp files
-                                RemoveFile(tempFile);
-                                RemoveFile(backupFile);
+                                    // rename the output file over to the source file. Expect to be (close to) atomic op.
+                                    RenameFile(tempFile, inputFile.ItemSpec);
+*/
+                                    // rename the source file to the backup file name. Expect to be (close to) atomic op.
+                                    UidManager.RenameFile(inputFile.ItemSpec, backupFile);
+
+                                    // rename the output file over to the source file. Expect to be (close to) atomic op.
+                                    UidManager.RenameFile(tempFile, inputFile.ItemSpec);
+
+                                    // remove the temp files
+                                    RemoveFile(tempFile);
+                                    RemoveFile(backupFile);
 
                                 countGoodFiles++;
                             }
@@ -371,13 +401,13 @@ namespace Microsoft.Build.Tasks.Windows
             return Path.Combine(_backupPath, Path.ChangeExtension(Path.GetFileName(fileName), "uidbackup"));
         }
 
-        private void RenameFile(string src, string dest)
+        private static void RenameFile(string src, string dest)
         {
             RemoveFile(dest);
             File.Move(src, dest);
         }
 
-        private void RemoveFile(string fileName)
+        private static void RemoveFile(string fileName)
         {
             if (File.Exists(fileName))
             {
@@ -483,7 +513,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         /// <param name="fileName">input file</param>
         /// <returns>UidCollector containing all the information for the Uids in the file</returns>
-        private UidCollector ParseFile(string fileName)
+        private static UidCollector ParseFile(string fileName)
         {
             UidCollector collector = new UidCollector(fileName  );
 
@@ -850,7 +880,7 @@ namespace Microsoft.Build.Tasks.Windows
             return availableUid;
         }
 
-        private void ParseUid(string uid, out string prefix, out Int64 index)
+        private static void ParseUid(string uid, out string prefix, out Int64 index)
         {
             // set prefix and index to invalid values
             prefix = null;
@@ -881,7 +911,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
         }
 
-        private string GetElementLocalName(string typeFullName)
+        private static string GetElementLocalName(string typeFullName)
         {
             int index = typeFullName.LastIndexOf('.');
             if (index > 0)

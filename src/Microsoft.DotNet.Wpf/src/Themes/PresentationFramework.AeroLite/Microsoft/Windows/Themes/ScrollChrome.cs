@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -234,7 +234,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private void DrawHorizontalGripper(DrawingContext dc, Brush brush, Rect bounds)
+        private static void DrawHorizontalGripper(DrawingContext dc, Brush brush, Rect bounds)
         {
             if ((bounds.Width > 15.0) && (bounds.Height > 2.0))
             {
@@ -249,7 +249,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private void DrawVerticalGripper(DrawingContext dc, Brush brush, Rect bounds)
+        private static void DrawVerticalGripper(DrawingContext dc, Brush brush, Rect bounds)
         {
             if ((bounds.Width > 2.0) && (bounds.Height > 15.0))
             {
@@ -450,7 +450,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private SolidColorBrush CommonThumbEnabledGlyph
+        private static SolidColorBrush CommonThumbEnabledGlyph
         {
             get
             {

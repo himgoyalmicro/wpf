@@ -116,7 +116,7 @@ namespace System.Windows.Markup
         /// Return false if a public static field or property with the same
         /// name cannot be found.
         /// <summary>
-        private bool GetFieldOrPropertyValue(Type type, string name, out object value)
+        private static bool GetFieldOrPropertyValue(Type type, string name, out object value)
         {
             Type currentType = type;
             do

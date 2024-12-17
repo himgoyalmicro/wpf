@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -425,7 +425,7 @@ namespace System.Windows.Navigation
                    && (navInfo.JournalEntry == null || navInfo.JournalEntry.NavigationServiceId == _guidId);
         }
 
-        private bool IsJournalNavigation(NavigateInfo navInfo)
+        private static bool IsJournalNavigation(NavigateInfo navInfo)
         {
             return navInfo != null &&
                 (navInfo.NavigationMode == NavigationMode.Back || navInfo.NavigationMode == NavigationMode.Forward);
@@ -752,7 +752,7 @@ namespace System.Windows.Navigation
         //
         // Set Uri to root element's BaseUri DependencyProperty.
         //
-        private void SetBaseUri(DependencyObject dobj, Uri fullUri)
+        private static void SetBaseUri(DependencyObject dobj, Uri fullUri)
         {
             Invariant.Assert((dobj != null) && (! dobj.IsSealed));
 
@@ -1611,7 +1611,7 @@ namespace System.Windows.Navigation
             return true;
         }
 
-        private void InformBrowserAboutStoppedNavigation()
+        private static void InformBrowserAboutStoppedNavigation()
         {
             if (Application != null && Application.CheckAccess())
             {
@@ -2047,8 +2047,8 @@ namespace System.Windows.Navigation
                 navigateInfo.NavigationMode == NavigationMode.New)
             {
                 // This should happen only for the Application case when processing the Startup Uri
-                Debug.Assert(this.Application != null &&
-                             this.Application.CheckAccess() == true &&
+                Debug.Assert(Application != null &&
+                             Application.CheckAccess() == true &&
                              IsSameUri(null, Application.StartupUri,
                                                      navigateInfo.Source, false /* withFragment */),
                              "Encountered unexpected condition in FireNavigating, see comments in the file");
@@ -2075,9 +2075,9 @@ namespace System.Windows.Navigation
             {
                 _navigating(INavigatorHost, e);
             }
-            if (!e.Cancel && this.Application != null && this.Application.CheckAccess())
+            if (!e.Cancel && Application != null && Application.CheckAccess())
             {
-                this.Application.FireNavigating(e, _bp == null);
+                Application.FireNavigating(e, _bp == null);
             }
 
             // If this is null, the IProvideCustomContentState callback will be used later on.
@@ -2233,9 +2233,9 @@ namespace System.Windows.Navigation
                 }
 
                 // Fire it on the Application
-                if (this.Application != null && this.Application.CheckAccess())
+                if (Application != null && Application.CheckAccess())
                 {
-                    this.Application.FireNavigated(e);
+                    Application.FireNavigated(e);
                 }
             }
             catch
@@ -2381,9 +2381,9 @@ namespace System.Windows.Navigation
                     _navigationProgress(INavigatorHost, e);
                 }
 
-                if (this.Application != null && this.Application.CheckAccess())
+                if (Application != null && Application.CheckAccess())
                 {
-                    this.Application.FireNavigationProgress(e);
+                    Application.FireNavigationProgress(e);
                 }
             }
             catch
@@ -2430,9 +2430,9 @@ namespace System.Windows.Navigation
                     _loadCompleted(INavigatorHost, e);
                 }
 
-                if (this.Application != null && this.Application.CheckAccess())
+                if (Application != null && Application.CheckAccess())
                 {
-                    this.Application.FireLoadCompleted(e);
+                    Application.FireLoadCompleted(e);
                 }
             }
             catch
@@ -2580,9 +2580,9 @@ namespace System.Windows.Navigation
             {
                 _stopped(INavigatorHost, e);
             }
-            if (this.Application != null && this.Application.CheckAccess())
+            if (Application != null && Application.CheckAccess())
             {
-                this.Application.FireNavigationStopped(e);
+                Application.FireNavigationStopped(e);
             }
         }
 
@@ -2739,9 +2739,9 @@ namespace System.Windows.Navigation
                     }
                 }
 
-                if (!e.Handled && this.Application != null && this.Application.CheckAccess())
+                if (!e.Handled && Application != null && Application.CheckAccess())
                 {
-                    this.Application.FireNavigationFailed(e);
+                    Application.FireNavigationFailed(e);
                 }
             }
             finally
@@ -3392,7 +3392,7 @@ namespace System.Windows.Navigation
         /// <summary>
         /// Returns the current Application
         /// </summary>
-        internal Application Application
+        internal static Application Application
         {
             get { return Application.Current; }
         }
@@ -3484,9 +3484,9 @@ namespace System.Windows.Navigation
                 // a NavigationWindow/Frame that exists on a non-App thread and thus looking
                 // into App to determine top level container does not make sense.
                 return (INavigatorHost is NavigationWindow ||
-                        (this.Application != null &&
-                        this.Application.CheckAccess() == true &&
-                        this.Application.NavService == this)
+                        (Application != null &&
+                        Application.CheckAccess() == true &&
+                        Application.NavService == this)
                         );
             }
         }
@@ -3592,8 +3592,8 @@ namespace System.Windows.Navigation
                 // a NavigationWindow/Frame that exists on a non-App thread and thus looking
                 // into App to determine if app is shuttind down does not make sense.
                 bool isAppShuttingDown = false;
-                if ((this.Application != null) &&
-                    (this.Application.CheckAccess() == true) &&
+                if ((Application != null) &&
+                    (Application.CheckAccess() == true) &&
                     (Application.IsShuttingDown == true))
                 {
                     isAppShuttingDown = true;
@@ -4469,7 +4469,7 @@ namespace System.Windows.Navigation
     {
         internal object Dispatch(object o)
         {
-            this.DisposeElement(_root);
+            DisposeElement(_root);
             return null;
         }
 
@@ -4477,7 +4477,7 @@ namespace System.Windows.Navigation
         /// Dispose the elements in the tree, children first.
         /// </summary>
         /// <param name="node">The node to dispose.</param>
-        internal void DisposeElement(Object node)
+        internal static void DisposeElement(Object node)
         {
             DependencyObject dobj = node as DependencyObject;
             if (dobj != null)

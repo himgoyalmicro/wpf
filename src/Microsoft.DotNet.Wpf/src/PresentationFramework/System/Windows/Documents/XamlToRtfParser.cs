@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -343,7 +343,7 @@ namespace System.Windows.Documents
             //
             // ---------------------------------------------------------------------
 
-            private bool IsSpace(char character)
+            private static bool IsSpace(char character)
             {
                 return (character == ' ' || character == '\t' || character == '\n' || character == '\r');
             }
@@ -943,12 +943,12 @@ namespace System.Windows.Documents
             //
             // ---------------------------------------------------------------------
 
-            private bool IsSpace(char character)
+            private static bool IsSpace(char character)
             {
                 return (character == ' ' || character == '\t' || character == '\n' || character == '\r');
             }
 
-            private bool IsNameChar(char character)
+            private static bool IsNameChar(char character)
             {
                 return (!IsSpace(character) && character != '=' && character != '>' && character != '/');
             }

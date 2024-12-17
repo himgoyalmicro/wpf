@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -649,7 +649,7 @@ namespace System.Windows
             return null;
         }
 
-        private PropertyInfo GetPropertyHelper(Type ownerType, string propertyName)
+        private static PropertyInfo GetPropertyHelper(Type ownerType, string propertyName)
         {
             PropertyInfo result = null;
             bool enumerateBaseClasses = false;
@@ -774,7 +774,7 @@ namespace System.Windows
             return args;
         }
 
-        object GetTypedParamValue(string param, Type type, bool throwOnError)
+        static object GetTypedParamValue(string param, Type type, bool throwOnError)
         {
             object value = null;
             if (type == typeof(string))
@@ -829,7 +829,7 @@ namespace System.Windows
 
 
         // Return the type named by the given name
-        Type GetTypeFromName(string name, object context)
+        static Type GetTypeFromName(string name, object context)
         {
             // use the parser context, if available.  This allows early resolution.
             // bchapman 5/8/2009 - I believe with System.Xaml there is never an old parserContext here.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -428,8 +428,7 @@ namespace MS.Internal.Documents
         /// document with these pages.  This is serialized to the provided
         /// document writer.
         /// </summary>
-        private
-        void
+        private static void
         WritePageSelection(
             XpsDocumentWriter docWriter,
             DocumentPaginator docPaginator,
@@ -1201,7 +1200,7 @@ namespace MS.Internal.Documents
         /// Sets the visibility of the element passed in.
         /// </summary>
         /// <param name="uie">The element whose visibility will be changed</param>
-        private void ChangeControlVisibility(UIElement uie)
+        private static void ChangeControlVisibility(UIElement uie)
         {
             if (uie != null)
             {
@@ -1214,7 +1213,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="uie">The element whose visibility will be changed</param>
         /// <param name="visibility">True if uie should be set visible, false for collapsed</param>
-        private void ChangeControlVisibility(UIElement uie, bool visibility)
+        private static void ChangeControlVisibility(UIElement uie, bool visibility)
         {
             if (uie != null)
             {
@@ -1301,7 +1300,7 @@ namespace MS.Internal.Documents
                 if (e.Command.Equals(ApplicationCommands.Save))
                 {
                     Trace.SafeWrite(Trace.File, "Save ApplicationCommand fired.");
-                    if (docManager.CanSave)
+                    if (DocumentManager.CanSave)
                     {
                         // Save document.
                         docManager.Save(null);
@@ -1361,7 +1360,7 @@ namespace MS.Internal.Documents
                     DocumentManager documentManager = DocumentManager.CreateDefault();
                     if (documentManager != null)
                     {
-                        e.CanExecute = documentManager.CanSave && documentManager.IsModified;
+                        e.CanExecute = DocumentManager.CanSave && DocumentManager.IsModified;
                     }
                     Trace.SafeWrite(
                         Trace.File,
@@ -1569,7 +1568,7 @@ namespace MS.Internal.Documents
                 }
                 else
                 {
-                    dv._rmManager.PromptToInstallRM();
+                    DocumentRightsManagementManager.PromptToInstallRM();
                 }
             }
         }
@@ -1961,7 +1960,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="pageNumberString">A string representing an int pagenumber</param>
         /// <returns>An int represented by the string, or -1 on a parse error</returns>
-        public int ParsePageNumber(string pageNumberString)
+        public static int ParsePageNumber(string pageNumberString)
         {
             CultureInfo culture = CultureInfo.CurrentCulture;
 

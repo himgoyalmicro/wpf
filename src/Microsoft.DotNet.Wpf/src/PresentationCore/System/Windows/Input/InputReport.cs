@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -66,7 +66,7 @@ namespace System.Windows.Input
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_InputMode( InputMode mode )
+        private static void Validate_InputMode( InputMode mode )
         {
             switch( mode )
             {
@@ -82,7 +82,7 @@ namespace System.Windows.Input
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_InputType( InputType type )
+        private static void Validate_InputType( InputType type )
         {
             switch( type )
             {

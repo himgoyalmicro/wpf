@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -405,7 +405,7 @@ namespace System.Windows.Documents
         // 0 means the same container
         // n means block1 is n steps before block2 in the link list
         // -n  means block1 is n steps after block2 in the link list
-        internal int GetChildBlockDistance(ChildDocumentBlock block1, ChildDocumentBlock block2)
+        internal static int GetChildBlockDistance(ChildDocumentBlock block1, ChildDocumentBlock block2)
         {
             // Note: we can improve perf of this function by using generation
             // mark + caching index, if this function turns out to be costly.

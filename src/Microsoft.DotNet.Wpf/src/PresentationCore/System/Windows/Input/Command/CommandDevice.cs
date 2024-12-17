@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -113,7 +113,7 @@ namespace System.Windows.Input
         }
 
         // Maps the Windows WM_APPCOMMANDS to regular Commands.
-        private RoutedCommand GetRoutedCommand( int appCommandId )
+        private static RoutedCommand GetRoutedCommand( int appCommandId )
         {
             RoutedCommand appCommand = null;
             switch (appCommandId)
@@ -270,7 +270,7 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="device"></param>
         /// <returns>Returns either Mouse.DirectlyOver or Keyboard.FocusedElement</returns>
-        private IInputElement GetSourceFromDevice(InputType device)
+        private static IInputElement GetSourceFromDevice(InputType device)
         {
             if (device == InputType.Mouse)
             {

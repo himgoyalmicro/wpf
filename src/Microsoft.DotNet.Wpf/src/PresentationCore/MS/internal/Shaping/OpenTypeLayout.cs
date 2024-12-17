@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1182,7 +1182,7 @@ namespace MS.Internal.Shaping
         ///<param name="scriptTag">In: Script tag</param>
         ///<param name="langSysTag">In: Language System tag</param>
         ///<returns>Success if workspace is initialized succesfully, specific error if failed</returns>
-        internal OpenTypeLayoutResult Init(
+        internal static OpenTypeLayoutResult Init(
             IOpenTypeFont           font,
             OpenTypeTags            tableTag,
             uint                    scriptTag,

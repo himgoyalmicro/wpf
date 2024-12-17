@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -760,7 +760,7 @@ namespace System.Windows.Annotations.Storage
         /// <param name="knownNamespaces">namespaces dictionary</param>
         /// <remarks>We do not allow internal namespases in this dictionary nor
         /// duplicates</remarks>
-        private void CheckKnownNamespaces(IDictionary<Uri, IList<Uri>> knownNamespaces)
+        private static void CheckKnownNamespaces(IDictionary<Uri, IList<Uri>> knownNamespaces)
         {
             if (knownNamespaces == null)
                 return;

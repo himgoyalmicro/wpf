@@ -876,7 +876,7 @@ namespace System.Xaml
                 }
             }
 
-            protected internal void WriteNode(XamlXmlWriter writer, XamlNode node)
+            protected internal static void WriteNode(XamlXmlWriter writer, XamlNode node)
             {
                 switch (node.NodeType)
                 {
@@ -1306,7 +1306,7 @@ namespace System.Xaml
                 }
             }
 
-            void WriteXmlSpaceOrThrow(XamlXmlWriter writer, string value)
+            static void WriteXmlSpaceOrThrow(XamlXmlWriter writer, string value)
             {
                 var frameWithXmlSpacePreserve = FindFrameWithXmlSpacePreserve(writer);
                 if (frameWithXmlSpacePreserve.AllocatingNodeType == XamlNodeType.StartMember)
@@ -1318,7 +1318,7 @@ namespace System.Xaml
             }
 
             // this method finds the SO or SM where "xml:space = preserve" will actually be attached to
-            Frame FindFrameWithXmlSpacePreserve(XamlXmlWriter writer)
+            static Frame FindFrameWithXmlSpacePreserve(XamlXmlWriter writer)
             {
                 var frameEnumerator = writer.namespaceScopes.GetEnumerator();
 
@@ -1762,7 +1762,7 @@ namespace System.Xaml
                 get { return state; }
             }
 
-            void WriteNodesInXmlForm(XamlXmlWriter writer)
+            static void WriteNodesInXmlForm(XamlXmlWriter writer)
             {
                 writer.WriteDeferredNamespaces(XamlNodeType.StartObject);
                 WriteMemberAsElement(writer);
@@ -1772,7 +1772,7 @@ namespace System.Xaml
                 var meNodes = writer.meNodesStack.Pop();
                 foreach (var node in meNodes)
                 {
-                    writer.currentState.WriteNode(writer, node);
+                    WriteNode(writer, node);
                 }
             }
 
@@ -1877,7 +1877,7 @@ namespace System.Xaml
                 get { return state; }
             }
 
-            void ExpandPositionalParametersIntoProperties(XamlXmlWriter writer)
+            static void ExpandPositionalParametersIntoProperties(XamlXmlWriter writer)
             {
                 Frame frame = writer.namespaceScopes.Peek();
                 Debug.Assert(frame.AllocatingNodeType == XamlNodeType.StartObject);
@@ -1935,7 +1935,7 @@ namespace System.Xaml
                 }
             }
 
-            ParameterInfo[] GetParametersInfo(XamlType objectXamlType, int numOfParameters)
+            static ParameterInfo[] GetParametersInfo(XamlType objectXamlType, int numOfParameters)
             {
                 IList<XamlType> paramXamlTypes = objectXamlType.GetPositionalParameters(numOfParameters);
 
@@ -1970,7 +1970,7 @@ namespace System.Xaml
                 return constructor.GetParameters();
             }
 
-            List<XamlMember> GetAllPropertiesWithCAA(XamlType objectXamlType)
+            static List<XamlMember> GetAllPropertiesWithCAA(XamlType objectXamlType)
             {
                 // Pull out all the properties that are attributed with ConstructorArgumentAttribute
                 //
@@ -1995,7 +1995,7 @@ namespace System.Xaml
                 return ctorArgProps;
             }
 
-            void WriteNodes(XamlXmlWriter writer)
+            static void WriteNodes(XamlXmlWriter writer)
             {
                 var ppNodesList = writer.ppStateInfo.NodesList;
                 writer.ppStateInfo.Reset();
@@ -2005,12 +2005,12 @@ namespace System.Xaml
                 {
                     foreach (XamlNode node in nodesList)
                     {
-                        writer.currentState.WriteNode(writer, node);
+                        WriteNode(writer, node);
                     }
                 }
             }
 
-            void ThrowIfFailed(bool fail, string operation)
+            static void ThrowIfFailed(bool fail, string operation)
             {
                 if (fail)
                 {

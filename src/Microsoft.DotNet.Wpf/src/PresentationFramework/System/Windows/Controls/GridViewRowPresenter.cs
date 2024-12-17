@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -490,7 +490,7 @@ namespace System.Windows.Controls
             return result;
         }
 
-        private bool CheckContains(Rect container, Rect element)
+        private static bool CheckContains(Rect container, Rect element)
         {
             // Check if ANY part of the element reside in container
             // return true if and only if (either case)
@@ -517,7 +517,7 @@ namespace System.Windows.Controls
                     CheckIsPointBetween(element, container.Bottom - tolerance));
         }
 
-        private bool CheckIsPointBetween(Rect rect, double pointY)
+        private static bool CheckIsPointBetween(Rect rect, double pointY)
         {
             // return rect.Top <= pointY <= rect.Bottom
             return (DoubleUtil.LessThanOrClose(rect.Top, pointY) &&

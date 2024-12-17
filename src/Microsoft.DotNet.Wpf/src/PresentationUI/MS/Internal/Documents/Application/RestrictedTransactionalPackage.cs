@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -103,7 +103,7 @@ namespace MS.Internal.Documents.Application
     ///  1) The list of content types is a hardcoded constant list of strings that
     ///     is only maintained here.  The only data being used is the string content
     ///     type to check.
-    private bool IsValidContentType(string contentType)
+    private static bool IsValidContentType(string contentType)
     {
         // Check that the contentType is a valid string, and of one of the approved
         // contentTypes.

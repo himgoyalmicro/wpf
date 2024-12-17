@@ -106,7 +106,7 @@ namespace MS.Internal.Xaml.Runtime
             return method.Invoke(null, args);
         }
 
-        protected MethodInfo GetFactoryMethod(Type type, string methodName, object[] args, BindingFlags flags)
+        protected static MethodInfo GetFactoryMethod(Type type, string methodName, object[] args, BindingFlags flags)
         {
             MethodInfo factory = null;
             if (args is null || args.Length == 0)
@@ -129,7 +129,7 @@ namespace MS.Internal.Xaml.Runtime
             return factory;
         }
 
-        protected MethodBase BindToMethod(BindingFlags bindingFlags, MethodBase[] candidates, object[] args)
+        protected static MethodBase BindToMethod(BindingFlags bindingFlags, MethodBase[] candidates, object[] args)
         {
             return Type.DefaultBinder.BindToMethod(
                 bindingFlags, candidates, ref args, null, null, null, out _);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -218,7 +218,7 @@ namespace System.Windows.Documents
         // If the TextPointer is adjacent to one of the TextElement's edges,
         // this method does not split the element, and instead returns a pointer
         // adjacent to the bordered edge, outside the TextElemetn scope.
-        private TextPointer SplitElement(TextPointer position)
+        private static TextPointer SplitElement(TextPointer position)
         {
             if (position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart)
             {

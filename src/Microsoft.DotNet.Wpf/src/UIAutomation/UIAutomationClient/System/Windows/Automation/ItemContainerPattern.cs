@@ -122,7 +122,7 @@ namespace System.Windows.Automation
 
        #region Private Methods
 
-        private object PropertyValueValidateAndMap(AutomationProperty property, object value)
+        private static object PropertyValueValidateAndMap(AutomationProperty property, object value)
         {
             AutomationPropertyInfo info;
             if (!Schema.GetPropertyInfo(property, out info))

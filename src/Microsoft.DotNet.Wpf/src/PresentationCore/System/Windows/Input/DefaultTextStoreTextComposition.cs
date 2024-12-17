@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -78,7 +78,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Get the base ITfContext of the transitory document.
         /// </summary>
-        private UnsafeNativeMethods.ITfContext GetTransitoryContext()
+        private static UnsafeNativeMethods.ITfContext GetTransitoryContext()
         {
             DefaultTextStore defaultTextStore = DefaultTextStore.Current;
             UnsafeNativeMethods.ITfDocumentMgr doc = defaultTextStore.TransitoryDocumentManager;
@@ -93,7 +93,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Get ITfContextView of the context.
         /// </summary>
-        private UnsafeNativeMethods.ITfCompositionView GetComposition(UnsafeNativeMethods.ITfContext context)
+        private static UnsafeNativeMethods.ITfCompositionView GetComposition(UnsafeNativeMethods.ITfContext context)
         {
             UnsafeNativeMethods.ITfContextComposition contextComposition;
             UnsafeNativeMethods.IEnumITfCompositionView enumCompositionView;

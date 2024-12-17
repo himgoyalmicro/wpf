@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -4117,7 +4117,7 @@ namespace System.Windows
         //   the
         // Returns:
         //   The dimensions, in local space, of the maximal area rectangle found.
-        private Size FindMaximalAreaLocalSpaceRect(Transform layoutTransform, Size transformSpaceBounds)
+        private static Size FindMaximalAreaLocalSpaceRect(Transform layoutTransform, Size transformSpaceBounds)
         {
             // X (width) and Y (height) constraints for axis-aligned bounding box in dest. space
             Double xConstr = transformSpaceBounds.Width;

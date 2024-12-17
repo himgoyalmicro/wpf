@@ -1055,7 +1055,7 @@ namespace MS.Internal.IO.Packaging
                 throw new XmlException(SR.PackageSignatureObjectTagRequired);
         }
 
-        private KeyInfo GenerateKeyInfo(AsymmetricAlgorithm key, X509Certificate2 signer)
+        private static KeyInfo GenerateKeyInfo(AsymmetricAlgorithm key, X509Certificate2 signer)
         {
             // KeyInfo section
             KeyInfo keyInfo = new KeyInfo();
@@ -1150,7 +1150,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="allowPackageSpecificReferences">When "true", we check to make sure that there is
         /// exactly one package-specific reference and when "false", we do not allow any package-specific
         /// references</param>
-        private void ValidateReferences(IEnumerable references, bool allowPackageSpecificReferences)
+        private static void ValidateReferences(IEnumerable references, bool allowPackageSpecificReferences)
         {
             Debug.Assert(references != null);
 

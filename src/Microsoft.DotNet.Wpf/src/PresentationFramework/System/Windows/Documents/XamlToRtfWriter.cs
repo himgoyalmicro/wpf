@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1577,7 +1577,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private void WriteCellPadding(DocumentNode dnCell)
+        private static void WriteCellPadding(DocumentNode dnCell)
         {
         }
 
@@ -2205,7 +2205,7 @@ namespace System.Windows.Documents
         }
 #endif // WindowsMetaFile
 
-        private string ConvertToImageHexDataString(Stream imageStream)
+        private static string ConvertToImageHexDataString(Stream imageStream)
         {
             byte imageByte;
             byte[] imageHexBytes = new byte[imageStream.Length * 2];
@@ -2226,7 +2226,7 @@ namespace System.Windows.Documents
         }
 
         // Get the image type from image source name
-        private RtfImageFormat GetImageFormatFromImageSourceName(string imageName)
+        private static RtfImageFormat GetImageFormatFromImageSourceName(string imageName)
         {
             RtfImageFormat imageFormat = RtfImageFormat.Unknown;
 
@@ -2268,7 +2268,7 @@ namespace System.Windows.Documents
         }
 
         // Get the image stretch type
-        private System.Windows.Media.Stretch GetImageStretch(string imageStretch)
+        private static System.Windows.Media.Stretch GetImageStretch(string imageStretch)
         {
             if (string.Equals("Fill", imageStretch, StringComparison.OrdinalIgnoreCase))
             {
@@ -2285,7 +2285,7 @@ namespace System.Windows.Documents
         }
 
         // Get the image stretch direction type
-        private System.Windows.Controls.StretchDirection GetImageStretchDirection(string imageStretchDirection)
+        private static System.Windows.Controls.StretchDirection GetImageStretchDirection(string imageStretchDirection)
         {
             if (string.Equals("UpOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase))
             {
@@ -2786,13 +2786,13 @@ namespace System.Windows.Documents
 
             #region Private Methods
 
-            private bool IsNewLine(char character)
+            private static bool IsNewLine(char character)
             {
                 return (character == '\r' || character == '\n');
             }
 
             // Helper for IXamlContentHandler.StartElement.
-            private DocumentNode CreateDocumentNode(ConverterState converterState, DocumentNodeType documentNodeType, DocumentNode dnTop, XamlTag xamlTag)
+            private static DocumentNode CreateDocumentNode(ConverterState converterState, DocumentNodeType documentNodeType, DocumentNode dnTop, XamlTag xamlTag)
             {
                 DocumentNode documentNode = new DocumentNode(documentNodeType);
                 if (dnTop != null)
@@ -2839,7 +2839,7 @@ namespace System.Windows.Documents
             }
 
             // Helper for IXamlContentHandler.StartElement.
-            private XamlToRtfError HandleAttributes(ConverterState converterState, IXamlAttributes attributes,
+            private static XamlToRtfError HandleAttributes(ConverterState converterState, IXamlAttributes attributes,
                 DocumentNode documentNode, XamlTag xamlTag, DocumentNodeArray dna)
             {
                 int nLen = 0;

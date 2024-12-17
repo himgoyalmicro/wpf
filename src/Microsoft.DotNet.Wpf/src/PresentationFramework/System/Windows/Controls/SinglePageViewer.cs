@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1016,7 +1016,7 @@ namespace System.Windows.Controls
         /// Handle the case when the position is no longer valid for the current document, conservatively returns true if
         /// is uknown.
         /// </summary>
-        private bool IsValidContentPositionForDocument(IDocumentPaginatorSource document, ContentPosition contentPosition)
+        private static bool IsValidContentPositionForDocument(IDocumentPaginatorSource document, ContentPosition contentPosition)
         {
             FlowDocument flowDocument = document as FlowDocument;
             TextPointer textPointer = contentPosition as TextPointer;

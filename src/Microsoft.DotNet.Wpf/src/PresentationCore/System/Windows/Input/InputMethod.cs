@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1459,7 +1459,7 @@ namespace System.Windows.Input
         ///     Uninitialize the sink for compartments
         ///     Unadvise the cicero's compartment event sink.
         /// </summary> 
-        private void UninitializeCompartmentEventSink()
+        private static void UninitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
             {
@@ -1618,7 +1618,7 @@ namespace System.Windows.Input
         /// <summary>
         ///    Get ITfFunctionProvider of the current active keyboard TIP.
         /// </summary> 
-        private UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
+        private static UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
         {
             // Get the profile info structre of the current active keyboard TIP.
             tf_profile = GetCurrentKeybordTipProfile();
@@ -1644,7 +1644,7 @@ namespace System.Windows.Input
         ///    Return the profile info structre of the current active keyboard TIP.
         ///    This enumelates all TIP's profiles and find the active keyboard category TIP.
         /// </summary> 
-        private UnsafeNativeMethods.TF_LANGUAGEPROFILE GetCurrentKeybordTipProfile()
+        private static UnsafeNativeMethods.TF_LANGUAGEPROFILE GetCurrentKeybordTipProfile()
         {
             UnsafeNativeMethods.ITfInputProcessorProfiles ipp = InputProcessorProfilesLoader.Load();
             UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile = new UnsafeNativeMethods.TF_LANGUAGEPROFILE();
@@ -1678,7 +1678,7 @@ namespace System.Windows.Input
         }
 
         // This validates the ImeConversionMode value.
-        private bool IsValidConversionMode(ImeConversionModeValues mode)
+        private static bool IsValidConversionMode(ImeConversionModeValues mode)
         {
             int mask = (int)(ImeConversionModeValues.Alphanumeric |
                              ImeConversionModeValues.Native       |
@@ -1699,7 +1699,7 @@ namespace System.Windows.Input
         }
 
         // This validates the ImeSentenceMode value.
-        private bool IsValidSentenceMode(ImeSentenceModeValues mode)
+        private static bool IsValidSentenceMode(ImeSentenceModeValues mode)
         {
             int mask = (int)(ImeSentenceModeValues.None              |
                              ImeSentenceModeValues.PluralClause      |

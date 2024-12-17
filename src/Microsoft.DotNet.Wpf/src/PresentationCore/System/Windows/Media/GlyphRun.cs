@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1423,7 +1423,7 @@ namespace System.Windows.Media
             return bounds;
         }
 
-        private double AdjustAdvanceForDisplayLayout(double advance,
+        private static double AdjustAdvanceForDisplayLayout(double advance,
                                                      double oneSideBearing,
                                                      double otherSideBearing)
         {
@@ -2033,7 +2033,7 @@ namespace System.Windows.Media
         /// <param name="caretStops">GlyphRun CaretStops array. Guaranteed to be non-null.</param>
         /// <param name="caretStopIndex">Nearest caret stop index, or -1 if there are no caret stops.</param>
         /// <param name="codePointsUntilNextStop">Code points until the next caret stop, or -1 if there is no next caret stop.</param>
-        private void FindNearestCaretStop(
+        private static void FindNearestCaretStop(
             int         characterIndex,
             IList<bool> caretStops,
             out int     caretStopIndex,

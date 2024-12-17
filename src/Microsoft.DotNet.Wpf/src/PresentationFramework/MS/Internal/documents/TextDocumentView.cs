@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1827,7 +1827,7 @@ namespace MS.Internal.Documents
         /// <returns>
         /// An index of column matching or closest to the point.
         /// </returns>
-        private int GetColumnFromPoint(ReadOnlyCollection<ColumnResult> columns, Point point, bool snapToText)
+        private static int GetColumnFromPoint(ReadOnlyCollection<ColumnResult> columns, Point point, bool snapToText)
         {
             int columnIndex;
             int lastColumnWithContent = -1;
@@ -1959,7 +1959,7 @@ namespace MS.Internal.Documents
         /// If false, this method should return -1, if the test 
         /// point does not fall within any paragraph bounding box.
         /// </param>
-        private int GetParagraphFromPoint(ReadOnlyCollection<ParagraphResult> paragraphs, Point point, bool snapToText)
+        private static int GetParagraphFromPoint(ReadOnlyCollection<ParagraphResult> paragraphs, Point point, bool snapToText)
         {
             int paragraphIndex;
             int lastParagraphWithContent = -1;
@@ -2087,7 +2087,7 @@ namespace MS.Internal.Documents
         /// <param name="floatingElements">Collection of floating element paragraphs.</param>
         /// <param name="point">Point in pixel coordinates to test.</param>
         /// <param name="snapToText">If snapToText is true, we must match the point to some floating element.</param>
-        private int GetParagraphFromPointInFloatingElements(ReadOnlyCollection<ParagraphResult> floatingElements, Point point, bool snapToText)
+        private static int GetParagraphFromPointInFloatingElements(ReadOnlyCollection<ParagraphResult> floatingElements, Point point, bool snapToText)
         {
             Invariant.Assert(floatingElements != null, "Paragraph collection is null");
             double closestDistance = Double.MaxValue;
@@ -2119,7 +2119,7 @@ namespace MS.Internal.Documents
         /// <param name="columns">Collection of columns.</param>
         /// <param name="position">Position to test.</param>
         /// <returns>An index of column</returns>
-        private int GetColumnFromPosition(ReadOnlyCollection<ColumnResult> columns, ITextPointer position)
+        private static int GetColumnFromPosition(ReadOnlyCollection<ColumnResult> columns, ITextPointer position)
         {
             // Column collection cannot be null
             Invariant.Assert(columns != null, "Column collection is null");
@@ -2780,7 +2780,7 @@ namespace MS.Internal.Documents
         /// A TextPointer and its orientation matching suggestedX on the 
         /// destination line.
         /// </returns>
-        private ITextPointer GetPositionAtNextLineFromSiblingPara(ReadOnlyCollection<ParagraphResult> paragraphs, int paragraphIndex, double suggestedX, ref int count)
+        private static ITextPointer GetPositionAtNextLineFromSiblingPara(ReadOnlyCollection<ParagraphResult> paragraphs, int paragraphIndex, double suggestedX, ref int count)
         {
             Invariant.Assert(count != 0);
             Invariant.Assert(paragraphIndex >= 0 && paragraphIndex < paragraphs.Count, "Paragraph collection is empty.");
@@ -2943,7 +2943,7 @@ namespace MS.Internal.Documents
         /// A TextPointer and its orientation matching suggestedX on the 
         /// destination line.
         /// </returns>
-        private ITextPointer GetPositionAtNextLineFromSiblingTextPara(TextParagraphResult paragraph, double suggestedX, ref int count)
+        private static ITextPointer GetPositionAtNextLineFromSiblingTextPara(TextParagraphResult paragraph, double suggestedX, ref int count)
         {
             ITextPointer positionOut = null;
 
@@ -3061,7 +3061,7 @@ namespace MS.Internal.Documents
         /// A TextPointer and its orientation matching suggestedX on the 
         /// destination line.
         /// </returns>
-        private ITextPointer GetPositionAtNextLineFromSiblingColumn(ReadOnlyCollection<ColumnResult> columns, int columnIndex, double columnSuggestedX, ref double newSuggestedX, ref int count)
+        private static ITextPointer GetPositionAtNextLineFromSiblingColumn(ReadOnlyCollection<ColumnResult> columns, int columnIndex, double columnSuggestedX, ref double newSuggestedX, ref int count)
         {
             ITextPointer positionOut = null;
 
@@ -3124,7 +3124,7 @@ namespace MS.Internal.Documents
         /// <param name="end">End position.</param>
         /// <param name="paragraphs">Collection of paragraphs.</param>
         /// <returns>True if needs to continue search. False if all glyph runs have been retrieved.</returns>
-        private bool GetGlyphRunsFromParagraphs(List<GlyphRun> glyphRuns, ITextPointer start, ITextPointer end, ReadOnlyCollection<ParagraphResult> paragraphs)
+        private static bool GetGlyphRunsFromParagraphs(List<GlyphRun> glyphRuns, ITextPointer start, ITextPointer end, ReadOnlyCollection<ParagraphResult> paragraphs)
         {
             Invariant.Assert(paragraphs != null, "Paragraph collection is null.");
 
@@ -3472,7 +3472,7 @@ namespace MS.Internal.Documents
         /// <returns>
         /// Returns rect for edge, or Rect.Empty if textposition not on edge
         /// </returns>
-        private Rect GetRectangleFromEdge(ParagraphResult paragraphResult, ITextPointer textPointer)
+        private static Rect GetRectangleFromEdge(ParagraphResult paragraphResult, ITextPointer textPointer)
         {
             TextElement textElement = paragraphResult.Element as TextElement;
 
@@ -3502,7 +3502,7 @@ namespace MS.Internal.Documents
         /// <returns>
         /// Returns rect for edge, or Rect.Empty if textposition not on edge
         /// </returns>
-        private Rect GetRectangleFromContentEdge(ParagraphResult paragraphResult, ITextPointer textPointer)
+        private static Rect GetRectangleFromContentEdge(ParagraphResult paragraphResult, ITextPointer textPointer)
         {
             TextElement textElement = paragraphResult.Element as TextElement;
             if (textElement != null)

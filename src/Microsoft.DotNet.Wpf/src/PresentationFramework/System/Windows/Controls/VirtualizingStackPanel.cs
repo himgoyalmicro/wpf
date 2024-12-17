@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -4677,7 +4677,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void NormalizeCacheLength(
+        private static void NormalizeCacheLength(
             bool isHorizontal,
             Rect viewport,
             ref VirtualizationCacheLength cacheLength,
@@ -6385,7 +6385,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private Thickness GetItemsHostInsetForChild(IHierarchicalVirtualizationAndScrollInfo virtualizationInfoProvider, IContainItemStorage parentItemStorageProvider=null, object parentItem=null)
+        private static Thickness GetItemsHostInsetForChild(IHierarchicalVirtualizationAndScrollInfo virtualizationInfoProvider, IContainItemStorage parentItemStorageProvider=null, object parentItem=null)
         {
             // This method is called in two ways:
             // 1) Before this panel has been measured.
@@ -6443,7 +6443,7 @@ namespace System.Windows.Controls
             return inset;
         }
 
-        private void SetItemsHostInsetForChild(int index, UIElement child, IContainItemStorage itemStorageProvider, bool isHorizontal)
+        private static void SetItemsHostInsetForChild(int index, UIElement child, IContainItemStorage itemStorageProvider, bool isHorizontal)
         {
             Debug.Assert(!IsVSP45Compat, "SetItemsHostInset should not be called in VSP45-compat mode");
 
@@ -6554,7 +6554,7 @@ namespace System.Windows.Controls
         // NOTE: This assumes that the only container types are TreeViewItem and
         // GroupItem.   This is true in 4.5.  If hierarchical virtualization
         // is ever extended to other container types, this method will need to change.
-        private ItemsControl GetScrollingItemsControl(UIElement container)
+        private static ItemsControl GetScrollingItemsControl(UIElement container)
         {
             if (container is TreeViewItem)
             {
@@ -6591,13 +6591,13 @@ namespace System.Windows.Controls
             return null;
         }
 
-        private object GetItemFromContainer(DependencyObject container)
+        private static object GetItemFromContainer(DependencyObject container)
         {
             return container.ReadLocalValue(System.Windows.Controls.ItemContainerGenerator.ItemForItemContainerProperty);
         }
 
         // true if "header" occurs before the ItemsHost panel in the stacking direction
-        private bool IsHeaderBeforeItems(bool isHorizontal, FrameworkElement container, ref Thickness inset)
+        private static bool IsHeaderBeforeItems(bool isHorizontal, FrameworkElement container, ref Thickness inset)
         {
             // don't depend on finding an element identified as the "header".  Instead
             // see whether there is more space before the ItemsHost than after, and
@@ -6653,7 +6653,7 @@ namespace System.Windows.Controls
             return false;
         }
 
-        private bool IsEndOfViewport(bool isHorizontal, Rect viewport, Size stackPixelSizeInViewport)
+        private static bool IsEndOfViewport(bool isHorizontal, Rect viewport, Size stackPixelSizeInViewport)
         {
             if (isHorizontal)
             {
@@ -6665,7 +6665,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool IsViewportEmpty(bool isHorizontal, Rect viewport)
+        private static bool IsViewportEmpty(bool isHorizontal, Rect viewport)
         {
             if (isHorizontal)
             {
@@ -7395,7 +7395,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void UpdateStackSizes(
+        private static void UpdateStackSizes(
             bool isHorizontal,
             bool foundFirstItemInViewport,
             Size childPixelSize,
@@ -10940,7 +10940,7 @@ namespace System.Windows.Controls
             _scrollData._offset = viewportOffset;
         } // *** End DEAD CODE ***
 
-        private void StorePreviouslyMeasuredOffset(
+        private static void StorePreviouslyMeasuredOffset(
             ref List<double> previouslyMeasuredOffsets,
             double offset)
         {
@@ -10952,7 +10952,7 @@ namespace System.Windows.Controls
             previouslyMeasuredOffsets.Add(offset);
         }
 
-        private bool WasOffsetPreviouslyMeasured(
+        private static bool WasOffsetPreviouslyMeasured(
             List<double> previouslyMeasuredOffsets,
             double offset)
         {
@@ -11128,7 +11128,7 @@ namespace System.Windows.Controls
             return offset;
         }
 
-        private DependencyObject FindDirectDescendentOfItemsHost(Panel itemsHost, DependencyObject child)
+        private static DependencyObject FindDirectDescendentOfItemsHost(Panel itemsHost, DependencyObject child)
         {
             if (itemsHost == null || !itemsHost.IsVisible)
             {
@@ -11263,7 +11263,7 @@ namespace System.Windows.Controls
         ///     and returns the max arrange height/width for
         ///     horizontal/vertical orientation
         /// </summary>
-        private double GetMaxChildArrangeLength(IList children, bool isHorizontal)
+        private static double GetMaxChildArrangeLength(IList children, bool isHorizontal)
         {
             double maxChildLength = 0;
             for (int i = 0, childCount = children.Count; i < childCount; i++)
@@ -11633,7 +11633,7 @@ namespace System.Windows.Controls
             get { return _scrollData?._expectedDistanceBetweenViewports ?? 0.0; }
         }
 
-        private bool CanMouseWheelVerticallyScroll
+        private static bool CanMouseWheelVerticallyScroll
         {
             get { return (SystemParameters.WheelScrollLines > 0); }
         }

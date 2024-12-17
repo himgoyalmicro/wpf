@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -425,7 +425,7 @@ namespace MS.Internal.Media3D
         /// <param name="edgeList">The edge list that results should be placed on</param>
         /// <param name="adjInformation">The adjacency information for the mesh</param>
         /// <param name="camPosObjSpace"></param>
-        private void ProcessTriangle(Point3D[] p,
+        private static void ProcessTriangle(Point3D[] p,
                                      Point[] uv,
                                      Point[] visualTexCoordBounds,
                                      List<HitTestEdge> edgeList,
@@ -467,7 +467,7 @@ namespace MS.Internal.Media3D
         /// <param name="uv">The texture coordinates for that triangle</param>
         /// <param name="visualTexCoordBounds">The texture coordinate edges to be intersected against</param>
         /// <param name="edgeList">The list of edges any intersecte edges should be added to</param>
-        private void ProcessVisualBoundsIntersections(Point3D[] p,
+        private static void ProcessVisualBoundsIntersections(Point3D[] p,
                                                       Point[] uv,
                                                       Point[] visualTexCoordBounds,
                                                       List<HitTestEdge> edgeList)
@@ -586,7 +586,7 @@ namespace MS.Internal.Media3D
         /// <param name="triUV1">The texture coordinates of the triangle edge</param>
         /// <param name="triUV2">The texture coordinates of the triangle edge</param>
         /// <param name="edgeList">The edge list to add to</param>
-        private void HandleCoincidentLines(Point visUV1, Point visUV2,
+        private static void HandleCoincidentLines(Point visUV1, Point visUV2,
                                            Point3D tri3D1, Point3D tri3D2,
                                            Point triUV1, Point triUV2,
                                            List<HitTestEdge> edgeList)
@@ -729,7 +729,7 @@ namespace MS.Internal.Media3D
         /// The parameter along the ray of the point of intersection.
         /// If the ray and line are parallel and not coincident, this will be -1.
         /// </returns>
-        private double IntersectRayLine(Point o, Vector d, Point p1, Point p2, out bool coinc)
+        private static double IntersectRayLine(Point o, Vector d, Point p1, Point p2, out bool coinc)
         {
             coinc = false;
 
@@ -817,7 +817,7 @@ namespace MS.Internal.Media3D
         /// <param name="polygonSide">Which side the polygon is facing (greateer than 0 front, less than 0 back)</param>
         /// <param name="edgeList">The list of edges comprosing the visual outline</param>
         /// <param name="adjInformation">The adjacency information structure</param>
-        private void ProcessTriangleEdges(Point3D[] p,
+        private static void ProcessTriangleEdges(Point3D[] p,
                                           Point[] uv,
                                           Point[] visualTexCoordBounds,
                                           PolygonSide polygonSide,
@@ -899,7 +899,7 @@ namespace MS.Internal.Media3D
         /// <param name="p3D2">The 3D point of the edge</param>
         /// <param name="bounds">The texture coordinate bounds</param>
         /// <param name="edgeList">The list of edges</param>
-        private void HandleSilhouetteEdge(Point uv1, Point uv2,
+        private static void HandleSilhouetteEdge(Point uv1, Point uv2,
                                           Point3D p3D1, Point3D p3D2,
                                           Point[] bounds,
                                           List<HitTestEdge> edgeList)
@@ -989,7 +989,7 @@ namespace MS.Internal.Media3D
         /// <param name="polygon">The polygon to test against</param>
         /// <param name="p">The point to be tested against</param>
         /// <returns>Whether the point is in the polygon</returns>
-        private bool IsPointInPolygon(Point[] polygon, Point p)
+        private static bool IsPointInPolygon(Point[] polygon, Point p)
         {
             bool sign = false;
 

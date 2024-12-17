@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -3563,7 +3563,7 @@ namespace System.Windows
         /// <summary>
         /// Ensure Dialog command is registered with the CommandManager
         /// </summary>
-        private void EnsureDialogCommand()
+        private static void EnsureDialogCommand()
         {
             // _dialogCommandAdded is a static variable, however, we're not synchronizing
             // access to it.  The reason is that, CommandManager is thread safe and according
@@ -3754,7 +3754,7 @@ namespace System.Windows
             }
         }
 
-        IntPtr GetCurrentMonitorFromMousePosition()
+        static IntPtr GetCurrentMonitorFromMousePosition()
         {
             // center on the screen on which the mouse is on
             NativeMethods.POINT pt = default;
@@ -4535,7 +4535,7 @@ namespace System.Windows
                 Owner.OwnedWindowsInternal.Remove(this);
             }
 
-            if (this.IsInsideApp)
+            if (IsInsideApp)
             {
                 if (Application.Current.Dispatcher.Thread == Dispatcher.CurrentDispatcher.Thread)
                 {
@@ -7214,7 +7214,7 @@ namespace System.Windows
         /// <summary>
         ///     Application Instance
         /// </summary>
-        private System.Windows.Application App
+        private static System.Windows.Application App
         {
             get {return System.Windows.Application.Current;}
         }
@@ -7222,7 +7222,7 @@ namespace System.Windows
         /// <summary>
         ///     Tells whether the Application object exists or not
         /// </summary>
-        private bool IsInsideApp
+        private static bool IsInsideApp
         {
             get
             {
@@ -7824,7 +7824,7 @@ namespace System.Windows
             /// compatibility measure put in place to ensure that our improvement/fix does not clash with workarounds
             /// that developers might have built into their applications to correct this problem.
             /// </remarks>
-            private bool IsHelperNeeded
+            private static bool IsHelperNeeded
             {
                 get
                 {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace System.Windows.Media.Imaging
                 lock (syncObject)
                 {
                     HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFastMetadataEncoderFromFrameDecode(
-                            factoryMaker.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             frameHandle,
                             out fmeHandle));
                 }
@@ -82,7 +82,7 @@ namespace System.Windows.Media.Imaging
                 lock (syncObject)
                 {
                     HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFastMetadataEncoderFromDecoder(
-                            factoryMaker.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             decoderHandle,
                             out fmeHandle));
                 }

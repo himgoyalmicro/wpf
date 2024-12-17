@@ -1063,7 +1063,7 @@ namespace System.Xaml
         }
 
         // These are the all the directives that affect Construction of object.
-        bool IsConstructionDirective(XamlMember xamlMember)
+        static bool IsConstructionDirective(XamlMember xamlMember)
         {
             return xamlMember == XamlLanguage.Arguments
                 || xamlMember == XamlLanguage.Base
@@ -1075,7 +1075,7 @@ namespace System.Xaml
 
         // BAML sometimes sends the x:base directive later than it should
         // so these are the Ctor Directives we worry about 'Users' messing up.
-        bool IsTextConstructionDirective(XamlMember xamlMember)
+        static bool IsTextConstructionDirective(XamlMember xamlMember)
         {
             return xamlMember == XamlLanguage.Arguments
                 || xamlMember == XamlLanguage.FactoryMethod
@@ -1086,7 +1086,7 @@ namespace System.Xaml
         // Non Ctor directives that are also allowed before object creation.
         // These are compat issues with BAML recording x:Key x:Uid earlier than
         // it current XAML standards.
-        bool IsDirectiveAllowedOnNullInstance(XamlMember xamlMember, XamlType xamlType)
+        static bool IsDirectiveAllowedOnNullInstance(XamlMember xamlMember, XamlType xamlType)
         {
             if (xamlMember == XamlLanguage.Key)
             {
@@ -1620,7 +1620,7 @@ namespace System.Xaml
             }
         }
 
-        private void Logic_CheckBaseUri(ObjectWriterContext ctx, string value)
+        private static void Logic_CheckBaseUri(ObjectWriterContext ctx, string value)
         {
             // Make sure BaseUri is not already set and that we can only set BaseUri on the root element
             // Depth > 2 because on the root element, SO/SM takes 1 slot, V is slot 2
@@ -1800,7 +1800,7 @@ namespace System.Xaml
         /// <param name="type">The type of the new item</param>
         /// <param name="excludeObjectType">return false if collection Item Type is Object</param>
         /// <returns></returns>
-        private bool Logic_WillParentCollectionAdd(ObjectWriterContext ctx, Type type, bool excludeObjectType)
+        private static bool Logic_WillParentCollectionAdd(ObjectWriterContext ctx, Type type, bool excludeObjectType)
         {
             Debug.Assert(ctx.ParentType.IsCollection, "Logic_WillParentCollectionAdd called on a non-collection");
 
@@ -2090,7 +2090,7 @@ namespace System.Xaml
             }
         }
 
-        private void Logic_RegisterName_OnCurrent(ObjectWriterContext ctx, string name)
+        private static void Logic_RegisterName_OnCurrent(ObjectWriterContext ctx, string name)
         {
             bool isRoot = ctx.LiveDepth == 1;
             RegisterName(ctx, name, ctx.CurrentInstance, ctx.CurrentType,
@@ -2098,14 +2098,14 @@ namespace System.Xaml
             ctx.CurrentInstanceRegisteredName = name;
         }
 
-        private void Logic_RegisterName_OnParent(ObjectWriterContext ctx, string name)
+        private static void Logic_RegisterName_OnParent(ObjectWriterContext ctx, string name)
         {
             RegisterName(ctx, name, ctx.ParentInstance, ctx.ParentType,
                                ctx.ParentNameScope, ctx.GrandParentNameScope, false);
             ctx.ParentInstanceRegisteredName = name;
         }
 
-        private void RegisterName(ObjectWriterContext ctx, string name,
+        private static void RegisterName(ObjectWriterContext ctx, string name,
                                 object inst, XamlType xamlType,
                                 XAML3.INameScope nameScope, XAML3.INameScope parentNameScope, bool isRoot)
         {
@@ -2214,7 +2214,7 @@ namespace System.Xaml
             Logic_PendCurrentFixupToken_SetValue(ctx, token);
         }
 
-        private NameFixupToken GetTokenForUnresolvedChildren(object childThatHasUnresolvedChildren,
+        private static NameFixupToken GetTokenForUnresolvedChildren(object childThatHasUnresolvedChildren,
             XamlMember property, XamlSavedContext deferredMarkupExtensionContext)
         {
             NameFixupToken token = new NameFixupToken();
@@ -2296,7 +2296,7 @@ namespace System.Xaml
         }
 
         // Throw an exception with all the unresolved simple fixups
-        private void ThrowUnresolvedRefs(IEnumerable<NameFixupToken> unresolvedRefs)
+        private static void ThrowUnresolvedRefs(IEnumerable<NameFixupToken> unresolvedRefs)
         {
             StringBuilder exceptionMessage = new StringBuilder();
             bool first = true;

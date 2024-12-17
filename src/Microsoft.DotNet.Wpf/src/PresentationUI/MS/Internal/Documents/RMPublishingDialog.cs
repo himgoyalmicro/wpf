@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -138,7 +138,7 @@ namespace MS.Internal.Documents
             DocumentManager documentManager = DocumentManager.CreateDefault();
             if (documentManager != null)
             {
-                _canSave = documentManager.CanSave;
+                _canSave = DocumentManager.CanSave;
             }
 
             buttonSave.Enabled = _canSave;
@@ -320,7 +320,7 @@ namespace MS.Internal.Documents
         /// Used to get the value of HKCU\Software\Microsoft\XPSViewer\Common\DRM\AdminTemplatePath
         /// </summary>
         /// <returns>The contents of the key, otherwise string.Empty.</returns>
-        private Uri GetTemplatePath()
+        private static Uri GetTemplatePath()
         {
             string path = string.Empty;
 
@@ -688,7 +688,7 @@ namespace MS.Internal.Documents
             //Invoke the People Picker, which should return a user-selected
             //e-mail address or an empty array if nothing was selected.
             PeoplePickerWrapper picker = new PeoplePickerWrapper();
-            String[] userNames = picker.Show(this.Handle);
+            String[] userNames = PeoplePickerWrapper.Show(this.Handle);
 
             if (userNames != null && userNames.Length > 0)
             {

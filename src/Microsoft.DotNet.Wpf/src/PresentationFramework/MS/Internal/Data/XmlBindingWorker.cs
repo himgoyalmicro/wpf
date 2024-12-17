@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -371,7 +371,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private XmlDocument DocumentFor(XmlNode node)
+        private static XmlDocument DocumentFor(XmlNode node)
         {
             XmlDocument doc = node.OwnerDocument;
             if (doc == null)
@@ -540,7 +540,7 @@ namespace MS.Internal.Data
             return nodes;
         }
 
-        private string IdentifyNode(XmlNode node)
+        private static string IdentifyNode(XmlNode node)
         {
             if (node == null)
                 return "<null>";
@@ -548,7 +548,7 @@ namespace MS.Internal.Data
             return $"{node.GetType().Name} ({node.Name})";
         }
 
-        private string IdentifyNodeList(XmlNodeList nodeList)
+        private static string IdentifyNodeList(XmlNodeList nodeList)
         {
             if (nodeList == null)
                 return "<null>";

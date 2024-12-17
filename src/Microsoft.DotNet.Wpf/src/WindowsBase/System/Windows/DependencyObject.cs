@@ -3368,7 +3368,7 @@ namespace System.Windows
         /// <summary>
         ///     Helper method to compare two DP values
         /// </summary>
-        private bool Equals(DependencyProperty dp, object value1, object value2)
+        private static bool Equals(DependencyProperty dp, object value1, object value2)
         {
             if (dp.IsValueType || dp.IsStringType)
             {

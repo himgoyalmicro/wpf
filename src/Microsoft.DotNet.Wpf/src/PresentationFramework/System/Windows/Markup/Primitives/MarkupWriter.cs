@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -165,7 +165,7 @@ namespace System.Windows.Markup.Primitives
             GC.SuppressFinalize(this);
         }
 
-        private bool RecordNamespaces(Scope scope, MarkupObject item, IValueSerializerContext context, bool
+        private static bool RecordNamespaces(Scope scope, MarkupObject item, IValueSerializerContext context, bool
             lastWasString)
         {
             // Ensure that there's an xmlns declaration generated for strings that are emitted as content.
@@ -856,7 +856,7 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        private bool IsContentProperty(MarkupProperty property, ContentPropertyAttribute cpa, ref MarkupProperty contentProperty)
+        private static bool IsContentProperty(MarkupProperty property, ContentPropertyAttribute cpa, ref MarkupProperty contentProperty)
         {
             // if the property already knows it is the content property, we're done
             bool isContentProperty = property.IsContent;
@@ -922,7 +922,7 @@ namespace System.Windows.Markup.Primitives
             return isContentProperty;
         }
 
-        private bool IsDeferredProperty (MarkupProperty property, Dictionary<string, string> writtenAttributes,
+        private static bool IsDeferredProperty (MarkupProperty property, Dictionary<string, string> writtenAttributes,
                                                ref PartiallyOrderedList<string, MarkupProperty> deferredProperties)
         {
             bool defer = false;
@@ -968,7 +968,7 @@ namespace System.Windows.Markup.Primitives
         /// <summary>
         /// whether the property needs to write out an explicit tag because it is a collection value with a null default value
         /// </summary>
-        private bool NeedToWriteExplicitTag(MarkupProperty property, MarkupObject firstItem)
+        private static bool NeedToWriteExplicitTag(MarkupProperty property, MarkupObject firstItem)
         {
             // need to write an explicit tag if ALL of the following conditions are met:
             // 1) property is a collection type
@@ -1076,7 +1076,7 @@ namespace System.Windows.Markup.Primitives
             _writer.WriteEndElement();
         }
 
-        private List<Type> GetWrapperTypes(Type type)
+        private static List<Type> GetWrapperTypes(Type type)
         {
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
             if (attributes[typeof(ContentWrapperAttribute)] == null)
@@ -1094,7 +1094,7 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        private MarkupProperty GetWrappedProperty(List<Type> wrapperTypes, MarkupObject item)
+        private static MarkupProperty GetWrappedProperty(List<Type> wrapperTypes, MarkupObject item)
         {
             if (!IsInTypes(item.ObjectType, wrapperTypes))
                 return null;
@@ -1114,14 +1114,14 @@ namespace System.Windows.Markup.Primitives
             return contentProperty;
         }
 
-        private bool IsInTypes(Type type, List<Type> types)
+        private static bool IsInTypes(Type type, List<Type> types)
         {
             foreach (Type t in types)
                 if (t == type) return true;
             return false;
         }
 
-        private string TextValue(MarkupObject item)
+        private static string TextValue(MarkupObject item)
         {
             foreach (MarkupProperty property in item.Properties)
             {
@@ -1132,7 +1132,7 @@ namespace System.Windows.Markup.Primitives
             return null;
         }
 
-        private bool HasNonValueProperties(MarkupObject item)
+        private static bool HasNonValueProperties(MarkupObject item)
         {
             foreach (MarkupProperty property in item.Properties)
             {
@@ -1142,13 +1142,13 @@ namespace System.Windows.Markup.Primitives
             return false;
         }
 
-        private bool IsCollectionType(Type type)
+        private static bool IsCollectionType(Type type)
         {
             return typeof(IEnumerable).IsAssignableFrom(type) ||
                 typeof(Array).IsAssignableFrom(type);
         }
 
-        private bool HasOnlyNormalizationNeutralStrings(MarkupProperty contentProperty,
+        private static bool HasOnlyNormalizationNeutralStrings(MarkupProperty contentProperty,
             bool keepLeadingSpace, bool keepTrailingSpace)
         {
             if (!contentProperty.IsComposite)
@@ -1224,14 +1224,14 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        private bool ShouldTrimSurroundingWhitespace(MarkupObject item)
+        private static bool ShouldTrimSurroundingWhitespace(MarkupObject item)
         {
             // An item declares how surrounding whitespace should be treated with the TrimSurroundingWhitespaceAttribute.
             TrimSurroundingWhitespaceAttribute attribute = item.Attributes[typeof(TrimSurroundingWhitespaceAttribute)] as TrimSurroundingWhitespaceAttribute;
             return (attribute != null);
         }
 
-        private bool IsNormalizationNeutralString(string value, bool keepLeadingSpace, bool keepTrailingSpace)
+        private static bool IsNormalizationNeutralString(string value, bool keepLeadingSpace, bool keepTrailingSpace)
         {
             bool lastCharSpace = !keepLeadingSpace;
 

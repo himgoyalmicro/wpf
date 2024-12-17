@@ -84,7 +84,7 @@ namespace System.Xaml
             Initialize(CreateXmlReader(fileName, settings), schemaContext, settings);
         }
 
-        private XmlReader CreateXmlReader(string fileName, XamlXmlReaderSettings settings)
+        private static XmlReader CreateXmlReader(string fileName, XamlXmlReaderSettings settings)
         {
             bool closeInput = (settings is null) ? true : settings.CloseInput;
             return XmlReader.Create(fileName, new XmlReaderSettings { CloseInput = closeInput, DtdProcessing = DtdProcessing.Prohibit });
@@ -118,7 +118,7 @@ namespace System.Xaml
             Initialize(CreateXmlReader(stream, settings), schemaContext, settings);
         }
 
-        private XmlReader CreateXmlReader(Stream stream, XamlXmlReaderSettings settings)
+        private static XmlReader CreateXmlReader(Stream stream, XamlXmlReaderSettings settings)
         {
             bool closeInput = (settings is not null) && settings.CloseInput;
             return XmlReader.Create(stream, new XmlReaderSettings { CloseInput = closeInput, DtdProcessing = DtdProcessing.Prohibit });
@@ -152,7 +152,7 @@ namespace System.Xaml
             Initialize(CreateXmlReader(textReader, settings), schemaContext, settings);
         }
 
-        private XmlReader CreateXmlReader(TextReader textReader, XamlXmlReaderSettings settings)
+        private static XmlReader CreateXmlReader(TextReader textReader, XamlXmlReaderSettings settings)
         {
             bool closeInput = (settings is not null) && settings.CloseInput;
             return XmlReader.Create(textReader, new XmlReaderSettings { CloseInput = closeInput, DtdProcessing = DtdProcessing.Prohibit });

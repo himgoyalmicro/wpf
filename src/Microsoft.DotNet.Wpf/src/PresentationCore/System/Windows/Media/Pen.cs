@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -79,7 +79,7 @@ namespace System.Windows.Media
 
         #endregion Constructors
 
-        private MIL_PEN_CAP GetInternalCapType(PenLineCap cap)
+        private static MIL_PEN_CAP GetInternalCapType(PenLineCap cap)
         {
             Debug.Assert((MIL_PEN_CAP)PenLineCap.Flat == MIL_PEN_CAP.MilPenCapFlat);
             Debug.Assert((MIL_PEN_CAP)PenLineCap.Square == MIL_PEN_CAP.MilPenCapSquare);
@@ -89,7 +89,7 @@ namespace System.Windows.Media
             return (MIL_PEN_CAP)cap;
         }
 
-        private MIL_PEN_JOIN GetInternalJoinType(PenLineJoin join)
+        private static MIL_PEN_JOIN GetInternalJoinType(PenLineJoin join)
         {
             Debug.Assert((MIL_PEN_JOIN)PenLineJoin.Miter == MIL_PEN_JOIN.MilPenJoinMiter);
             Debug.Assert((MIL_PEN_JOIN)PenLineJoin.Bevel == MIL_PEN_JOIN.MilPenJoinBevel);

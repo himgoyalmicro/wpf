@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -146,7 +146,7 @@ namespace System.Windows.Markup
         // Returns an known markup extension that can have a simple value. Also returns the property
         // name of the extension that can be used to set the value. This is used to strip it out of
         // the  args to get the simple value.
-        private KnownElements GetKnownExtensionFromType(Type extensionType, out string propName)
+        private static KnownElements GetKnownExtensionFromType(Type extensionType, out string propName)
         {
             if (KnownTypes.Types[(int)KnownElements.TypeExtension] == extensionType)
             {
@@ -578,7 +578,7 @@ namespace System.Windows.Markup
                 {
                     // if local assemblies can be resolved, but the type could not be resolved, then
                     // we need to throw an exception
-                    ThrowException(nameof(SR.ParserNotMarkupExtension), attributeValue, typename,
+                    MarkupExtensionParser.ThrowException(nameof(SR.ParserNotMarkupExtension), attributeValue, typename,
                                    namespaceURI, lineNumber, linePosition);
                 }
                 else
@@ -593,7 +593,7 @@ namespace System.Windows.Markup
             else if (!KnownTypes.Types[(int)KnownElements.MarkupExtension].IsAssignableFrom(targetType))
             {
                 // if the type is not known, throw an exception
-                ThrowException(nameof(SR.ParserNotMarkupExtension), attributeValue, typename,
+                MarkupExtensionParser.ThrowException(nameof(SR.ParserNotMarkupExtension), attributeValue, typename,
                                namespaceURI, lineNumber, linePosition);
             }
 
@@ -1042,7 +1042,7 @@ namespace System.Windows.Markup
                             }
                             else
                             {
-                                ThrowException(nameof(SR.ParserMarkupExtensionInvalidClosingBracketCharacers), args[i].ToString(), lineNumber, linePosition);
+                                MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionInvalidClosingBracketCharacers), args[i].ToString(), lineNumber, linePosition);
                             }
                         }
 
@@ -1061,7 +1061,16 @@ namespace System.Windows.Markup
                             // occur as the first non-whitespace character in a name or value.
                             if (stringBuilder.Length != 0)
                             {
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                 ThrowException(nameof(SR.ParserMarkupExtensionNoQuotesInName), args,
+                                               lineNumber, linePosition);
+After:
+                                    ThrowException(nameof(SR.ParserMarkupExtensionNoQuotesInName), args,
+                                               lineNumber, linePosition);
+*/
+                                    MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionNoQuotesInName), args,
                                                lineNumber, linePosition);
                             }
                             inQuotes = true;
@@ -1086,21 +1095,56 @@ namespace System.Windows.Markup
                                 AddToTokenList(list, stringBuilder, true);
                                 if (bracketCharacterStack.Count != 0)
                                 {
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                     ThrowException(nameof(SR.ParserMarkupExtensionMalformedBracketCharacers), bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
+                                }
+After:
+                                        ThrowException(nameof(SR.ParserMarkupExtensionMalformedBracketCharacers), bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
+                                }
+*/
+                                        MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionMalformedBracketCharacers), bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
                                 }
                             }
                             else if (list.Count == 0)
                             {
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                 // Must have an attribute before you have the first delimeter
                                 ThrowException(nameof(SR.ParserMarkupExtensionDelimiterBeforeFirstAttribute), args,
+                                               lineNumber, linePosition);
+After:
+                                    // Must have an attribute before you have the first delimeter
+                                    ThrowException(nameof(SR.ParserMarkupExtensionDelimiterBeforeFirstAttribute), args,
+                                               lineNumber, linePosition);
+*/
+                                    // Must have an attribute before you have the first delimeter
+                                    MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionDelimiterBeforeFirstAttribute), args,
                                                lineNumber, linePosition);
                             }
                             else if (list[list.Count - 1] is Char)
                             {
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                 // Can't have two delimiters in a row, so check what is on
                                 // the list and complain if the last item is a character, or if
                                 // a delimiter is the first item.
                                 ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
+                                               lineNumber, linePosition);
+After:
+                                    // Can't have two delimiters in a row, so check what is on
+                                    // the list and complain if the last item is a character, or if
+                                    // a delimiter is the first item.
+                                    ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
+                                               lineNumber, linePosition);
+*/
+                                    // Can't have two delimiters in a row, so check what is on
+                                    // the list and complain if the last item is a character, or if
+                                    // a delimiter is the first item.
+                                    MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
                                                lineNumber, linePosition);
                             }
 
@@ -1130,7 +1174,16 @@ namespace System.Windows.Markup
                                 }
                                 else if (list.Count > 0 && (list[list.Count-1] is Char))
                                 {
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                                     ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
+                                                   lineNumber, linePosition);
+After:
+                                        ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
+                                                   lineNumber, linePosition);
+*/
+                                        MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
                                                    lineNumber, linePosition);
                                 }
                             }
@@ -1162,12 +1215,12 @@ namespace System.Windows.Markup
             // format is bad, so complain.
             if (!gotFinalCloseCurly)
             {
-                ThrowException(nameof(SR.ParserMarkupExtensionNoEndCurlie), "}", lineNumber, linePosition);
+                MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionNoEndCurlie), "}", lineNumber, linePosition);
             }
             // If there is junk after the closing '}', complain
             else if (i < length)
             {
-                ThrowException(nameof(SR.ParserMarkupExtensionTrailingGarbage), "}",
+                MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionTrailingGarbage), "}",
                                args.Substring(i,length-(i)), lineNumber, linePosition);
             }
 
@@ -1195,7 +1248,7 @@ namespace System.Windows.Markup
         /// Returns the list of parameters of the constructor with the most number
         /// of arguments.
         /// </summary>
-        private ParameterInfo[] FindLongestConstructor(Type extensionType, out int maxConstructorArguments)
+        private static ParameterInfo[] FindLongestConstructor(Type extensionType, out int maxConstructorArguments)
         {
             ParameterInfo[] constructorParameters = null;
             ConstructorInfo[] constructors = extensionType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
@@ -1242,7 +1295,7 @@ namespace System.Windows.Markup
                 {
                     if (!(list[listIndex] is String))
                     {
-                        ThrowException(nameof(SR.ParserMarkupExtensionBadConstructorParam), data.Args,
+                        MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionBadConstructorParam), data.Args,
                                        data.LineNumber, data.LinePosition);
                     }
 
@@ -1314,7 +1367,7 @@ namespace System.Windows.Markup
                     }
 
                     // If we get to here, then no matching constructor was found, so complain
-                    ThrowException(nameof(SR.ParserBadConstructorParams), data.TargetType.Name,
+                    MarkupExtensionParser.ThrowException(nameof(SR.ParserBadConstructorParams), data.TargetType.Name,
                                    numberOfConstructorAttributes.ToString(CultureInfo.CurrentCulture),
                                    data.LineNumber, data.LinePosition);
                 }
@@ -1346,7 +1399,7 @@ namespace System.Windows.Markup
                         (list[k+1] is String) ||
                         ((Char)list[k+1]) != '=')
                     {
-                        ThrowException(nameof(SR.ParserMarkupExtensionNoNameValue), data.Args,
+                        MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionNoNameValue), data.Args,
                                        data.LineNumber, data.LinePosition);
                     }
 
@@ -1358,7 +1411,7 @@ namespace System.Windows.Markup
 
                     if (propertyNamesSoFar.Contains(propertyName))
                     {
-                        ThrowException(nameof(SR.ParserDuplicateMarkupExtensionProperty), propertyName, data.LineNumber, data.LinePosition);
+                        MarkupExtensionParser.ThrowException(nameof(SR.ParserDuplicateMarkupExtensionProperty), propertyName, data.LineNumber, data.LinePosition);
                     }
                     propertyNamesSoFar.Add( propertyName );
 
@@ -1471,7 +1524,7 @@ namespace System.Windows.Markup
         /// Looks up the already constructed BracketCharacter cache for the BracketCharacters on 
         /// the given property.
         /// </summary>
-        private SpecialBracketCharacters GetBracketCharacterForProperty(string propertyName, Dictionary<string, SpecialBracketCharacters> bracketCharacterCache)
+        private static SpecialBracketCharacters GetBracketCharacterForProperty(string propertyName, Dictionary<string, SpecialBracketCharacters> bracketCharacterCache)
         {
             SpecialBracketCharacters bracketCharacters = null;
             if (bracketCharacterCache != null && bracketCharacterCache.ContainsKey(propertyName))
@@ -1512,7 +1565,16 @@ namespace System.Windows.Markup
 
             if (String.IsNullOrEmpty(attribNamespaceURI))
             {
+
+/* Unmerged change from project 'PresentationBuildTasks (net10.0)'
+Before:
                ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name, lineNumber, linePosition);
+            }
+After:
+                ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name, lineNumber, linePosition);
+            }
+*/
+                MarkupExtensionParser.ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name, lineNumber, linePosition);
             }
 
             AttributeContext attributeContext = GetAttributeContext(
@@ -1528,7 +1590,7 @@ namespace System.Windows.Markup
 
             if (attributeContext != AttributeContext.Property)
             {
-                ThrowException(nameof(SR.ParserMarkupExtensionUnknownAttr), localName,
+                MarkupExtensionParser.ThrowException(nameof(SR.ParserMarkupExtensionUnknownAttr), localName,
                                parentType.FullName, lineNumber, linePosition);
             }
 
@@ -1683,7 +1745,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        static void ThrowException(
             string id,
             string parameter1,
             int    lineNumber,
@@ -1696,7 +1758,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        static void ThrowException(
             string id,
             string parameter1,
             string parameter2,
@@ -1710,7 +1772,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        static void ThrowException(
             string id,
             string parameter1,
             string parameter2,
@@ -1725,7 +1787,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowExceptionWithLine(
+        static void ThrowExceptionWithLine(
             string message,
             int    lineNumber,
             int    linePosition)

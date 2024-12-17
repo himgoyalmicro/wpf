@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -413,7 +413,7 @@ namespace System.Windows.Media
         /// zombie state. This means either an unhandled batch processing,
         /// rendering or presentation error and will require us to reconnect.
         /// </summary>
-        private void NotifyPartitionIsZombie(int failureCode)
+        private static void NotifyPartitionIsZombie(int failureCode)
         {
             //
             // We only get back these kinds of notification:-
@@ -437,7 +437,7 @@ namespace System.Windows.Media
         /// The back channel processed a malformed packet and so gives
         /// the notification of invalid packet.
         /// </summary>
-        private void HandleInvalidPacketNotification()
+        private static void HandleInvalidPacketNotification()
         {
             //
             // -
@@ -505,7 +505,7 @@ namespace System.Windows.Media
         /// Asks the composition engine to retrieve the current hardware tier.
         /// This tier will be sent back via NotifyChannelMessage.
         /// </summary>
-        private void RequestTier(DUCE.Channel channel)
+        private static void RequestTier(DUCE.Channel channel)
         {
             unsafe
             {
@@ -2575,7 +2575,7 @@ namespace System.Windows.Media
         /// Tells the composition engine that we want to receive asynchronous
         /// notifications on this channel.
         /// </summary>
-        private void RegisterForNotifications(DUCE.Channel channel)
+        private static void RegisterForNotifications(DUCE.Channel channel)
         {
             DUCE.MILCMD_PARTITION_REGISTERFORNOTIFICATIONS registerCmd;
 

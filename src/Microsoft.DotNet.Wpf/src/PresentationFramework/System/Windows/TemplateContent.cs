@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1102,7 +1102,7 @@ namespace System.Windows
                 CollectionViewSource viewSource = value as CollectionViewSource;
                 if (viewSource != null)
                 {
-                    isValueShareable = viewSource.IsShareableInTemplate();
+                    isValueShareable = CollectionViewSource.IsShareableInTemplate();
                 }
             }
             else if (value is MarkupExtension)
@@ -1155,7 +1155,7 @@ namespace System.Windows
             return isValueShareable;
         }
 
-        private bool IsTypeShareable(Type type)
+        private static bool IsTypeShareable(Type type)
         {
             if ( // We handle Freezables on an per-instance basis.
                 typeof(Freezable).IsAssignableFrom(type)
@@ -1185,7 +1185,7 @@ namespace System.Windows
             return false;
         }
 
-        private void WriteNamespaces(System.Xaml.XamlWriter writer,
+        private static void WriteNamespaces(System.Xaml.XamlWriter writer,
                                      FrugalObjectList<System.Xaml.NamespaceDeclaration> previousNamespaces,
                                      FrugalObjectList<System.Xaml.NamespaceDeclaration> localNamespaces)
         {

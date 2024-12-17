@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -307,7 +307,7 @@ namespace MS.Internal.Documents
             /// <param name="valueType">Type of column content (string or bool)</param>
             /// <param name="minWidth">Minimum width of column.</param>
             /// <returns>A DataGridViewColumn using the given parameters.</returns>
-            private DataGridViewColumn CreateColumnHeader(
+            private static DataGridViewColumn CreateColumnHeader(
                 string name, string text, Type valueType, int minWidth)
             {
                 DataGridViewColumn header = new System.Windows.Forms.DataGridViewColumn();

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -188,7 +188,7 @@ namespace MS.Internal.TextFormatting
 
                         if (  _bidiState == null
                             &&
-                               (   IsDirectionalModifier(runInfo.TextRun as TextModifier)
+                               (IsDirectionalModifier(runInfo.TextRun as TextModifier)
                                 || IsEndOfDirectionalModifier(runInfo)
                                )
                             )
@@ -933,7 +933,7 @@ namespace MS.Internal.TextFormatting
 
                         currentRunInfo = (TextRunInfo) runInfoVector[i].element;
                         if ( currentRunInfo.Plsrun == Plsrun.Hidden &&
-                              (  IsDirectionalModifier(currentRunInfo.TextRun as TextModifier)
+                              (IsDirectionalModifier(currentRunInfo.TextRun as TextModifier)
                               || IsEndOfDirectionalModifier(currentRunInfo)
                               )
                            )
@@ -984,7 +984,7 @@ namespace MS.Internal.TextFormatting
         /// Contents inside the modifier scope is at a higher embedding level and hence
         /// separated from the content before the modifier scope.
         /// </returns>
-        private byte AnalyzeDirectionalModifier(
+        private static byte AnalyzeDirectionalModifier(
             BidiState       state,
             FlowDirection   flowDirection
             )
@@ -1019,7 +1019,7 @@ namespace MS.Internal.TextFormatting
         /// Contents inside the modifier scope is at a higher embedding level and hence separated
         /// from the content after the modifier scope.
         /// </returns>
-        private byte AnalyzeEndOfDirectionalModifier(BidiState state)
+        private static byte AnalyzeEndOfDirectionalModifier(BidiState state)
         {
             // Pop level stack
             if (state.Overflow > 0)
@@ -1041,7 +1041,7 @@ namespace MS.Internal.TextFormatting
             return parentLevel;
         }
 
-        private bool IsEndOfDirectionalModifier(TextRunInfo runInfo)
+        private static bool IsEndOfDirectionalModifier(TextRunInfo runInfo)
         {
             return (  runInfo.TextModifierScope != null
                    && runInfo.TextModifierScope.TextModifier.HasDirectionalEmbedding
@@ -1049,7 +1049,7 @@ namespace MS.Internal.TextFormatting
                    );
         }
 
-        private bool IsDirectionalModifier(TextModifier modifier)
+        private static bool IsDirectionalModifier(TextModifier modifier)
         {
             return modifier != null && modifier.HasDirectionalEmbedding;
         }

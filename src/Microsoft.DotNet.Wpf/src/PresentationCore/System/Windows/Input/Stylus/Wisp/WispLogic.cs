@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1359,7 +1359,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
+        static void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
         {
             RoutedEvent routedEvent = StylusLogic.GetPreviewEventFromRawStylusActions(report.Actions);
             if (routedEvent != null && report.StylusDevice != null && !report.StylusDevice.As<WispStylusDevice>().IgnoreStroke)
@@ -1394,7 +1394,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        void PromotePreviewToMain(ProcessInputEventArgs e)
+        static void PromotePreviewToMain(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
             {
@@ -1767,7 +1767,7 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
-        private bool IgnoreGestureToMousePromotion(StylusSystemGestureEventArgs gestureArgs, WispStylusTouchDevice touchDevice)
+        private static bool IgnoreGestureToMousePromotion(StylusSystemGestureEventArgs gestureArgs, WispStylusTouchDevice touchDevice)
         {
             if (gestureArgs != null && touchDevice.DownHandled)
             {
@@ -2619,7 +2619,7 @@ namespace System.Windows.Input.StylusWisp
             }
         }
               
-        internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
+        internal static void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             if (inputReport.StylusDevice != null)
             {

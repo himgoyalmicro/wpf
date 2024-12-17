@@ -70,7 +70,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private bool IsValidBracketCharacter(char openingBracket, char closingBracket)
+        private static bool IsValidBracketCharacter(char openingBracket, char closingBracket)
         {
             if (openingBracket == closingBracket)
             {

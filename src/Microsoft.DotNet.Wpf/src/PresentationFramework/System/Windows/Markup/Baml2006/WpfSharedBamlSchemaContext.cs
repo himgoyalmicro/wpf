@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,7 +58,7 @@ namespace System.Windows.Baml2006
             _knownBamlMembers = new WpfKnownMember[KnownPropertyCount + 1];
         }
 
-        internal string GetKnownBamlString(Int16 stringId)
+        internal static string GetKnownBamlString(Int16 stringId)
         {
             string result;
 
@@ -94,7 +94,7 @@ namespace System.Windows.Baml2006
             return assembly;
         }
 
-        internal Baml6Assembly CreateKnownBamlAssembly(Int16 assemblyId)
+        internal static Baml6Assembly CreateKnownBamlAssembly(Int16 assemblyId)
         {
             Baml6Assembly assembly;
 
@@ -315,23 +315,23 @@ namespace System.Windows.Baml2006
             return null;
         }
 
-        internal XamlMember StaticExtensionMemberTypeProperty { get { return _xStaticMemberProperty.Value; } }
+        internal static XamlMember StaticExtensionMemberTypeProperty { get { return _xStaticMemberProperty.Value; } }
 
-        internal XamlMember TypeExtensionTypeProperty { get { return _xTypeTypeProperty.Value; } }
+        internal static XamlMember TypeExtensionTypeProperty { get { return _xTypeTypeProperty.Value; } }
 
-        internal XamlMember ResourceDictionaryDeferredContentProperty { get { return _resourceDictionaryDefContentProperty.Value; } }
+        internal static XamlMember ResourceDictionaryDeferredContentProperty { get { return _resourceDictionaryDefContentProperty.Value; } }
 
-        internal XamlType ResourceDictionaryType { get { return _resourceDictionaryType.Value; } }
+        internal static XamlType ResourceDictionaryType { get { return _resourceDictionaryType.Value; } }
 
-        internal XamlType EventSetterType { get { return _eventSetterType.Value; } }
+        internal static XamlType EventSetterType { get { return _eventSetterType.Value; } }
 
-        internal XamlMember EventSetterEventProperty { get { return _eventSetterEventProperty.Value; } }
+        internal static XamlMember EventSetterEventProperty { get { return _eventSetterEventProperty.Value; } }
 
-        internal XamlMember EventSetterHandlerProperty { get { return _eventSetterHandlerProperty.Value; } }
+        internal static XamlMember EventSetterHandlerProperty { get { return _eventSetterHandlerProperty.Value; } }
 
-        internal XamlMember FrameworkTemplateTemplateProperty { get { return _frameworkTemplateTemplateProperty.Value; } }
+        internal static XamlMember FrameworkTemplateTemplateProperty { get { return _frameworkTemplateTemplateProperty.Value; } }
 
-        internal XamlType StaticResourceExtensionType { get { return _staticResourceExtensionType.Value; } }
+        internal static XamlType StaticResourceExtensionType { get { return _staticResourceExtensionType.Value; } }
 
         internal Baml2006ReaderSettings Settings { get; set; }
 

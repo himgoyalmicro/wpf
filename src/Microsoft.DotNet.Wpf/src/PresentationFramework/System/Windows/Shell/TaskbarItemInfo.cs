@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace System.Windows.Shell
             set { SetValue(ProgressStateProperty, value); }
         }
 
-        private TaskbarItemProgressState CoerceProgressState(TaskbarItemProgressState value)
+        private static TaskbarItemProgressState CoerceProgressState(TaskbarItemProgressState value)
         {
             switch (value)
             {
@@ -174,7 +174,7 @@ namespace System.Windows.Shell
             set { SetValue(ThumbnailClipMarginProperty, value); }
         }
 
-        private Thickness CoerceThumbnailClipMargin(Thickness margin)
+        private static Thickness CoerceThumbnailClipMargin(Thickness margin)
         {
             // Any negative/NaN/Infinity margins we'll treat as nil.
             if (!margin.IsValid(false, false, false, false))

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -108,7 +108,7 @@ namespace MS.Internal.Data
         }
 
         // Private Methods
-        private SortPropertyInfo[] CreatePropertyInfo(SortDescriptionCollection sortFields)
+        private static SortPropertyInfo[] CreatePropertyInfo(SortDescriptionCollection sortFields)
         {
             SortPropertyInfo[] fields = new SortPropertyInfo[sortFields.Count];
             for (int k = 0; k < sortFields.Count; ++k)

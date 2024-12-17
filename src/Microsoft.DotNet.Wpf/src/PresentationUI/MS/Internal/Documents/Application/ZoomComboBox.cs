@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -407,7 +407,7 @@ namespace MS.Internal.Documents.Application
         /// and UI Automation.
         /// </summary>
         /// <param name="value">The string to test.</param>
-        private bool IsValidInputString(string incomingString)
+        private static bool IsValidInputString(string incomingString)
         {
             if (String.IsNullOrEmpty(incomingString))
             {
@@ -429,7 +429,7 @@ namespace MS.Internal.Documents.Application
         /// Returns true if the character is valid for input to this control.
         /// </summary>
         /// <param name="c">The character to test.</param>
-        private bool IsValidInputChar(char c)
+        private static bool IsValidInputChar(char c)
         {
             // After discussing this with localization this is an approved method for
             // checking for digit input, as it works regardless of the keyboard mapping.
@@ -563,7 +563,7 @@ namespace MS.Internal.Documents.Application
                     throw new ElementNotEnabledException();
                 }
 
-                if (owner.IsValidInputString(value))
+                if (IsValidInputString(value))
                 {
                     owner.Text = value;
                     owner._isEditingText = true;

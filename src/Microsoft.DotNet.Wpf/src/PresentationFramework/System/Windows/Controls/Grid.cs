@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1373,7 +1373,7 @@ namespace System.Windows.Controls
         /// <remarks>
         /// For "Auto" definitions MinWidth is used in place of PreferredSize.
         /// </remarks>
-        private double GetMeasureSizeForRange(
+        private static double GetMeasureSizeForRange(
             DefinitionBase[] definitions,
             int start,
             int count)
@@ -1400,7 +1400,7 @@ namespace System.Windows.Controls
         /// <param name="start">Starting index of the range.</param>
         /// <param name="count">Number of definitions included in the range.</param>
         /// <returns>Length type for given range.</returns>
-        private LayoutTimeSizeType GetLengthTypeForRange(
+        private static LayoutTimeSizeType GetLengthTypeForRange(
             DefinitionBase[] definitions,
             int start,
             int count)
@@ -2024,7 +2024,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="definitions">Array of definitions to use for calculations.</param>
         /// <returns>Desired size.</returns>
-        private double CalculateDesiredSize(
+        private static double CalculateDesiredSize(
             DefinitionBase[] definitions)
         {
             double desiredSize = 0;
@@ -2836,7 +2836,7 @@ namespace System.Windows.Controls
         /// <param name="start">Start of the range.</param>
         /// <param name="count">Number of items in the range.</param>
         /// <returns>Final size.</returns>
-        private double GetFinalSizeForRange(
+        private static double GetFinalSizeForRange(
             DefinitionBase[] definitions,
             int start,
             int count)
@@ -4095,7 +4095,7 @@ namespace System.Windows.Controls
         }
 
         [Conditional("GRIDPARANOIA")]
-        internal void EnterCounterScope(Counters scopeCounter)
+        internal static void EnterCounterScope(Counters scopeCounter)
         {
             #if GRIDPARANOIA
             if (ID == "CountThis")
@@ -4115,7 +4115,7 @@ namespace System.Windows.Controls
         }
 
         [Conditional("GRIDPARANOIA")]
-        internal void ExitCounterScope(Counters scopeCounter)
+        internal static void ExitCounterScope(Counters scopeCounter)
         {
             #if GRIDPARANOIA
             if (_counters != null)
@@ -4162,7 +4162,7 @@ namespace System.Windows.Controls
         }
 
         [Conditional("GRIDPARANOIA")]
-        internal void EnterCounter(Counters counter)
+        internal static void EnterCounter(Counters counter)
         {
             #if GRIDPARANOIA
             if (_counters != null)
@@ -4176,7 +4176,7 @@ namespace System.Windows.Controls
         }
 
         [Conditional("GRIDPARANOIA")]
-        internal void ExitCounter(Counters counter)
+        internal static void ExitCounter(Counters counter)
         {
             #if GRIDPARANOIA
             if (_counters != null)

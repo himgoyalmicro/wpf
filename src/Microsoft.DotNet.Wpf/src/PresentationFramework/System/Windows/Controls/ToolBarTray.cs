@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -703,7 +703,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private double ToolBarsTotalMinimum(List<ToolBar> band, int startIndex, int endIndex)
+        private static double ToolBarsTotalMinimum(List<ToolBar> band, int startIndex, int endIndex)
         {
             double totalMinLenght = 0d;
             for (int i = startIndex; i <= endIndex; i++)
@@ -751,7 +751,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private double ToolBarsTotalMaximum(List<ToolBar> band, int startIndex, int endIndex)
+        private static double ToolBarsTotalMaximum(List<ToolBar> band, int startIndex, int endIndex)
         {
             double totalMaxLength = 0d;
             for (int i = startIndex; i <= endIndex; i++)
@@ -916,7 +916,7 @@ namespace System.Windows.Controls
         }
 
         // Insert toolbar into band list so band remains sorted
-        private void InsertToolBar(ToolBar toolBar, List<ToolBar> band)
+        private static void InsertToolBar(ToolBar toolBar, List<ToolBar> band)
         {
             for (int i = 0; i < band.Count; i++)
             {

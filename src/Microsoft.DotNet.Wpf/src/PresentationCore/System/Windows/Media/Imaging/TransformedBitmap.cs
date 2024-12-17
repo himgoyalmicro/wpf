@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -87,7 +87,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Check the transformation to see if it's a simple scale and/or rotation and/or flip.
         /// </summary>
-        internal bool CheckTransform(Transform newTransform)
+        internal static bool CheckTransform(Transform newTransform)
         {
             Matrix m = newTransform.Value;
             bool canHandle = false;
@@ -104,7 +104,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Check the transformation to see if it's a simple scale and/or rotation and/or flip.
         /// </summary>
-        internal void GetParamsFromTransform(
+        internal static void GetParamsFromTransform(
             Transform newTransform,
             out double scaleX,
             out double scaleY,
@@ -167,7 +167,7 @@ namespace System.Windows.Media.Imaging
             {
                 try
                 {
-                    IntPtr wicFactory = factoryMaker.ImagingFactoryPtr;
+                    IntPtr wicFactory = FactoryMaker.ImagingFactoryPtr;
 
                     wicTransformer = _source.WicSourceHandle;
 

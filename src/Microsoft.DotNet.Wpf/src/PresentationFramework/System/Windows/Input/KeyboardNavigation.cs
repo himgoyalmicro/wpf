@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1442,7 +1442,7 @@ namespace System.Windows.Input
             return false;
         }
 
-        private DependencyObject GetPreviousSibling(DependencyObject e)
+        private static DependencyObject GetPreviousSibling(DependencyObject e)
         {
             DependencyObject parent = GetParent(e);
 
@@ -1500,7 +1500,7 @@ namespace System.Windows.Input
             return null;
         }
 
-        private DependencyObject GetNextSibling(DependencyObject e)
+        private static DependencyObject GetNextSibling(DependencyObject e)
         {
             DependencyObject parent = GetParent(e);
 
@@ -1899,7 +1899,7 @@ namespace System.Windows.Input
 
         #region Logical Navigation
 
-        private bool IsTabStop(DependencyObject e)
+        private static bool IsTabStop(DependencyObject e)
         {
             FrameworkElement fe = e as FrameworkElement;
             if (fe != null)
@@ -1918,7 +1918,7 @@ namespace System.Windows.Input
             return GetKeyNavigationMode(e) != KeyboardNavigationMode.Continue;
         }
 
-        internal bool IsFocusableInternal(DependencyObject element)
+        internal static bool IsFocusableInternal(DependencyObject element)
         {
             UIElement uie = element as UIElement;
             if (uie != null)
@@ -1935,7 +1935,7 @@ namespace System.Windows.Input
             return false;
         }
 
-        private bool IsElementEligible(DependencyObject element, bool treeViewNavigation)
+        private static bool IsElementEligible(DependencyObject element, bool treeViewNavigation)
         {
             if (treeViewNavigation)
             {
@@ -2452,7 +2452,7 @@ namespace System.Windows.Input
         // which produces wrong results.  Instead use a rectangle that excludes
         // the children in the vertical direction, and extends as much as the
         // TreeViewItem in the horizontal direction.
-        private Rect GetRepresentativeRectangle(DependencyObject element)
+        private static Rect GetRepresentativeRectangle(DependencyObject element)
         {
             Rect rect = GetRectangle(element);
             TreeViewItem tvi = element as TreeViewItem;
@@ -2521,14 +2521,14 @@ namespace System.Windows.Input
         }
 
         // distance between two points
-        private double GetDistance(Point p1, Point p2)
+        private static double GetDistance(Point p1, Point p2)
         {
             double deltaX = p1.X - p2.X;
             double deltaY = p1.Y - p2.Y;
             return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
         }
 
-        private double GetPerpDistance(Rect sourceRect, Rect targetRect, FocusNavigationDirection direction)
+        private static double GetPerpDistance(Rect sourceRect, Rect targetRect, FocusNavigationDirection direction)
         {
             switch (direction)
             {
@@ -2594,7 +2594,7 @@ namespace System.Windows.Input
 
         // Example when moving down:
         // true if the top of the toRect is below the bottom of fromRect
-        private bool IsInDirection(Rect fromRect, Rect toRect, FocusNavigationDirection direction)
+        private static bool IsInDirection(Rect fromRect, Rect toRect, FocusNavigationDirection direction)
         {
             switch (direction)
             {
@@ -2612,12 +2612,12 @@ namespace System.Windows.Input
         }
 
         // The element is focus scope if IsFocusScope is true or it is the visual tree root
-        private bool IsFocusScope(DependencyObject e)
+        private static bool IsFocusScope(DependencyObject e)
         {
             return FocusManager.GetIsFocusScope(e) || GetParent(e) == null;
         }
 
-        private bool IsAncestorOf(DependencyObject sourceElement, DependencyObject targetElement)
+        private static bool IsAncestorOf(DependencyObject sourceElement, DependencyObject targetElement)
         {
             Visual sourceVisual = sourceElement as Visual;
             Visual targetVisual = targetElement as Visual;
@@ -2632,7 +2632,7 @@ namespace System.Windows.Input
         // with the tree navigation methods GetParent, Get*Child, Get*Sibling.
         // [It might be correct to have only one method - this one - but we need
         // to keep the existing calls to the previous method around for compat.]
-        internal bool IsAncestorOfEx(DependencyObject sourceElement, DependencyObject targetElement)
+        internal static bool IsAncestorOfEx(DependencyObject sourceElement, DependencyObject targetElement)
         {
             Debug.Assert(sourceElement != null, "sourceElement must not be null");
 
@@ -3100,7 +3100,7 @@ namespace System.Windows.Input
         /// Computes RangeScore which reflects the closeness of two
         /// position ranges.
         /// </summary>
-        private double ComputeRangeScore(double rangeStart1,
+        private static double ComputeRangeScore(double rangeStart1,
             double rangeEnd1,
             double rangeStart2,
             double rangeEnd2)
@@ -3242,12 +3242,12 @@ namespace System.Windows.Input
             }
         }
 
-        private bool IsMenuKey(Key key)
+        private static bool IsMenuKey(Key key)
         {
             return (key == Key.LeftAlt || key == Key.RightAlt || key == Key.F10);
         }
 
-        private Key GetRealKey(KeyEventArgs e)
+        private static Key GetRealKey(KeyEventArgs e)
         {
             return (e.Key == Key.System) ? e.SystemKey : e.Key;
         }
@@ -3384,7 +3384,7 @@ namespace System.Windows.Input
 
         #region UIState
 
-        private void ProcessForUIState(InputEventArgs inputEventArgs)
+        private static void ProcessForUIState(InputEventArgs inputEventArgs)
         {
             PresentationSource source;
             RawUIStateInputReport report = ExtractRawUIStateInputReport(inputEventArgs, InputManager.InputReportEvent);
@@ -3402,7 +3402,7 @@ namespace System.Windows.Input
             }
         }
 
-        private RawUIStateInputReport ExtractRawUIStateInputReport(InputEventArgs e, RoutedEvent Event)
+        private static RawUIStateInputReport ExtractRawUIStateInputReport(InputEventArgs e, RoutedEvent Event)
         {
             RawUIStateInputReport uiStateInputReport = null;
             InputReportEventArgs input = e as InputReportEventArgs;

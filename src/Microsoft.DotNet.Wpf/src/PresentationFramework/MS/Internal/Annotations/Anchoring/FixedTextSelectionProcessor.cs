@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -392,7 +392,7 @@ namespace MS.Internal.Annotations.Anchoring
 
         #region Private Methods
 
-        private DocumentPage GetDocumentPage(FixedPage page)
+        private static DocumentPage GetDocumentPage(FixedPage page)
         {
             Invariant.Assert(page != null);
 
@@ -424,7 +424,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// </summary>
         /// <param name="selection">selection</param>
         /// <returns>ITextRange interface, implemented by the object</returns>
-        private IList<TextSegment> CheckSelection(object selection)
+        private static IList<TextSegment> CheckSelection(object selection)
         {
             ArgumentNullException.ThrowIfNull(selection);
 
@@ -464,7 +464,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// </summary>
         /// <param name="selection">selection</param>
         /// <returns>ITextRange interface, implemented by the object</returns>
-        private TextAnchor CheckAnchor(object selection)
+        private static TextAnchor CheckAnchor(object selection)
         {
             ArgumentNullException.ThrowIfNull(selection);
 
@@ -486,7 +486,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="segmentNumber">number of segment value to retrieve</param>
         /// <param name="start">the start point value based on StartXAttribute and StartYAttribute values</param>
         /// <param name="end">the end point value based on EndXAttribyte and EndYattribute values</param>
-        private void GetLocatorPartSegmentValues(ContentLocatorPart locatorPart, int segmentNumber, out Point start, out Point end)
+        private static void GetLocatorPartSegmentValues(ContentLocatorPart locatorPart, int segmentNumber, out Point start, out Point end)
         {
             ArgumentNullException.ThrowIfNull(locatorPart);
 
@@ -510,7 +510,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="xstr">x string value</param>
         /// <param name="ystr">y string value</param>
         /// <returns></returns>
-        private Point GetPoint(string xstr, string ystr)
+        private static Point GetPoint(string xstr, string ystr)
         {
             Point point;
             if (xstr != null && !String.IsNullOrEmpty(xstr.Trim()) && ystr != null && !String.IsNullOrEmpty(ystr.Trim()))

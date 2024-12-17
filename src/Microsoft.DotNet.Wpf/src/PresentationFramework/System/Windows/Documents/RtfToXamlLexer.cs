@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -502,34 +502,34 @@ namespace System.Windows.Documents
             }
         }
 
-        private bool IsControl(byte controlChar)
+        private static bool IsControl(byte controlChar)
         {
             return ((controlChar) == (byte)'\\' || (controlChar) == (byte)'{' || (controlChar) == (byte)'}');
         }
 
-        private bool IsControlCharValid(byte controlChar)
+        private static bool IsControlCharValid(byte controlChar)
         {
             return (((controlChar) >= (byte)'a' && (controlChar) <= (byte)'z') || ((controlChar) >= (byte)'A' && (controlChar) <= (byte)'Z'));
         }
 
-        private bool IsParameterStart(byte controlChar)
+        private static bool IsParameterStart(byte controlChar)
         {
             return ((controlChar) == (byte)'-' || ((controlChar) >= (byte)'0' && (controlChar) <= (byte)'9'));
         }
 
-        private bool IsParameterFollow(byte controlChar)
+        private static bool IsParameterFollow(byte controlChar)
         {
             return (((controlChar) >= (byte)'0' && (controlChar) <= (byte)'9'));
         }
 
-        private bool IsHex(byte controlChar)
+        private static bool IsHex(byte controlChar)
         {
             return ((controlChar >= (byte)'0' && controlChar <= (byte)'9') ||
                     (controlChar >= (byte)'a' && controlChar <= (byte)'f') ||
                     (controlChar >= (byte)'A' && controlChar <= (byte)'F'));
         }
 
-        private byte HexToByte(byte hexByte)
+        private static byte HexToByte(byte hexByte)
         {
             if (hexByte >= (byte)'0' && hexByte <= (byte)'9')
             {

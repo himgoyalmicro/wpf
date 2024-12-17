@@ -198,7 +198,7 @@ namespace System.Windows
         // Because the frugalmap is going to be stored in an uncommon field, it would get boxed
         // to avoid this boxing, skip the struct and go straight for the class contained by the
         // struct.  Given the simplicity of this scenario, we can get away with this.
-        private object GetCachedDefaultValue(DependencyObject owner, DependencyProperty property)
+        private static object GetCachedDefaultValue(DependencyObject owner, DependencyProperty property)
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
@@ -210,7 +210,7 @@ namespace System.Windows
             return map.Search(property.GlobalIndex);
         }
 
-        private void SetCachedDefaultValue(DependencyObject owner, DependencyProperty property, object value)
+        private static void SetCachedDefaultValue(DependencyObject owner, DependencyProperty property, object value)
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
@@ -238,7 +238,7 @@ namespace System.Windows
         ///     This is internal so it can be accessed by subclasses of
         ///     DefaultValueFactory.
         /// </summary>
-        internal void ClearCachedDefaultValue(DependencyObject owner, DependencyProperty property)
+        internal static void ClearCachedDefaultValue(DependencyObject owner, DependencyProperty property)
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
             if (map.Count == 1)

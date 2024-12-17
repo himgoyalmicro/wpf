@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1456,7 +1456,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        internal string GetFrameworkId() { return ("WPF"); }
+        internal static string GetFrameworkId() { return ("WPF"); }
 
         //
         internal AutomationPeer GetFirstChild()
@@ -1864,7 +1864,7 @@ namespace System.Windows.Automation.Peers
         }
 
         // internal handling of structure chanegd events
-        private void RaisePropertyChangedInternal(IRawElementProviderSimple provider,
+        private static void RaisePropertyChangedInternal(IRawElementProviderSimple provider,
                                                              AutomationProperty propertyId,
                                                              object oldValue,
                                                              object newValue)
@@ -2240,7 +2240,7 @@ namespace System.Windows.Automation.Peers
         }
 
         // Determine whether invisible items should show up in UIAutomation Control View
-        internal bool IncludeInvisibleElementsInControlView
+        internal static bool IncludeInvisibleElementsInControlView
         {
             get
             {
@@ -2492,7 +2492,7 @@ namespace System.Windows.Automation.Peers
         private static object GetCultureInfo(AutomationPeer peer)           {   return null;    }
         private static object IsOffscreen(AutomationPeer peer)              {   return peer.IsOffscreen();  }
         private static object GetOrientation(AutomationPeer peer)           {   return peer.GetOrientation();   }
-        private static object GetFrameworkId(AutomationPeer peer)           {   return peer.GetFrameworkId();   }
+        private static object GetFrameworkId(AutomationPeer peer)           {   return GetFrameworkId();   }
         private static object IsRequiredForForm(AutomationPeer peer)        {   return peer.IsRequiredForForm();    }
         private static object GetItemStatus(AutomationPeer peer)            {   return peer.GetItemStatus();    }
         private static object GetLiveSetting(AutomationPeer peer)           {   return peer.GetLiveSetting(); }

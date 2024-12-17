@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -453,7 +453,7 @@ namespace System.Windows
 
                 // Call OLE RegisterDragDrop and it will get the drop target events during drag-and-drop
                 // operation on the drop target window.
-                OleServicesContext.CurrentOleServicesContext.OleRegisterDragDrop(
+                OleServicesContext.OleRegisterDragDrop(
                     new HandleRef(null, windowHandle),
                     (UnsafeNativeMethods.IOleDropTarget)oleDropTarget);
             }
@@ -470,7 +470,7 @@ namespace System.Windows
             if (windowHandle != IntPtr.Zero)
             {
                 // Call OLE RevokeDragDrop to revoke the droppable target window.
-                OleServicesContext.CurrentOleServicesContext.OleRevokeDragDrop(
+                OleServicesContext.OleRevokeDragDrop(
                     new HandleRef(null, windowHandle));
             }
         }
@@ -575,7 +575,7 @@ namespace System.Windows
             // Call OLE DoDragDrop and it will hanlde all mouse and keyboard input until drop the object.
             // We don't need to check the error return since PreserveSig attribute is defined as "false"
             // which will pops up the exception automatically.
-            OleServicesContext.CurrentOleServicesContext.OleDoDragDrop(
+            OleServicesContext.OleDoDragDrop(
                                                             (IComDataObject)dataObject,
                                                             (UnsafeNativeMethods.IOleDropSource)oleDragSource,
                                                             (int)allowedEffects,
@@ -813,7 +813,7 @@ namespace System.Windows
         ///     to handle (Preview)QueryContinueDragEvent to the allow 
         ///     such valid combinations explicitly.
         /// </remarks>
-        private void OnDefaultQueryContinueDrag(QueryContinueDragEventArgs e)
+        private static void OnDefaultQueryContinueDrag(QueryContinueDragEventArgs e)
         {
             int mouseButtonDownCount = 0;
             
@@ -846,7 +846,7 @@ namespace System.Windows
         /// <summary>
         /// Default give feedback during drag-and-drop operation.
         /// </summary>
-        private void OnDefaultGiveFeedback(GiveFeedbackEventArgs e)
+        private static void OnDefaultGiveFeedback(GiveFeedbackEventArgs e)
         {
             // Show the default DragDrop cursor.
             e.UseDefaultCursors = true;
@@ -1214,7 +1214,7 @@ namespace System.Windows
         /// <summary>
         /// Default drag enter during drag-and-drop operation.
         /// </summary>
-        private void OnDefaultDragEnter(DragEventArgs e)
+        private static void OnDefaultDragEnter(DragEventArgs e)
         {
             bool ctrlKeyDown;
 
@@ -1242,7 +1242,7 @@ namespace System.Windows
         /// <summary>
         /// Default drag over during drag-and-drop operation.
         /// </summary>
-        private void OnDefaultDragOver(DragEventArgs e)
+        private static void OnDefaultDragOver(DragEventArgs e)
         {
             bool ctrlKeyDown;
 
@@ -1270,7 +1270,7 @@ namespace System.Windows
         /// <summary>
         /// Get the client point from the screen point.
         /// </summary>
-        private Point GetClientPointFromScreenPoint(long dragPoint, PresentationSource source)
+        private static Point GetClientPointFromScreenPoint(long dragPoint, PresentationSource source)
         {
             Point screenPoint;
             Point clientPoint;
@@ -1372,7 +1372,7 @@ namespace System.Windows
         /// <summary>
         /// Get the data object.
         /// </summary>
-        private IDataObject GetDataObject(object data)
+        private static IDataObject GetDataObject(object data)
         {
             IDataObject dataObject;
 
@@ -1397,7 +1397,7 @@ namespace System.Windows
         /// <summary>
         /// Check the available data.
         /// </summary>
-        private bool IsDataAvailable(IDataObject dataObject)
+        private static bool IsDataAvailable(IDataObject dataObject)
         {
             bool dataAvailable;
 

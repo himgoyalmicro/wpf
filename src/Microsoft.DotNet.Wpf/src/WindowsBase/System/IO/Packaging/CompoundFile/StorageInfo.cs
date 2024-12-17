@@ -1140,15 +1140,15 @@ public class StorageInfo
         return returnValue;
     }
 
-    /// <summary>
-    /// Convert a System.Runtime.InteropServices.FILETIME struct to the CLR
-    /// DateTime class.  Strange that the straightforward conversion doesn't 
-    /// already exist.  Perhaps I'm just not finding it.  DateTime has a 
-    /// method to convert itself to FILETIME, but only supports creating a
-    /// DateTime from a 64-bit value representing FILETIME instead of the
-    /// FILETIME struct itself.
-    /// </summary>
-    DateTime ConvertFILETIMEToDateTime( System.Runtime.InteropServices.ComTypes.FILETIME time )
+        /// <summary>
+        /// Convert a System.Runtime.InteropServices.FILETIME struct to the CLR
+        /// DateTime class.  Strange that the straightforward conversion doesn't 
+        /// already exist.  Perhaps I'm just not finding it.  DateTime has a 
+        /// method to convert itself to FILETIME, but only supports creating a
+        /// DateTime from a 64-bit value representing FILETIME instead of the
+        /// FILETIME struct itself.
+        /// </summary>
+        static DateTime ConvertFILETIMEToDateTime( System.Runtime.InteropServices.ComTypes.FILETIME time )
     {
         // We should let the user know when the time is not valid, rather than 
         //  return a bogus date of Dec 31. 1600.

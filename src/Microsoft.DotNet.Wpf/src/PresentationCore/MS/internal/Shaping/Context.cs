@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -245,7 +245,7 @@ namespace MS.Internal.Shaping
                 return Table.GetUShort(Offset);
             }
 
-            public ContextualLookupRecords ContextualLookups(FontTable Table, int CurrentOffset)
+            public static ContextualLookupRecords ContextualLookups(FontTable Table, int CurrentOffset)
             {
                 return new ContextualLookupRecords(CurrentOffset+sizeCount,
                     Table.GetUShort(CurrentOffset));
@@ -447,7 +447,7 @@ namespace MS.Internal.Shaping
             return match;
         }
 
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -563,7 +563,7 @@ namespace MS.Internal.Shaping
                 return Table.GetUShort(Offset);
             }
 
-            public ContextualLookupRecords ContextualLookups(FontTable Table, int CurrentOffset)
+            public static ContextualLookupRecords ContextualLookups(FontTable Table, int CurrentOffset)
             {
                 return new ContextualLookupRecords(CurrentOffset + sizeCount,
                     Table.GetUShort(CurrentOffset));
@@ -790,7 +790,7 @@ namespace MS.Internal.Shaping
             return match;
         }
 
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1167,13 +1167,13 @@ namespace MS.Internal.Shaping
                 case 1: 
                     GlyphChainingSubtable glyphChainingSubtable = 
                                                 new GlyphChainingSubtable(offset);
-                    return glyphChainingSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
+                    return GlyphChainingSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
 
                 case 2: 
 
                     ClassChainingSubtable classChainingSubtable = 
                                                 new ClassChainingSubtable(offset);
-                    return classChainingSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
+                    return ClassChainingSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
                 
                 case 3:
                 
@@ -1432,7 +1432,7 @@ namespace MS.Internal.Shaping
             return match;
         }
 
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1681,7 +1681,7 @@ namespace MS.Internal.Shaping
             return match;
         }
 
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1805,7 +1805,7 @@ namespace MS.Internal.Shaping
             return match;
         }
         
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1914,15 +1914,15 @@ namespace MS.Internal.Shaping
                 case 1:
                     GlyphContextSubtable glyphContextSubtable = 
                                                 new GlyphContextSubtable(offset);
-                    return glyphContextSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
+                    return GlyphContextSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
                 case 2:
                     ClassContextSubtable classContextSubtable = 
                                                 new ClassContextSubtable(offset);
-                    return classContextSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
+                    return ClassContextSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
                 case 3:
                     CoverageContextSubtable coverageContextSubtable = 
                                                 new CoverageContextSubtable(offset);
-                    return coverageContextSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
+                    return CoverageContextSubtable.IsLookupCovered(table, glyphBits, minGlyphId, maxGlyphId);
                 default:
                     return true;
             }
@@ -1978,7 +1978,7 @@ namespace MS.Internal.Shaping
             return new CoverageTable(offset + Table.GetUShort(Offset));
         }
 
-        private ushort GlyphCount(FontTable Table, int Offset)
+        private static ushort GlyphCount(FontTable Table, int Offset)
         {
             return Table.GetUShort(Offset);
         }
@@ -2085,7 +2085,7 @@ namespace MS.Internal.Shaping
             return match;
         }
         
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 

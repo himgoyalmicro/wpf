@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -137,7 +137,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         /// <param name="control"></param>
         /// <param name="text"></param>
-        private void SetTextProperty(Control control, string text)
+        private static void SetTextProperty(Control control, string text)
         {
             // Check if control exists
             if (control != null)
@@ -154,7 +154,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         /// <param name="control"></param>
         /// <param name="text"></param>
-        private void SetTextProperty(Control control, DateTime? date)
+        private static void SetTextProperty(Control control, DateTime? date)
         {
             // Check if control exists
             if (control != null)
@@ -182,7 +182,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         /// <param name="fileSize"></param>
         /// <returns></returns>
-        private string FormatFileSize(long fileSize)
+        private static string FormatFileSize(long fileSize)
         {
             // Ensure that file size is valid.
             if (fileSize <= 0)

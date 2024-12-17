@@ -1257,7 +1257,7 @@ namespace Microsoft.Build.Tasks.Windows
                     _localXamlPages = compilerWrapper.LocalXamlPages;
                     _localXamlApplication = compilerWrapper.LocalXamlApplication;
 
-                    _hasInternals = compilerWrapper.HasInternals;
+                    _hasInternals = CompilerWrapper.HasInternals;
                 }
             }
             finally
@@ -1573,7 +1573,7 @@ namespace Microsoft.Build.Tasks.Windows
         // source task item's custom attributes to the generated baml item if necessary.
         // The xaml file could be an application definition file, a Markup Page.
         // The bamlFile must exist before this method is called.
-        private TaskItem GenerateBamlItem(string bamlFile, ITaskItem SourceItem)
+        private static TaskItem GenerateBamlItem(string bamlFile, ITaskItem SourceItem)
         {
             TaskItem bamlItem;
 

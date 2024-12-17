@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -582,7 +582,7 @@ namespace System.Windows.Documents
             _end.FlowPosition.AttachElement(_containerElement);
         }
 
-        internal void OnNewFlowElement(FixedElement parentElement, FixedElement.ElementType elementType, FlowPosition pStart, FlowPosition pEnd, Object source, int pageIndex)
+        internal static void OnNewFlowElement(FixedElement parentElement, FixedElement.ElementType elementType, FlowPosition pStart, FlowPosition pEnd, Object source, int pageIndex)
         {
             FixedTextPointer eStart = new FixedTextPointer(false, LogicalDirection.Backward, pStart);
             FixedTextPointer eEnd = new FixedTextPointer(false, LogicalDirection.Forward, pEnd);
@@ -605,7 +605,7 @@ namespace System.Windows.Documents
 
         // given a TextPointer range, find out all fixed position included in this range and
         // offset into the begin and end fixed element
-        private bool _GetFixedNodesForFlowRange(ITextPointer start, ITextPointer end, out FixedSOMElement[] elements, out int startIndex, out int endIndex)
+        private static bool _GetFixedNodesForFlowRange(ITextPointer start, ITextPointer end, out FixedSOMElement[] elements, out int startIndex, out int endIndex)
         {
             Debug.Assert(start.CompareTo(end) <= 0);
             elements  = null;
@@ -620,7 +620,7 @@ namespace System.Windows.Documents
             FixedTextPointer pStart    = (FixedTextPointer)start;
             FixedTextPointer pEnd      = (FixedTextPointer)end;
 
-            return this.FixedTextBuilder.GetFixedNodesForFlowRange(pStart.FlowPosition, pEnd.FlowPosition, out elements, out startIndex, out endIndex);
+            return FixedTextBuilder.GetFixedNodesForFlowRange(pStart.FlowPosition, pEnd.FlowPosition, out elements, out startIndex, out endIndex);
         } //endofGetFixedNodes
         #endregion Private Methods
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace PresentationCore.Tests.BinaryFormat;
@@ -18,7 +18,7 @@ public class DataObjectTests
         
     }
 
-    private void TestLogic(object value)
+    private static void TestLogic(object value)
     {
         using BinaryFormatterScope formatterScope = new(enable: false);
         DataObject dataObject = new();

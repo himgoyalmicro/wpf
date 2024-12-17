@@ -662,7 +662,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private MethodInfo PickAttachableEventAdder(IEnumerable<MethodInfo> adders)
+        private static MethodInfo PickAttachableEventAdder(IEnumerable<MethodInfo> adders)
         {
             if (adders is not null)
             {
@@ -725,7 +725,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private void LookupAllStaticAccessorsHelper(MethodInfo[] allMethods, Dictionary<string,List<MethodInfo>> getters,
+        private static void LookupAllStaticAccessorsHelper(MethodInfo[] allMethods, Dictionary<string,List<MethodInfo>> getters,
             Dictionary<string, List<MethodInfo>> setters, Dictionary<string, List<MethodInfo>> adders, bool isUnderlyingTypePublic)
         {
             foreach (MethodInfo method in allMethods)
@@ -819,7 +819,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private bool IsAttachablePropertyAccessor(bool isEvent, bool isGetter, MethodInfo accessor)
+        private static bool IsAttachablePropertyAccessor(bool isEvent, bool isGetter, MethodInfo accessor)
         {
             if (isEvent)
             {
@@ -876,7 +876,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private bool IsAttachablePropertyGetter(MethodInfo mi, out string name)
+        private static bool IsAttachablePropertyGetter(MethodInfo mi, out string name)
         {
             name = null;
             if (!KS.StartsWith(mi.Name, KnownStrings.Get))
@@ -891,14 +891,14 @@ namespace System.Xaml.Schema
             return true;
         }
 
-        private bool IsAttachablePropertyGetter(MethodInfo mi)
+        private static bool IsAttachablePropertyGetter(MethodInfo mi)
         {
             // Static Getter has one argument and does not return void
             ParameterInfo[] pmi = mi.GetParameters();
             return (pmi.Length == 1) && (mi.ReturnType != typeof(void));
         }
 
-        private bool IsAttachablePropertySetter(MethodInfo mi, out string name)
+        private static bool IsAttachablePropertySetter(MethodInfo mi, out string name)
         {
             name = null;
             if (!KS.StartsWith(mi.Name, KnownStrings.Set))
@@ -913,14 +913,14 @@ namespace System.Xaml.Schema
             return true;
         }
 
-        private bool IsAttachablePropertySetter(MethodInfo mi)
+        private static bool IsAttachablePropertySetter(MethodInfo mi)
         {
             // Static Setter has two arguments
             ParameterInfo[] pmi = mi.GetParameters();
             return (pmi.Length == 2);
         }
 
-        private bool IsAttachableEventAdder(MethodInfo mi, out string name)
+        private static bool IsAttachableEventAdder(MethodInfo mi, out string name)
         {
             name = null;
             if (!KS.StartsWith(mi.Name, KnownStrings.Add) || !KS.EndsWith(mi.Name, KnownStrings.Handler))
@@ -936,7 +936,7 @@ namespace System.Xaml.Schema
             return true;
         }
 
-        private bool IsAttachableEventAdder(MethodInfo mi)
+        private static bool IsAttachableEventAdder(MethodInfo mi)
         {
             // Static Adder has two arguments, and second is a delegate
             ParameterInfo[] pmi = mi.GetParameters();

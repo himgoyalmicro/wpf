@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -321,7 +321,7 @@ namespace System.Windows.Controls.Primitives
 
         // This method calculates the height of the first line if the element is TextBlock or FlowDocumentScrollViewer
         // Otherwise returns the element height
-        private double GetFirstLineHeight(UIElement element)
+        private static double GetFirstLineHeight(UIElement element)
         {
             // We need to find TextBlock/FlowDocumentScrollViewer if it is nested inside ContentPresenter
             // Common scenario when used in styles is that BulletDecorator content is a ContentPresenter
@@ -373,7 +373,7 @@ namespace System.Windows.Controls.Primitives
             return element.RenderSize.Height;
         }
 
-        private TextBlock FindText(Visual root)
+        private static TextBlock FindText(Visual root)
         {
             // Cases where the root is itself a TextBlock
             TextBlock text = root as TextBlock;
@@ -415,7 +415,7 @@ namespace System.Windows.Controls.Primitives
             return null;
         }
 
-        private FlowDocumentScrollViewer FindFlowDocumentScrollViewer(Visual root)
+        private static FlowDocumentScrollViewer FindFlowDocumentScrollViewer(Visual root)
         {
             FlowDocumentScrollViewer text = root as FlowDocumentScrollViewer;
             if (text != null)

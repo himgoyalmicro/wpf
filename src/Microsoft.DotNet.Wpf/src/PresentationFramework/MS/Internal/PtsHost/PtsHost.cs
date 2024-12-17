@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -115,7 +115,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Debugging callbacks
         // ------------------------------------------------------------------
-        internal void AssertFailed(
+        internal static void AssertFailed(
             string arg1,                        // IN:
             string arg2,                        // IN:
             int arg3,                           // IN:
@@ -198,7 +198,7 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 FigureParaClient paraClient = PtsContext.HandleToObject(pfsparaclientFigure) as FigureParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.GetFigurePolygons(paraClient, fswdir, ncVertices, nfspt, rgcVertices, out ccVertices, 
+                FigureParagraph.GetFigurePolygons(paraClient, fswdir, ncVertices, nfspt, rgcVertices, out ccVertices, 
                     rgfspt, out cfspt, out fWrapThrough);
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nms) as Section;
                 PTS.ValidateHandle(section);
-                section.FSkipPage(out fSkip);
+                Section.FSkipPage(out fSkip);
             }
             catch (Exception e)
             {
@@ -330,7 +330,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nmsCur) as Section;
                 PTS.ValidateHandle(section);
-                section.GetNextSection(out fSuccess, out nmsNext);
+                Section.GetNextSection(out fSuccess, out nmsNext);
             }
             catch (Exception e)
             {
@@ -396,7 +396,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(rgnms[0]) as Section;
                 PTS.ValidateHandle(section);
-                section.GetJustificationProperties(rgnms, cnms, fLastSectionNotBroken,
+                Section.GetJustificationProperties(rgnms, cnms, fLastSectionNotBroken,
                     out fJustify, out fskal, out fCancelAtLastColumn);
             }
             catch (Exception e)
@@ -459,7 +459,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nms) as Section;
                 PTS.ValidateHandle(section);
-                section.GetHeaderSegment(pfsbrpagePrelim, fswdir, out fHeaderPresent, out fHardMargin, 
+                Section.GetHeaderSegment(pfsbrpagePrelim, fswdir, out fHeaderPresent, out fHardMargin, 
                     out dvrMaxHeight, out dvrFromEdge, out fswdirHeader, out nmsHeader);
             }
             catch (Exception e)
@@ -494,7 +494,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nms) as Section;
                 PTS.ValidateHandle(section);
-                section.GetFooterSegment(pfsbrpagePrelim, fswdir, out fFooterPresent, out fHardMargin, 
+                Section.GetFooterSegment(pfsbrpagePrelim, fswdir, out fFooterPresent, out fHardMargin, 
                     out dvrMaxHeight, out dvrFromEdge, out fswdirFooter, out nmsFooter);
             }
             catch (Exception e)
@@ -568,7 +568,7 @@ namespace MS.Internal.PtsHost
             return fserr;
         }
 
-        internal unsafe int GetSegmentDefinedColumnSpanAreaInfo(
+        internal static unsafe int GetSegmentDefinedColumnSpanAreaInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
@@ -580,7 +580,7 @@ namespace MS.Internal.PtsHost
             cAreasActual = 0;
             return PTS.fserrNotImplemented;
         }
-        internal unsafe int GetHeightDefinedColumnSpanAreaInfo(
+        internal static unsafe int GetHeightDefinedColumnSpanAreaInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
@@ -806,7 +806,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal int FInterruptFormattingAfterPara(
+        internal static int FInterruptFormattingAfterPara(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
             IntPtr nmp,                         // IN:  name of paragraph
@@ -828,7 +828,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nmsSection) as Section;
                 PTS.ValidateHandle(section);
-                section.GetEndnoteSeparators(out nmsEndnoteSeparator, out nmsEndnoteContSeparator, out nmsEndnoteContNotice);
+                Section.GetEndnoteSeparators(out nmsEndnoteSeparator, out nmsEndnoteContSeparator, out nmsEndnoteContNotice);
             }
             catch (Exception e)
             {
@@ -855,7 +855,7 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nmsSection) as Section;
                 PTS.ValidateHandle(section);
-                section.GetEndnoteSegment(out fEndnotesPresent, out nmsEndnotes);
+                Section.GetEndnoteSegment(out fEndnotesPresent, out nmsEndnotes);
             }
             catch (Exception e)
             {
@@ -871,7 +871,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal int GetNumberEndnoteColumns(
+        internal static int GetNumberEndnoteColumns(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int ccolEndnote)                // OUT: number of columns in endnote area
@@ -880,7 +880,7 @@ namespace MS.Internal.PtsHost
             ccolEndnote = 0;
             return PTS.fserrNotImplemented;
         }
-        internal unsafe int GetEndnoteColumnInfo(
+        internal static unsafe int GetEndnoteColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             uint fswdir,                        // IN:  direction of section
@@ -892,7 +892,7 @@ namespace MS.Internal.PtsHost
             ccolEndnote = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int GetFootnoteSeparators(
+        internal static int GetFootnoteSeparators(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmsSection,                  // IN:  name of section
             out IntPtr nmsFtnSeparator,         // OUT: name of the footnote separator segment
@@ -903,7 +903,7 @@ namespace MS.Internal.PtsHost
             nmsFtnSeparator = nmsFtnContSeparator = nmsFtnContNotice = IntPtr.Zero;
             return PTS.fserrNotImplemented;
         }
-        internal int FFootnoteBeneathText(
+        internal static int FFootnoteBeneathText(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int fFootnoteBeneathText)       // OUT: position footnote right after text?
@@ -912,7 +912,7 @@ namespace MS.Internal.PtsHost
             fFootnoteBeneathText = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int GetNumberFootnoteColumns(
+        internal static int GetNumberFootnoteColumns(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             out int ccolFootnote)               // OUT: number of columns in footnote area
@@ -921,7 +921,7 @@ namespace MS.Internal.PtsHost
             ccolFootnote = 0;
             return PTS.fserrNotImplemented;
         }
-        internal unsafe int GetFootnoteColumnInfo(
+        internal static unsafe int GetFootnoteColumnInfo(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nms,                         // IN:  name of section
             uint fswdir,                        // IN:  direction of main text
@@ -933,7 +933,7 @@ namespace MS.Internal.PtsHost
             ccolFootnote = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int GetFootnoteSegment(
+        internal static int GetFootnoteSegment(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmftn,                       // IN:  name of footnote
             out IntPtr nmsFootnote)             // OUT: name of footnote segment
@@ -942,7 +942,7 @@ namespace MS.Internal.PtsHost
             nmsFootnote = IntPtr.Zero;
             return PTS.fserrNotImplemented;
         }
-        internal unsafe int GetFootnotePresentationAndRejectionOrder(
+        internal static unsafe int GetFootnotePresentationAndRejectionOrder(
             IntPtr pfsclient,                           // IN:  client opaque data
             int cFootnotes,                             // IN:  size of all arrays
             IntPtr* rgProposedPresentationOrder,        // IN:  footnotes in proposed pres order
@@ -956,7 +956,7 @@ namespace MS.Internal.PtsHost
             fProposedPresentationOrderAccepted = fProposedRejectionOrderAccepted = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int FAllowFootnoteSeparation(
+        internal static int FAllowFootnoteSeparation(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmftn,                       // IN:  name of footnote
             out int fAllow)                     // OUT: allow separating footnote from its reference
@@ -1233,7 +1233,7 @@ namespace MS.Internal.PtsHost
             {
                 TextParagraph para = PtsContext.HandleToObject(nmp) as TextParagraph;
                 PTS.ValidateHandle(para);
-                para.GetNumberFootnotes(fsdcpStart, fsdcpLim, out nFootnote);
+                TextParagraph.GetNumberFootnotes(fsdcpStart, fsdcpLim, out nFootnote);
             }
             catch (Exception e)
             {
@@ -1249,7 +1249,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal unsafe int GetFootnotes(
+        internal static unsafe int GetFootnotes(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             int fsdcpStart,                     // IN:  dcp at the beginning of the range
@@ -1263,7 +1263,7 @@ namespace MS.Internal.PtsHost
             cFootnotes = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int FormatDropCap(
+        internal static int FormatDropCap(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -1283,7 +1283,7 @@ namespace MS.Internal.PtsHost
             fInMargin = dur = dvr = cPolygons = cVertices = durText = 0;
             return PTS.fserrNotImplemented;
         }
-        internal unsafe int GetDropCapPolygons(
+        internal static unsafe int GetDropCapPolygons(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsdropc,                    // IN:  pointer to drop cap
             IntPtr nmp,                         // IN:  para name
@@ -1300,7 +1300,7 @@ namespace MS.Internal.PtsHost
             ccVertices = cfspt = fWrapThrough = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int DestroyDropCap(
+        internal static int DestroyDropCap(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsdropc)                    // IN:  pointer to drop cap created by client
         {
@@ -1325,7 +1325,7 @@ namespace MS.Internal.PtsHost
                 if(line != null)
                 {
                     PTS.ValidateHandle(line);
-                    para.FormatBottomText(iArea, fswdir, line, dvrLine, out pmcsclientOut);
+                    TextParagraph.FormatBottomText(iArea, fswdir, line, dvrLine, out pmcsclientOut);
                 }
                 else
                 {
@@ -1709,7 +1709,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal int SnapGridVertical(
+        internal static int SnapGridVertical(
             IntPtr pfsclient,                   // IN:  client opaque data
             uint fswdir,                        // IN:  current direction
             int vrMargin,                       // IN:  top margin
@@ -1812,7 +1812,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal int UpdGetDropCapChange(
+        internal static int UpdGetDropCapChange(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr nmp,                         // IN:  name of paragraph
             out int fChanged)                   // OUT: dropcap changed?
@@ -1850,7 +1850,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal int GetTextParaCache(
+        internal static int GetTextParaCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -1884,7 +1884,7 @@ namespace MS.Internal.PtsHost
             fskclear = PTS.FSKCLEAR.fskclearNone;
             return PTS.fserrNone;
         }
-        internal unsafe int SetTextParaCache(
+        internal static unsafe int SetTextParaCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsparaclient,               // IN:
             IntPtr nmp,                         // IN:  name of paragraph
@@ -1913,7 +1913,7 @@ namespace MS.Internal.PtsHost
             // But it is not suitable for incremental update. Hence for now it is not used.
             return PTS.fserrNone;
         }
-        internal unsafe int GetOptimalLineDcpCache(
+        internal static unsafe int GetOptimalLineDcpCache(
             IntPtr pfsclient,                   // IN:  client opaque data
             int cLines,                         // IN:  number of lines - size of pre-allocated array
             int* rgdcp)                         // OUT: array of dcp's to fill
@@ -2555,7 +2555,7 @@ namespace MS.Internal.PtsHost
             }
             return PTS.FsGetNumberSubpageFootnotes(Context, pfsFloaterContent, out cftn);
         }
-        internal int GetFloaterContentFootnoteInfo(
+        internal static int GetFloaterContentFootnoteInfo(
             IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
             uint fswdir,                        // IN:  current direction
             int nftn,                           // IN:  size of FSFTNINFO array
@@ -2659,7 +2659,7 @@ namespace MS.Internal.PtsHost
         // Subtrack paragraph callbacks
         // ------------------------------------------------------------------
         #region SubtrackPara
-        internal int SubtrackCreateContext(
+        internal static int SubtrackCreateContext(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsc,                        // IN:  FS context
             IntPtr pfscbkobj,                   // IN:  callbacks (FSCBKOBJ)
@@ -2670,7 +2670,7 @@ namespace MS.Internal.PtsHost
             pfssobjc = (IntPtr)(idobj + _objectContextOffset);
             return PTS.fserrNone;
         }
-        internal int SubtrackDestroyContext(
+        internal static int SubtrackDestroyContext(
             IntPtr pfssobjc)                    // IN:  object context
         {
             // Do nothing
@@ -2940,7 +2940,7 @@ namespace MS.Internal.PtsHost
         {
             return PTS.FsGetNumberSubtrackFootnotes(Context, pfspara, out nftn);
         }
-        internal unsafe int SubtrackGetFootnoteInfo(
+        internal static unsafe int SubtrackGetFootnoteInfo(
             IntPtr pfspara,                     // IN:  pointer to the para data
             uint fswdir,                        // IN:  current direction
             int nftn,                           // IN:  size of FSFTNINFO array
@@ -2952,7 +2952,7 @@ namespace MS.Internal.PtsHost
             iftnLim = 0;
             return PTS.fserrNotImplemented;
         }
-        internal int SubtrackShiftVertical(IntPtr pfspara,                     // IN:  pointer to the para data
+        internal static int SubtrackShiftVertical(IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsshift,                    // IN:  pointer to the shift data
             uint fswdir,                        // IN:  wdir for bbox - the same as the one passed to formatting method
@@ -2974,7 +2974,7 @@ namespace MS.Internal.PtsHost
         // Subpage paragraph callbacks
         // ------------------------------------------------------------------
         #region SubpagePara
-        internal int SubpageCreateContext(
+        internal static int SubpageCreateContext(
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsc,                        // IN:  FS context
             IntPtr pfscbkobj,                   // IN:  callbacks (FSCBKOBJ)
@@ -2985,7 +2985,7 @@ namespace MS.Internal.PtsHost
             pfssobjc = (IntPtr)(idobj + _objectContextOffset + 1);
             return PTS.fserrNone;
         }
-        internal int SubpageDestroyContext(
+        internal static int SubpageDestroyContext(
             IntPtr pfssobjc)                    // IN:  object context
         {
             // Do nothing
@@ -3171,7 +3171,7 @@ namespace MS.Internal.PtsHost
             }
             return fserr;
         }
-        internal int SubpageSynchronizeBottomlessPara(
+        internal static int SubpageSynchronizeBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsgeom,                     // IN:  pointer to geometry
@@ -3250,7 +3250,7 @@ namespace MS.Internal.PtsHost
             return PTS.FsGetSubpageFootnoteInfo(Context, pfspara, nftn, iftnFirst, out fswdir, pfsftninf, out iftnLim);
         }
 
-        internal int SubpageShiftVertical(
+        internal static int SubpageShiftVertical(
             IntPtr pfspara,                     // IN:  pointer to the para data
             IntPtr pfsparaclient,               // IN:
             IntPtr pfsshift,                    // IN:  pointer to the shift data
@@ -3408,7 +3408,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.GetFirstHeaderRow(fRepeatedHeader, out fFound, out pnmFirstHeaderRow);
+                TableParagraph.GetFirstHeaderRow(fRepeatedHeader, out fFound, out pnmFirstHeaderRow);
             }
             catch (Exception e)
             {
@@ -3440,7 +3440,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.GetNextHeaderRow(fRepeatedHeader, nmHeaderRow, out fFound, out pnmNextHeaderRow);
+                TableParagraph.GetNextHeaderRow(fRepeatedHeader, nmHeaderRow, out fFound, out pnmNextHeaderRow);
             }
             catch (Exception e)
             {
@@ -3471,7 +3471,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.GetFirstFooterRow(fRepeatedFooter, out fFound, out pnmFirstFooterRow);
+                TableParagraph.GetFirstFooterRow(fRepeatedFooter, out fFound, out pnmFirstFooterRow);
             }
             catch (Exception e)
             {
@@ -3503,7 +3503,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.GetNextFooterRow(fRepeatedFooter, nmFooterRow, out fFound, out pnmNextFooterRow);
+                TableParagraph.GetNextFooterRow(fRepeatedFooter, nmFooterRow, out fFound, out pnmNextFooterRow);
             }
             catch (Exception e)
             {
@@ -3596,7 +3596,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.UpdFChangeInHeaderFooter(
+                TableParagraph.UpdFChangeInHeaderFooter(
                     out fHeaderChanged, 
                     out fFooterChanged, 
                     out fRepeatedHeaderChanged, 
@@ -3635,7 +3635,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.UpdGetFirstChangeInTable(
+                TableParagraph.UpdGetFirstChangeInTable(
                     out fFound, 
                     out fChangeFirst, 
                     out pnmRowBeforeChange);
@@ -3705,7 +3705,7 @@ namespace MS.Internal.PtsHost
                 CellParagraph cellParagraph = PtsContext.HandleToObject(nmCell) as CellParagraph;
                 PTS.ValidateHandle(cellParagraph);
 
-                cellParagraph.UpdGetCellChange(out fWidthChanged, out fskchCell);
+                CellParagraph.UpdGetCellChange(out fWidthChanged, out fskchCell);
             }
             catch (Exception e)
             {
@@ -3735,7 +3735,7 @@ namespace MS.Internal.PtsHost
                 TableParagraph para = PtsContext.HandleToObject(nmTable) as TableParagraph;
                 PTS.ValidateHandle(para);
 
-                para.GetDistributionKind(fswdirTable, out tabledistr);
+                TableParagraph.GetDistributionKind(fswdirTable, out tabledistr);
             }
             catch (Exception e)
             {
@@ -3820,7 +3820,7 @@ namespace MS.Internal.PtsHost
                 RowParagraph rowParagraph = PtsContext.HandleToObject(nmRow) as RowParagraph;
                 PTS.ValidateHandle(rowParagraph);
 
-                rowParagraph.FInterruptFormattingTable(dvr, out fInterrupt);
+                RowParagraph.FInterruptFormattingTable(dvr, out fInterrupt);
             }
             catch (Exception e)
             {
@@ -4014,7 +4014,7 @@ namespace MS.Internal.PtsHost
             return (fserr);
         }
 
-        internal int CompareCells(
+        internal static int CompareCells(
             IntPtr pfscellOld,
             IntPtr pfscellNew,
             out PTS.FSCOMPRESULT fscmpr)                         // IN:OUT: cell object
@@ -4024,7 +4024,7 @@ namespace MS.Internal.PtsHost
         }
 
 
-        internal int ClearUpdateInfoInCell(
+        internal static int ClearUpdateInfoInCell(
             IntPtr pfscell)                         // IN:OUT: cell object
         {
             // Do nothing
@@ -4051,7 +4051,7 @@ namespace MS.Internal.PtsHost
                 TableParaClient tableParaClient = PtsContext.HandleToObject(pfsparaclientTable) as TableParaClient;
                 PTS.ValidateHandle(tableParaClient);
 
-                cellParagraph.SetCellHeight(
+                CellParagraph.SetCellHeight(
                     cellParaClient, 
                     tableParaClient,
                     pfsbrkcell, 

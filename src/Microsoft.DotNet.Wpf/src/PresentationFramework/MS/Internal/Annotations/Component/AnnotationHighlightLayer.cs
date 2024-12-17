@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -916,7 +916,7 @@ namespace MS.Internal.Annotations.Component
             /// <param name="geometry">GeometryGroup to add the geometry</param>
             /// <param name="segment">TextSegment</param>
             /// <param name="parentView">TextView to which geometry has to be transformed</param>
-            private void GetSegmentGeometry(GeometryGroup geometry, TextSegment segment, ITextView parentView)
+            private static void GetSegmentGeometry(GeometryGroup geometry, TextSegment segment, ITextView parentView)
             {
                 List<ITextView> textViews = TextSelectionHelper.GetDocumentPageTextViews(segment);
                 Debug.Assert(textViews != null, "geometry text view not found");
@@ -936,7 +936,7 @@ namespace MS.Internal.Annotations.Component
             /// <param name="view">the page view</param>
             /// <param name="parentView">the parent page view</param>
             /// <returns></returns>
-            private Geometry GetPageGeometry(TextSegment segment, ITextView view, ITextView parentView)
+            private static Geometry GetPageGeometry(TextSegment segment, ITextView view, ITextView parentView)
             {
                 Debug.Assert((view != null) && (parentView != null), "null text view");
                 //in the initial layout update the TextViews might be invalid. This is OK
@@ -1048,7 +1048,7 @@ namespace MS.Internal.Annotations.Component
 
 
             // Opens a segment for the following portion
-            private void OpenSegment(ref ITextPointer segmentStart, ITextPointer cursor)
+            private static void OpenSegment(ref ITextPointer segmentStart, ITextPointer cursor)
             {
                 if (segmentStart == null)
                 {

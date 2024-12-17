@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -218,7 +218,7 @@ namespace System.Windows.Documents
             return root;
         }
 
-        private void CloneVisualTree(ContainerVisual parent, Visual old)
+        private static void CloneVisualTree(ContainerVisual parent, Visual old)
         {
             DrawingVisual visual = new DrawingVisual();
             parent.Children.Add(visual);
@@ -474,7 +474,7 @@ namespace System.Windows.Documents
         }
 
         //Returns the character offset in a GlyphRun given an X position
-        private int GlyphRunHitTest(GlyphRun run, double xoffset, bool LTR)
+        private static int GlyphRunHitTest(GlyphRun run, double xoffset, bool LTR)
         {
             bool isInside;
             double distance = LTR ? xoffset - run.BaselineOrigin.X : run.BaselineOrigin.X - xoffset;

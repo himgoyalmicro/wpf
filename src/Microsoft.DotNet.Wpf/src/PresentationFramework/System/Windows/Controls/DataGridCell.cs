@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -797,12 +797,12 @@ namespace System.Windows.Controls
 
             if (horizontalLinesVisible)
             {
-                horizontalLineThickness = dataGridOwner.HorizontalGridLineThickness;
+                horizontalLineThickness = DataGrid.HorizontalGridLineThickness;
                 constraint = DataGridHelper.SubtractFromSize(constraint, horizontalLineThickness, /*height = */ true);
             }
             if (verticalLinesVisible)
             {
-                verticalLineThickness = dataGridOwner.VerticalGridLineThickness;
+                verticalLineThickness = DataGrid.VerticalGridLineThickness;
                 constraint = DataGridHelper.SubtractFromSize(constraint, verticalLineThickness, /*height = */ false);
             }
             Size desiredSize = base.MeasureOverride(constraint);
@@ -832,12 +832,12 @@ namespace System.Windows.Controls
             double verticalLineThickness = 0;
             if (horizontalLinesVisible)
             {
-                horizontalLineThickness = dataGridOwner.HorizontalGridLineThickness;
+                horizontalLineThickness = DataGrid.HorizontalGridLineThickness;
                 arrangeSize = DataGridHelper.SubtractFromSize(arrangeSize, horizontalLineThickness, /*height = */ true);
             }
             if (verticalLinesVisible)
             {
-                verticalLineThickness = dataGridOwner.VerticalGridLineThickness;
+                verticalLineThickness = DataGrid.VerticalGridLineThickness;
                 arrangeSize = DataGridHelper.SubtractFromSize(arrangeSize, verticalLineThickness, /*height = */ false);
             }
             Size returnSize = base.ArrangeOverride(arrangeSize);
@@ -863,7 +863,7 @@ namespace System.Windows.Controls
 
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ false))
             {
-                double thickness = DataGridOwner.VerticalGridLineThickness;
+                double thickness = DataGrid.VerticalGridLineThickness;
                 Rect rect = new Rect(new Size(thickness, RenderSize.Height));
                 rect.X = RenderSize.Width - thickness;
 
@@ -872,7 +872,7 @@ namespace System.Windows.Controls
 
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
-                double thickness = dataGrid.HorizontalGridLineThickness;
+                double thickness = DataGrid.HorizontalGridLineThickness;
                 Rect rect = new Rect(new Size(RenderSize.Width, thickness));
                 rect.Y = RenderSize.Height - thickness;
 

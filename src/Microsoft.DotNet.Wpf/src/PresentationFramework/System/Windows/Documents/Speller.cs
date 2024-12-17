@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1232,7 +1232,7 @@ namespace System.Windows.Documents
         // Also returns the offset, within the TextMap, of the two word breaks surrounding
         // TextMap.ContentStartOffset.  The word breaks may be segment edges, or
         // the extent of a run of whitespace between two segments.
-        private int FindPositionInSegmentList(TextMap textMap, LogicalDirection direction, ArrayList segments,
+        private static int FindPositionInSegmentList(TextMap textMap, LogicalDirection direction, ArrayList segments,
             out int leftWordBreak, out int rightWordBreak)
         {
             SpellerInteropBase.ITextRange sTextRange;
@@ -1579,7 +1579,7 @@ namespace System.Windows.Documents
         ///
         /// </summary>
         /// <param name="tempLocationUri"></param>
-        private void CleanupDictionaryTempFile(Uri tempLocationUri)
+        private static void CleanupDictionaryTempFile(Uri tempLocationUri)
         {
             if (tempLocationUri != null)
             {
@@ -1793,7 +1793,7 @@ namespace System.Windows.Documents
             }
 
             // Returns true if pointer preceeds an Inline start or end edge.
-            private bool IsAdjacentToFormatElement(ITextPointer pointer)
+            private static bool IsAdjacentToFormatElement(ITextPointer pointer)
             {
                 TextPointerContext context;
                 bool isAdjacentToFormatElement;

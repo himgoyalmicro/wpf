@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -4895,7 +4895,7 @@ namespace System.Windows.Documents
             }
         }
 
-        internal string StripInvalidChars(string text)
+        internal static string StripInvalidChars(string text)
         {
             if (text == null || text.Length == 0)
             {
@@ -7322,7 +7322,7 @@ namespace System.Windows.Documents
             return nInserted;
         }
 
-        private void PreCoalesceRow(DocumentNode dn, ref bool fVMerged)
+        private static void PreCoalesceRow(DocumentNode dn, ref bool fVMerged)
         {
             DocumentNodeArray dnaCells = dn.GetRowsCells();
             RowFormat rf = dn.FormatState.RowFormat;
@@ -7403,7 +7403,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private void ProcessTableRowSpan(DocumentNodeArray dnaTables)
+        private static void ProcessTableRowSpan(DocumentNodeArray dnaTables)
         {
             for (int i = 0; i < dnaTables.Count; i++)
             {
@@ -8282,7 +8282,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private int HexToInt(char c)
+        private static int HexToInt(char c)
         {
             if (c >= '0' && c <= '9')
             {
@@ -8302,7 +8302,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private int DecToInt(char c)
+        private static int DecToInt(char c)
         {
             if (c >= '0' && c <= '9')
             {
@@ -8315,7 +8315,7 @@ namespace System.Windows.Documents
         }
 
         // Return the included picture Uri
-        private string GetIncludePictureUri(string instructionName)
+        private static string GetIncludePictureUri(string instructionName)
         {
             string pictureUri = null;
             int uriIndex = instructionName.IndexOf("http:", StringComparison.OrdinalIgnoreCase);
@@ -8741,7 +8741,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private void ConvertSymbolCharValueToText(DocumentNode dn, int nChar, EncodeType encodeType)
+        private static void ConvertSymbolCharValueToText(DocumentNode dn, int nChar, EncodeType encodeType)
         {
             switch (encodeType)
             {
@@ -11563,7 +11563,7 @@ namespace System.Windows.Documents
 
         #region Private Methods
 
-        private void SetTokenTextWithControlCharacter(RtfToken token)
+        private static void SetTokenTextWithControlCharacter(RtfToken token)
         {
             switch (token.Text[0])
             {
@@ -11594,7 +11594,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private int GetMatchedMarkList(FormatState formatState, MarkerList mlHave, MarkerList mlWant)
+        private static int GetMatchedMarkList(FormatState formatState, MarkerList mlHave, MarkerList mlWant)
         {
             // The ones we have are only "good" if the styles match what we want.
             int nMatch = 0;
@@ -11618,7 +11618,7 @@ namespace System.Windows.Documents
             return nMatch;
         }
 
-        private void EnsureListAndListItem(FormatState formatState, DocumentNodeArray dna, MarkerList mlHave, MarkerList mlWant, int nMatch)
+        private static void EnsureListAndListItem(FormatState formatState, DocumentNodeArray dna, MarkerList mlHave, MarkerList mlWant, int nMatch)
         {
             int nInsertAt;
 

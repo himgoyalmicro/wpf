@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -3079,7 +3079,7 @@ namespace MS.Internal.Documents
         /// Represents the number of pixels to scroll by when using the
         /// Mouse Wheel; based on System.Parameters.WheelScrollLines.
         /// </summary>
-        private double MouseWheelVerticalScrollAmount
+        private static double MouseWheelVerticalScrollAmount
         {
             get
             {
@@ -3099,7 +3099,7 @@ namespace MS.Internal.Documents
         /// Represents the number of pixels to scroll by when using the
         /// Mouse Wheel; based on System.Parameters.WheelScrollLines.
         /// </summary>
-        private double MouseWheelHorizontalScrollAmount
+        private static double MouseWheelHorizontalScrollAmount
         {
             get
             {

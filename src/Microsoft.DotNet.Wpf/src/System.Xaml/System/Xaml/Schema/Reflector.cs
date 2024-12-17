@@ -439,7 +439,7 @@ namespace System.Xaml.Schema
             return result;
         }
 
-        private Type ExtractType(CustomAttributeTypedArgument arg)
+        private static Type ExtractType(CustomAttributeTypedArgument arg)
         {
             if (arg.ArgumentType == typeof(Type))
             {

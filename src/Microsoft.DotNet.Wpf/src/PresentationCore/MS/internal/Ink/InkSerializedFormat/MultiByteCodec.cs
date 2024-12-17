@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="data"></param>
         /// <param name="output"></param>
-        internal void Encode(uint data, List<byte> output)
+        internal static void Encode(uint data, List<byte> output)
         {
             ArgumentNullException.ThrowIfNull(output);
             while (data > 0x7f)
@@ -39,7 +39,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="data"></param>
         /// <param name="output"></param>
-        internal void SignEncode(int data, List<byte> output)
+        internal static void SignEncode(int data, List<byte> output)
         {
             uint xfData = 0;
             if (data < 0)
@@ -60,7 +60,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="inputIndex"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal uint Decode(byte[] input, int inputIndex, ref uint data)
+        internal static uint Decode(byte[] input, int inputIndex, ref uint data)
         {
             Debug.Assert(input != null);
             Debug.Assert(inputIndex < input.Length);
@@ -95,7 +95,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="inputIndex"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal uint SignDecode(byte[] input, int inputIndex, ref int data)
+        internal static uint SignDecode(byte[] input, int inputIndex, ref int data)
         {
             Debug.Assert(input != null); //already validated at the AlgoModule level
             ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(inputIndex, input.Length);

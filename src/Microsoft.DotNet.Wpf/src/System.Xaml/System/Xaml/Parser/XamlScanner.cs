@@ -849,7 +849,7 @@ namespace MS.Internal.Xaml.Parser
             _readNodesQueue.Enqueue(node);
         }
 
-        private bool IsXDataElement(string xmlns, string name)
+        private static bool IsXDataElement(string xmlns, string name)
         {
             return
                 XamlLanguage.XamlNamespaces.Contains(xmlns) &&

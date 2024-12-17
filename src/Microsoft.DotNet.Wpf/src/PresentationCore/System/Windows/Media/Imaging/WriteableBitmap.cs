@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -700,7 +700,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///     Gets the estimated memory pressure in bytes
         /// </summary>
-        private long GetEstimatedSize(int pixelWidth, int pixelHeight, PixelFormat pixelFormat)
+        private static long GetEstimatedSize(int pixelWidth, int pixelHeight, PixelFormat pixelFormat)
         {
             // Dimensions of the bitmap * bytes per pixel, then multiply by 2 because
             // WriteableBitmap uses 2 buffers.
@@ -1052,7 +1052,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceBufferSize">
         ///     On output, will contain the size of the array.
         /// </param>
-        private void ValidateArrayAndGetInfo(Array sourceBuffer,
+        private static void ValidateArrayAndGetInfo(Array sourceBuffer,
                                                        bool backwardsCompat,
                                                        out int elementSize,
                                                        out int sourceBufferSize,

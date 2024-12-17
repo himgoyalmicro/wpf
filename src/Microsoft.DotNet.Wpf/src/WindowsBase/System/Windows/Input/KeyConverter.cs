@@ -120,7 +120,7 @@ namespace System.Windows.Input
             throw GetConvertToException(value, destinationType);
         }
 
-        private object GetKey(string keyToken, CultureInfo culture)
+        private static object GetKey(string keyToken, CultureInfo culture)
         {
             if (keyToken.Length == 0)
             {

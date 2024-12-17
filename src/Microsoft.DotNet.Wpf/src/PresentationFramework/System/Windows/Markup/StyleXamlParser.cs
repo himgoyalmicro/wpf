@@ -1499,7 +1499,7 @@ namespace System.Windows.Markup
         /// Helper function if we are going to a Reader/Writer stream closes the writer
         /// side.
         /// </summary>
-        internal void CloseWriterStream()
+        internal static void CloseWriterStream()
         {
 #if !PBTCOMPILER
             // only close the BamlRecordWriter.  (Rename to Root??)

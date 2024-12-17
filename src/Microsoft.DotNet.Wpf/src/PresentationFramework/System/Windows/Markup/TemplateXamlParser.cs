@@ -1714,7 +1714,7 @@ namespace System.Windows.Markup
         /// Helper function if we are going to a Reader/Writer stream closes the writer
         /// side.
         /// </summary>
-        internal void CloseWriterStream()
+        internal static void CloseWriterStream()
         {
 #if !PBTCOMPILER
             // only close the BamlRecordWriter.  (Rename to Root??)
@@ -1763,7 +1763,7 @@ namespace System.Windows.Markup
             get { return BamlRecordWriter == null; }
         }
         
-        private Type ItemContainerTemplateType
+        private static Type ItemContainerTemplateType
         {
             get
             {
@@ -1775,7 +1775,7 @@ namespace System.Windows.Markup
             }
         }
 
-        private Type ItemContainerTemplateKeyType
+        private static Type ItemContainerTemplateKeyType
         {
             get
             {

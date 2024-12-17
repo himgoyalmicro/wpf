@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -871,7 +871,7 @@ namespace MS.Internal.IO.Packaging
             _xamlReader.Skip();
         }
 
-        private bool IsPrefixedPropertyName(string name, out string propertyName)
+        private static bool IsPrefixedPropertyName(string name, out string propertyName)
         {
             int suffixStart = name.IndexOf('.');
             if (suffixStart == -1)
@@ -914,7 +914,7 @@ namespace MS.Internal.IO.Packaging
             {
                 string attributePropertyName;
 
-                if (   IsPrefixedPropertyName(_xamlReader.LocalName, out attributePropertyName)
+                if (IsPrefixedPropertyName(_xamlReader.LocalName, out attributePropertyName)
                     && attributePropertyName.Equals(propertyName, StringComparison.Ordinal))
                 {
                     value = _xamlReader.Value;

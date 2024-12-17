@@ -131,7 +131,7 @@ namespace System.Windows.Input
             throw GetConvertToException(value,destinationType);
         }
 
-        private ModifierKeys GetModifierKeys(string modifiersToken, CultureInfo culture)
+        private static ModifierKeys GetModifierKeys(string modifiersToken, CultureInfo culture)
         {
             ModifierKeys modifiers = ModifierKeys.None;
             if (modifiersToken.Length != 0)

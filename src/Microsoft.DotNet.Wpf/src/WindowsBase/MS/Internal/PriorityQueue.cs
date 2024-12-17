@@ -169,7 +169,7 @@ namespace System.Windows.Threading
             return chain;
         }
         
-        private void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain)
+        private static void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain)
         {
             // Scan along the sequential chain, in the previous direction,
             // looking for an item that is already in the new chain.  We will
@@ -200,7 +200,7 @@ namespace System.Windows.Threading
             }
         }
 
-        internal void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain, PriorityItem<T> after)
+        internal static void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain, PriorityItem<T> after)
         {
             Debug.Assert(chain != null, "PriorityQueue.InsertItemInPriorityChain: a chain must be provided.");
             Debug.Assert(item.Chain == null && item.PriorityPrev == null && item.PriorityNext == null, "PriorityQueue.InsertItemInPriorityChain: item must not already be in a priority chain.");

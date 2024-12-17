@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -426,7 +426,7 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Compute scroll offset for child rectangle.
         /// </summary>
-        private double ComputeScrollOffset(double topView, double bottomView, double topChild, double bottomChild)
+        private static double ComputeScrollOffset(double topView, double bottomView, double topChild, double bottomChild)
         {
             // # CHILD POSITION             REMEDY
             // 1 Above viewport             Align top edge of child & viewport

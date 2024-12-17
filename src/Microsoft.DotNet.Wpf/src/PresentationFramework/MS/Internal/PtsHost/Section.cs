@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -69,7 +69,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fSkip">
         /// OUT: skip page due to odd/even page issue
         /// </param>
-        internal void FSkipPage(
+        internal static void FSkipPage(
             out int fSkip)                   
         {
             // Never skip a page
@@ -146,7 +146,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fCancelAtLastColumn">
         /// OUT: cancel justification for the last column of the page?
         /// </param>
-        internal unsafe void GetJustificationProperties(
+        internal static unsafe void GetJustificationProperties(
             IntPtr* rgnms,                  
             int cnms,                        
             int fLastSectionNotBroken,      
@@ -169,7 +169,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmsNext">
         /// OUT: name of the next section
         /// </param>
-        internal void GetNextSection(
+        internal static void GetNextSection(
             out int fSuccess,                
             out IntPtr nmsNext)              
         {
@@ -270,7 +270,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmsHeader">
         /// OUT: name of header segment
         /// </param>
-        internal void GetHeaderSegment(
+        internal static void GetHeaderSegment(
             IntPtr pfsbrpagePrelim, 
             uint fswdir,                     
             out int fHeaderPresent,          
@@ -314,7 +314,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmsFooter">
         /// OUT: name of footer segment
         /// </param>
-        internal void GetFooterSegment(
+        internal static void GetFooterSegment(
             IntPtr pfsbrpagePrelim, 
             uint fswdir,                     
             out int fFooterPresent,          
@@ -373,7 +373,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmsEndnotes">
         /// OUT: name of endnote segment
         /// </param>
-        internal void GetEndnoteSegment(
+        internal static void GetEndnoteSegment(
             out int fEndnotesPresent,        
             out IntPtr nmsEndnotes)          
         {
@@ -393,7 +393,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmsEndnoteContNotice">
         /// OUT: name of the endnote cont notice segment
         /// </param>
-        internal void GetEndnoteSeparators(
+        internal static void GetEndnoteSeparators(
             out IntPtr nmsEndnoteSeparator,      
             out IntPtr nmsEndnoteContSeparator,  
             out IntPtr nmsEndnoteContNotice)    

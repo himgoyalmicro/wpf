@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -356,9 +356,11 @@ namespace MS.Internal.Data
                     else if (c == 2)
                     {   // special case - this[left] is blue, this[left+1] is red
                         // swap the outer green regions into the middle, and terminate
-                        Trade(low, greenL, red); red += low - greenL + 1; Exchange(red - 1, left + 1);
+                        Trade(low, greenL, red); red += low - greenL + 1;
+                        Exchange(red - 1, left + 1);
                         if (red > left) ++left;
-                        Trade(blue, greenR, high); blue += high - greenR - 1; Exchange(left, blue);
+                        Trade(blue, greenR, high); blue += high - greenR - 1;
+                        Exchange(left, blue);
                         break;
                     }
                     else
@@ -386,7 +388,7 @@ namespace MS.Internal.Data
 
         // Input: two regions [left, mid) and [mid, right), each of a single color
         // Output: swap so that the color on the left is now on the right, and vice-versa
-        void Trade(RBFinger<T> left, RBFinger<T> mid, RBFinger<T> right)
+        static void Trade(RBFinger<T> left, RBFinger<T> mid, RBFinger<T> right)
         {
             int n = Math.Min(mid - left, right - mid);
             for (int k = 0; k < n; ++k)
@@ -397,7 +399,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void Exchange(RBFinger<T> f1, RBFinger<T> f2)
+        static void Exchange(RBFinger<T> f1, RBFinger<T> f2)
         {
             T x = f1.Item;
             f1.SetItem(f2.Item);

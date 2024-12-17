@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1017,7 +1017,7 @@ namespace MS.Internal.Documents
         /// <param name="position">Position at the beginning/end of the page.</param>
         /// <param name="suggestedX">Suggested offset in the page.</param>
         /// <returns>Position at the page boundary from given suggestedX.</returns>
-        private ITextPointer GetPositionAtPageBoundary(bool pageTop, ITextView pageTextView, ITextPointer position, double suggestedX)
+        private static ITextPointer GetPositionAtPageBoundary(bool pageTop, ITextView pageTextView, ITextPointer position, double suggestedX)
         {
             double newSuggestedX;
             int newLinesMoved;

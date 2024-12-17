@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -159,7 +159,7 @@ namespace System.Windows.Media.Imaging
                             try
                             {
                                 HRESULT.Check(UnsafeNativeMethods.WICComponentFactory.CreateMetadataWriterFromReader(
-                                    factoryMaker.ImagingFactoryPtr,
+                                    FactoryMaker.ImagingFactoryPtr,
                                     metadataHandle,
                                     ref guidVendor,
                                     out pIMetadataWriter
@@ -290,7 +290,7 @@ namespace System.Windows.Media.Imaging
                                 }
 
                                 hr = UnsafeNativeMethods.WICComponentFactory.CreateMetadataWriterFromReader(
-                                    factoryMaker.ImagingFactoryPtr,
+                                    FactoryMaker.ImagingFactoryPtr,
                                     pIMetadataReader,
                                     ref guidVendor,
                                     out pIMetadataWriter
@@ -653,7 +653,7 @@ namespace System.Windows.Media.Imaging
 
                 // If it's a metadata format, create a Query Writer to wrap it.
                 hr = UnsafeNativeMethods.WICImagingFactory.CreateQueryWriter(
-                    factoryMaker.ImagingFactoryPtr,
+                    FactoryMaker.ImagingFactoryPtr,
                     ref containerFormat,
                     ref vendorMicrosoft,
                     out queryWriter
@@ -695,7 +695,7 @@ namespace System.Windows.Media.Imaging
                         typeof(System.Windows.Media.Imaging.BitmapMetadata.IWICMetadataBlockWriter));
 
                     HRESULT.Check(UnsafeNativeMethods.WICComponentFactory.CreateQueryWriterFromBlockWriter(
-                        factoryMaker.ImagingFactoryPtr,
+                        FactoryMaker.ImagingFactoryPtr,
                         blockWriter,
                         ref queryWriter
                     ));
@@ -744,7 +744,7 @@ namespace System.Windows.Media.Imaging
                         typeof(System.Windows.Media.Imaging.BitmapMetadata.IWICMetadataBlockWriter));
 
                     HRESULT.Check(UnsafeNativeMethods.WICComponentFactory.CreateQueryWriterFromBlockWriter(
-                        factoryMaker.ImagingFactoryPtr,
+                        FactoryMaker.ImagingFactoryPtr,
                         blockWriter,
                         ref queryWriter
                     ));
@@ -791,7 +791,7 @@ namespace System.Windows.Media.Imaging
                     lock (syncObject)
                     {
                         hr = UnsafeNativeMethods.WICImagingFactory.CreateQueryWriterFromReader(
-                            factoryMaker.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             metadataHandle,
                             ref guidVendor,
                             out queryWriter);

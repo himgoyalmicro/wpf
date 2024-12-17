@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -193,7 +193,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Loads the strokeIds from the stream, we need to do this to decrement the count of bytes
         /// </summary>
-        internal uint LoadStrokeIds(Stream isfStream, uint cbSize)
+        internal static uint LoadStrokeIds(Stream isfStream, uint cbSize)
         {
             if (0 == cbSize)
                 return 0;
@@ -231,7 +231,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         }
 
 
-        private bool IsGIFData(Stream inkdata)
+        private static bool IsGIFData(Stream inkdata)
         {
             Debug.Assert(inkdata != null);
             long currentPosition = inkdata.Position;
@@ -248,7 +248,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
         }
 
-        private void ExamineStreamHeader(Stream inkdata, out bool fBase64, out bool fGif, out uint cbData)
+        private static void ExamineStreamHeader(Stream inkdata, out bool fBase64, out bool fGif, out uint cbData)
         {
             fGif = false;
             cbData = 0;
@@ -869,7 +869,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// <param name="cbSize"></param>
     /// <param name="descr"></param>
     /// <returns></returns>
-    private uint DecodeStrokeDescriptor(Stream strm, uint cbSize, out StrokeDescriptor descr)
+    private static uint DecodeStrokeDescriptor(Stream strm, uint cbSize, out StrokeDescriptor descr)
     {
         descr = new StrokeDescriptor();
         if (0 == cbSize)
@@ -1075,7 +1075,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="cbSize"></param>
         /// <param name="block"></param>
         /// <returns></returns>
-        private uint DecodeMetricBlock(Stream strm, uint cbSize, out MetricBlock block)
+        private static uint DecodeMetricBlock(Stream strm, uint cbSize, out MetricBlock block)
         {
             // allocate the block
             block = new MetricBlock();
@@ -1235,7 +1235,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="useDoubles"></param>
         /// <param name="xform"></param>
         /// <returns></returns>
-        private uint DecodeTransformBlock(Stream strm, KnownTagCache.KnownTagIndex tag, uint cbSize, bool useDoubles, out TransformDescriptor xform)
+        private static uint DecodeTransformBlock(Stream strm, KnownTagCache.KnownTagIndex tag, uint cbSize, bool useDoubles, out TransformDescriptor xform)
         {
             xform = new TransformDescriptor();
             xform.Tag = tag;
@@ -1381,7 +1381,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="tdrd"></param>
         /// <returns></returns>
-        private Matrix LoadTransform(TransformDescriptor tdrd)
+        private static Matrix LoadTransform(TransformDescriptor tdrd)
         {
             double M00 = 0.0f, M01 = 0.0f, M10 = 0.0f, M11 = 0.0f, M20 = 0.0f, M21 = 0.0f;
 
@@ -1444,7 +1444,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="tag"></param>
         /// <param name="block"></param>
         /// <returns></returns>
-        private StylusPointPropertyInfo GetStylusPointPropertyInfo(Guid guid, KnownTagCache.KnownTagIndex tag, MetricBlock block)
+        private static StylusPointPropertyInfo GetStylusPointPropertyInfo(Guid guid, KnownTagCache.KnownTagIndex tag, MetricBlock block)
         {
             int dw = 0;
             bool fSetDefault = false;
@@ -1556,7 +1556,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="block"></param>
         /// <param name="guidList"></param>
         /// <returns></returns>
-        private StylusPointDescription BuildStylusPointDescription(StrokeDescriptor strd, MetricBlock block, GuidList guidList)
+        private static StylusPointDescription BuildStylusPointDescription(StrokeDescriptor strd, MetricBlock block, GuidList guidList)
         {
             int cTags = 0;
             int packetPropertyCount = 0;
@@ -2093,7 +2093,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private bool IsBase64Data(Stream data)
+        private static bool IsBase64Data(Stream data)
         {
             Debug.Assert(data != null);
             long currentPosition = data.Position;
@@ -2151,7 +2151,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="stroke"></param>
         /// <param name="guidList"></param>
-        private void BuildStrokeGuidList(Stroke stroke, GuidList guidList)
+        private static void BuildStrokeGuidList(Stroke stroke, GuidList guidList)
         {
             int i = 0;
 
@@ -2302,7 +2302,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="strm"></param>
         /// <param name="strd"></param>
         /// <returns></returns>
-        private uint EncodeStrokeDescriptor(Stream strm, StrokeDescriptor strd)
+        private static uint EncodeStrokeDescriptor(Stream strm, StrokeDescriptor strd)
         {
             uint cbData = 0;
 
@@ -2397,7 +2397,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="xform"></param>
         /// <param name="useDoubles"></param>
         /// <returns></returns>
-        private uint EncodeTransformDescriptor(Stream strm, TransformDescriptor xform, bool useDoubles)
+        private static uint EncodeTransformDescriptor(Stream strm, TransformDescriptor xform, bool useDoubles)
         {
             uint cbData = 0;
 

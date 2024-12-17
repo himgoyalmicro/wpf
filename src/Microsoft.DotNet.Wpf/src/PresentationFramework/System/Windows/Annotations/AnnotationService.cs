@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -827,7 +827,7 @@ namespace System.Windows.Annotations
         /// <param name="firstAttachedAnnotation">first attached annotation</param>
         /// <param name="secondAttachedAnnotation">second attached annotation</param>
         /// <returns>true if the attachment level is equal and the two anchors are equal TextAnchors</returns>
-        private bool AttachedAnchorsEqual(IAttachedAnnotation firstAttachedAnnotation, IAttachedAnnotation secondAttachedAnnotation)
+        private static bool AttachedAnchorsEqual(IAttachedAnnotation firstAttachedAnnotation, IAttachedAnnotation secondAttachedAnnotation)
         {
             //the annotation exists, but we do not know if the attached anchor has
             //changed, so we we always modify it
@@ -1151,7 +1151,7 @@ namespace System.Windows.Annotations
         /// <param name="attachedAnnotation">the attached annotation</param>
         /// <param name="list">the list</param>
         /// <returns>the annotation form the list if mathing is found</returns>
-        private IAttachedAnnotation FindAnnotationInList(IAttachedAnnotation attachedAnnotation, IList<IAttachedAnnotation> list)
+        private static IAttachedAnnotation FindAnnotationInList(IAttachedAnnotation attachedAnnotation, IList<IAttachedAnnotation> list)
         {
             foreach (IAttachedAnnotation aa in list)
             {

@@ -80,7 +80,7 @@ namespace MS.Internal
 
                 // Remove this value from the DefaultValue cache so we stop
                 // handing it out as the default value now that it has changed.
-                metadata.ClearCachedDefaultValue(_owner, _property);
+                PropertyMetadata.ClearCachedDefaultValue(_owner, _property);
 
                 // If someone else hasn't already written a local value,
                 // promote the default value to local.

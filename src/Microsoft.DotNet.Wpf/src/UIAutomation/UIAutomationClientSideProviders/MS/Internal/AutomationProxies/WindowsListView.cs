@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -231,7 +231,7 @@ namespace MS.Internal.AutomationProxies
                 if (windowsListViewGroup != null)
                 {
                     // The group might have destroyed by an event between a first an now
-                    _groupsCollection.EnsureCreation (_hwnd);
+                    GroupManagerCollection.EnsureCreation(_hwnd);
 
                     GroupManager manager = _groupsCollection[_hwnd];
                     int [] groupIds = manager.GetGroupIds ();
@@ -268,7 +268,7 @@ namespace MS.Internal.AutomationProxies
             if (IsGroupViewEnabled (_hwnd))
             {
                 // The group might have destroyed by an event between a first an now
-                _groupsCollection.EnsureCreation (_hwnd);
+                GroupManagerCollection.EnsureCreation(_hwnd);
 
                 // note: navigation is done from last group to the first
                 GroupManager manager = _groupsCollection [_hwnd];
@@ -341,7 +341,7 @@ namespace MS.Internal.AutomationProxies
                 // Navigate to the first group
                 if (hasGroup)
                 {
-                    _groupsCollection.EnsureCreation(_hwnd);
+                    GroupManagerCollection.EnsureCreation(_hwnd);
 
                     GroupManager manager = _groupsCollection[_hwnd];
                     int[] groupIds = manager.GetGroupIds();
@@ -370,7 +370,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // group view is enabled and we got here
                 // now return the last group
-                _groupsCollection.EnsureCreation (_hwnd);
+                GroupManagerCollection.EnsureCreation(_hwnd);
 
                 GroupManager manager = _groupsCollection [_hwnd];
                 int [] groupIds = manager.GetGroupIds ();
@@ -405,7 +405,7 @@ namespace MS.Internal.AutomationProxies
             // in the case of the lv in the group mode, return a group at point(x,y)
             if (IsGroupViewEnabled (_hwnd))
             {
-                _groupsCollection.EnsureCreation (_hwnd);
+                GroupManagerCollection.EnsureCreation(_hwnd);
 
                 // Let's locate the group that contains x,y
                 GroupManager manager = WindowsListView._groupsCollection [_hwnd];
@@ -467,7 +467,7 @@ namespace MS.Internal.AutomationProxies
         {
             if (IsGroupViewEnabled (_hwnd))
             {
-                _groupsCollection.EnsureCreation (_hwnd);
+                GroupManagerCollection.EnsureCreation(_hwnd);
                 return WindowsListViewGroup.GetFocusInGroup (_hwnd, this);
             }
 
@@ -1115,7 +1115,7 @@ namespace MS.Internal.AutomationProxies
                             // 2. View changed (e.g.icone -> tiles)     (No action needed group did no change)
                             // 3. something as simple as resize     (No action needed)
                             // To detect case 1 we need to make sure that our ids are still valid
-                            if (_groupsCollection.Contains (hwnd))
+                            if (GroupManagerCollection.Contains(hwnd))
                             {
                                 GroupManager manager = _groupsCollection [hwnd];
 
@@ -1137,7 +1137,7 @@ namespace MS.Internal.AutomationProxies
                             // we need to remove the corresponding GroupManager from collection
                             // and raise an event
                             // NOTE: Unfortunately LV will not produce event on this consistently (e.g. Any mode->List)
-                            if (_groupsCollection.Contains (hwnd))
+                            if (GroupManagerCollection.Contains(hwnd))
                             {
                                 // groups were removed
                                 RemoveGroupAndRaiseLogicalChangedEvent (hwnd);
@@ -1149,9 +1149,9 @@ namespace MS.Internal.AutomationProxies
                 case NativeMethods.EventObjectDestroy :
                     {
                         // lv is being destroyed...
-                        if (_groupsCollection.Contains (hwnd))
+                        if (GroupManagerCollection.Contains(hwnd))
                         {
-                            _groupsCollection.Remove (hwnd);
+                            GroupManagerCollection.Remove(hwnd);
                             WinEventTracker.RemoveToNotificationList (hwnd, _groupEvents, null, 3);
                         }
                     }
@@ -1165,9 +1165,9 @@ namespace MS.Internal.AutomationProxies
                         // There is however some timing issue: The window handle sometimes still will be visible and enabled even though OBJECT_HIDE
                         // event was raised in the response to LV going away:
                         // Hence our "remove" code may not be executing all the time
-                        if (_groupsCollection.Contains (hwnd) && !SafeNativeMethods.IsWindowVisible (hwnd) && !SafeNativeMethods.IsWindowEnabled (hwnd))
+                        if (GroupManagerCollection.Contains(hwnd) && !SafeNativeMethods.IsWindowVisible (hwnd) && !SafeNativeMethods.IsWindowEnabled (hwnd))
                         {
-                            _groupsCollection.Remove (hwnd);
+                            GroupManagerCollection.Remove(hwnd);
                             WinEventTracker.RemoveToNotificationList (hwnd, _groupEvents, null, 3);
                         }
                     }
@@ -1193,7 +1193,7 @@ namespace MS.Internal.AutomationProxies
         static internal void RaiseLogicalChangedEvent (IntPtr hwnd)
         {
             // remove groupmanager from collection
-            _groupsCollection.Remove (hwnd);
+            GroupManagerCollection.Remove(hwnd);
 
             // Raise logical structure changed event
             IRawElementProviderFragment wlv = (IRawElementProviderFragment) new WindowsListView (hwnd, null, -1);
@@ -1590,7 +1590,7 @@ namespace MS.Internal.AutomationProxies
             // Navigate to the first group
             if (hasGroup)
             {
-                _groupsCollection.EnsureCreation(_hwnd);
+                GroupManagerCollection.EnsureCreation(_hwnd);
 
                 GroupManager manager = _groupsCollection[_hwnd];
                 int[] groupIds = manager.GetGroupIds();
@@ -1974,7 +1974,7 @@ namespace MS.Internal.AutomationProxies
                 if (fGroupView)
                 {
                     // remove groupmanager from collection
-                    _groupsCollection.Remove(hwnd);
+                    GroupManagerCollection.Remove(hwnd);
 
                     // If it is an object creation, create the element and picks
                     // its parent to invalidate. The parent can be either a group

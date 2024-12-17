@@ -117,7 +117,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 using(BinaryReader utf8Reader = new BinaryReader(stream, _utf8Encoding))
                 {
-                    UseLicense useLicense = rmet.LoadUseLicenseAndUserFromStream(utf8Reader, out user);
+                    UseLicense useLicense = RightsManagementEncryptionTransform.LoadUseLicenseAndUserFromStream(utf8Reader, out user);
 
                     _dict.Add(user, useLicense);
                 }

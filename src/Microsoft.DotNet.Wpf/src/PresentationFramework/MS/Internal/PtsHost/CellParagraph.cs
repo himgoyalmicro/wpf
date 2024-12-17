@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -180,7 +180,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fBrokenHere">Cell broken on this page/column</param>
         /// <param name="fswdirTable">Flow direction</param>
         /// <param name="dvrActual">Actual height</param>
-        internal void SetCellHeight(
+        internal static void SetCellHeight(
             CellParaClient cellParaClient,          // IN: cell object
             TableParaClient tableParaClient,        // table's para client
             IntPtr subpageBreakRecord,              // not NULL if cell broken from previous page/column
@@ -199,7 +199,7 @@ namespace MS.Internal.PtsHost
         /// </param>
         /// <param name="fskchCell">Change kind. One of: None, New, Inside
         /// </param>
-        internal void UpdGetCellChange(
+        internal static void UpdGetCellChange(
             out int fWidthChanged,                  // OUT: 
             out PTS.FSKCHANGE fskchCell)            // OUT: 
         {

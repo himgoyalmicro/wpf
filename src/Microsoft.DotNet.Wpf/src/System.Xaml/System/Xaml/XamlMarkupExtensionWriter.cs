@@ -270,7 +270,7 @@ namespace System.Xaml
                 return sb.ToString();
             }
 
-            protected void WritePrefix(XamlMarkupExtensionWriter writer, string prefix)
+            protected static void WritePrefix(XamlMarkupExtensionWriter writer, string prefix)
             {
                 if (!string.IsNullOrEmpty(prefix))
                 {
@@ -279,7 +279,7 @@ namespace System.Xaml
                 }
             }
 
-            public void WriteString(XamlMarkupExtensionWriter writer, string value)
+            public static void WriteString(XamlMarkupExtensionWriter writer, string value)
             {
                 if (ContainCharacterToEscape(value) || value.Length == 0)
                 {
@@ -368,7 +368,7 @@ namespace System.Xaml
                 }
             }
 
-            protected void UpdateStack(XamlMarkupExtensionWriter writer, XamlMember property)
+            protected static void UpdateStack(XamlMarkupExtensionWriter writer, XamlMember property)
             {
                 if (writer.nodes.Count == 0)
                 {

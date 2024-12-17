@@ -480,7 +480,7 @@ namespace System.Windows
         /// <summary>
         /// Property to access and intialize the thread static _eventStorage variable.
         /// </summary>
-        private EventStorage CachedEventStorage
+        private static EventStorage CachedEventStorage
         {
             get
             {
@@ -503,7 +503,7 @@ namespace System.Windows
         /// An EventStorage object to be used to cache event handlers that is set
         /// to be in use.
         /// </returns>
-        private EventStorage GetEventStorage()
+        private static EventStorage GetEventStorage()
         {
             EventStorage eventStorage = CachedEventStorage;
 
@@ -2006,7 +2006,7 @@ namespace System.Windows
         // Verifies that the given owner/property pair constitutes a valid
         // inheritance context for this Freezable.  This is a no-op if the
         // property is null.
-        private void Debug_VerifyContextIsValid(DependencyObject owner, DependencyProperty property)
+        private static void Debug_VerifyContextIsValid(DependencyObject owner, DependencyProperty property)
         {
             if (Invariant.Strict)
             {

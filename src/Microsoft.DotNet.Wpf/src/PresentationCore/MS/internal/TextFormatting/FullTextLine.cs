@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1914,7 +1914,7 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Return the ending edge of the subline relative to its own flow direction
             /// </summary>
-            private int GetEndOfSublineDistance(
+            private static int GetEndOfSublineDistance(
                 LsQSubInfo[] sublines,
                 int          index
                 )
@@ -1929,7 +1929,7 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Return the ending edge of the run relative to its own flow direction.
             /// </summary>
-            private int GetEndOfRunDistance(
+            private static int GetEndOfRunDistance(
                 LsQSubInfo[] sublines,
                 int          index
                 )
@@ -1944,7 +1944,7 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Add non-zero geometry bounds to the bounds list
             /// </summary>
-            private void AddValidTextBounds(
+            private static void AddValidTextBounds(
                 ArrayList      boundsList,
                 TextBounds     bounds
                 )

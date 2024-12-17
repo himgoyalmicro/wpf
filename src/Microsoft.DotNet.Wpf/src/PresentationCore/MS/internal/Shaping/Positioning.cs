@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1011,7 +1011,7 @@ namespace MS.Internal.Shaping
             return true;
         }        
         
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1161,7 +1161,7 @@ namespace MS.Internal.Shaping
             return true;
         }        
         
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1347,7 +1347,7 @@ namespace MS.Internal.Shaping
             return true;
         }
         
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 
@@ -1443,7 +1443,7 @@ namespace MS.Internal.Shaping
         }
         
         // Find base ligature and component corresponding to the mark
-        private unsafe void FindBaseLigature (
+        private static unsafe void FindBaseLigature (
             int             CharCount,
             UshortList      Charmap,
             GlyphInfoList   GlyphInfo,
@@ -1514,7 +1514,7 @@ namespace MS.Internal.Shaping
             
             int baseGlyph;
             ushort component;
-            
+
             FindBaseLigature(CharCount, Charmap,GlyphInfo,markGlyph, 
                                                 out component, out baseGlyph);
             if (baseGlyph<0) return false;
@@ -1548,7 +1548,7 @@ namespace MS.Internal.Shaping
             return true;
         }        
         
-        public bool IsLookupCovered(
+        public static bool IsLookupCovered(
                         FontTable table, 
                         uint[] glyphBits, 
                         ushort minGlyphId, 

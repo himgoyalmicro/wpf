@@ -713,7 +713,7 @@ namespace System.IO.Packaging
     /// <summary>
     /// Tranform object is created. We are no longer using reflection to do this. We are supporting limited data transforms.
     /// </summary>
-    private IDataTransform InstantiateDataTransformObject(int transformClassType,  string transformClassName, TransformEnvironment transformEnvironment )
+    private static IDataTransform InstantiateDataTransformObject(int transformClassType,  string transformClassName, TransformEnvironment transformEnvironment )
     {
         object transformInstance = null;
 

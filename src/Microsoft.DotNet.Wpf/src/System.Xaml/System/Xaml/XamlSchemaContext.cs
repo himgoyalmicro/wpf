@@ -164,7 +164,7 @@ namespace System.Xaml
             return result;
         }
 
-        string GetPrefixForClrNs(string clrNs, string assemblyName)
+        static string GetPrefixForClrNs(string clrNs, string assemblyName)
         {
             if (string.IsNullOrEmpty(assemblyName))
             {
@@ -218,7 +218,7 @@ namespace System.Xaml
             }
         }
 
-        void UpdatePreferredPrefixes(XmlNsInfo newNamespaces, ConcurrentDictionary<string, string> prefixDict)
+        static void UpdatePreferredPrefixes(XmlNsInfo newNamespaces, ConcurrentDictionary<string, string> prefixDict)
         {
             foreach (KeyValuePair<string, string> nsToPrefix in newNamespaces.Prefixes)
             {
@@ -562,7 +562,7 @@ namespace System.Xaml
         /// Looks up all properties via reflection on the given type, and scans through the attributes on all of them
         /// to build a cache of properties which have MarkupExtensionBracketCharactersAttribute set on them.
         /// </summary>
-        private Dictionary<string, SpecialBracketCharacters> BuildBracketCharacterCacheForType(XamlType type)
+        private static Dictionary<string, SpecialBracketCharacters> BuildBracketCharacterCacheForType(XamlType type)
         {
             Dictionary<string, SpecialBracketCharacters> map = new Dictionary<string, SpecialBracketCharacters>(StringComparer.OrdinalIgnoreCase);
             ICollection<XamlMember> members = type.GetAllMembers();
@@ -1280,7 +1280,7 @@ namespace System.Xaml
             return true;
         }
 
-        private Assembly ResolveAssembly(string assemblyName)
+        private static Assembly ResolveAssembly(string assemblyName)
         {
             // First see if the assembly is already loaded. This is necessary because Assembly.Load
             // won't match to assemblies in the LoadFile or LoadFrom contexts.

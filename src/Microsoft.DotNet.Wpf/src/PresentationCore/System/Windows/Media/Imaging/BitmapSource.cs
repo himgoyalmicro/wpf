@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -853,7 +853,7 @@ namespace System.Windows.Media.Imaging
                                     // sychronization locks with UI thread during bitmap access.
 
                                     HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFormatConverter(
-                                        factoryMaker.ImagingFactoryPtr,
+                                        FactoryMaker.ImagingFactoryPtr,
                                         out pIWicConverter));
 
                                     HRESULT.Check(UnsafeNativeMethods.WICFormatConverter.Initialize(
@@ -875,7 +875,7 @@ namespace System.Windows.Media.Imaging
                                 try
                                 {
                                     HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                                            factoryMaker.ImagingFactoryPtr,
+                                            FactoryMaker.ImagingFactoryPtr,
                                             pIWICSource,
                                             WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
                                             out pIWICSource));
@@ -1081,7 +1081,7 @@ namespace System.Windows.Media.Imaging
 
             using (FactoryMaker factoryMaker = new FactoryMaker())
             {
-                IntPtr wicFactory = factoryMaker.ImagingFactoryPtr;
+                IntPtr wicFactory = FactoryMaker.ImagingFactoryPtr;
                 bool changeFormat = false;
                 PixelFormat originalFmt = PixelFormats.Pbgra32;
 

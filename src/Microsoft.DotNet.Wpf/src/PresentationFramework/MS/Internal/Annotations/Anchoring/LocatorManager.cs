@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -589,7 +589,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="locator">locator to find a match for</param>
         /// <param name="matched">whether or not a match was found</param>
         /// <returns>index of the next locator part to resolve</returns>
-        private int FindMatchingPrefix(ContentLocator[] prefixes, ContentLocatorBase locator, out bool matched)
+        private static int FindMatchingPrefix(ContentLocator[] prefixes, ContentLocatorBase locator, out bool matched)
         {
             matched = true;
             int locatorPartIdx = 0;
@@ -1213,7 +1213,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="initialLocator">the locator to append the additional locators to</param>
         /// <param name="additionalLocators">array of locators that need to be appended</param>
         /// <returns>list of merged locators</returns>
-        private IList<ContentLocatorBase> Merge(ContentLocatorBase initialLocator, IList<ContentLocatorBase> additionalLocators)
+        private static IList<ContentLocatorBase> Merge(ContentLocatorBase initialLocator, IList<ContentLocatorBase> additionalLocators)
         {
             if (additionalLocators == null || additionalLocators.Count == 0)
             {

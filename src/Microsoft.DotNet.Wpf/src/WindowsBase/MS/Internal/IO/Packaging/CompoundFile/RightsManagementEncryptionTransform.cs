@@ -458,7 +458,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// Space Manager that the TransformIdentifier is one of a small number of well-
         /// known strings that identify the built-in transforms (compression and encryption).
         /// </remarks>
-        internal int TransformIdentifierType 
+        internal static int TransformIdentifierType 
         {   
             get
             {
@@ -668,7 +668,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// This method is internal rather than private because it is used by
         /// UserUseLicenseDictionaryLoader.AddUseLicenseFromStreamToDictionary.
         /// </remarks>
-        internal UseLicense
+        internal static UseLicense
         LoadUseLicenseAndUserFromStream(
             BinaryReader utf8Reader,
             out ContentUser user
@@ -768,11 +768,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 using (BinaryReader utf8Reader = new BinaryReader(stream, Encoding.UTF8))
                 {
-                    userFromStream = rmet.LoadUserFromStream(utf8Reader);
+                    userFromStream = LoadUserFromStream(utf8Reader);
 
                     if (userFromStream.GenericEquals(userDesired))
                     {
-                        lulfup.UseLicense = rmet.LoadUseLicenseFromStream(utf8Reader);
+                        lulfup.UseLicense = LoadUseLicenseFromStream(utf8Reader);
                         stop = true;
                     }
                 }
@@ -820,7 +820,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 using (BinaryReader utf8Reader = new BinaryReader(stream, Encoding.UTF8))
                 {
-                    userFromStream = rmet.LoadUserFromStream(utf8Reader);
+                    userFromStream = LoadUserFromStream(utf8Reader);
                 }
             }
 
@@ -1093,7 +1093,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <remarks>
         /// For details of the stream format, see the comments in LoadUseLicenseAndUserFromStream.
         /// </remarks>
-        private UseLicense
+        private static UseLicense
         LoadUseLicenseFromStream(
             BinaryReader utf8Reader
             )
@@ -1129,7 +1129,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <remarks>
         /// For details of the stream format, see the comments in LoadUseLicenseAndUserFromStream.
         /// </remarks>
-        private ContentUser
+        private static ContentUser
         LoadUserFromStream(
             BinaryReader utf8Reader
             )

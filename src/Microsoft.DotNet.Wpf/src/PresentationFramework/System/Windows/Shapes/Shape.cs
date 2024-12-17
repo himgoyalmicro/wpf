@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -438,7 +438,7 @@ namespace System.Windows.Shapes
 
         #region Internal Methods
 
-        internal bool SizeIsInvalidOrEmpty(Size size)
+        internal static bool SizeIsInvalidOrEmpty(Size size)
         {
             return (double.IsNaN(size.Width) ||
                     double.IsNaN(size.Height) ||
@@ -534,7 +534,7 @@ namespace System.Windows.Shapes
 
         internal virtual void CacheDefiningGeometry() {}
 
-        internal Size GetStretchedRenderSize(Stretch mode, double strokeThickness, Size availableSize, Rect geometryBounds)
+        internal static Size GetStretchedRenderSize(Stretch mode, double strokeThickness, Size availableSize, Rect geometryBounds)
         {
             double xScale, yScale, dX, dY;
             Size renderSize;
@@ -570,7 +570,7 @@ namespace System.Windows.Shapes
             _renderedGeometry = null;
         }
 
-        internal void GetStretchMetrics(Stretch mode, double strokeThickness, Size availableSize, Rect geometryBounds,
+        internal static void GetStretchMetrics(Stretch mode, double strokeThickness, Size availableSize, Rect geometryBounds,
                                              out double xScale, out double yScale, out double dX, out double dY, out Size stretchedSize)
         {
             if (!geometryBounds.IsEmpty)

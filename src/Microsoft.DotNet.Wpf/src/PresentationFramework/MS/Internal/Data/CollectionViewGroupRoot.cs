@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -303,7 +303,7 @@ namespace MS.Internal.Data
             }
         }
 
-        GroupTreeNode BuildGroupTree(LiveShapingItem lsi)
+        static GroupTreeNode BuildGroupTree(LiveShapingItem lsi)
         {
             CollectionViewGroupInternal parentGroup = lsi.ParentGroup;
             GroupTreeNode node;
@@ -655,7 +655,7 @@ namespace MS.Internal.Data
         ///     PropertyGroupDescriptions are used with
         ///     case insensitive comparisons.
         /// </summary>
-        object GetGroupNameKey(object name, CollectionViewGroupInternal group)
+        static object GetGroupNameKey(object name, CollectionViewGroupInternal group)
         {
             object groupNameKey = name;
             PropertyGroupDescription pgd = group.GroupBy as PropertyGroupDescription;

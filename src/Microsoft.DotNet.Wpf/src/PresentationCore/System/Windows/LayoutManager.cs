@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,7 +76,7 @@ namespace System.Windows
             ArrangeQueue.Add(e);
         }
 
-        private void markTreeDirtyHelper(Visual v)
+        private static void markTreeDirtyHelper(Visual v)
         {
             //now walk down and mark all UIElements dirty
             if(v != null)
@@ -95,7 +95,8 @@ namespace System.Windows
                 for(int i=0; i<cnt; i++)
                 {
                     Visual child = v.InternalGetVisualChild(i);
-                    if (child != null) markTreeDirtyHelper(child);
+                    if (child != null)
+                        markTreeDirtyHelper(child);
                 }
             }
         }
@@ -450,7 +451,7 @@ namespace System.Windows
 #endif // DEBUG_CLR_MEM
         }
 
-        private Rect getProperArrangeRect(UIElement element)
+        private static Rect getProperArrangeRect(UIElement element)
         {
             Rect arrangeRect = element.PreviousArrangeRect;
 

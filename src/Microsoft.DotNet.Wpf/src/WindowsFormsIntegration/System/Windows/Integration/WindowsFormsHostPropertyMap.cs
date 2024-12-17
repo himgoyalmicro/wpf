@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -293,7 +293,7 @@ namespace System.Windows.Forms.Integration
         /// <param name="translator">The delegate to be called if this property is to be set later</param>
         /// <param name="value">The value the property will have if it needs to be set later</param>
         /// </summary>
-        private SWF.Control GetChildControl(object host, PropertyTranslator translator, object value)
+        private static SWF.Control GetChildControl(object host, PropertyTranslator translator, object value)
         {
             WindowsFormsHost windowsFormsHost = host as WindowsFormsHost;
             if (windowsFormsHost == null || windowsFormsHost.Child == null)

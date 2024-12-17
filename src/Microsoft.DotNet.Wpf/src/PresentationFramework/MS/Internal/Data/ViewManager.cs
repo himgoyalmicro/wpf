@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -830,7 +830,7 @@ namespace MS.Internal.Data
             return (al.Count > 0 || foundViewTableDirt);
         }
 
-        private void ValidateViewType(CollectionView cv, Type collectionViewType)
+        private static void ValidateViewType(CollectionView cv, Type collectionViewType)
         {
             if (collectionViewType != null)
             {

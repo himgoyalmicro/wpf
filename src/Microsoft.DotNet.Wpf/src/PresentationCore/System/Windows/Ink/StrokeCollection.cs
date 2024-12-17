@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -107,7 +107,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// Private helper to read from a stream to the end and get a byte[]
         /// </summary>
-        private Stream GetSeekableStream(Stream stream)
+        private static Stream GetSeekableStream(Stream stream)
         {
             Debug.Assert(stream != null);
             Debug.Assert(stream.CanRead);

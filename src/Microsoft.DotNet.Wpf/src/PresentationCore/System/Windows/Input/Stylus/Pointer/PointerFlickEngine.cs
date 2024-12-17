@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -459,7 +459,7 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        private double RadiansToDegrees(double radians)
+        private static double RadiansToDegrees(double radians)
         {
             return ((180 * radians / Math.PI) + 360) % 360;
         }
@@ -470,7 +470,7 @@ namespace System.Windows.Input.StylusPointer
         /// <param name="p1">The first point</param>
         /// <param name="p2">The second point</param>
         /// <returns>The distance between the points</returns>
-        private double Distance(Point p1, Point p2)
+        private static double Distance(Point p1, Point p2)
         {
             return Math.Sqrt(Math.Pow((p1.X - p2.X), 2) + Math.Pow((p1.Y - p2.Y), 2));
         }

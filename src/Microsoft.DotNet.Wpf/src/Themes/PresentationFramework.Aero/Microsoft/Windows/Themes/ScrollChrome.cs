@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -95,7 +95,7 @@ namespace Microsoft.Windows.Themes
         {
             ScrollChrome chrome = ((ScrollChrome)o);
 
-            if (chrome.Animates)
+            if (Animates)
             {
                 if (((bool)e.NewValue))
                 {
@@ -203,7 +203,7 @@ namespace Microsoft.Windows.Themes
         {
             ScrollChrome chrome = ((ScrollChrome)o);
 
-            if (chrome.Animates)
+            if (Animates)
             {
                 if (chrome._localResources == null)
                 {
@@ -307,7 +307,7 @@ namespace Microsoft.Windows.Themes
         {
             ScrollChrome chrome = ((ScrollChrome)o);
 
-            if (chrome.Animates)
+            if (Animates)
             {
                 if (chrome._localResources == null)
                 {
@@ -785,7 +785,7 @@ namespace Microsoft.Windows.Themes
 
         #region Data
 
-        private bool Animates
+        private static bool Animates
         {
             get
             {
@@ -1333,7 +1333,7 @@ namespace Microsoft.Windows.Themes
         }
 
 
-        private LinearGradientBrush CommonHorizontalThumbEnabledGlyph
+        private static LinearGradientBrush CommonHorizontalThumbEnabledGlyph
         {
             get
             {
@@ -1360,7 +1360,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonHorizontalThumbHoverGlyph
+        private static LinearGradientBrush CommonHorizontalThumbHoverGlyph
         {
             get
             {
@@ -1387,7 +1387,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonHorizontalThumbPressedGlyph
+        private static LinearGradientBrush CommonHorizontalThumbPressedGlyph
         {
             get
             {
@@ -1414,7 +1414,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonVerticalThumbEnabledGlyph
+        private static LinearGradientBrush CommonVerticalThumbEnabledGlyph
         {
             get
             {
@@ -1441,7 +1441,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonVerticalThumbHoverGlyph
+        private static LinearGradientBrush CommonVerticalThumbHoverGlyph
         {
             get
             {
@@ -1468,7 +1468,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonVerticalThumbPressedGlyph
+        private static LinearGradientBrush CommonVerticalThumbPressedGlyph
         {
             get
             {
@@ -1496,7 +1496,7 @@ namespace Microsoft.Windows.Themes
         }
 
 
-        private LinearGradientBrush CommonButtonGlyph
+        private static LinearGradientBrush CommonButtonGlyph
         {
             get
             {
@@ -1524,7 +1524,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonButtonEnabledGlyph
+        private static LinearGradientBrush CommonButtonEnabledGlyph
         {
             get
             {
@@ -1552,7 +1552,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private LinearGradientBrush CommonButtonHoverGlyph
+        private static LinearGradientBrush CommonButtonHoverGlyph
         {
             get
             {

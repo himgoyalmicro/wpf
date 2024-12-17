@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -930,11 +930,11 @@ namespace MS.Internal.PtsHost
                 //  ColumnWidth is effectively min, and space is distributed according to ColumnSpaceDistribution policy
                 for (int i = 0; i < cColumns; i++)
                 {
-                    if (columnProperties.ColumnSpaceDistribution == ColumnSpaceDistribution.Right)
+                    if (ColumnPropertiesGroup.ColumnSpaceDistribution == ColumnSpaceDistribution.Right)
                     {
                         pfscolinfo[i].durWidth = TextDpi.ToTextDpi((i == cColumns - 1) ? columnWidth + freeSpace : columnWidth);
                     }
-                    else if (columnProperties.ColumnSpaceDistribution == ColumnSpaceDistribution.Left)
+                    else if (ColumnPropertiesGroup.ColumnSpaceDistribution == ColumnSpaceDistribution.Left)
                     {
                         pfscolinfo[i].durWidth = TextDpi.ToTextDpi((i == 0) ? columnWidth + freeSpace : columnWidth);
                     }

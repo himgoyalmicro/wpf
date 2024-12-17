@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,7 +89,7 @@ namespace MS.Internal.Ink
         /// <param name="cusp">Whether there is a cusp at the end</param>
         /// <param name="done">Whether end of the stroke is reached</param>
         /// <returns>Whether the the segment was extended</returns>
-        private bool ExtendingRange(double error, CuspData data, int from, int next_cusp, ref int to, ref bool cusp, ref bool done)
+        private static bool ExtendingRange(double error, CuspData data, int from, int next_cusp, ref int to, ref bool cusp, ref bool done)
         {
             to++;
             cusp = true;    // Presumed guilty

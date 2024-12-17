@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1163,7 +1163,7 @@ namespace MS.Internal.Data
                     }
                     else if (doa != null)
                     {
-                        sourceType = doa.PropertyType;
+                        sourceType = DynamicObjectAccessor.PropertyType;
 #if DEBUG
                     checkCacheResult = false;      // not relevant for dynamic objects
 #endif
@@ -1347,7 +1347,7 @@ namespace MS.Internal.Data
         // convert the (string) argument names to types appropriate for use with
         // the given property.  Put the results in the args[] array.  Return
         // true if everything works.
-        private bool MatchIndexerParameters(PropertyInfo pi, IndexerParameterInfo[] aryInfo, object[] args, bool isIList)
+        private static bool MatchIndexerParameters(PropertyInfo pi, IndexerParameterInfo[] aryInfo, object[] args, bool isIList)
         {
             ParameterInfo[] aryPI = pi?.GetIndexParameters();
 
@@ -1474,7 +1474,7 @@ namespace MS.Internal.Data
             return true;
         }
 
-        private bool ShouldConvertIndexerToProperty(object item, ref string name)
+        private static bool ShouldConvertIndexerToProperty(object item, ref string name)
         {
             // Special case for ADO.  If the path specifies an indexer on a DataRowView,
             // and if the DRV exposes a property with the same name as the indexer
@@ -1586,7 +1586,7 @@ namespace MS.Internal.Data
             return DependencyProperty.UnsetValue;
         }
 
-        void SetPropertyInfo(object info, out PropertyInfo pi, out PropertyDescriptor pd, out DependencyProperty dp, out DynamicPropertyAccessor dpa)
+        static void SetPropertyInfo(object info, out PropertyInfo pi, out PropertyDescriptor pd, out DependencyProperty dp, out DynamicPropertyAccessor dpa)
         {
             pi = null;
             pd = null;
@@ -1606,7 +1606,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void CheckReadOnly(object item, object info)
+        static void CheckReadOnly(object item, object info)
         {
             PropertyInfo pi;
             PropertyDescriptor pd;
@@ -1631,12 +1631,12 @@ namespace MS.Internal.Data
             }
             else if (dpa != null)
             {
-                if (dpa.IsReadOnly)
+                if (DynamicObjectAccessor.IsReadOnly)
                     throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dpa.PropertyName));
             }
         }
 
-        bool IsPropertyReadOnly(object item, PropertyInfo pi)
+        static bool IsPropertyReadOnly(object item, PropertyInfo pi)
         {
             // Custom properties obtained from ICustomTypeProvider often don't
             // implement all the methods we call below.  In those cases, we catch

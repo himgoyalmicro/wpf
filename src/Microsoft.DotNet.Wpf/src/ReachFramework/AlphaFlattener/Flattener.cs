@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -961,7 +961,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return true;
         }
 
-        internal void LogInterestingPrimitives(List<PrimitiveInfo> commands, int count, List<Cluster> transparentCluster)
+        internal static void LogInterestingPrimitives(List<PrimitiveInfo> commands, int count, List<Cluster> transparentCluster)
         {
             if (Configuration.Verbose >= 1)
             {
@@ -1326,42 +1326,42 @@ namespace Microsoft.Internal.AlphaFlattener
             _ctx.PushTransform(new MatrixTransform(transform));
         }
 
-        int ILegacyDevice.StartDocument(string printerName, string jobName, string filename, byte[] devmode)
+        static int ILegacyDevice.StartDocument(string printerName, string jobName, string filename, byte[] devmode)
         {
             throw new InvalidOperationException();
         }
 
-        void ILegacyDevice.StartDocumentWithoutCreatingDC(string printerName, string jobName, string filename)
+        static void ILegacyDevice.StartDocumentWithoutCreatingDC(string printerName, string jobName, string filename)
         {
             throw new InvalidOperationException();
         }
 
-        void ILegacyDevice.EndDocument()
+        static void ILegacyDevice.EndDocument()
         {
             throw new InvalidOperationException();
         }
 
-        void ILegacyDevice.CreateDeviceContext(string printerName, string jobName, byte[] devmode)
+        static void ILegacyDevice.CreateDeviceContext(string printerName, string jobName, byte[] devmode)
         {
             throw new InvalidOperationException();
         }
 
-        void ILegacyDevice.DeleteDeviceContext()
+        static void ILegacyDevice.DeleteDeviceContext()
         {
             throw new InvalidOperationException();
         }
 
-        String ILegacyDevice.ExtEscGetName()
+        static String ILegacyDevice.ExtEscGetName()
         {
             throw new InvalidOperationException();
         }
 
-        bool ILegacyDevice.ExtEscMXDWPassThru()
+        static bool ILegacyDevice.ExtEscMXDWPassThru()
         {
             throw new InvalidOperationException();
         }
 
-        void ILegacyDevice.StartPage(byte[] devmode, int rasterizationDPI)
+        static void ILegacyDevice.StartPage(byte[] devmode, int rasterizationDPI)
         {
             throw new InvalidOperationException();
         }
@@ -1407,11 +1407,11 @@ namespace Microsoft.Internal.AlphaFlattener
             _ctx.DrawGlyphRun(foreground, glyphRun);
         }
 
-        void ILegacyDevice.Comment(string message)
+        static void ILegacyDevice.Comment(string message)
         {
         }
 
-        void ILegacyDevice.EndPage()
+        static void ILegacyDevice.EndPage()
         {
             throw new InvalidOperationException();
         }

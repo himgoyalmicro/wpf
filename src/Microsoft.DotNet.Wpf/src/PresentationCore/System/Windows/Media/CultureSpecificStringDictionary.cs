@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -295,7 +295,7 @@ namespace System.Windows.Media
         #region private members
 
         // make sure value is not null
-        private string ValidateValue(string value)
+        private static string ValidateValue(string value)
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -303,7 +303,7 @@ namespace System.Windows.Media
         }
 
         // make sure value is a string, and throw exception on failure
-        private string ConvertValue(object value)
+        private static string ConvertValue(object value)
         {
             string s = value as string;
             if (s == null)
@@ -316,7 +316,7 @@ namespace System.Windows.Media
         }
 
         // Convert a key to an XmlLanguage, and throw exception on failure
-        private XmlLanguage ConvertKey(object key)
+        private static XmlLanguage ConvertKey(object key)
         {
             XmlLanguage language = TryConvertKey(key);
             if (language == null)
@@ -329,7 +329,7 @@ namespace System.Windows.Media
         }
 
         // Convert a key to an XmlLanguage, and return null on failure
-        private XmlLanguage TryConvertKey(object key)
+        private static XmlLanguage TryConvertKey(object key)
         {
             XmlLanguage language = key as XmlLanguage;
             if (language != null)

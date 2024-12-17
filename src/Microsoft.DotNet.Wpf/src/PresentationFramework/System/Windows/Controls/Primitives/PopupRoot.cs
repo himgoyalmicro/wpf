@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -212,7 +212,7 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         ///     Gets teh restricted size of a popup & computes which dimensions were affected.
         /// </summary>
-        private Size GetPopupSizeRestrictions(Popup popup, Size desiredSize, out bool restrictWidth, out bool restrictHeight)
+        private static Size GetPopupSizeRestrictions(Popup popup, Size desiredSize, out bool restrictWidth, out bool restrictHeight)
         {
             Size restrictedSize = popup.RestrictSize(desiredSize);
             restrictWidth = Math.Abs(restrictedSize.Width - desiredSize.Width) > Popup.Tolerance;

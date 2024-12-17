@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -787,7 +787,7 @@ namespace System.Windows.Media
                 using (FactoryMaker myFactory = new FactoryMaker())
                 {
                     HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateMediaPlayer(
-                            myFactory.FactoryPtr,
+                            FactoryMaker.FactoryPtr,
                             unmanagedProxy,
                             true,
                             out _nativeMedia
@@ -847,7 +847,7 @@ namespace System.Windows.Media
             HRESULT.Check(MILMedia.Open(_nativeMedia, toOpen));
         }
 
-        private Uri ResolveUri(Uri uri, Uri appBase)
+        private static Uri ResolveUri(Uri uri, Uri appBase)
         {
             if (uri.IsAbsoluteUri)
             {
@@ -861,7 +861,7 @@ namespace System.Windows.Media
 
         // returns the exact string on which we demanded permissions
 
-        private string DemandPermissions(Uri absoluteUri)
+        private static string DemandPermissions(Uri absoluteUri)
         {
             Debug.Assert(absoluteUri.IsAbsoluteUri);
             string toOpen = BindUriHelper.UriToString(absoluteUri);

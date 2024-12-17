@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -129,7 +129,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        internal long SkipLastWriteTime()
+        internal static long SkipLastWriteTime()
         {
             // clients may choose to use this temporary method because GetLastWriteTime call
             // results in touching the file system

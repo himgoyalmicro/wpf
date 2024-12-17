@@ -667,7 +667,7 @@ namespace Microsoft.Build.Tasks.Windows
                     //
                     // We still keep the empty file to make other parts of the build system happy.
                     //
-                    if (!String.IsNullOrEmpty(_internalTypeHelperFile) && !compilerWrapper.HasInternals)
+                    if (!String.IsNullOrEmpty(_internalTypeHelperFile) && !CompilerWrapper.HasInternals)
                     {
                         if (TaskFileService.Exists(_internalTypeHelperFile))
                         {

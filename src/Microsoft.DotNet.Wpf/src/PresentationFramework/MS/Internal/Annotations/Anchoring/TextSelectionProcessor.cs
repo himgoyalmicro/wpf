@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -450,7 +450,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns the TextContainer for a node that contains text.  If the node
         ///     doesn't have a TextContainer this method returns null.
         /// </summary>
-        private ITextContainer GetTextContainer(DependencyObject startNode)
+        private static ITextContainer GetTextContainer(DependencyObject startNode)
         {
             Debug.Assert(startNode != null);
 
@@ -478,7 +478,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns ITextPointers positioned at the start and end of an element
         ///     that contains text.
         /// </summary>
-        private bool GetNodesStartAndEnd(DependencyObject startNode, out ITextPointer start, out ITextPointer end)
+        private static bool GetNodesStartAndEnd(DependencyObject startNode, out ITextPointer start, out ITextPointer end)
         {
             start = null;
             end = null;
@@ -512,7 +512,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// of a given element.  This way if a large text range is being resolved on a node that only contains
         /// a portion of the text range (such as a paragraph) the result only includes the content in that node.
         /// </summary>
-        private void GetTextSegmentValues(TextSegment segment, ITextPointer elementStart, ITextPointer elementEnd, out int startOffset, out int endOffset)
+        private static void GetTextSegmentValues(TextSegment segment, ITextPointer elementStart, ITextPointer elementEnd, out int startOffset, out int endOffset)
         {
             startOffset = 0;
             endOffset = 0;

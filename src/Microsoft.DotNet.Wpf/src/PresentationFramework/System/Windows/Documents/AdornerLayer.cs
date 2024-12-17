@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -526,7 +526,7 @@ namespace System.Windows.Documents
         /// Clean all the dynamically-updated data from the Adorner
         /// </summary>
         /// <param name="adornerInfo">AdornerInfo to scrub</param>
-        internal void InvalidateAdorner(AdornerInfo adornerInfo)
+        internal static void InvalidateAdorner(AdornerInfo adornerInfo)
         {
             Debug.Assert(adornerInfo != null, "Adorner should not be null");
             adornerInfo.Adorner.InvalidateMeasure();
@@ -896,7 +896,7 @@ namespace System.Windows.Documents
         /// <param name="adorner">adorner</param>
         /// <param name="key">key</param>
         /// <returns>true if info was found and removed</returns>
-        private bool RemoveAdornerInfo(IDictionary infoMap, Adorner adorner, object key)
+        private static bool RemoveAdornerInfo(IDictionary infoMap, Adorner adorner, object key)
         {
             ArrayList adornerInfos = infoMap[key] as ArrayList;
 
@@ -916,7 +916,7 @@ namespace System.Windows.Documents
             return false;
         }
 
-        private AdornerInfo GetAdornerInfo(ArrayList adornerInfos, Adorner adorner)
+        private static AdornerInfo GetAdornerInfo(ArrayList adornerInfos, Adorner adorner)
         {
             if (adornerInfos != null)
             {
@@ -934,7 +934,7 @@ namespace System.Windows.Documents
             return null;
         }
 
-        private void AddAdornerInfo(IDictionary infoMap, AdornerInfo adornerInfo, object key)
+        private static void AddAdornerInfo(IDictionary infoMap, AdornerInfo adornerInfo, object key)
         {
             ArrayList adornerInfos;
 

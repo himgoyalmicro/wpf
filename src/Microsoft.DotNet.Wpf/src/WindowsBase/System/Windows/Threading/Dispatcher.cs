@@ -2221,7 +2221,7 @@ namespace System.Windows.Threading
             }
         }
 
-        private void TranslateAndDispatchMessage(ref MSG msg)
+        private static void TranslateAndDispatchMessage(ref MSG msg)
         {
             bool handled = false;
 
@@ -2300,7 +2300,7 @@ namespace System.Windows.Threading
             return IntPtr.Zero ;
         }
 
-        private bool IsInputPending()
+        private static bool IsInputPending()
         {
             int retVal = 0;
 
@@ -2811,7 +2811,7 @@ namespace System.Windows.Threading
             return _exceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchHandler);
         }
 
-        private object[] CombineParameters(object arg, object[] args)
+        private static object[] CombineParameters(object arg, object[] args)
         {
             object[] parameters = new object[1 + (args == null ? 1 : args.Length)];
             parameters[0] = arg;

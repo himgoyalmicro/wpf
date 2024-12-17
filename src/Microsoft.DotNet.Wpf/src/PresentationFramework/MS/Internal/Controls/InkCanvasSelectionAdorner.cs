@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -338,7 +338,7 @@ namespace MS.Internal.Controls
         /// <summary>
         /// Returns the handle rect (both visibile and the tolerance one)
         /// </summary>
-        private void GetHandleRect(InkCanvasSelectionHitResult hitResult, Rect rectWireFrame, out Rect visibleRect, out Rect toleranceRect)
+        private static void GetHandleRect(InkCanvasSelectionHitResult hitResult, Rect rectWireFrame, out Rect visibleRect, out Rect toleranceRect)
         {
             Point center = new Point();
             double size = 0;

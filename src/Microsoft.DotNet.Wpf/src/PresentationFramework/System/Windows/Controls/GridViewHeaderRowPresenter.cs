@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1239,7 +1239,7 @@ namespace System.Windows.Controls
         /// <param name="currentPos">The current mouse position, relative to GridViewHeaderRowPresenter</param>
         /// <param name="originalPos">The original start position, relative to GridViewHeaderRowPresenter</param>
         /// <returns></returns>
-        private bool CheckStartHeaderDrag(Point currentPos, Point originalPos)
+        private static bool CheckStartHeaderDrag(Point currentPos, Point originalPos)
         {
             return (DoubleUtil.GreaterThan(Math.Abs(currentPos.X - originalPos.X), c_thresholdX));
         }
@@ -1383,7 +1383,7 @@ namespace System.Windows.Controls
         }
 
         // Update Content of GridViewColumnHeader
-        private void UpdateHeaderContent(GridViewColumnHeader header)
+        private static void UpdateHeaderContent(GridViewColumnHeader header)
         {
             if (header != null && header.IsInternalGenerated)
             {

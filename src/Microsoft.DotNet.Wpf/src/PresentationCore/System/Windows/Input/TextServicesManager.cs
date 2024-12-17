@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -210,7 +210,7 @@ namespace System.Windows.Input
             }
         }
 
-        private bool TextServicesKeystroke(TextServicesContext context, KeyEventArgs keyArgs, bool test)
+        private static bool TextServicesKeystroke(TextServicesContext context, KeyEventArgs keyArgs, bool test)
         {
             TextServicesContext.KeyOp keyop;
             int wParam;
@@ -253,7 +253,7 @@ namespace System.Windows.Input
             return context.Keystroke(wParam, lParam, keyop);
         }
 
-        private bool IsSysKeyDown()
+        private static bool IsSysKeyDown()
         {
             if (Keyboard.IsKeyDown(Key.LeftAlt) || 
                 Keyboard.IsKeyDown(Key.RightAlt) ||

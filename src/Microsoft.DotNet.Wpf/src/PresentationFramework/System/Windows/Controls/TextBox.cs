@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1681,7 +1681,7 @@ namespace System.Windows.Controls
         // return an index within newText that best approximates the old index
         // within oldText.   Called when the text container's content is changed
         // re-entrantly.
-        private int ChooseCaretIndex(int oldIndex, string oldText, string newText)
+        private static int ChooseCaretIndex(int oldIndex, string oldText, string newText)
         {
             // There is no exact algorithm for this.  Instead we use some heuristics.
             //   First handle some frequent special cases

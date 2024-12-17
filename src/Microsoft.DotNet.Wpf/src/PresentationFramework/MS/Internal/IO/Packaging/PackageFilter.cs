@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -258,7 +258,7 @@ namespace MS.Internal.IO.Packaging
         {
             throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
-        
+
         #endregion IFilter methods
 
         #region Private methods
@@ -275,7 +275,7 @@ namespace MS.Internal.IO.Packaging
         /// with InvalidCastException, COMException and IOException, are `swallowed by this method.
         /// </para>
         /// </remarks>
-        IFilter GetFilterFromClsid(Guid clsid)
+        static IFilter GetFilterFromClsid(Guid clsid)
         {
             Type filterType = Type.GetTypeFromCLSID(clsid);
             IFilter filter;
@@ -590,7 +590,7 @@ namespace MS.Internal.IO.Packaging
 
 
         // Return uri's extension or null if no extension.
-        private string GetPartExtension(Uri partUri)
+        private static string GetPartExtension(Uri partUri)
         {
             // partUri is the part's path as exposed by its part uri, so it cannot be null.
             Invariant.Assert(partUri != null);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1168,7 +1168,7 @@ namespace MS.Internal.Documents
     /// </summary>
     /// <param name="rmLicense">The RightsManagementLicense to transform</param>
     /// <returns>A list of Grant objects</returns>
-    private IList<ContentGrant> GetGrantsFromLicense(
+    private static IList<ContentGrant> GetGrantsFromLicense(
         RightsManagementLicense rmLicense)
     {
         RightsManagementUser user = rmLicense.LicensedUser;
@@ -1312,7 +1312,7 @@ namespace MS.Internal.Documents
     /// <param name="user">The user for whom the grant applies</param>
     /// <param name="right">The right to grant</param>
     /// <returns>A new ContentGrant object</returns>
-    private ContentGrant CreateGrant(RightsManagementUser user, ContentRight right, DateTime validFrom, DateTime validUntil)
+    private static ContentGrant CreateGrant(RightsManagementUser user, ContentRight right, DateTime validFrom, DateTime validUntil)
     {
         return new ContentGrant(user, right, validFrom, validUntil);
     }
@@ -1322,7 +1322,7 @@ namespace MS.Internal.Documents
     /// </summary>
     /// <param name="unsignedLicense">An unsigned publish license</param>
     /// <returns>A collection of grants</returns>
-    private ICollection<ContentGrant> GetGrantsFromUnsignedLicense(
+    private static ICollection<ContentGrant> GetGrantsFromUnsignedLicense(
         UnsignedPublishLicense unsignedLicense)
     {
         ICollection<ContentGrant> grants = null;
@@ -1338,7 +1338,7 @@ namespace MS.Internal.Documents
     /// <summary>
     /// Cleans up the SecureEnvironment member.
     /// </summary>
-    private string GetApplicationManifest()
+    private static string GetApplicationManifest()
     {
         //Get the current Process and MainModule.
         System.Diagnostics.Process currentProcess = System.Diagnostics.Process.GetCurrentProcess();

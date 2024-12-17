@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1778,7 +1778,7 @@ namespace System.Windows
         // Creates and returns a NavigationWindow for standalone cases
         // For browser hosted cases, returns the existing RootBrowserWindow which
         //   is created before the application.Run is called.
-        internal NavigationWindow GetAppWindow()
+        internal static NavigationWindow GetAppWindow()
         {
             NavigationWindow appWin = new NavigationWindow();
 
@@ -2352,7 +2352,7 @@ namespace System.Windows
         /// </summary>
         /// <param name="soundName">The name of the sound to play</param>
         /// <returns>true if a sound was successfully played</returns>
-        private void PlaySound(string soundName)
+        private static void PlaySound(string soundName)
         {
             string soundFile = GetSystemSound(soundName);
 
@@ -2362,7 +2362,7 @@ namespace System.Windows
             }
         }
 
-        private string GetSystemSound(string soundName)
+        private static string GetSystemSound(string soundName)
         {
             string soundFile = null;
             string regPath = $@"AppEvents\Schemes\Apps\Explorer\{soundName}\.current\";

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -213,7 +213,7 @@ namespace System.Windows.Markup
         }
 
 #if PBTCOMPILER
-        private CustomAttributeData[] GetAttributes(Assembly asm, string fullClrName)
+        private static CustomAttributeData[] GetAttributes(Assembly asm, string fullClrName)
         {
             IList<CustomAttributeData> allAttributes = CustomAttributeData.GetCustomAttributes(asm);
             List<CustomAttributeData> foundAttributes = new List<CustomAttributeData>();
@@ -230,7 +230,7 @@ namespace System.Windows.Markup
             return foundAttributes.ToArray();
         }
 
-        private void GetNamespacesFromDefinitionAttr(CustomAttributeData data, out string xmlns, out string clrns)
+        private static void GetNamespacesFromDefinitionAttr(CustomAttributeData data, out string xmlns, out string clrns)
         {
             // typedConstructorArguments (the Attribute constructor arguments)
             // [MyAttribute("test", Name=Hello)]
@@ -250,7 +250,7 @@ namespace System.Windows.Markup
             }
         }
 
-        private void GetNamespacesFromCompatAttr(CustomAttributeData data, out string oldXmlns, out string newXmlns)
+        private static void GetNamespacesFromCompatAttr(CustomAttributeData data, out string oldXmlns, out string newXmlns)
         {
             // typedConstructorArguments (the Attribute constructor arguments)
             // [MyAttribute("test", Name=Hello)]
@@ -272,19 +272,19 @@ namespace System.Windows.Markup
 
 #else
 
-        private Attribute[] GetAttributes(Assembly asm, Type attrType)
+        private static Attribute[] GetAttributes(Assembly asm, Type attrType)
         {
             return Attribute.GetCustomAttributes(asm, attrType);
         }
 
-        private void GetNamespacesFromDefinitionAttr(Attribute attr, out string xmlns, out string clrns)
+        private static void GetNamespacesFromDefinitionAttr(Attribute attr, out string xmlns, out string clrns)
         {
             XmlnsDefinitionAttribute xmlnsAttr  = (XmlnsDefinitionAttribute)attr;
             xmlns = xmlnsAttr.XmlNamespace;
             clrns = xmlnsAttr.ClrNamespace;
         }
 
-        private void GetNamespacesFromCompatAttr(Attribute attr, out string oldXmlns, out string newXmlns)
+        private static void GetNamespacesFromCompatAttr(Attribute attr, out string oldXmlns, out string newXmlns)
         {
             XmlnsCompatibleWithAttribute xmlnsCompat = (XmlnsCompatibleWithAttribute)attr;
             oldXmlns = xmlnsCompat.OldNamespace;
@@ -332,7 +332,7 @@ namespace System.Windows.Markup
         // given list of Assemblies.  This returns a list that the caller
         // Will add to the _cacheTable.   At runtime the needed assemblies
         // appear with various XmlNs namespaces one at a time as we read the BAML
-        private List<ClrNamespaceAssemblyPair> GetClrnsToAssemblyNameMappingList(
+        private static List<ClrNamespaceAssemblyPair> GetClrnsToAssemblyNameMappingList(
                                                     Assembly[] asmList,
                                                     string xmlnsRequested )
         {

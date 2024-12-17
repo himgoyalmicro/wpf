@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -297,7 +297,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // GetFigurePolygons
         //-------------------------------------------------------------------
-        internal unsafe void GetFigurePolygons(
+        internal static unsafe void GetFigurePolygons(
             FigureParaClient paraClient,        // IN:
             uint fswdir,                        // IN:  current direction
             int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
@@ -647,7 +647,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Returns an appropriate search rectangle for collision based on anchor properties.
         /// </summary>
-        private PTS.FSRECT CalculateSearchArea(FigureHorizontalAnchor horizAnchor, FigureVerticalAnchor vertAnchor, ref PTS.FSRECT fsrcPage, ref PTS.FSRECT fsrcMargin, ref PTS.FSRECT fsrcTrack, ref PTS.FSRECT fsrcFigurePreliminary)
+        private static PTS.FSRECT CalculateSearchArea(FigureHorizontalAnchor horizAnchor, FigureVerticalAnchor vertAnchor, ref PTS.FSRECT fsrcPage, ref PTS.FSRECT fsrcMargin, ref PTS.FSRECT fsrcTrack, ref PTS.FSRECT fsrcFigurePreliminary)
         {
             PTS.FSRECT fsrcSearch;
 

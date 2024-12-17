@@ -821,7 +821,7 @@ namespace MS.Internal.Xaml.Parser
             yield return new XamlNode(XamlNodeType.EndMember);
         }
 
-        private XamlNode Logic_EndOfAttributes()
+        private static XamlNode Logic_EndOfAttributes()
         {
             var endOfAttributes = new XamlNode(XamlNode.InternalNodeType.EndOfAttributes);
             return endOfAttributes;

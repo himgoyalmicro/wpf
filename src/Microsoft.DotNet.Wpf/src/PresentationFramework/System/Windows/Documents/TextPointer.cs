@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -431,7 +431,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(textPosition);
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             return (this.TextContainer == textPosition.TextContainer);
         }
@@ -458,7 +458,7 @@ namespace System.Windows.Documents
             int offsetPosition;
             int result;
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             ValidationHelper.VerifyPosition(_tree, position);
 
@@ -540,7 +540,7 @@ namespace System.Windows.Documents
         {
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -562,7 +562,7 @@ namespace System.Windows.Documents
         {
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -674,7 +674,7 @@ namespace System.Windows.Documents
         /// </example>
         public int GetOffsetToPosition(TextPointer position)
         {
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             ValidationHelper.VerifyPosition(_tree, position);
 
@@ -805,7 +805,7 @@ namespace System.Windows.Documents
         {
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             return GetAdjacentElement(_node, this.Edge, direction);
@@ -1244,7 +1244,7 @@ namespace System.Windows.Documents
         {
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             this.ValidateLayout();
@@ -1271,7 +1271,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(textData);
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             TextPointer insertPosition;
@@ -1312,7 +1312,7 @@ namespace System.Windows.Documents
         /// </returns>
         public int DeleteTextInRun(int count)
         {
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             // TextSchema Validation
@@ -1382,7 +1382,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(textElement != null);
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             ValidationHelper.ValidateChild(this, textElement, "textElement");
@@ -1412,7 +1412,7 @@ namespace System.Windows.Documents
         /// </exception>
         public TextPointer InsertParagraphBreak()
         {
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             if (this.TextContainer.Parent != null)
@@ -1457,7 +1457,7 @@ namespace System.Windows.Documents
         /// </returns>
         public TextPointer InsertLineBreak()
         {
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             TextPointer position;
@@ -1542,7 +1542,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 return GetLogicalTreeNode();
@@ -1563,7 +1563,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 return TextPointerBase.IsAtInsertionPosition(this);
@@ -1591,7 +1591,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 this.ValidateLayout();
@@ -1642,7 +1642,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 return this.ParentBlock as Paragraph;
@@ -1661,7 +1661,7 @@ namespace System.Windows.Documents
             //  Introduce a new class - common base for Paragraph and BlockUIContainer
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 Block parentBlock = this.ParentBlock;
@@ -1766,7 +1766,7 @@ namespace System.Windows.Documents
             }
             Invariant.Assert(textNode != null, "textNode is expected to be non-null");
 
-            textContainer.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             if (nodeOffset < 0)
             {
@@ -1852,7 +1852,7 @@ namespace System.Windows.Documents
 
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
             textPosition.SyncToTreeGeneration();
@@ -1894,7 +1894,7 @@ namespace System.Windows.Documents
 
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -1973,7 +1973,7 @@ namespace System.Windows.Documents
             ValidationHelper.VerifyDirection(direction, "direction");
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -2029,7 +2029,7 @@ namespace System.Windows.Documents
             ValidationHelper.VerifyDirection(direction, "direction");
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             return TextPointerBase.MoveToInsertionPosition(this, direction);
@@ -2072,7 +2072,7 @@ namespace System.Windows.Documents
             ValidationHelper.VerifyDirection(direction, "direction");
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             return TextPointerBase.MoveToNextInsertionPosition(this, direction);
@@ -2114,7 +2114,7 @@ namespace System.Windows.Documents
                 return 0;
             }
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             return TextPointerBase.MoveToLineBoundary(this, _tree.TextView, count);
@@ -2138,7 +2138,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(uiElement);
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             ValidationHelper.ValidateChild(this, uiElement, "uiElement");
@@ -2164,7 +2164,7 @@ namespace System.Windows.Documents
         {
             TextTreeTextElementNode elementNode;
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             elementNode = GetAdjacentTextElementNodeSibling(direction);
@@ -2187,7 +2187,7 @@ namespace System.Windows.Documents
 
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             if (GetGravityInternal() != direction)
             {
@@ -2288,7 +2288,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
 
                 return (_flags & (uint)Flags.IsFrozen) == (uint)Flags.IsFrozen;
             }
@@ -2311,7 +2311,7 @@ namespace System.Windows.Documents
         /// </Remarks>
         internal void Freeze()
         {
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SetIsFrozen();
         }
@@ -2335,7 +2335,7 @@ namespace System.Windows.Documents
         {
             ValidationHelper.VerifyDirection(logicalDirection, "logicalDirection");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             return (TextPointer)TextPointerBase.GetFrozenPointer(this, logicalDirection);
         }
@@ -2412,7 +2412,7 @@ namespace System.Windows.Documents
 
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -2427,7 +2427,7 @@ namespace System.Windows.Documents
             TextTreeNode parent2;
             TextPointer textPointer;
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             ValidationHelper.VerifyPosition(_tree, position);
 
@@ -2499,7 +2499,7 @@ namespace System.Windows.Documents
 
             ArgumentNullException.ThrowIfNull(formattingProperty);
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -2523,7 +2523,7 @@ namespace System.Windows.Documents
 
             ArgumentNullException.ThrowIfNull(formattingProperty);
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -2540,7 +2540,7 @@ namespace System.Windows.Documents
         {
             DependencyObject element;
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -2561,7 +2561,7 @@ namespace System.Windows.Documents
 
         StaticTextPointer ITextPointer.CreateStaticPointer()
         {
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             return new StaticTextPointer(_tree, _node, _node.GetOffsetFromEdge(this.Edge));
@@ -2621,7 +2621,7 @@ namespace System.Windows.Documents
             ValidationHelper.VerifyElementEdge(edge, "edge");
             VerifyNotFrozen();
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
 
             SyncToTreeGeneration();
 
@@ -2679,7 +2679,7 @@ namespace System.Windows.Documents
 
             ValidationHelper.VerifyDirection(contentDirection, "contentDirection");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             VerifyNotFrozen();
@@ -2713,7 +2713,7 @@ namespace System.Windows.Documents
 
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             VerifyNotFrozen();
@@ -2744,7 +2744,7 @@ namespace System.Windows.Documents
             TextPointer position;
             bool moved;
 
-            _tree.EmptyDeadPositionList();
+            TextContainer.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             VerifyNotFrozen();
@@ -3610,7 +3610,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
 
                 SyncToTreeGeneration();
 
@@ -3645,7 +3645,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration(); // NB: this call might set this.IsCaretUnitBoundaryCacheValid == false.
 
                 this.ValidateLayout();
@@ -3713,7 +3713,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 return GetSymbolOffset() - 1;
@@ -3736,7 +3736,7 @@ namespace System.Windows.Documents
             {
                 TextTreeTextElementNode elementNode;
 
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 int charOffset;
@@ -3860,7 +3860,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                _tree.EmptyDeadPositionList();
+                TextContainer.EmptyDeadPositionList();
                 SyncToTreeGeneration();
 
                 DependencyObject parentBlock = this.Parent;
@@ -3940,7 +3940,7 @@ namespace System.Windows.Documents
             _layoutGeneration = layoutGeneration;
 
             VerifyFlags();
-            tree.AssertTree();
+            TextContainer.AssertTree();
             AssertState();
         }
 
@@ -3959,7 +3959,7 @@ namespace System.Windows.Documents
         // Returns the actual node referenced, which will always be newNode,
         // unless newNode is a TextTreeTextNode that gets split.  The caller
         // should use the returned node to position navigators.
-        private TextTreeNode AdjustRefCounts(TextTreeNode newNode, ElementEdge newNodeEdge, TextTreeNode oldNode, ElementEdge oldNodeEdge)
+        private static TextTreeNode AdjustRefCounts(TextTreeNode newNode, ElementEdge newNodeEdge, TextTreeNode oldNode, ElementEdge oldNodeEdge)
         {
             TextTreeNode node;
 

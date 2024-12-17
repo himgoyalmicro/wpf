@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -160,7 +160,7 @@ namespace System.Windows.Media.Animation
 
         // Helpers for addref and release of local properties.  Subclasses can provide
         // overloads.
-        internal void AddRefResource(DUCE.IResource resource, DUCE.Channel channel)
+        internal static void AddRefResource(DUCE.IResource resource, DUCE.Channel channel)
         {
             if (resource != null)
             {
@@ -168,7 +168,7 @@ namespace System.Windows.Media.Animation
             }
         }
 
-        internal void ReleaseResource(DUCE.IResource resource, DUCE.Channel channel)
+        internal static void ReleaseResource(DUCE.IResource resource, DUCE.Channel channel)
         {
             if (resource != null)
             {

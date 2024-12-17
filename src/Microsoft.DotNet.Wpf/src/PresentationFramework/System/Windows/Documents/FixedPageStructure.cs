@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -208,7 +208,7 @@ namespace System.Windows.Documents
 
 
 #if DEBUG
-        private void DrawRectOutline(DrawingContext dc, Pen pen, Rect rect)
+        private static void DrawRectOutline(DrawingContext dc, Pen pen, Rect rect)
         {
             Debug.Assert(!rect.IsEmpty);
             dc.DrawLine(pen, rect.TopLeft,      rect.TopRight);
@@ -232,7 +232,7 @@ namespace System.Windows.Documents
         }
 
 
-        private Point CreateFromLastTextPoint(Point p)
+        private static Point CreateFromLastTextPoint(Point p)
         {
             // those is always in the left margin area
             Point newp = new Point(1, p.Y + 10);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -368,7 +368,7 @@ namespace System.Windows
 
         // Validate against the following rules
         // 1. The VisualTree's root must be a FrameworkElement.
-        private void ValidateVisualTree(FrameworkElementFactory templateRoot)
+        private static void ValidateVisualTree(FrameworkElementFactory templateRoot)
         {
             // The VisualTree's root must be a FrameworkElement.
             if (templateRoot != null &&
@@ -707,7 +707,7 @@ namespace System.Windows
 
         private XamlContextStack<Frame> Names;
 
-        private bool ReceivePropertySet(object targetObject, XamlMember member,
+        private static bool ReceivePropertySet(object targetObject, XamlMember member,
             object value, DependencyObject templatedParent)
         {
             DependencyObject dependencyObject = targetObject as DependencyObject;

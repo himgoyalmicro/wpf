@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -592,8 +592,8 @@ namespace System.Windows.Controls
             bool newValue = (bool) e.NewValue;
             // The IsSubmenuOpen value has changed; this should stop any timers
             // we may have set to open/close the menus.
-            menuItem.StopTimer(ref menuItem._openHierarchyTimer);
-            menuItem.StopTimer(ref menuItem._closeHierarchyTimer);
+            StopTimer(ref menuItem._openHierarchyTimer);
+            StopTimer(ref menuItem._closeHierarchyTimer);
 
             MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
             if (peer != null)
@@ -1028,8 +1028,8 @@ namespace System.Windows.Controls
                 }
 
                 // Also stop any timers immediately when we become deselected.
-                menuItem.StopTimer(ref menuItem._openHierarchyTimer);
-                menuItem.StopTimer(ref menuItem._closeHierarchyTimer);
+                StopTimer(ref menuItem._openHierarchyTimer);
+                StopTimer(ref menuItem._closeHierarchyTimer);
             }
 
             menuItem.RaiseEvent(new RoutedPropertyChangedEventArgs<bool>((bool) e.OldValue, (bool) e.NewValue, MenuBase.IsSelectedChangedEvent));
@@ -1056,7 +1056,7 @@ namespace System.Windows.Controls
                         // the current selection but then comes back.
                         if (menuItem.CurrentSelection == source)
                         {
-                            menuItem.StopTimer(ref menuItem._closeHierarchyTimer);
+                            StopTimer(ref menuItem._closeHierarchyTimer);
                         }
 
                         // If the MenuItem is selected and it's a new item that's a child of ours,
@@ -2565,7 +2565,7 @@ namespace System.Windows.Controls
             StartTimer(_closeHierarchyTimer);
         }
 
-        private void StopTimer(ref DispatcherTimer timer)
+        private static void StopTimer(ref DispatcherTimer timer)
         {
             if (timer != null)
             {
@@ -2574,7 +2574,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void StartTimer(DispatcherTimer timer)
+        private static void StartTimer(DispatcherTimer timer)
         {
             Debug.Assert(timer != null, "timer should not be null.");
             Debug.Assert(!timer.IsEnabled, "timer should not be running.");

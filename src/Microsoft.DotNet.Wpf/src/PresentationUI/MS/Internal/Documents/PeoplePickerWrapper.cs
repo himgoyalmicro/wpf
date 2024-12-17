@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ namespace MS.Internal.Documents
         /// </summary>   
         /// <param name="hWndParent">The parent window for this dialog.  If null, window will
         /// be shown non-modally.</param>
-        internal String[] Show(IntPtr hWndParent)
+        internal static String[] Show(IntPtr hWndParent)
         {
             ValidateHWnd(hWndParent);
 
@@ -115,7 +115,7 @@ namespace MS.Internal.Documents
         /// <returns></returns>  
         /// <param name="hWndParent">The HWND for the ICommonQuery.OpenQueryWindow call which
         /// defines the parent of the dialog.</param>
-        private IDataObject OpenQueryWindow(IntPtr hWndParent)
+        private static IDataObject OpenQueryWindow(IntPtr hWndParent)
         {           
             Type commonQueryType = Type.GetTypeFromCLSID(UnsafeNativeMethods.CLSID_CommonQuery);
 
@@ -220,7 +220,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="paths"></param>
         /// <returns></returns>
-        private String[] GetEmailAddressesFromPaths(String[] paths)
+        private static String[] GetEmailAddressesFromPaths(String[] paths)
         {
             List<String> addresses = new List<String>(paths.Length);
 
@@ -259,7 +259,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="hWndParent"></param>
         /// 
-        private void ValidateHWnd(IntPtr hWndParent)
+        private static void ValidateHWnd(IntPtr hWndParent)
         {
             if( hWndParent != IntPtr.Zero )
             {

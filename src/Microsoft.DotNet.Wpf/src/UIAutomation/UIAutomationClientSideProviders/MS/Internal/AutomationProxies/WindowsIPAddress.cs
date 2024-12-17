@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -119,7 +119,7 @@ namespace MS.Internal.AutomationProxies
                 throw new ElementNotEnabledException();
             }
 
-            IPAddress ipAddress = GetIPAddressFromString (val);
+            IPAddress ipAddress = GetIPAddressFromString(val);
 
             if (ipAddress != null)
             {
@@ -218,7 +218,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Method
 
-        private IPAddress GetIPAddressFromString (String strIPAddress)
+        private static IPAddress GetIPAddressFromString (String strIPAddress)
         {
             String [] strIPAddresses = strIPAddress.Split (IP_ADDRESS_SEPERATOR);
 

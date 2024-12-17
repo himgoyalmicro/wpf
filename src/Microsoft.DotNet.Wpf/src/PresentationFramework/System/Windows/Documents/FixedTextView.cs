@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -787,7 +787,7 @@ namespace System.Windows.Documents
             return false;
         }
 
-        private void _GlyphRunHitTest(Glyphs g, double xoffset, out int charIndex, out LogicalDirection edge)
+        private static void _GlyphRunHitTest(Glyphs g, double xoffset, out int charIndex, out LogicalDirection edge)
         {
             charIndex = 0;
             edge = LogicalDirection.Forward;
@@ -1047,7 +1047,7 @@ namespace System.Windows.Documents
         }
 
         // Creates an axis-aligned caret for possibly rotated glyphs
-        private Rect _GetTransformedCaretRect(GeneralTransform transform, Point origin, double height)
+        private static Rect _GetTransformedCaretRect(GeneralTransform transform, Point origin, double height)
         {
             Point bottom = origin;
             bottom.Y += height;
@@ -1110,11 +1110,11 @@ namespace System.Windows.Documents
                     if (((ITextPointer)nav).MoveToNextInsertionPosition(textdir) &&
                         this.Container.GetPageNumber(nav) == this.PageIndex)
                     {
-                        return Container.FixedTextBuilder.GetFixedPosition(nav.FlowPosition, textdir, out fixedp);
+                        return FixedTextBuilder.GetFixedPosition(nav.FlowPosition, textdir, out fixedp);
                     }
                     else
                     {
-                        fixedp = new FixedPosition(this.Container.FixedTextBuilder.FixedFlowMap.FixedStartEdge, 0);
+                        fixedp = new FixedPosition(FixedFlowMap.FixedStartEdge, 0);
                         return false;
                     }
                 }
@@ -1125,7 +1125,7 @@ namespace System.Windows.Documents
             }
 
             Debug.Assert(symbolType == TextPointerContext.Text || symbolType == TextPointerContext.EmbeddedElement);
-            return Container.FixedTextBuilder.GetFixedPosition(ftp.FlowPosition, textdir, out fixedp);
+            return FixedTextBuilder.GetFixedPosition(ftp.FlowPosition, textdir, out fixedp);
         }
 
 
@@ -1149,12 +1149,12 @@ namespace System.Windows.Documents
             }
             if (this.Container.GetPageNumber(nav) == this.PageIndex)
             {
-                return Container.FixedTextBuilder.GetFixedPosition(nav.FlowPosition, dir, out fixedP);
+                return FixedTextBuilder.GetFixedPosition(nav.FlowPosition, dir, out fixedP);
             }
             else
             {
                 //This position is on another page.
-                fixedP = new FixedPosition(this.Container.FixedTextBuilder.FixedFlowMap.FixedStartEdge, 0);
+                fixedP = new FixedPosition(FixedFlowMap.FixedStartEdge, 0);
                 return false;
             }
         }
@@ -1196,7 +1196,7 @@ namespace System.Windows.Documents
             return _CreateTextPointer(fixedp, edge);
         }
 
-        private void _SkipFormattingTags(ITextPointer textPointer)
+        private static void _SkipFormattingTags(ITextPointer textPointer)
         {
             Debug.Assert(!textPointer.IsFrozen, "Can't reposition a frozen pointer!");
 

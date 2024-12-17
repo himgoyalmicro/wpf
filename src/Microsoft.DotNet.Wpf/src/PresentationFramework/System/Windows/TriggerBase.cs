@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -96,7 +96,7 @@ namespace System.Windows
         internal bool HasExitActions { get { return _exitActions != null && _exitActions.Count > 0; } }
 
 //  Here's the internal version that does what Robby thinks it should do.
-        internal bool ExecuteEnterActionsOnApply
+        internal static bool ExecuteEnterActionsOnApply
         {
             get
             {
@@ -104,7 +104,7 @@ namespace System.Windows
             }
         }
 
-        internal bool ExecuteExitActionsOnApply
+        internal static bool ExecuteExitActionsOnApply
         {
             get
             {
@@ -170,7 +170,7 @@ namespace System.Windows
         ///     Parameter validation work common to the SetXXXX methods that deal
         /// with the container node of the Style/Template.
         /// </summary>
-        internal void ProcessParametersContainer(DependencyProperty dp)
+        internal static void ProcessParametersContainer(DependencyProperty dp)
         {
             // Not allowed to use Style to affect the StyleProperty.
             if (dp == FrameworkElement.StyleProperty)
@@ -183,7 +183,7 @@ namespace System.Windows
         ///     Parameter validation work common to the SetXXXX methods that deal
         /// with visual tree child nodes.
         /// </summary>
-        internal string ProcessParametersVisualTreeChild(DependencyProperty dp, string target)
+        internal static string ProcessParametersVisualTreeChild(DependencyProperty dp, string target)
         {
             ArgumentNullException.ThrowIfNull(target);
 

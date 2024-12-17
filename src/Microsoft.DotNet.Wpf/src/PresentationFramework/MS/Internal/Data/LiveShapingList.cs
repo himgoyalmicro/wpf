@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -215,7 +215,7 @@ namespace MS.Internal.Data
             _dpFromPath.EndReset();
         }
 
-        bool TestLiveShapingFlag(LiveShapingFlags flags, LiveShapingFlags flag)
+        static bool TestLiveShapingFlag(LiveShapingFlags flags, LiveShapingFlags flag)
         {
             return (flags & flag) != 0;
         }
@@ -405,8 +405,7 @@ namespace MS.Internal.Data
             }
         }
 
-
-        string NormalizePath(string path)
+        static string NormalizePath(string path)
         {
             return String.IsNullOrEmpty(path) ? String.Empty : path;
         }
@@ -471,7 +470,7 @@ namespace MS.Internal.Data
                 LiveShapingDirty(this, EventArgs.Empty);
         }
 
-        bool ContainsDP(LivePropertyInfo[] infos, DependencyProperty dp)
+        static bool ContainsDP(LivePropertyInfo[] infos, DependencyProperty dp)
         {
             for (int k = 0; k < infos.Length; ++k)
             {

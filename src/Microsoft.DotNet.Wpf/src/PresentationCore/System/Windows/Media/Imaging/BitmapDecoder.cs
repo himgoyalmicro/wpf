@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1143,7 +1143,7 @@ namespace System.Windows.Media.Imaging
                     using (FactoryMaker myFactory = new FactoryMaker())
                     {
                         HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateDecoderFromFileHandle(
-                            myFactory.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             safeFilehandle,
                             ref vendorMicrosoft,
                             metadataFlags,
@@ -1159,7 +1159,7 @@ namespace System.Windows.Media.Imaging
                     {
                         // This does an add-ref on the comStream
                         HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateDecoderFromStream(
-                            myFactory.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             comStream,
                             ref vendorMicrosoft,
                             metadataFlags,

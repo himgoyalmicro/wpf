@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,7 +49,7 @@ namespace System.Windows
             while (true)
             {
                 // Clear the system clipboard by calling OleSetClipboard with null parameter.
-                int hr = OleServicesContext.CurrentOleServicesContext.OleSetClipboard(null);
+                int hr = OleServicesContext.OleSetClipboard(null);
 
                 if (NativeMethods.Succeeded(hr))
                 {
@@ -138,7 +138,7 @@ namespace System.Windows
 
             while (true)
             {
-                int hr = OleServicesContext.CurrentOleServicesContext.OleFlushClipboard();
+                int hr = OleServicesContext.OleFlushClipboard();
 
                 if (NativeMethods.Succeeded(hr))
                 {
@@ -376,7 +376,7 @@ namespace System.Windows
 
                 while (true)
                 {
-                    hr = OleServicesContext.CurrentOleServicesContext.OleIsCurrentClipboard((IComDataObject)data);
+                    hr = OleServicesContext.OleIsCurrentClipboard((IComDataObject)data);
 
                     if (NativeMethods.Succeeded(hr) || (--i == 0))
                     {
@@ -480,7 +480,7 @@ namespace System.Windows
             while (true)
             {
                 // Clear the system clipboard by calling OleSetClipboard with null parameter.
-                int hr = OleServicesContext.CurrentOleServicesContext.OleSetClipboard(dataObject);
+                int hr = OleServicesContext.OleSetClipboard(dataObject);
 
                 if (NativeMethods.Succeeded(hr))
                 {
@@ -590,7 +590,7 @@ namespace System.Windows
             while (true)
             {
                 oleDataObject = null;
-                int hr = OleServicesContext.CurrentOleServicesContext.OleGetClipboard(ref oleDataObject);
+                int hr = OleServicesContext.OleGetClipboard(ref oleDataObject);
 
                 if (NativeMethods.Succeeded(hr))
                 {

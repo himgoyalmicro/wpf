@@ -753,7 +753,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset"></param>
         /// <remarks>writes from the current stream position</remarks>
         /// <returns>offset</returns>
-        private long SkipWrite(Stream targetStream, long currentPos, long offset)
+        private static long SkipWrite(Stream targetStream, long currentPos, long offset)
         {
             long toSkip = offset - currentPos;
             Debug.Assert(toSkip >= 0);

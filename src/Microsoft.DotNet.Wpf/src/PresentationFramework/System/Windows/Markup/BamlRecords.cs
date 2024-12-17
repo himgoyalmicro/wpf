@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -510,7 +510,7 @@ namespace System.Windows.Markup
         }
 
 #if !PBTCOMPILER
-        internal BamlRecord CloneRecord(BamlRecord record)
+        internal static BamlRecord CloneRecord(BamlRecord record)
         {
             BamlRecord newRecord;
 
@@ -550,7 +550,7 @@ namespace System.Windows.Markup
 #endif
 
         // Helper function to create a BamlRecord from a BamlRecordType
-        private BamlRecord AllocateWriteRecord(BamlRecordType recordType)
+        private static BamlRecord AllocateWriteRecord(BamlRecordType recordType)
         {
             BamlRecord record;
 
@@ -569,7 +569,7 @@ namespace System.Windows.Markup
         }
 
         // Helper function to create a BamlRecord from a BamlRecordType
-        private BamlRecord AllocateRecord(BamlRecordType recordType)
+        private static BamlRecord AllocateRecord(BamlRecordType recordType)
         {
             BamlRecord record;
 
@@ -738,7 +738,7 @@ namespace System.Windows.Markup
             BamlRecord record = _writeCache[(int)recordType];
             if (null == record)
             {
-                record = AllocateWriteRecord(recordType);
+                record = BamlRecordManager.AllocateWriteRecord(recordType);
             }
             else
             {
@@ -1057,7 +1057,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-        protected int ComputeSizeOfVariableLengthRecord(long start, long end)
+        protected static int ComputeSizeOfVariableLengthRecord(long start, long end)
         {
             int size = (Int32)(end - start);
             int sizeOfSize = BamlBinaryWriter.SizeOf7bitEncodedSize(size);

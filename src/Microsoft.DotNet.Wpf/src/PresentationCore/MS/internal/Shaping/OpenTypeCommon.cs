@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1079,7 +1079,7 @@ namespace MS.Internal.Shaping
                                 case 8: //ReverseCahiningSubst
                                     ReverseChainingSubtable reverseChainingSub =
                                         new ReverseChainingSubtable(subtableOffset);
-                                    lookupIsCovered = reverseChainingSub.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
+                                    lookupIsCovered = ReverseChainingSubtable.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
                                     break;
 
                                 default:
@@ -1121,14 +1121,14 @@ namespace MS.Internal.Shaping
                                     CursivePositioningSubtable cursivePositioningSubtable =
                                         new CursivePositioningSubtable(subtableOffset);
 
-                                    lookupIsCovered = cursivePositioningSubtable.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
+                                    lookupIsCovered = CursivePositioningSubtable.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
 
                                     break;
 
                                 case 4: //MarkToBasePos
                                     MarkToBasePositioningSubtable markToBasePos =
                                         new MarkToBasePositioningSubtable(subtableOffset);
-                                    lookupIsCovered = markToBasePos.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
+                                    lookupIsCovered = MarkToBasePositioningSubtable.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
                                     break;
 
 
@@ -1136,13 +1136,13 @@ namespace MS.Internal.Shaping
                                     // Under construction
                                     MarkToLigaturePositioningSubtable markToLigaPos =
                                        new MarkToLigaturePositioningSubtable(subtableOffset);
-                                    lookupIsCovered = markToLigaPos.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
+                                    lookupIsCovered = MarkToLigaturePositioningSubtable.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
                                     break;
 
                                 case 6: //MarkToMarkPos
                                     MarkToMarkPositioningSubtable markToMarkPos =
                                         new MarkToMarkPositioningSubtable(subtableOffset);
-                                    lookupIsCovered = markToMarkPos.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
+                                    lookupIsCovered = MarkToMarkPositioningSubtable.IsLookupCovered(table,glyphBits,minGlyphId,maxGlyphId);
                                     break;
 
                                 case 7: // Contextual

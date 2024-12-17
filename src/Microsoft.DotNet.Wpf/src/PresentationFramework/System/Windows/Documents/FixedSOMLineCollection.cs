@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,7 +65,7 @@ namespace System.Windows.Documents
 
         #region Private Methods
         //Merge line 2 into line 1
-        private void _AddLineToRanges(List<FixedSOMLineRanges> ranges, double line, double start, double end)
+        private static void _AddLineToRanges(List<FixedSOMLineRanges> ranges, double line, double start, double end)
         {
             if (start > end)
             {
@@ -104,7 +104,7 @@ namespace System.Windows.Documents
 
         //Generic function that decides whether or not a rectangle as spefied by the points is
         //divided by any of the lines in the line ranges in the passed in list
-        private bool _IsSeparated(List<FixedSOMLineRanges> lines, double parallelLowEnd, double perpLowEnd, double parallelHighEnd, double perpHighEnd)
+        private static bool _IsSeparated(List<FixedSOMLineRanges> lines, double parallelLowEnd, double perpLowEnd, double parallelHighEnd, double perpHighEnd)
         {
             int startIndex = 0;
             int endIndex = lines.Count;

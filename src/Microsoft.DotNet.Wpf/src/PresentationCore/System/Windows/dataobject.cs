@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1279,7 +1279,7 @@ namespace System.Windows
         /// <summary>
         /// Returns true if the tymed is useable.
         /// </summary>
-        private bool GetTymedUseable(TYMED tymed)
+        private static bool GetTymedUseable(TYMED tymed)
         {
             for (int i=0; i<ALLOWED_TYMEDS.Length; i++)
             {
@@ -1362,7 +1362,7 @@ namespace System.Windows
         /// <summary>
         /// Get the enhanced metafile handle from the metafile data object.
         /// </summary>
-        private IntPtr GetEnhancedMetafileHandle(String format, object data)
+        private static IntPtr GetEnhancedMetafileHandle(String format, object data)
         {
             IntPtr hEnhancedMetafile;
 
@@ -1553,7 +1553,7 @@ namespace System.Windows
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_ISTREAM.
         /// </summary>
-        private int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
+        private static int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
         {
             IStream istream = (IStream)( Marshal.GetObjectForIUnknown(medium.unionmember) );
             if ( istream == null )
@@ -1633,7 +1633,7 @@ namespace System.Windows
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_ENHMF.
         /// </summary>
-        private int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
+        private static int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
         {
             IntPtr hMetafile;
             int hr;
@@ -2670,7 +2670,7 @@ namespace System.Windows
                 return baseVar;
             }
 
-            private void SetData(string format, object data, bool autoConvert, DVASPECT aspect, int index)
+            private static void SetData(string format, object data, bool autoConvert, DVASPECT aspect, int index)
             {
                 // If we want to support setting data into an OLE data Object,
                 // the code should be here.
@@ -3271,7 +3271,7 @@ namespace System.Windows
             ///     when unnecessary.
             /// </summary>
             [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-            private Object GetBitmapSourceFromHbitmap(IntPtr hbitmap)
+            private static Object GetBitmapSourceFromHbitmap(IntPtr hbitmap)
             {
                 return Imaging.CreateBitmapSourceFromHBitmap(
                     hbitmap,
@@ -3695,7 +3695,7 @@ namespace System.Windows
                 return dataStoreEntry;
             }
 
-            private Object GetDataFromDataStoreEntry(DataStoreEntry dataStoreEntry, string format)
+            private static Object GetDataFromDataStoreEntry(DataStoreEntry dataStoreEntry, string format)
             {
                 Object data;
 

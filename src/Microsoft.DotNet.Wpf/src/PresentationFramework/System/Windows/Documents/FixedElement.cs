@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -305,7 +305,7 @@ namespace System.Windows.Documents
         private void ClickHyperlink(Object sender, RequestNavigateEventArgs args)
         {
             FixedDocument doc = _start.FixedTextContainer.FixedDocument;
-            int pageno = doc.GetPageNumber(_start);
+            int pageno = FixedDocument.GetPageNumber(_start);
             FixedPage page = doc.SyncGetPage(pageno, false);
 
             //have page raise click event

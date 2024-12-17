@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -95,7 +95,7 @@ namespace MS.Internal.AppModel
         #region Private Methods
 
 
-        private string GetEntryAssemblyLocation()
+        private static string GetEntryAssemblyLocation()
         {
             string entryLocation = null;
 
@@ -119,7 +119,7 @@ namespace MS.Internal.AppModel
             return entryLocation;
         }
 
-        private Stream CriticalOpenFile(string filename)
+        private static Stream CriticalOpenFile(string filename)
         {
             return System.IO.File.Open(filename, FileMode.Open, FileAccess.Read, ResourceContainer.FileShare);
         }

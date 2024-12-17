@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -4566,8 +4566,8 @@ namespace System.Windows
                 {
                     ; // Trigger has neither enter nor exit actions.  There's nothing to run anyway, so skip.
                 }
-                else if( triggerBase.ExecuteEnterActionsOnApply ||
-                    triggerBase.ExecuteExitActionsOnApply )
+                else if(TriggerBase.ExecuteEnterActionsOnApply ||
+                    TriggerBase.ExecuteExitActionsOnApply)
                 {
                     // Look for any SourceName in the condition
                     if( NoSourceNameInTrigger( triggerBase ) )
@@ -4575,13 +4575,13 @@ namespace System.Windows
                         // Evaluate the current state of the trigger.
                         triggerState = triggerBase.GetCurrentState( triggerContainer, dataField );
 
-                        if( triggerState && triggerBase.ExecuteEnterActionsOnApply )
+                        if( triggerState && TriggerBase.ExecuteEnterActionsOnApply)
                         {
                             // Trigger is true, and Trigger wants EnterActions to be executed on Style/Template application.
                             InvokeActions( triggerBase.EnterActions, triggerBase, triggerContainer,
                                 style, ft );
                         }
-                        else if( !triggerState && triggerBase.ExecuteExitActionsOnApply )
+                        else if( !triggerState && TriggerBase.ExecuteExitActionsOnApply)
                         {
                             // Trigger is false, and Trigger wants ExitActions to be executed on Style/Template application.
                             InvokeActions( triggerBase.ExitActions, triggerBase, triggerContainer,

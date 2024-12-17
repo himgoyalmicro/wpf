@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -248,7 +248,7 @@ namespace MS.Internal.PtsHost
                                        pageFontSize, pageFontFamily, true, cColumns,
                                        ref lineHeight, out width, out freeSpace, out gap);
     
-            if (columnProperties.IsColumnWidthFlexible && columnProperties.ColumnSpaceDistribution == ColumnSpaceDistribution.Between)
+            if (columnProperties.IsColumnWidthFlexible && ColumnPropertiesGroup.ColumnSpaceDistribution == ColumnSpaceDistribution.Between)
             {
                 width += freeSpace / cColumns;
             }

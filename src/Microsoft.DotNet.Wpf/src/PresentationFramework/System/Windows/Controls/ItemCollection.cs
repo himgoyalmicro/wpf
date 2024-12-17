@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2002,7 +2002,7 @@ namespace System.Windows.Controls
             {
                 using (SortDescriptionsMonitor.Enter())
                 {
-                    SynchronizeCollections<SortDescription>(e, MySortDescriptions, _collectionView.SortDescriptions);
+                    SynchronizeCollections(e, MySortDescriptions, _collectionView.SortDescriptions);
                 }
             }
 
@@ -2018,7 +2018,7 @@ namespace System.Windows.Controls
             // keep this ItemColl.SortDescriptions in synch with inner collection view's
             using (SortDescriptionsMonitor.Enter())
             {
-                SynchronizeCollections<SortDescription>(e, _collectionView.SortDescriptions, MySortDescriptions);
+                SynchronizeCollections(e, _collectionView.SortDescriptions, MySortDescriptions);
             }
 
             IsSortingSet = false;      // most recent change came from inner collection view
@@ -2035,7 +2035,7 @@ namespace System.Windows.Controls
             {
                 using (GroupDescriptionsMonitor.Enter())
                 {
-                    SynchronizeCollections<GroupDescription>(e, MyGroupDescriptions, _collectionView.GroupDescriptions);
+                    SynchronizeCollections(e, MyGroupDescriptions, _collectionView.GroupDescriptions);
                 }
             }
 
@@ -2051,7 +2051,7 @@ namespace System.Windows.Controls
             // keep this ItemColl.GroupDescriptions in synch with inner collection view's
             using (GroupDescriptionsMonitor.Enter())
             {
-                SynchronizeCollections<GroupDescription>(e, _collectionView.GroupDescriptions, MyGroupDescriptions);
+                SynchronizeCollections(e, _collectionView.GroupDescriptions, MyGroupDescriptions);
             }
 
             IsGroupingSet = false;      // most recent change came from inner collection view
@@ -2070,7 +2070,7 @@ namespace System.Windows.Controls
             {
                 using (LiveSortingMonitor.Enter())
                 {
-                    SynchronizeCollections<string>(e, MyLiveSortingProperties, icvls.LiveSortingProperties);
+                    SynchronizeCollections(e, MyLiveSortingProperties, icvls.LiveSortingProperties);
                 }
             }
 
@@ -2089,7 +2089,7 @@ namespace System.Windows.Controls
             {
                 using (LiveSortingMonitor.Enter())
                 {
-                    SynchronizeCollections<string>(e, icvls.LiveSortingProperties, MyLiveSortingProperties);
+                    SynchronizeCollections(e, icvls.LiveSortingProperties, MyLiveSortingProperties);
                 }
             }
 
@@ -2109,7 +2109,7 @@ namespace System.Windows.Controls
             {
                 using (LiveFilteringMonitor.Enter())
                 {
-                    SynchronizeCollections<string>(e, MyLiveFilteringProperties, icvls.LiveFilteringProperties);
+                    SynchronizeCollections(e, MyLiveFilteringProperties, icvls.LiveFilteringProperties);
                 }
             }
 
@@ -2128,7 +2128,7 @@ namespace System.Windows.Controls
             {
                 using (LiveFilteringMonitor.Enter())
                 {
-                    SynchronizeCollections<string>(e, icvls.LiveFilteringProperties, MyLiveFilteringProperties);
+                    SynchronizeCollections(e, icvls.LiveFilteringProperties, MyLiveFilteringProperties);
                 }
             }
 
@@ -2148,7 +2148,7 @@ namespace System.Windows.Controls
             {
                 using (LiveGroupingMonitor.Enter())
                 {
-                    SynchronizeCollections<string>(e, MyLiveGroupingProperties, icvls.LiveGroupingProperties);
+                    SynchronizeCollections(e, MyLiveGroupingProperties, icvls.LiveGroupingProperties);
                 }
             }
 
@@ -2167,7 +2167,7 @@ namespace System.Windows.Controls
             {
                 using (LiveGroupingMonitor.Enter())
                 {
-                    SynchronizeCollections<string>(e, icvls.LiveGroupingProperties, MyLiveGroupingProperties);
+                    SynchronizeCollections(e, icvls.LiveGroupingProperties, MyLiveGroupingProperties);
                 }
             }
 
@@ -2176,7 +2176,7 @@ namespace System.Windows.Controls
 
 
         // keep collections in sync
-        private void SynchronizeCollections<T>(NotifyCollectionChangedEventArgs e, Collection<T> origin, Collection<T> clone)
+        private static void SynchronizeCollections<T>(NotifyCollectionChangedEventArgs e, Collection<T> origin, Collection<T> clone)
         {
             if (clone == null)
                 return;             // the clone might be lazily-created
@@ -2246,7 +2246,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void CloneList(IList clone, IList master)
+        private static void CloneList(IList clone, IList master)
         {
             // if either party is null, do nothing.  Allowing null lets the caller
             // avoid a lazy instantiation of the Sort/Group description collection.

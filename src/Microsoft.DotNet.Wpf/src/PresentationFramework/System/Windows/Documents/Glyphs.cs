@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -383,7 +383,7 @@ namespace System.Windows.Documents
         /// <param name="characterClusterSize"></param>
         /// <param name="glyphIndex"></param>
         /// <returns>true if glyph index is present, false if glyph index is not present.</returns>
-        private bool ReadGlyphIndex(
+        private static bool ReadGlyphIndex(
             ReadOnlySpan<char> valueSpec,
             ref bool           inCluster,
             ref int            glyphClusterSize,
@@ -444,7 +444,7 @@ namespace System.Windows.Documents
             return advance * EmMultiplier;
         }
 
-        private ushort GetGlyphFromCharacter(GlyphTypeface glyphTypeface, char character)
+        private static ushort GetGlyphFromCharacter(GlyphTypeface glyphTypeface, char character)
         {
             ushort glyphIndex;
             // TryGetValue will return zero glyph index for missing code points,

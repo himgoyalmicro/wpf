@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -215,8 +215,7 @@ namespace MS.Internal.Printing
             /// <param name="devModeHandle">
             /// An out parameter to store the devmode handle.
             /// </param>
-            private
-            void
+            private static void
             ExtractPrintDataAndDevMode(
                 IntPtr unmanagedBuffer,
                 out string printerName,
@@ -352,8 +351,7 @@ namespace MS.Internal.Printing
             /// <param name="printQueueName">
             /// The printer name for the PrintTicket converter.
             /// </param>
-            private
-            PrintTicket
+            private static PrintTicket
             AcquirePrintTicket(
                 IntPtr devModeHandle,
                 string printQueueName
@@ -403,8 +401,7 @@ namespace MS.Internal.Printing
             /// is passed around as an unmanaged buffer since the 32-bit and 64-bit versions
             /// of this buffer are not the same and need to be handled uniquely.
             /// </param>
-            private
-            UInt32
+            private static UInt32
             AcquireResultFromPrintDlgExStruct(
                 IntPtr unmanagedBuffer
                 )
@@ -632,8 +629,7 @@ namespace MS.Internal.Printing
             /// is passed around as an unmanaged buffer since the 32-bit and 64-bit versions
             /// of this buffer are not the same and need to be handled uniquely.
             /// </param>
-            private
-            void
+            private static void
             FreeUnmanagedPrintDlgExStruct(
                 IntPtr unmanagedBuffer
                 )
@@ -687,8 +683,7 @@ namespace MS.Internal.Printing
             /// Returns a boolean value representing whether the current runtime is
             /// 32-bit or 64-bit.
             /// </summary>
-            private
-            bool
+            private static bool
             Is64Bit()
             {
                 return IntPtr.Size == sizeof(long);
@@ -705,8 +700,7 @@ namespace MS.Internal.Printing
             /// Returns an IntPtr pointing to a memory address in unmanaged code where
             /// the structure has been initialized.
             /// </returns>
-            private
-            IntPtr
+            private static IntPtr
             AllocateAndInitializeDevNames(
                 string printerName
                 )
@@ -788,8 +782,7 @@ namespace MS.Internal.Printing
             /// An unmanaged pointer to an unmanaged DEVMODE structure that can be
             /// used in the PRINTDLGEX structure for a call to PrintDlgEx.
             /// </returns>
-            private
-            IntPtr
+            private static IntPtr
             AllocateAndInitializeDevMode(
                 string printerName,
                 PrintTicket printTicket

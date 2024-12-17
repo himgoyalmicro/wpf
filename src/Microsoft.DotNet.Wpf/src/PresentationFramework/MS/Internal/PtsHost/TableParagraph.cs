@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -194,7 +194,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fRepeatedHeader">Repeated header flag</param>
         /// <param name="fFound">Indication that first header row is found</param>
         /// <param name="pnmFirstHeaderRow">First header row name</param>
-        internal void GetFirstHeaderRow(
+        internal static void GetFirstHeaderRow(
             int fRepeatedHeader,
             out int fFound,
             out IntPtr pnmFirstHeaderRow)
@@ -210,7 +210,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmHeaderRow">Previous header row</param>
         /// <param name="fFound">Indication that header row is found</param>
         /// <param name="pnmNextHeaderRow">Header row name</param>
-        internal void GetNextHeaderRow(
+        internal static void GetNextHeaderRow(
             int fRepeatedHeader,
             IntPtr nmHeaderRow, 
             out int fFound,
@@ -226,7 +226,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fRepeatedFooter">Repeated footer flag</param>
         /// <param name="fFound">Indication that first header row is found</param>
         /// <param name="pnmFirstFooterRow">First footer row name</param>
-        internal void GetFirstFooterRow(
+        internal static void GetFirstFooterRow(
             int fRepeatedFooter,
             out int fFound,
             out IntPtr pnmFirstFooterRow)
@@ -242,7 +242,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nmFooterRow">Previous footer row</param>
         /// <param name="fFound">Indication that header row is found</param>
         /// <param name="pnmNextFooterRow">Footer row name</param>
-        internal void GetNextFooterRow(
+        internal static void GetNextFooterRow(
             int fRepeatedFooter,
             IntPtr nmFooterRow,
             out int fFound,
@@ -376,7 +376,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fFooterChanged">Footer changed?</param>
         /// <param name="fRepeatedHeaderChanged">Repeated header changed?</param>
         /// <param name="fRepeatedFooterChanged">Repeated footer changed?</param>
-        internal void UpdFChangeInHeaderFooter( // we don't do update in header/footer
+        internal static void UpdFChangeInHeaderFooter( // we don't do update in header/footer
             out int fHeaderChanged,                 // OUT: 
             out int fFooterChanged,                 // OUT: 
             out int fRepeatedHeaderChanged,         // OUT: unneeded for bottomless page, but...
@@ -394,7 +394,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fFound">Indication that changed body row is found</param>
         /// <param name="fChangeFirst">Is the change in the first body row?</param>
         /// <param name="pnmRowBeforeChange">The last unchanged body row</param>
-        internal void UpdGetFirstChangeInTable(
+        internal static void UpdGetFirstChangeInTable(
             out int fFound,                         // OUT: 
             out int fChangeFirst,                   // OUT: 
             out IntPtr pnmRowBeforeChange)          // OUT: 
@@ -410,7 +410,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         /// <param name="fswdirTable">Direction of the Table</param>
         /// <param name="tabledistr">Height distribution kind</param>
-        internal void GetDistributionKind(
+        internal static void GetDistributionKind(
             uint fswdirTable,                               // IN:  direction of the Table
             out PTS.FSKTABLEHEIGHTDISTRIBUTION tabledistr)  // OUT: height distribution kind
         {
@@ -503,7 +503,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Invalidate accumulated format caches for the row.
         // ------------------------------------------------------------------
-        private bool InvalidateRowStructure(RowParagraph rowParagraph, int startPosition)
+        private static bool InvalidateRowStructure(RowParagraph rowParagraph, int startPosition)
         {
             bool isEntireTableInvalid = true;
 
@@ -523,7 +523,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Invalidate accumulated format caches for the row.
         // ------------------------------------------------------------------
-        private void InvalidateRowFormatCache(RowParagraph rowParagraph)
+        private static void InvalidateRowFormatCache(RowParagraph rowParagraph)
         {
             for(int iCell = 0; iCell < rowParagraph.Cells.Length; iCell++)
             {
@@ -550,7 +550,7 @@ namespace MS.Internal.PtsHost
             // - to create dirty text range corresponding to the Table content
             // - notify formatter that Table's content is changed.
             //
-            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset � ContentStartOffset) but is more performant.
+            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset – ContentStartOffset) but is more performant.
             if (charCount > 0)
             {
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);

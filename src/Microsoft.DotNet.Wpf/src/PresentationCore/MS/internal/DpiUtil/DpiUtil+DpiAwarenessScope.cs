@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -100,13 +100,13 @@ namespace MS.Internal
                     return;
                 }
 
-                if (updateIfThreadInMixedHostingMode && !this.IsThreadInMixedHostingBehavior)
+                if (updateIfThreadInMixedHostingMode && !IsThreadInMixedHostingBehavior)
                 {
                     return;
                 }
 
                 if (updateIfWindowIsSystemAwareOrUnaware &&
-                    (hWnd == IntPtr.Zero || !this.IsWindowUnawareOrSystemAware(hWnd)))
+                    (hWnd == IntPtr.Zero || !IsWindowUnawareOrSystemAware(hWnd)))
                 {
                     return;
                 }
@@ -134,7 +134,7 @@ namespace MS.Internal
             /// <summary>
             /// Gets a value indicating whether the current thread is in DPI_HOSTING_BEHAVIOR_MIXED
             /// </summary>
-            private bool IsThreadInMixedHostingBehavior
+            private static bool IsThreadInMixedHostingBehavior
             {
                 get
                 {
@@ -165,7 +165,7 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hWnd">Handle to the window</param>
             /// <returns>True if the Window is Unaware or System Aware, otherwise False</returns>
-            private bool IsWindowUnawareOrSystemAware(IntPtr hWnd)
+            private static bool IsWindowUnawareOrSystemAware(IntPtr hWnd)
             {
                 var dpiAwarenessContext = GetDpiAwarenessContext(hWnd);
 

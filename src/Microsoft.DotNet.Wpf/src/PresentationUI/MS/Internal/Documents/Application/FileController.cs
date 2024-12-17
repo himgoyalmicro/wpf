@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,8 +42,8 @@ namespace MS.Internal.Documents.Application
             
             // We can save to the source file if we could reopen it for write
             if (documentManager != null)
-            { 
-                documentManager.CanSave = canWriteToSource;
+            {
+                    DocumentManager.CanSave = canWriteToSource;
             }
 
             doc.WorkspaceProxy = doc.SourceProxy.CreateTemporary(false);

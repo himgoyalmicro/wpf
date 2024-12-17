@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -136,7 +136,7 @@ namespace MS.Internal.Annotations.Component
         /// </summary>
         /// <param name="attachedAnnotation">the attachedAnnotation we are to find a component for</param>
         /// <returns>an IAnnotationComponent that can handle the attachedAnnotation (or null)</returns>
-        private IAnnotationComponent FindComponent(IAttachedAnnotation attachedAnnotation)
+        private static IAnnotationComponent FindComponent(IAttachedAnnotation attachedAnnotation)
         {
             Debug.Assert(attachedAnnotation != null, "AttachedAnnotation should not be null");
 
@@ -146,7 +146,7 @@ namespace MS.Internal.Annotations.Component
             AnnotationComponentChooser chooser = AnnotationService.GetChooser(annotatedElement);
 
             // should we return a list instead?
-            IAnnotationComponent component = chooser.ChooseAnnotationComponent(attachedAnnotation);
+            IAnnotationComponent component = AnnotationComponentChooser.ChooseAnnotationComponent(attachedAnnotation);
 
             return component;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,19 +76,19 @@ namespace MS.Internal.Automation
             UIElement e = _owner as UIElement;
             if (e != null)
             {
-                e.CancelSynchronizedInput();
+                UIElement.CancelSynchronizedInput();
             }
             else
             {
                 ContentElement ce = _owner as ContentElement;
                 if (ce != null)
                 {
-                    ce.CancelSynchronizedInput();
+                    ContentElement.CancelSynchronizedInput();
                 }
                 else
                 {
                     UIElement3D e3D = (UIElement3D)_owner;
-                    e3D.CancelSynchronizedInput();
+                    UIElement3D.CancelSynchronizedInput();
                 }
             }
 }

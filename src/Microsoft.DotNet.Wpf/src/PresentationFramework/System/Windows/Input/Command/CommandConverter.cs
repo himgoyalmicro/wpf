@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -206,7 +206,7 @@ namespace System.Windows.Input
         }
 
         //Utility helper to get the required information from the parserContext
-        private Type GetTypeFromContext( ITypeDescriptorContext context, string typeName )
+        private static Type GetTypeFromContext( ITypeDescriptorContext context, string typeName )
         {
             // Parser Context must exist to get the namespace info from prefix, if not, we assume it is known command.
             if (null != context && typeName != null)
@@ -221,7 +221,7 @@ namespace System.Windows.Input
             return null;
         }
 
-        private void ParseUri( string source, out string typeName, out string localName )
+        private static void ParseUri( string source, out string typeName, out string localName )
         {
             typeName = null;
             localName = ((string)source).Trim();

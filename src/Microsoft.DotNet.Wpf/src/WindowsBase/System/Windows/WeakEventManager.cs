@@ -762,7 +762,7 @@ namespace System.Windows
                 return foundStaleEntries;
             }
 
-            internal bool DeliverEvent(ref Listener listener, object sender, EventArgs args, Type managerType)
+            internal static bool DeliverEvent(ref Listener listener, object sender, EventArgs args, Type managerType)
             {
                 object target = listener.Target;
                 bool entryIsStale = (target == null);
@@ -909,7 +909,7 @@ namespace System.Windows
                         else
                         {
                             // legacy (4.0)
-                            foundStaleEntries |= base.DeliverEvent(ref listener, sender, e, managerType);
+                            foundStaleEntries |= DeliverEvent(ref listener, sender, e, managerType);
                         }
                     }
                     else

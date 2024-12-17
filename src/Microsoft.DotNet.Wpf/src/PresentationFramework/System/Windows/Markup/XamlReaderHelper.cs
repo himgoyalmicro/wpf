@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1250,7 +1250,7 @@ namespace System.Windows.Markup
 
                         lastTextWasPreserved = (xmlSpacePreserveSet) ? true : false;
 
-                        string collapsedText = CollapseText(XmlReader.Value,
+                        string collapsedText = XamlReaderHelper.CollapseText(XmlReader.Value,
                             stripAllLeadingSpaces /* stripAllLeadingSpaces */,
                             false /* stripAllRightWhitespace */ ,
                             lastTextWasPreserved /* preserve */,
@@ -1374,7 +1374,7 @@ namespace System.Windows.Markup
             ThrowExceptionWithLine(message);
         }
 
-        void RethrowAsParseException(
+        static void RethrowAsParseException(
             string keyString,
             int lineNumber,
             int linePosition,
@@ -1658,7 +1658,7 @@ namespace System.Windows.Markup
             public string NamespaceURI;
         }
 
-        private void SplitPropertyElementName(string longName, out string ownerName, out string propName)
+        private static void SplitPropertyElementName(string longName, out string ownerName, out string propName)
         {
             int idx = longName.LastIndexOf('.');
             if(idx != -1)
@@ -2218,7 +2218,7 @@ namespace System.Windows.Markup
                     namespaceAttribute = true;
 
                     // HandleElementScopedAttributes must be kept in-sync with IsElementScopedAttribute
-                    Debug.Assert(IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
+                    Debug.Assert(XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
                     attributeFound = true;
                 }
                 // Look for xmlns
@@ -2227,7 +2227,7 @@ namespace System.Windows.Markup
                     namespaceAttribute = true;
 
                     // HandleElementScopedAttributes must be kept in-sync with IsElementScopedAttribute
-                    Debug.Assert(IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
+                    Debug.Assert(XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
                     attributeFound = true;
                 }
                 // Look for xml:space
@@ -2236,7 +2236,7 @@ namespace System.Windows.Markup
                     xmlSpace = attribValue;
 
                     // HandleElementScopedAttributes must be kept in-sync with IsElementScopedAttribute
-                    Debug.Assert(IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
+                    Debug.Assert(XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
                     attributeFound = true;
                 }
                 // Look for xml:lang
@@ -2245,7 +2245,7 @@ namespace System.Windows.Markup
                     xmlLang = attribValue;
 
                     // HandleElementScopedAttributes must be kept in-sync with IsElementScopedAttribute
-                    Debug.Assert(IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
+                    Debug.Assert(XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
                     attributeFound = true;
                 }
                 // Look for PresentationOptions:Freeze
@@ -2254,7 +2254,7 @@ namespace System.Windows.Markup
                     freezeValue = attribValue;
 
                     // HandleElementScopedAttributes must be kept in-sync with IsElementScopedAttribute
-                    Debug.Assert(IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
+                    Debug.Assert(XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
                     attributeFound = true;
                 }
 
@@ -2263,7 +2263,7 @@ namespace System.Windows.Markup
                 //
                 // If no element-scoped attribute has been found (including this one), then IsElementScopedAttribute must return
                 // false for this attribute
-                Debug.Assert (attributeFound || !IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
+                Debug.Assert (attributeFound || !XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attributeNamespaceUri));
 
                 if (namespaceAttribute)
                 {
@@ -2801,7 +2801,7 @@ namespace System.Windows.Markup
                     // if no element-scoped attributes exist, or if they do exist and this isn't
                     // one of them.
                     if (!elementScopedAttributeFound ||
-                        !IsElementScopedAttribute(attribName, attribLocalName, attribNamespaceURI)
+                        !XamlReaderHelper.IsElementScopedAttribute(attribName, attribLocalName, attribNamespaceURI)
                         )
                     {
                         // attribute may map to the following
@@ -3505,7 +3505,7 @@ namespace System.Windows.Markup
         }
 
         // Return true if a given property is writable.
-        private bool PropertyIsWriteable(object propertyMember, Type declaringType)
+        private static bool PropertyIsWriteable(object propertyMember, Type declaringType)
         {
             PropertyInfo propertyInfo = propertyMember as PropertyInfo;
             if (propertyInfo != null)
@@ -4464,7 +4464,7 @@ namespace System.Windows.Markup
 
         // ContentPropertySeesAProperty drives the "Contiguous Content" state machine.
         // on property elements move from state During to state After.
-        private void ContentPropertySeesAProperty(ElementContextStackData context)
+        private static void ContentPropertySeesAProperty(ElementContextStackData context)
         {
             if (context.ContentParserState == ParsingContent.During)
             {
@@ -5145,7 +5145,7 @@ namespace System.Windows.Markup
             }
         }
 
-        bool IsAttributePresentationOptionsFreeze(string attributeLocalName, string attributeNamespaceUri)
+        static bool IsAttributePresentationOptionsFreeze(string attributeLocalName, string attributeNamespaceUri)
         {
             // Is this the 'Freeze' attribute in the PresentationOptions namespace?
             return (attributeLocalName == PresentationOptionsFreeze) &&
@@ -5168,7 +5168,7 @@ namespace System.Windows.Markup
             ValueFound = 5,
         }
 
-        private bool CompilePI()
+        private static bool CompilePI()
         {
             //we want to ignore all PIs
             return false;
@@ -5459,7 +5459,7 @@ namespace System.Windows.Markup
         // or endIndex if no whitespace.
         // caller should pass in an endIndex which is one greater
         // than the characters they want to check.
-        int SkipWhitespace(string text, int startIndex, int endIndex)
+        static int SkipWhitespace(string text, int startIndex, int endIndex)
         {
             int index = startIndex;
 
@@ -5560,7 +5560,7 @@ namespace System.Windows.Markup
         }
 
         // collapses text, review if can use existing stringBuilder.
-        string CollapseText(
+        static string CollapseText(
                 string text,
                 bool stripAllLeadingSpaces,
                 bool stripAllRightWhitespace,
@@ -6059,7 +6059,7 @@ namespace System.Windows.Markup
                     //  a potential TypeConverter sequence.
                     // This is a shortcut enabled by the current design, where only a
                     //  limited set of XamlNodes can be legally inserted out-of-order.
-                    if( NodeTypePrecludesTypeConverterUse(xamlNode) )
+                    if(NodeTypePrecludesTypeConverterUse(xamlNode) )
                     {
                         // The newly inserted node breaks our ability to use TypeConverter
                         ResetTypeConverterDecision();
@@ -6130,7 +6130,7 @@ namespace System.Windows.Markup
                         Debug.Assert( _typeConverterTextWrittenAndNotProcessed != null,
                             "The caller had sent out TypeConverter initialization text - we should be seeing it now.");
                     }
-                    else if( NodeTypePrecludesTypeConverterUse(xamlNode) )
+                    else if(NodeTypePrecludesTypeConverterUse(xamlNode) )
                     {
                         // Reset state since this node isn't permitted in TypeConverter usage.
                         ResetTypeConverterDecision();
@@ -6180,7 +6180,7 @@ namespace System.Windows.Markup
 
             // Checking the given XamlNode against the list of types that we know will
             //  break our ability to use TypeConverter.
-            private bool NodeTypePrecludesTypeConverterUse(XamlNode xamlNode)
+            private static bool NodeTypePrecludesTypeConverterUse(XamlNode xamlNode)
             {
                 XamlNodeType tokenType = xamlNode.TokenType;
 
@@ -6388,7 +6388,7 @@ namespace System.Windows.Markup
                 string collapsedText;
                 bool endedWithWhitespace;
 
-                collapsedText = CollapseText(textFlowData.TextNode.Text,
+                collapsedText = XamlReaderHelper.CollapseText(textFlowData.TextNode.Text,
                     textFlowData.StripLeadingSpaces,
                     stripAllRightWhitespace, textFlowData.XmlSpaceIsPreserve, out endedWithWhitespace);
 
@@ -6666,7 +6666,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Name of the class that holds the xml: attribute DPs (e.g. xml:Lang)
         /// </summary>
-        string XmlAttributesFullName
+        static string XmlAttributesFullName
         {
             get { return "System.Windows.Markup.XmlAttributeProperties"; }
         }
@@ -6786,7 +6786,7 @@ namespace System.Windows.Markup
             return _typeIXmlSerializable.IsAssignableFrom(type);
         }
 
-        private bool IsElementScopedAttribute(string attribName, string attributeLocalName, string attributeNamespaceUri)
+        private static bool IsElementScopedAttribute(string attribName, string attributeLocalName, string attributeNamespaceUri)
         {
             return attribName.StartsWith("xmlns:", StringComparison.Ordinal) ||
                    attribName.Equals(XmlnsDeclaration) ||

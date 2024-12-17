@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace System.Windows.Documents
 
                     ConvertToTextPosition(range, out start, out end);
 
-                    attr.Apply(start, end);
+                    TextServicesDisplayAttribute.Apply(start, end);
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace System.Windows.Documents
             return attr;
         }
 
-        private Int32 GetInt32Value(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
+        private static Int32 GetInt32Value(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
         {
             Object obj = GetValue(ecReadOnly, property, range);
             if (obj == null)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace MS.Internal.AutomationProxies
         // Ensures GroupManager creation for the specified listview
         // This method will be called only from certain methods on the LV
         // Called from LV: FirstChild, LastChild, ElementFromPoint, GetFocus
-        internal void EnsureCreation(IntPtr hwnd)
+        internal static void EnsureCreation(IntPtr hwnd)
         {
             if (!Contains(hwnd))
             {
@@ -35,13 +35,13 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        internal void Remove(IntPtr hwnd)
+        internal static void Remove(IntPtr hwnd)
         {
             _groupManagers.Remove(hwnd);
         }
 
         // O(1)
-        internal bool Contains(IntPtr hwnd)
+        internal static bool Contains(IntPtr hwnd)
         {
             return _groupManagers.ContainsKey(hwnd);
         }
@@ -63,7 +63,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 // The group may have been discarded by the reorder winevent.
-                EnsureCreation (hwnd);
+                EnsureCreation(hwnd);
 
                 GroupManager manager = _groupManagers[hwnd] as GroupManager;
                 if (manager == null)

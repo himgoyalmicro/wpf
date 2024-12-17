@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -698,7 +698,7 @@ namespace MS.Internal.Controls
 
         // check that item is not already parented
         // throws an exception if already parented
-        DependencyObject AssertPristineModelChild(object item)
+        static DependencyObject AssertPristineModelChild(object item)
         {
             DependencyObject node = item as DependencyObject;
             if (node == null)

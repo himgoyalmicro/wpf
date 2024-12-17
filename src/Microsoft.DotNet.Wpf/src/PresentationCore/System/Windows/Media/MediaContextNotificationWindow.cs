@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -170,7 +170,7 @@ namespace System.Windows.Media
         /// in case we are elevated. Failure is non-fatal and on down-level
         /// platforms this call will result in a no-op.
         /// </summary>
-        private void ChangeWindowMessageFilter(WindowMessage message, uint flag)
+        private static void ChangeWindowMessageFilter(WindowMessage message, uint flag)
         {
             // Find the address of ChangeWindowMessageFilter in user32.dll.
             IntPtr user32Module = UnsafeNativeMethods.GetModuleHandle("user32.dll");

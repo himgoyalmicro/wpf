@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -525,7 +525,7 @@ namespace MS.Internal.Globalization
         /// <param name="source">localizability attribute defined in source</param>
         /// <param name="inheritable">localizability attribute inheritable from above</param>
         /// <returns>LocalizabilityAttribute</returns>
-        private LocalizabilityAttribute CreateInheritedLocalizability(
+        private static LocalizabilityAttribute CreateInheritedLocalizability(
             LocalizabilityAttribute source,
             LocalizabilityAttribute inheritable
             )
@@ -558,7 +558,7 @@ namespace MS.Internal.Globalization
         /// <param name="first">first </param>
         /// <param name="second">second</param>
         /// <returns>LocalizabilityAttribute</returns>
-        private LocalizabilityAttribute CombineMinimumLocalizability(
+        private static LocalizabilityAttribute CombineMinimumLocalizability(
             LocalizabilityAttribute first,
             LocalizabilityAttribute second
             )

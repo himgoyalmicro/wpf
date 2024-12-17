@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2885,7 +2885,7 @@ namespace System.Windows.Controls
         }
 
         // Converts a HorizontalAlignment enum to a TextAlignment enum.
-        private TextAlignment HorizontalAlignmentToTextAlignment(HorizontalAlignment horizontalAlignment)
+        private static TextAlignment HorizontalAlignmentToTextAlignment(HorizontalAlignment horizontalAlignment)
         {
             TextAlignment textAlignment;
 

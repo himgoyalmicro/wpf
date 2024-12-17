@@ -35,7 +35,7 @@ namespace System.Windows.Threading
             return result;
         }
 
-        private object InternalRealCall(Delegate callback, object args, int numArgs)
+        private static object InternalRealCall(Delegate callback, object args, int numArgs)
         {
             object result = null;
 

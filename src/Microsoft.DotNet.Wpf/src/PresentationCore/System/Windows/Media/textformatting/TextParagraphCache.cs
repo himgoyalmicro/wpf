@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -158,7 +158,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Verify that the input line format width is within the maximum ideal value
         /// </summary>
-        private int VerifyMaxLineWidth(double maxLineWidth)
+        private static int VerifyMaxLineWidth(double maxLineWidth)
         {
             ArgumentOutOfRangeException.ThrowIfEqual(maxLineWidth, double.NaN);
             

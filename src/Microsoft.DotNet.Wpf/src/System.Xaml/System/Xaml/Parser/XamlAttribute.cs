@@ -139,7 +139,7 @@ namespace MS.Internal.Xaml.Parser
 
         //  ========================== private ================================
 
-        private XamlMember GetXamlAttributeProperty(XamlParserContext context, XamlPropertyName propName,
+        private static XamlMember GetXamlAttributeProperty(XamlParserContext context, XamlPropertyName propName,
                                                     XamlType tagType, string tagNamespace, bool tagIsRoot)
         {
             XamlMember prop = null;

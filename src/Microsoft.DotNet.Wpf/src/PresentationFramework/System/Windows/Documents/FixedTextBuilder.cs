@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -384,7 +384,7 @@ namespace System.Windows.Documents
         //-----------------------------------------------
 
         // This function can handle flow nodes that are mapped to fixed nodes (Object or Run type) and start and end nodes
-        internal bool GetFixedPosition(FlowPosition position, LogicalDirection textdir, out FixedPosition fixedp)
+        internal static bool GetFixedPosition(FlowPosition position, LogicalDirection textdir, out FixedPosition fixedp)
         {
             // Currently broken on empty page and on start/end flow nodes!
             // Init out parameter
@@ -449,7 +449,7 @@ namespace System.Windows.Documents
 
 
         // Find out fixed node given flow positions
-        internal bool GetFixedNodesForFlowRange(FlowPosition pStart,
+        internal static bool GetFixedNodesForFlowRange(FlowPosition pStart,
                                                             FlowPosition pEnd,
                                                             out FixedSOMElement[] somElements,
                                                             out int firstElementStart,
@@ -568,7 +568,7 @@ namespace System.Windows.Documents
 
         // Helper function to retrieve text from FixedNodes that are mapped
         // to a flow run represented by a FlowPosition.
-        internal string GetFlowText(FlowNode flowNode)
+        internal static string GetFlowText(FlowNode flowNode)
         {
             Debug.Assert(flowNode.Type == FlowNodeType.Run);
 
@@ -774,7 +774,7 @@ namespace System.Windows.Documents
         //      2. level1Index
         //      3. pathPrefix.
         //
-        FixedNode _NewFixedNode(int pageIndex, int nestingLevel, int level1Index, int[] pathPrefix, int childIndex)
+        static FixedNode _NewFixedNode(int pageIndex, int nestingLevel, int level1Index, int[] pathPrefix, int childIndex)
         {
             if (nestingLevel == 1)
             {
@@ -798,7 +798,7 @@ namespace System.Windows.Documents
 
 
         // Helper function to get Paths with ImageBrushes
-        private bool _IsImage(object o)
+        private static bool _IsImage(object o)
         {
             System.Windows.Shapes.Path p = o as System.Windows.Shapes.Path;
             if (p != null)
@@ -809,7 +809,7 @@ namespace System.Windows.Documents
         }
 
 
-        private bool _IsNonContiguous(FixedSOMTextRun prevRun, FixedSOMTextRun currentRun, GlyphComparison comparison)
+        private static bool _IsNonContiguous(FixedSOMTextRun prevRun, FixedSOMTextRun currentRun, GlyphComparison comparison)
         {
             Debug.Assert(prevRun != null);
             Debug.Assert(currentRun != null);
@@ -828,7 +828,7 @@ namespace System.Windows.Documents
                                     comparison);
         }
 
-        private GlyphComparison _CompareGlyphs(Glyphs glyph1, Glyphs glyph2)
+        private static GlyphComparison _CompareGlyphs(Glyphs glyph1, Glyphs glyph2)
         {
             GlyphComparison comparison = GlyphComparison.DifferentLine;
             if (glyph1 == glyph2)
@@ -1026,7 +1026,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private void _CreateFlowNodes(FixedSOMPage somPage, FlowModelBuilder flowBuilder)
+        private static void _CreateFlowNodes(FixedSOMPage somPage, FlowModelBuilder flowBuilder)
         {
             flowBuilder.AddStartNode(FixedElement.ElementType.Section);
             somPage.SetRTFProperties(flowBuilder.FixedElement);
@@ -1046,7 +1046,7 @@ namespace System.Windows.Documents
 
 
         //We will need to have a special case for an empty page
-        private void _CreateFlowNodes(FixedSOMContainer node, FlowModelBuilder flowBuilder)
+        private static void _CreateFlowNodes(FixedSOMContainer node, FlowModelBuilder flowBuilder)
         {
             FixedElement.ElementType[] elementsForNode = node.ElementTypes;
             foreach (FixedElement.ElementType type in elementsForNode)
@@ -1086,17 +1086,17 @@ namespace System.Windows.Documents
         // Fixed Document
         //---------------------------------------------------------------------
 
-        private bool _IsStartVisual(int visualIndex)
+        private static bool _IsStartVisual(int visualIndex)
         {
             return visualIndex == FixedFlowMap.FixedOrderStartVisual;
         }
 
-        private bool _IsEndVisual(int visualIndex)
+        private static bool _IsEndVisual(int visualIndex)
         {
             return visualIndex == FixedFlowMap.FixedOrderEndVisual;
         }
 
-        private bool _IsBoundaryPage(int pageIndex)
+        private static bool _IsBoundaryPage(int pageIndex)
         {
             return (   pageIndex == FixedFlowMap.FixedOrderStartPage
                     || pageIndex == FixedFlowMap.FixedOrderEndPage
@@ -1482,10 +1482,10 @@ namespace System.Windows.Documents
                             Glyphs currentRunGlyph = _builder.GetGlyphsElement(lastRun.FixedNode);
                             Glyphs glyphs = _builder.GetGlyphsElement(run.FixedNode);
 
-                            GlyphComparison comparison = _builder._CompareGlyphs(currentRunGlyph, glyphs);
+                            GlyphComparison comparison = _CompareGlyphs(currentRunGlyph, glyphs);
 
                             bool addSpace = false;
-                            if (_builder._IsNonContiguous(lastRun, run, comparison))
+                            if (_IsNonContiguous(lastRun, run, comparison))
                             {
                                 addSpace = true;
                             }
@@ -1517,7 +1517,7 @@ namespace System.Windows.Documents
 
                     FlowNode flowImageNode = new FlowNode(_NewScopeId(), FlowNodeType.Object, null);
                     // Create a new FixedElement to represent this new node.
-                    _container.OnNewFlowElement(_currentFixedElement,
+                    FixedTextContainer.OnNewFlowElement(_currentFixedElement,
                                     FixedElement.ElementType.Object,
                                     new FlowPosition(_container, flowImageNode, 0),
                                     new FlowPosition(_container, flowImageNode, 1),
@@ -1603,7 +1603,7 @@ namespace System.Windows.Documents
                 FlowNode startNode = new FlowNode(_NewScopeId(), FlowNodeType.Start, _pageIndex);
                 FlowNode endNode = new FlowNode(_NewScopeId(), FlowNodeType.End, _pageIndex);
                 // add fixed element
-                _container.OnNewFlowElement(_currentFixedElement, //_container.ContainerElement,
+                FixedTextContainer.OnNewFlowElement(_currentFixedElement, //_container.ContainerElement,
                 type,
                 new FlowPosition(_container, (FlowNode)startNode, 1),
                 new FlowPosition(_container, (FlowNode)endNode, 0),
@@ -1641,7 +1641,7 @@ namespace System.Windows.Documents
                     {
                         run = _textRuns[i];
                         Glyphs glyphs = _builder.GetGlyphsElement(run.FixedNode);
-                        GlyphComparison comparison = _builder._CompareGlyphs(_lastGlyphs, glyphs);
+                        GlyphComparison comparison = _CompareGlyphs(_lastGlyphs, glyphs);
 
                         if (comparison == GlyphComparison.DifferentLine)
                         {
@@ -1660,7 +1660,7 @@ namespace System.Windows.Documents
                         textRunLength += run.EndIndex - run.StartIndex;
                         Debug.Assert(run.EndIndex - run.StartIndex == run.Text.Length);
 
-                        if (i>0 && _builder._IsNonContiguous(_textRuns[i-1], run, comparison))
+                        if (i>0 && _IsNonContiguous(_textRuns[i-1], run, comparison))
                         {
                             _textRuns[i-1].Text = $"{_textRuns[i - 1].Text} ";
                             textRunLength++;

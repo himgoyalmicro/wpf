@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,7 +89,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != writeBuffer,"Null writeBuffer returned");
 
             // see how many bits fit into this buffer.
-            int availableBytesInBuffer =  BufferSize - bufferOffset;
+            int availableBytesInBuffer = BufferSize - bufferOffset;
             int leftOverBytes = 0;
             int bufferWriteCount = 0;
 
@@ -111,7 +111,7 @@ namespace System.Windows.Markup
             // now loop through writing out all or the number of bits that can fit in the buffer.
             for (int loopCount = 0; loopCount < bufferWriteCount; loopCount++)
             {
-                Debug.Assert(bufferOffset < BufferSize,"Trying to Read past bufer");
+                Debug.Assert(bufferOffset < BufferSize, "Trying to Read past bufer");
 
                 writeBuffer[bufferOffset++] = buffer[offset++];
             }
@@ -222,10 +222,10 @@ namespace System.Windows.Markup
                 out bufferOffset, out bufferIndex);
 
 
-            Debug.Assert(bufferOffset < BufferSize,"Calculated bufferOffset is greater than buffer");
+            Debug.Assert(bufferOffset < BufferSize, "Calculated bufferOffset is greater than buffer");
 
             // see how many bytes we can read from this buffer.
-            int availableBytesInBuffer =  BufferSize - bufferOffset;
+            int availableBytesInBuffer = BufferSize - bufferOffset;
             int leftOverBytes = 0;
             int bufferReadCount = 0;
 
@@ -247,7 +247,7 @@ namespace System.Windows.Markup
             for (int loopCount = 0; loopCount < bufferReadCount; loopCount++)
             {
                 // make sure not going over the buffer.
-                Debug.Assert(bufferOffset < BufferSize,"Trying ot read past buffer");
+                Debug.Assert(bufferOffset < BufferSize, "Trying ot read past buffer");
                 buffer[offset++] = readBuffer[bufferOffset++];
             }
 
@@ -364,13 +364,13 @@ namespace System.Windows.Markup
             }
 
             // calc get the bufferIndex
-            bufferIndex = (int) ((position - firstBufferPosition)/BufferSize);
+            bufferIndex = (int) ((position - firstBufferPosition)/ BufferSize);
 
             // calc the byte offset in the buffer for the position
             bufferOffset =
-                (int) ((position - firstBufferPosition) - (bufferIndex*BufferSize));
+                (int) ((position - firstBufferPosition) - (bufferIndex* BufferSize));
 
-            Debug.Assert(bufferOffset < BufferSize,"Calculated bufferOffset is greater than buffer");
+            Debug.Assert(bufferOffset < BufferSize, "Calculated bufferOffset is greater than buffer");
 
             // check if we need to allocate a new buffer.
             if (bufferArray.Count <= bufferIndex)
@@ -405,7 +405,7 @@ namespace System.Windows.Markup
          void CheckIfCanRemoveFromArrayList(long position,ArrayList arrayList,ref long firstBufferPosition)
         {
             // see if there are any buffers we can get rid of.
-            int bufferIndex = (int) ((position - firstBufferPosition)/BufferSize);
+            int bufferIndex = (int) ((position - firstBufferPosition)/ BufferSize);
 
             if (bufferIndex > 0)
             {
@@ -419,7 +419,7 @@ namespace System.Windows.Markup
 
                 // update buffer position offset for number of buffers to be
                 // removed.
-                firstBufferPosition += numBuffersToRemove*BufferSize;
+                firstBufferPosition += numBuffersToRemove* BufferSize;
 
                 arrayList.RemoveRange(0,bufferIndex);
 
@@ -489,7 +489,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Constant Buffer size to be used for all allocated buffers
         /// </summary>
-        int BufferSize
+        static int BufferSize
         {
             get { return _bufferSize; }
         }

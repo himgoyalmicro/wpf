@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1172,7 +1172,7 @@ namespace MS.Internal.Automation
         }
 
         // For given parent window, return first or last owned window
-        private NativeMethods.HWND GetFirstOrLastOwnedWindow( NativeMethods.HWND parent, bool wantFirst )
+        private static NativeMethods.HWND GetFirstOrLastOwnedWindow( NativeMethods.HWND parent, bool wantFirst )
         {
             if( ! IsTopLevelWindow( parent ) )
             {
@@ -1652,7 +1652,7 @@ namespace MS.Internal.Automation
         }
 
         // determine if the menu item is selectable.
-        private bool IsMenuItemSelectable(IntPtr hmenu, int item)
+        private static bool IsMenuItemSelectable(IntPtr hmenu, int item)
         {
             int state = UnsafeNativeMethods.GetMenuState(hmenu, item, UnsafeNativeMethods.MF_BYCOMMAND);
             bool isDisabled = IsBitSet(state, UnsafeNativeMethods.MF_DISABLED);

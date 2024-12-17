@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -344,7 +344,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Set the enabled gestures.
         /// This method is called from the internal SetEnabledGestures method.
         /// </summary>
-        private int SetEnabledGestures(MS.Win32.Recognizer.ContextSafeHandle recContext, ApplicationGesture[] enabledGestures)
+        private static int SetEnabledGestures(MS.Win32.Recognizer.ContextSafeHandle recContext, ApplicationGesture[] enabledGestures)
         {
             Debug.Assert(recContext != null && !recContext.IsInvalid);
 
@@ -391,7 +391,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Add the strokes to the recoContext.
         /// The method is called from the internal Recognize method.
         /// </summary>
-        private int AddStrokes(MS.Win32.Recognizer.ContextSafeHandle recContext, StrokeCollection strokes)
+        private static int AddStrokes(MS.Win32.Recognizer.ContextSafeHandle recContext, StrokeCollection strokes)
         {
             Debug.Assert(recContext != null && !recContext.IsInvalid);
 
@@ -433,7 +433,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Retrieve the packet description, packets data and XFORM which is the information the native recognizer needs.
         /// The method is called from AddStrokes.
         /// </summary>
-        private void GetPacketData
+        private static void GetPacketData
         (
             Stroke stroke,
             out MS.Win32.Recognizer.PACKET_DESCRIPTION packetDescription, 
@@ -545,7 +545,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Release the memory blocks which has been created for mashalling purpose.
         /// The method is called from AddStrokes.
         /// </summary>
-        private void ReleaseResourcesinPacketDescription(MS.Win32.Recognizer.PACKET_DESCRIPTION pd, IntPtr packets)
+        private static void ReleaseResourcesinPacketDescription(MS.Win32.Recognizer.PACKET_DESCRIPTION pd, IntPtr packets)
         {
             if ( pd.pPacketProperties != IntPtr.Zero )
             {

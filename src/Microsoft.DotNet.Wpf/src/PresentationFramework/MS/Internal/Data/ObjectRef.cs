@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -452,7 +452,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private object GetPreviousData(DependencyObject d)
+        private static object GetPreviousData(DependencyObject d)
         {
             // move up to the next containing DataContext scope
             for (; d != null; d = FrameworkElement.GetFrameworkParent(d))
@@ -541,7 +541,7 @@ namespace MS.Internal.Data
             return d;
         }
 
-        private DependencyObject FindAncestorOfType(Type type, int level, DependencyObject d, bool isTracing)
+        private static DependencyObject FindAncestorOfType(Type type, int level, DependencyObject d, bool isTracing)
         {
             if (type == null)
             {
@@ -582,7 +582,7 @@ namespace MS.Internal.Data
             return fo.DO;
         }
 
-        private int IndexOf(Visual parent, Visual child, out Visual prevChild)
+        private static int IndexOf(Visual parent, Visual child, out Visual prevChild)
         {
             Visual temp;
             bool foundIndex = false;

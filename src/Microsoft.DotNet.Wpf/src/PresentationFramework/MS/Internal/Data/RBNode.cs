@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -251,7 +251,7 @@ namespace MS.Internal.Data
         }
 
         // Find the new position of the item under the given finger.  Used in InsertionSort.
-        protected RBFinger<T> LocateItem(RBFinger<T> finger, Comparison<T> comparison)
+        protected static RBFinger<T> LocateItem(RBFinger<T> finger, Comparison<T> comparison)
         {
             RBNode<T> startingNode = finger.Node;
             int nodeIndex = finger.Index - finger.Offset;
@@ -372,21 +372,21 @@ namespace MS.Internal.Data
                 finger.Offset = 0;
 
                 int index;
-                RBTree<T> root = node.GetRootAndIndex(node, out index);
+                RBTree<T> root = GetRootAndIndex(node, out index);
                 root.RemoveNode(index);
             }
 
             finger.Offset -= 1;
         }
 
-        protected RBNode<T> InsertNodeAfter(RBNode<T> node)
+        protected static RBNode<T> InsertNodeAfter(RBNode<T> node)
         {
             int index;
             RBTree<T> root = GetRootAndIndex(node, out index);
             return root.InsertNode(index + node.Size);
         }
 
-        protected RBTree<T> GetRoot(RBNode<T> node)
+        protected static RBTree<T> GetRoot(RBNode<T> node)
         {
             for (RBNode<T> parent = node.Parent; parent != null; node = parent, parent = node.Parent)
             {
@@ -394,7 +394,7 @@ namespace MS.Internal.Data
             return (RBTree<T>)node;
         }
 
-        protected RBTree<T> GetRootAndIndex(RBNode<T> node, out int index)
+        protected static RBTree<T> GetRootAndIndex(RBNode<T> node, out int index)
         {
             index = node.LeftSize;
             for (RBNode<T> parent = node.Parent; parent != null; node = parent, parent = node.Parent)
@@ -499,7 +499,7 @@ namespace MS.Internal.Data
             }
         }
 
-        protected RBNode<T> InsertNode(RBTree<T> root, RBNode<T> parent, RBNode<T> node, int index, out RBNode<T> newNode)
+        protected static RBNode<T> InsertNode(RBTree<T> root, RBNode<T> parent, RBNode<T> node, int index, out RBNode<T> newNode)
         {
             if (node == null)
             {
@@ -541,7 +541,7 @@ namespace MS.Internal.Data
             }
         }
 
-        RBNode<T> Substitute(RBNode<T> node, RBNode<T> sub, RBNode<T> parent)
+        static RBNode<T> Substitute(RBNode<T> node, RBNode<T> sub, RBNode<T> parent)
         {
             sub.LeftChild = node.LeftChild;
             sub.RightChild = node.RightChild;
@@ -597,7 +597,7 @@ namespace MS.Internal.Data
             return Fixup(node);
         }
 
-        RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
+        static RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
         {
             if (node.LeftChild == null)
             {
@@ -613,7 +613,7 @@ namespace MS.Internal.Data
             return Fixup(node);
         }
 
-        bool IsNodeRed(RBNode<T> node)
+        static bool IsNodeRed(RBNode<T> node)
         {
             return node != null && node.IsRed;
         }
@@ -653,7 +653,7 @@ namespace MS.Internal.Data
             RightChild.IsRed = !RightChild.IsRed;
         }
 
-        RBNode<T> Fixup(RBNode<T> node)
+        static RBNode<T> Fixup(RBNode<T> node)
         {
             if (!IsNodeRed(node.LeftChild) && IsNodeRed(node.RightChild))
                 node = node.RotateLeft();
@@ -664,7 +664,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        RBNode<T> MoveRedRight(RBNode<T> node)
+        static RBNode<T> MoveRedRight(RBNode<T> node)
         {
             node.ColorFlip();
             if (IsNodeRed(node.LeftChild.LeftChild))
@@ -675,7 +675,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        RBNode<T> MoveRedLeft(RBNode<T> node)
+        static RBNode<T> MoveRedLeft(RBNode<T> node)
         {
             node.ColorFlip();
             if (IsNodeRed(node.RightChild.LeftChild))
@@ -699,7 +699,7 @@ namespace MS.Internal.Data
         #region Debugging
 #if DEBUG
 
-        protected bool Verify(RBNode<T> node, Comparison<T> comparison, int blackDepth, ref int index, ref T maxItem, out int size)
+        protected static bool Verify(RBNode<T> node, Comparison<T> comparison, int blackDepth, ref int index, ref T maxItem, out int size)
         {
             bool result = true;
 
@@ -767,7 +767,7 @@ namespace MS.Internal.Data
             return result;
         }
 
-        protected void SaveTree(RBNode<T> node, StringBuilder sb)
+        protected static void SaveTree(RBNode<T> node, StringBuilder sb)
         {
             if (node == null)
             {
@@ -791,17 +791,17 @@ namespace MS.Internal.Data
             }
         }
 
-        int AsInt(object x)
+        static int AsInt(object x)
         {
             return (x is int) ? (int)x : 0;
         }
 
-        T AsT(object x)
+        static T AsT(object x)
         {
             return (x is T) ? (T)x : default(T);
         }
 
-        protected RBNode<T> LoadTree(ref string s)
+        protected static RBNode<T> LoadTree(ref string s)
         {
             if (s.StartsWith("()", StringComparison.Ordinal))
             {

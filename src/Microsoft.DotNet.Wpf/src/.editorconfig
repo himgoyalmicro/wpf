@@ -89,9 +89,6 @@ dotnet_diagnostic.CA1810.severity = suggestion
 # CA1815: Override equals and operator equals on value types
 dotnet_diagnostic.CA1815.severity = suggestion
 
-# CA1822: Mark members as static
-dotnet_diagnostic.CA1822.severity = suggestion
-
 # CA1823: Avoid unused private fields
 dotnet_diagnostic.CA1823.severity = suggestion
 

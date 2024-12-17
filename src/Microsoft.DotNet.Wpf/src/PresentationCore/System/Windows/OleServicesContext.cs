@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -100,7 +100,7 @@ namespace System.Windows
         /// <summary>
         /// OleSetClipboard - Call OLE Interopo OleSetClipboard()
         /// </summary>
-        internal int OleSetClipboard(IComDataObject dataObject)
+        internal static int OleSetClipboard(IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -113,7 +113,7 @@ namespace System.Windows
         /// <summary>
         /// OleGetClipboard - Call OLE Interop OleGetClipboard()
         /// </summary>
-        internal int OleGetClipboard(ref IComDataObject dataObject)
+        internal static int OleGetClipboard(ref IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -126,7 +126,7 @@ namespace System.Windows
         /// <summary>
         /// OleFlushClipboard - Call OLE Interop OleFlushClipboard()
         /// </summary>
-        internal int OleFlushClipboard()
+        internal static int OleFlushClipboard()
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -138,11 +138,11 @@ namespace System.Windows
 
         /// <summary>
         /// OleIsCurrentClipboard - OleIsCurrentClipboard only works for the data object 
-        /// used in the OleSetClipboard. This means that it can�t be called by the consumer 
+        /// used in the OleSetClipboard. This means that it can’t be called by the consumer 
         /// of the data object to determine if the object that was on the clipboard at the 
         /// previous OleGetClipboard call is still on the Clipboard.
         /// </summary>
-        internal int OleIsCurrentClipboard(IComDataObject dataObject)
+        internal static int OleIsCurrentClipboard(IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -156,7 +156,7 @@ namespace System.Windows
         /// OleDoDragDrop - Call OLE Interop DoDragDrop()
         /// Initiate OLE DragDrop
         /// </summary>
-        internal void OleDoDragDrop(IComDataObject dataObject, UnsafeNativeMethods.IOleDropSource dropSource, int allowedEffects, int[] finalEffect)
+        internal static void OleDoDragDrop(IComDataObject dataObject, UnsafeNativeMethods.IOleDropSource dropSource, int allowedEffects, int[] finalEffect)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -184,7 +184,7 @@ namespace System.Windows
         /// <summary>
         /// OleRegisterDragDrop - Call OLE Interop RegisterDragDrop()
         /// </summary>
-        internal int OleRegisterDragDrop(HandleRef windowHandle, UnsafeNativeMethods.IOleDropTarget dropTarget)
+        internal static int OleRegisterDragDrop(HandleRef windowHandle, UnsafeNativeMethods.IOleDropTarget dropTarget)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -197,7 +197,7 @@ namespace System.Windows
         /// <summary>
         /// OleRevokeDragDrop - Call OLE Interop RevokeDragDrop()
         /// </summary>
-        internal int OleRevokeDragDrop(HandleRef windowHandle)
+        internal static int OleRevokeDragDrop(HandleRef windowHandle)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {

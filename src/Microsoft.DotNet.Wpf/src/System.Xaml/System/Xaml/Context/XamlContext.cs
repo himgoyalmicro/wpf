@@ -322,12 +322,12 @@ namespace MS.Internal.Xaml
             return true;
         }
 
-        private XamlMember CreateUnknownMember(XamlType declaringType, string name)
+        private static XamlMember CreateUnknownMember(XamlType declaringType, string name)
         {
             return new XamlMember(name, declaringType, false);
         }
 
-        private XamlMember CreateUnknownAttachableMember(XamlType declaringType, string name)
+        private static XamlMember CreateUnknownAttachableMember(XamlType declaringType, string name)
         {
             return new XamlMember(name, declaringType, true);
         }

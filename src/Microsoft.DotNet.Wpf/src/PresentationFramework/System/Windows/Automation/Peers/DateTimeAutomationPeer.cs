@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -933,7 +933,7 @@ namespace System.Windows.Automation.Peers
             else return false;
         }
 
-        private void ThrowElementNotAvailableException()
+        private static void ThrowElementNotAvailableException()
         {
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
             // avoids throwing exception and provide older behavior returning default values for items which are virtualized rather than throwing exception.

@@ -517,7 +517,7 @@ namespace System.Windows.Markup
             }
         }
 
-        private void TransferOldSharedData(IBamlDictionaryKey oldRecord, IBamlDictionaryKey newRecord)
+        private static void TransferOldSharedData(IBamlDictionaryKey oldRecord, IBamlDictionaryKey newRecord)
         {
             if ((oldRecord != null) && (newRecord != null))
             {
@@ -526,7 +526,7 @@ namespace System.Windows.Markup
             }
         }
 
-        private IBamlDictionaryKey FindBamlDictionaryKey(KeyDeferRecord record)
+        private static IBamlDictionaryKey FindBamlDictionaryKey(KeyDeferRecord record)
         {
             if (record != null)
             {
@@ -1259,7 +1259,7 @@ namespace System.Windows.Markup
             WriteAndReleaseRecord(bamlClrProperty, xamlProperty);
         }
 
-        internal void WriteClrEvent(XamlClrEventNode xamlClrEventNode)
+        internal static void WriteClrEvent(XamlClrEventNode xamlClrEventNode)
         {
             // This should have been overridden by AC to catch the CLR event case before
             // this point is reached.  If not it means we have a designer which

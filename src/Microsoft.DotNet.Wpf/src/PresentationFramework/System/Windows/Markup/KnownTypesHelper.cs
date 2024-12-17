@@ -28,7 +28,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
         internal static void InitializeKnownTypes(Assembly asmFramework, Assembly asmCore, Assembly asmBase)
         {
-            _typeIndexer.Initialize(asmFramework, asmCore, asmBase);
+            TypeIndexer.Initialize(asmFramework, asmCore, asmBase);
         }
 
         internal static void Clear()

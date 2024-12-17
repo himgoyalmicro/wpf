@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -199,7 +199,7 @@ namespace MS.Internal.Documents
         /// Returns whether TextSelection is valid for document - As this is flow document, we require the text containers to be equal
         /// to allow it as a valid selection.
         /// </summary>
-        private bool IsValidTextSelectionForDocument(ITextSelection textSelection, FlowDocument flowDocument)
+        private static bool IsValidTextSelectionForDocument(ITextSelection textSelection, FlowDocument flowDocument)
         {
             if (textSelection.Start != null && textSelection.Start.TextContainer == flowDocument.StructuralCache.TextContainer)
             {

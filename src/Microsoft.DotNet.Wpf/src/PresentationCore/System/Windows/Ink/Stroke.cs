@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -349,7 +349,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// Private helper used to get the length between two points
         /// </summary>
-        private double GetDistanceBetweenPoints(Point p1, Point p2)
+        private static double GetDistanceBetweenPoints(Point p1, Point p2)
         {
             Vector spine = p2 - p1;
             return Math.Sqrt(spine.LengthSquared);
@@ -358,7 +358,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// Private helper for adding a StylusPoint to the BezierStylusPoints
         /// </summary>
-        private void AddInterpolatedBezierPoint(StylusPointCollection bezierStylusPoints, 
+        private static void AddInterpolatedBezierPoint(StylusPointCollection bezierStylusPoints, 
                                                 Point bezierPoint, 
                                                 int[] additionalData, 
                                                 float pressure)
@@ -974,7 +974,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// Private helper that will generate a new point between two points at an findex
         /// </summary>
-        private Point GetIntermediatePoint(StylusPoint p1, StylusPoint p2, double findex)
+        private static Point GetIntermediatePoint(StylusPoint p1, StylusPoint p2, double findex)
         {
             double xDistance = p2.X - p1.X;
             double yDistance = p2.Y - p1.Y;
@@ -992,7 +992,7 @@ namespace System.Windows.Ink
         /// are sorted and there are no overlaps
         /// </summary>
         /// <param name="fragments">fragments</param>
-        private void AssertSortedNoOverlap(StrokeFIndices[] fragments)
+        private static void AssertSortedNoOverlap(StrokeFIndices[] fragments)
         {
             if (fragments.Length == 0)
             {
@@ -1019,7 +1019,7 @@ namespace System.Windows.Ink
             }
         }
 
-        private bool IsValidStrokeFIndices(StrokeFIndices findex)
+        private static bool IsValidStrokeFIndices(StrokeFIndices findex)
         {
             return (!double.IsNaN(findex.BeginFIndex) && !double.IsNaN(findex.EndFIndex) && findex.BeginFIndex < findex.EndFIndex);
         }

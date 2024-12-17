@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -79,7 +79,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         // Creates an instance of a known type given the inverse of the known type ID. (which
         // is the negative short value of the KnownElements enum)
-        internal object CreateKnownTypeFromId(short id)
+        internal static object CreateKnownTypeFromId(short id)
         {
             if (id < 0)
             {
@@ -277,7 +277,7 @@ namespace System.Windows.Markup
 
         // Returns the known converter type for a given object type. If there is no known
         // converter, return null.
-        internal Type GetKnownConverterTypeFromType(Type type)
+        internal static Type GetKnownConverterTypeFromType(Type type)
         {
 #if PBTCOMPILER
             // Need to handle Nullable types specially as they require a ctor that
@@ -427,7 +427,7 @@ namespace System.Windows.Markup
         // is one of those.
         // NOTE: When serializers are publically extensible, then this should be
         //       reflected for as part of the KnownElementsInitializer.
-        internal bool HasSerializerForTypeId(short id)
+        internal static bool HasSerializerForTypeId(short id)
         {
             if (id >= 0)
             {
@@ -655,7 +655,7 @@ namespace System.Windows.Markup
             return record;
         }
 
-        private string GetAttributeNameFromKnownId(KnownProperties knownId)
+        private static string GetAttributeNameFromKnownId(KnownProperties knownId)
         {
             if(knownId < KnownProperties.MaxDependencyProperty)
             {
@@ -1143,7 +1143,7 @@ namespace System.Windows.Markup
         // Return the hash table key used for a type info record with the given
         // assembly name and type full name.  The type full name must include
         // the entire clr namespace.
-        private TypeInfoKey GetTypeInfoKey(
+        private static TypeInfoKey GetTypeInfoKey(
                                string assemblyFullName,
                                string typeFullName)
         {
@@ -1271,7 +1271,7 @@ namespace System.Windows.Markup
 
         // Return the key to use when inserting or extracting attribute information
         // from the object cache.
-        internal object GetAttributeInfoKey(
+        internal static object GetAttributeInfoKey(
             string ownerTypeName,
             string attributeName)
         {
@@ -1378,7 +1378,7 @@ namespace System.Windows.Markup
 
             if (!ShouldBypassCustomCheck(ownerType, attributeType))
             {
-                converterOrSerializerType = GetCustomSerializer(attributeType, out converterOrSerializerTypeId);
+                converterOrSerializerType = BamlMapTable.GetCustomSerializer(attributeType, out converterOrSerializerTypeId);
 
                 // NOTE: We do not want to check for custom converters when the property is
                 // known to be custom serializable or it is a complex property.
@@ -1530,7 +1530,7 @@ namespace System.Windows.Markup
 
         // Particular attributes do need to be tested for custom serialization
         // or type conversion. This method checks for those.
-        private bool ShouldBypassCustomCheck(
+        private static bool ShouldBypassCustomCheck(
             Type declaringType,  // Type of object that owns or declares this attribute
             Type attributeType) // Type of the attribute or property itself; not its owner type
         {
@@ -1591,7 +1591,7 @@ namespace System.Windows.Markup
 
         // Returns a custom serializer Type & Id that is used to more
         // efficiently store the value of a "type" instance in binary format
-        private Type GetCustomSerializer(
+        private static Type GetCustomSerializer(
                 Type type,
             out short converterOrSerializerTypeId)
         {
@@ -1622,7 +1622,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // Helper method to throw an Exception.
-        void ThrowException(string id, string parameter)
+        static void ThrowException(string id, string parameter)
         {
             ApplicationException bamlException = new ApplicationException(
                                                      SR.Format(SR.GetResourceString(id), parameter));

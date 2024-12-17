@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1110,7 +1110,7 @@ namespace System.Windows.Forms.Integration
         }
 
         //Use reflection to call protected OnParentRightToLeftChanged
-        private void CallOnParentRightToLeftChanged(Control control)
+        private static void CallOnParentRightToLeftChanged(Control control)
         {
             MethodInfo methodInfo = typeof(SWF.Control).GetMethod("OnParentRightToLeftChanged", BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(EventArgs) }, null);
             Debug.Assert(methodInfo != null, "Couldn't find OnParentRightToLeftChanged method!");

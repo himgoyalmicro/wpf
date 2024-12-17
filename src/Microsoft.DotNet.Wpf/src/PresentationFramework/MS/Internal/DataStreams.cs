@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,7 +76,7 @@ namespace MS.Internal.AppModel
         /// </summary>
         /// <param name="element"></param>
         /// <returns>The ArrayList of SubStreams. May be null.</returns>
-        private ArrayList SaveSubStreams(UIElement element)
+        private static ArrayList SaveSubStreams(UIElement element)
         {
             ArrayList subStreams = null;
 
@@ -134,8 +134,8 @@ namespace MS.Internal.AppModel
 
                             if(!success)
                             {
-                                #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                                this.Formatter.Serialize(byteStream, currentValue);
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                                Formatter.Serialize(byteStream, currentValue);
                                 #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                             }
                             
@@ -171,7 +171,7 @@ namespace MS.Internal.AppModel
 
             if (persistId != 0)
             {
-                ArrayList subStreams = this.SaveSubStreams(element);
+                ArrayList subStreams = SaveSubStreams(element);
                 if (subStreams != null)
                 {
                     //
@@ -234,7 +234,7 @@ namespace MS.Internal.AppModel
             // Everything in _subStreams is already binary-serialized.
         }
 
-        private void LoadSubStreams(UIElement element, ArrayList subStreams)
+        private static void LoadSubStreams(UIElement element, ArrayList subStreams)
         {
             for (int subStreamIndex = 0; subStreamIndex < subStreams.Count; ++subStreamIndex)
             {
@@ -266,7 +266,7 @@ namespace MS.Internal.AppModel
                         {
                             dataStream.Position = 0;
                             #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                            newValue = this.Formatter.Deserialize(dataStream);
+                            newValue = Formatter.Deserialize(dataStream);
                             #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                         }
                         
@@ -331,7 +331,7 @@ namespace MS.Internal.AppModel
         /// </summary>
         /// <param name="node"></param>
         /// <param name="operation"></param>
-        private void WalkLogicalTree(object node, NodeOperation operation)
+        private static void WalkLogicalTree(object node, NodeOperation operation)
         {
             if (node != null)
             {
@@ -384,7 +384,7 @@ namespace MS.Internal.AppModel
         }
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
         #region Private and internal fields and properties
-        private BinaryFormatter Formatter
+        private static BinaryFormatter Formatter
         {
             get
             {

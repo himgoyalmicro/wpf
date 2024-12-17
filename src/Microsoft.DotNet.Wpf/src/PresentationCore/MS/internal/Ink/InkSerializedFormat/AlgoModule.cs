@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="input">assumed to be point data (x,x,x,x,x,x,x)</param>
         /// <returns></returns>
-        internal byte GetBestDefHuff(int[] input)
+        internal static byte GetBestDefHuff(int[] input)
         {
             if (input.Length < 3)
             {
@@ -97,7 +97,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 bool testDelDel = ((compression & 0x20) != 0);
                 compression =
-                    this.GorillaCodec.FindPacketAlgoByte(input, testDelDel);
+                    GorillaCodec.FindPacketAlgoByte(input, testDelDel);
                 
                 DeltaDelta dtxf = null;
                 if ((compression & 0x20) != 0)
@@ -114,10 +114,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     
                     dtxf.ResetState();
                     dtxf.Transform(input[0], ref xfData, ref xfExtra);
-                    this.MultiByteCodec.SignEncode(xfData, compressedData);
+                    MultiByteCodec.SignEncode(xfData, compressedData);
 
                     dtxf.Transform(input[1], ref xfData, ref xfExtra);
-                    this.MultiByteCodec.SignEncode(xfData, compressedData);
+                    MultiByteCodec.SignEncode(xfData, compressedData);
 
                     //advance to the third member, we've already read the first two
                     inputIndex = 2;
@@ -125,7 +125,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 //Gorllia time
                 int bitCount = (compression & 0x1F);
-                this.GorillaCodec.Compress( bitCount,           //the max count of bits required for each int
+                GorillaCodec.Compress( bitCount,           //the max count of bits required for each int
                                             input,              //the input array to compress
                                             inputIndex,         //the index to start compressing at
                                             dtxf,               //data transform to use when compressing, can be null
@@ -202,8 +202,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                             dtxf.ResetState();
 
-                            uint bytesRead = 
-                                this.MultiByteCodec.SignDecode(input, inputIndex, ref xfData);
+                            uint bytesRead =
+                                MultiByteCodec.SignDecode(input, inputIndex, ref xfData);
                             //advance our index
                             inputIndex += (int)bytesRead;
                             totalBytesRead += bytesRead;
@@ -212,7 +212,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                             outputBuffer[outputBufferIndex++] = result;
 
                             bytesRead =
-                                this.MultiByteCodec.SignDecode(input, inputIndex, ref xfData);
+                                MultiByteCodec.SignDecode(input, inputIndex, ref xfData);
                             //advance our index
                             inputIndex += (int)bytesRead;
                             totalBytesRead += bytesRead;
@@ -222,7 +222,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         }
 
                         totalBytesRead +=
-                            this.GorillaCodec.Uncompress(  bitCount,    //the max count of bits required for each int
+                            GorillaCodec.Uncompress(  bitCount,    //the max count of bits required for each int
                                                            input,       //the input array to uncompress
                                                            inputIndex,  //the index to start uncompressing at
                                                            dtxf,        //data transform to use when compressing, can be null
@@ -245,7 +245,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="input">byte[] data ready to be compressed</param>
         /// <param name="compression">the compression to use</param>
         /// <returns></returns>
-        internal byte[] CompressPropertyData(byte[] input, byte compression)
+        internal static byte[] CompressPropertyData(byte[] input, byte compression)
         {
             List<byte> compressedData = new List<byte>(input.Length + 1); //reasonable default based on profiling.
 
@@ -255,7 +255,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             if (DefaultCompression == (DefaultCompression & compression))
             {
-                compression = this.GorillaCodec.FindPropAlgoByte(input);
+                compression = GorillaCodec.FindPropAlgoByte(input);
             }
 
             //validate that we never lzencode
@@ -267,7 +267,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //determine what the optimal way to compress the data is.  Should we treat
             //the byte[] as a series of Int's, Short's or Byte's?
             int countPerItem = 0, bitCount = 0, padCount = 0;
-            this.GorillaCodec.GetPropertyBitCount(compression, ref countPerItem, ref bitCount, ref padCount);
+            GorillaCodec.GetPropertyBitCount(compression, ref countPerItem, ref bitCount, ref padCount);
 
             Debug.Assert(countPerItem == 4 || countPerItem == 2 || countPerItem == 1);
 
@@ -288,7 +288,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             BitStreamReader reader = new BitStreamReader(input);
 
             //encode, gorilla style
-            this.GorillaCodec.Compress(bitCount,            //the max count of bits required for each int
+            GorillaCodec.Compress(bitCount,            //the max count of bits required for each int
                                         reader,             //the reader, which can read int, byte, short
                                         type,               //informs how the reader reads
                                         unitCount,          //just how many items do we need to compress?
@@ -329,7 +329,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //determine what the way to uncompress the data.  Should we treat
                 //the byte[] as a series of Int's, Short's or Byte's?
                 int countPerItem = 0, bitCount = 0, padCount = 0;
-                this.GorillaCodec.GetPropertyBitCount(compression, ref countPerItem, ref bitCount, ref padCount);
+                GorillaCodec.GetPropertyBitCount(compression, ref countPerItem, ref bitCount, ref padCount);
                 Debug.Assert(countPerItem == 4 || countPerItem == 2 || countPerItem == 1);
 
                 GorillaEncodingType type = GorillaEncodingType.Byte;
@@ -345,7 +345,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //determine how many units (of int, short or byte) that there are to decompress
                 int unitsToDecode = ((input.Length - inputIndex << 3) / bitCount) - padCount;
                 BitStreamReader reader = new BitStreamReader(input, inputIndex);
-                return this.GorillaCodec.Uncompress(bitCount, reader, type, unitsToDecode);
+                return GorillaCodec.Uncompress(bitCount, reader, type, unitsToDecode);
             }
 }
 

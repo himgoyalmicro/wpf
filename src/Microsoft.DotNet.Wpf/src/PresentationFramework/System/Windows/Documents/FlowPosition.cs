@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -219,7 +219,7 @@ namespace System.Windows.Documents
             // allows copying segement of the flow node text run directly.
             //
 
-            string text = _container.FixedTextBuilder.GetFlowText(flow._flowNode);
+            string text = FixedTextBuilder.GetFlowText(flow._flowNode);
             if (dir == LogicalDirection.Forward)
             {
                 Array.Copy(text.ToCharArray(flow._offset, maxLength), 0, chars, startIndex, maxLength);
@@ -444,7 +444,7 @@ namespace System.Windows.Documents
         }
 
 
-        internal bool IsVirtual(FlowNode flowNode)
+        internal static bool IsVirtual(FlowNode flowNode)
         {
             return (flowNode.Type == FlowNodeType.Virtual);
         }
@@ -755,7 +755,7 @@ namespace System.Windows.Documents
 
 
         // Convert Flow Node Type to TextPointerContext
-        private TextPointerContext _FlowNodeTypeToTextSymbol(FlowNodeType t)
+        private static TextPointerContext _FlowNodeTypeToTextSymbol(FlowNodeType t)
         {
             switch (t)
             {

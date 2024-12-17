@@ -843,7 +843,7 @@ namespace System.Windows.Markup
         /// Looks up all properties via reflection on the given type, and scans through the attributes on all of them
         /// to build a cache of properties which have MarkupExtensionBracketCharactersAttribute set on them.
         /// </summary>
-        private Dictionary<string, SpecialBracketCharacters> BuildBracketCharacterCacheForType(Type extensionType)
+        private static Dictionary<string, SpecialBracketCharacters> BuildBracketCharacterCacheForType(Type extensionType)
         {
             Dictionary<string, SpecialBracketCharacters> cache = new Dictionary<string, SpecialBracketCharacters>(StringComparer.OrdinalIgnoreCase);
             PropertyInfo[] propertyInfo = extensionType.GetProperties(BindingFlags.Public | BindingFlags.Instance);

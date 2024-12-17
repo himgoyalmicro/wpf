@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -788,7 +788,7 @@ namespace MS.Internal.Ink
         /// <param name="endRadius">endNode radius</param>
         /// <param name="beginRadius">beginNode radius</param>
         /// <param name="result">StrokeFIndices representing the location for cutting</param>
-        private void CalculateCutLocations(
+        private static void CalculateCutLocations(
             Vector spineVector, Vector hitBegin, Vector hitEnd, double endRadius, double beginRadius, ref StrokeFIndices result)
         {
             // Find out whether the {hitBegin, hitEnd} segment intersects with the contour

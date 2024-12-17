@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2485,7 +2485,7 @@ namespace System.Windows.Controls
             return false;
         }
 
-        private FrameworkElement FindEndFocusableLeafContainer(Panel itemsHost, bool last)
+        private static FrameworkElement FindEndFocusableLeafContainer(Panel itemsHost, bool last)
         {
             if (itemsHost == null)
             {
@@ -2938,7 +2938,7 @@ namespace System.Windows.Controls
         /// For example, if axis == North, then the element's Top and Bottom must
         /// be completely contained on the page.
         /// </summary>
-        private bool IsOnCurrentPage(FrameworkElement viewPort, FrameworkElement element, FocusNavigationDirection axis, bool fullyVisible)
+        private static bool IsOnCurrentPage(FrameworkElement viewPort, FrameworkElement element, FocusNavigationDirection axis, bool fullyVisible)
         {
             return (GetElementViewportPosition(viewPort, element, axis, fullyVisible) == ElementViewportPosition.CompletelyInViewport);
         }
@@ -3157,7 +3157,7 @@ namespace System.Windows.Controls
             return true;
         }
 
-        private bool IsInDirectionForLineNavigation(Rect fromRect, Rect toRect, FocusNavigationDirection direction, bool isHorizontal)
+        private static bool IsInDirectionForLineNavigation(Rect fromRect, Rect toRect, FocusNavigationDirection direction, bool isHorizontal)
         {
             Debug.Assert(direction == FocusNavigationDirection.Up ||
                 direction == FocusNavigationDirection.Down);
@@ -3404,7 +3404,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool IsRTL(FrameworkElement element)
+        private static bool IsRTL(FrameworkElement element)
         {
             FlowDirection flowDirection = element.FlowDirection;
             return (flowDirection == FlowDirection.RightToLeft);
@@ -3518,7 +3518,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void RemoveItemContainerStyle(DependencyObject container)
+        private static void RemoveItemContainerStyle(DependencyObject container)
         {
             FrameworkObject foContainer = new FrameworkObject(container);
 
@@ -3587,7 +3587,7 @@ namespace System.Windows.Controls
         }
 
         // create an unresolved ItemInfo
-        internal ItemInfo NewUnresolvedItemInfo(object item)
+        internal static ItemInfo NewUnresolvedItemInfo(object item)
         {
             return new ItemInfo(item, ItemInfo.UnresolvedContainer, -1);
         }
@@ -3700,7 +3700,7 @@ namespace System.Windows.Controls
         }
 
         // correct the indices in the given ItemInfo, in response to a collection change event
-        internal void AdjustItemInfo(NotifyCollectionChangedEventArgs e, ItemInfo info)
+        internal static void AdjustItemInfo(NotifyCollectionChangedEventArgs e, ItemInfo info)
         {
             if (info != null)
             {
@@ -3710,7 +3710,7 @@ namespace System.Windows.Controls
         }
 
         // correct the indices in the given ItemInfos, in response to a collection change event
-        internal void AdjustItemInfos(NotifyCollectionChangedEventArgs e, IEnumerable<ItemInfo> list)
+        internal static void AdjustItemInfos(NotifyCollectionChangedEventArgs e, IEnumerable<ItemInfo> list)
         {
             switch (e.Action)
             {

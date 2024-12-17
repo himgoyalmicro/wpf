@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -690,7 +690,7 @@ namespace MS.Internal.Printing.Configuration
         }
 
         // Number of bytes that vary depending on whether the DEVMODE is a DEVMODEA or a DEVMODEW
-        private int GetVariableByteSize(bool isDevModeW)
+        private static int GetVariableByteSize(bool isDevModeW)
         {
             return (CCHDEVICENAME + CCHFORMNAME) * BytesPerCharCode(isDevModeW);
         }
@@ -731,7 +731,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Private Properties
 
-        private int dmDeviceNameByteOffset { get { return 0; } }
+        private static int dmDeviceNameByteOffset { get { return 0; } }
         private int dmSpecVersionByteOffset { get { return dmDeviceNameByteOffset + dmDeviceNameByteSize; } }
         private int dmDriverVersionByteOffset { get { return dmSpecVersionByteOffset + 2; } }
         private int dmSizeByteOffset { get { return dmSpecVersionByteOffset + 4; } }

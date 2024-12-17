@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1093,7 +1093,7 @@ namespace MS.Internal.Annotations.Component
             /// <remarks>The comparison is based on the comparison of the Start TPs of the two AttachedAnchors
             /// If Start TPs are equal, the end TPs are compared. The result will be 0 only if
             /// both = Start and End TPs are equal. </remarks>
-            private int Compare(IAnnotationComponent first, IAnnotationComponent second)
+            private static int Compare(IAnnotationComponent first, IAnnotationComponent second)
             {
                 Debug.Assert(first != null, "first component is null");
                 Debug.Assert((first.AttachedAnnotations != null) && (first.AttachedAnnotations.Count > 0), "first AttachedAnchor is null");

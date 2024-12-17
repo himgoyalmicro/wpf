@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -144,7 +144,7 @@ namespace System.Windows.Xps.Packaging
                                           (packageAccess== FileAccess.Read) ?  FileShare.Read: FileShare.None
                                           );
                 }
-                    
+
                 AddPackageToCache( _uri, package );               
             }
             else
@@ -895,7 +895,7 @@ namespace System.Windows.Xps.Packaging
 
             if( _ownsPackage )
             {
-               RemovePackageReference(_uri, _metroPackage);
+                RemovePackageReference(_uri, _metroPackage);
             }
 
             GC.SuppressFinalize(this);
@@ -997,8 +997,7 @@ namespace System.Windows.Xps.Packaging
         /// page level print tickets are called Pagen_PT where
         /// n is the page number
         /// </summary>
-        private
-        Uri
+        private static Uri
         GeneratePrintTicketUri(
             object relatedPart
             )
@@ -1256,8 +1255,7 @@ namespace System.Windows.Xps.Packaging
             return propertiesPartRelationship;
         }
 
-        private
-        void
+        private static void
         AddPackageToCache(Uri uri, Package package )
         {
             lock (_globalLock)
@@ -1267,8 +1265,7 @@ namespace System.Windows.Xps.Packaging
             PackageStore.AddPackage( uri, package );
         }
 
-        private
-        void
+        private static void
         AddPackageReference( Uri uri )
         {
             lock (_globalLock)
@@ -1277,8 +1274,7 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        private
-        void
+        private static void
         RemovePackageReference( Uri uri, Package package )
         {
             int reference = 0;

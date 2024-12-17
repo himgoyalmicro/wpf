@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -248,7 +248,7 @@ namespace MS.Internal.TextFormatting
             SetChpFormat(FullText.TextStore.Pap.TextDecorations, ref lschp);
         }
 
-        private void SetChpFormat(
+        private static void SetChpFormat(
             TextDecorationCollection    textDecorations,
             ref LsChp                   lschp
             )
@@ -773,7 +773,7 @@ namespace MS.Internal.TextFormatting
         }
 
 
-        private void GetLSRunStrikethroughMetrics(
+        private static void GetLSRunStrikethroughMetrics(
             LSRun       lsrun,
             out double  strikeThroughPositionInEm,
             out double  strikeThroughThicknessInEm
@@ -2408,7 +2408,7 @@ namespace MS.Internal.TextFormatting
         }
 
 
-        private LsBrkCond BreakConditionToLsBrkCond(LineBreakCondition breakCondition)
+        private static LsBrkCond BreakConditionToLsBrkCond(LineBreakCondition breakCondition)
         {
             switch (breakCondition)
             {
@@ -2787,7 +2787,7 @@ namespace MS.Internal.TextFormatting
         /// Returns whether a given character is a space character and hence can safely be expanded/compressed
         /// with little visual impact on the text.
         /// </summary>
-        private bool IsSpace(char ch)
+        private static bool IsSpace(char ch)
         {
             if (   ch == '\u0009' // tab
                 || ch == '\u0020' // Space

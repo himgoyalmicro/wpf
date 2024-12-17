@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -256,7 +256,7 @@ namespace MS.Internal.FontFace
         /// Combining mark is considered part of the character that may be supported
         /// thru precomposed form or OpenType glyph substitution table.
         /// </remarks>
-        private int MapCharacters(
+        private static int MapCharacters(
             MS.Internal.Text.TextInterface.Font font,
             CharacterBufferRange                unicodeString,
             CultureInfo                         digitCulture,

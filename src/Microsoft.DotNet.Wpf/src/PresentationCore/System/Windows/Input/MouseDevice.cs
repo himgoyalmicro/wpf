@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -751,7 +751,7 @@ namespace System.Windows.Input
             return null;
         }
 
-        private bool ValidateUIElementForCapture(UIElement element)
+        private static bool ValidateUIElementForCapture(UIElement element)
         {
             if (element.IsEnabled == false)
                 return false;
@@ -765,7 +765,7 @@ namespace System.Windows.Input
             return true;
         }
 
-        private bool ValidateUIElement3DForCapture(UIElement3D element)
+        private static bool ValidateUIElement3DForCapture(UIElement3D element)
         {
             if (element.IsEnabled == false)
                 return false;
@@ -780,7 +780,7 @@ namespace System.Windows.Input
         }
 
 
-        private bool ValidateContentElementForCapture(ContentElement element)
+        private static bool ValidateContentElementForCapture(ContentElement element)
         {
             if (element.IsEnabled == false)
                 return false;
@@ -1797,7 +1797,7 @@ namespace System.Windows.Input
         // to determine if the coordinates are close enough
         // to consider the same.
 
-        private bool ArePointsClose(Point A, Point B)
+        private static bool ArePointsClose(Point A, Point B)
         {
             return MS.Internal.DoubleUtil.AreClose(A.X, B.X) && MS.Internal.DoubleUtil.AreClose(A.Y, B.Y);
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -638,7 +638,7 @@ namespace MS.Internal.Documents
         /// If the user so chooses, we will then start a top-level navigation to 
         /// the external install location for the RM Client.
         /// </summary>
-        internal void PromptToInstallRM()
+        internal static void PromptToInstallRM()
         {
             // Notify the user that RM is not installed, and ask
             // if they would like to install it now.
@@ -824,14 +824,14 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Saves the use license back into the package.
         /// </summary>
-        private void SaveUseLicense()
+        private static void SaveUseLicense()
         {
             //This action should occur after other work has been completed.
             Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background,
                 (DispatcherOperationCallback)delegate(object arg)
                 {
                     DocumentManager docManager = DocumentManager.CreateDefault();
-                    if (docManager.CanSave)
+                    if (DocumentManager.CanSave)
                     {
                         Trace.SafeWrite(
                             Trace.Rights,
@@ -847,7 +847,7 @@ namespace MS.Internal.Documents
                     // be opened writeable. We also know that saving an RM
                     // protected document will save the use license back to
                     // the file.
-                    if (docManager.CanSave)
+                    if (DocumentManager.CanSave)
                     {
                         Trace.SafeWrite(
                             Trace.Rights,
@@ -864,7 +864,7 @@ namespace MS.Internal.Documents
         /// MSDRM.DLL in the user's system folder.
         /// </summary>
         /// <returns>Whether RM Client DLL, msdrm.dll, was found</returns>
-        private bool IsRMClientInstalled()
+        private static bool IsRMClientInstalled()
         {
             bool foundRMClient = false;
 
@@ -1434,7 +1434,7 @@ namespace MS.Internal.Documents
         /// <param name="templateFilename">The filename (with path) to load.</param>
         /// <returns>The text string read from the file if successful, otherwise
         /// string.Empty</returns>
-        private string GetTemplateFromFile(Uri templateFilename)
+        private static string GetTemplateFromFile(Uri templateFilename)
         {
             // Set the default value, this value will remain if any of the file
             // loading fails.

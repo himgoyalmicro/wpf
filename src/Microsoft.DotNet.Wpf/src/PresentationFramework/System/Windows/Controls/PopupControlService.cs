@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -805,7 +805,7 @@ namespace System.Windows.Controls
             set { _lastMouseToolTipOwner.SetValue(value); }
         }
 
-        private DependencyObject GetOwner(ToolTip t)
+        private static DependencyObject GetOwner(ToolTip t)
         {
             return t?.GetValue(OwnerProperty) as DependencyObject;
         }
@@ -1372,7 +1372,7 @@ namespace System.Windows.Controls
             }
 
             // sort by y (and by x among equal y's)
-            private void SortPoints(PointList points)
+            private static void SortPoints(PointList points)
             {
                 // insertion sort is good enough.  We're dealing with a small
                 // set of points that are nearly in the right order already.
@@ -1555,7 +1555,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            private void AddPoints(PointList points, in NativeMethods.RECT rect, bool rectIsHull=false)
+            private static void AddPoints(PointList points, in NativeMethods.RECT rect, bool rectIsHull=false)
             {
                 if (rectIsHull)
                 {

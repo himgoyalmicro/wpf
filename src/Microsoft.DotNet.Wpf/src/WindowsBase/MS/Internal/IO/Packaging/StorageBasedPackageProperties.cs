@@ -800,7 +800,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        private VARTYPE
+        private static VARTYPE
         GetVtFromPropId(
             Guid fmtid,
             uint propId

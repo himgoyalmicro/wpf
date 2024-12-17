@@ -1024,7 +1024,7 @@ namespace MS.Internal.Security.RightsManagement
         /// <summary>
         /// Converts Authentication type enumeration into a string that can be accepted by the unmanaged code
         /// </summary>
-        private string ConvertAuthenticationTypeToString(ContentUser user)
+        private static string ConvertAuthenticationTypeToString(ContentUser user)
         {
             if (user.AuthenticationType == AuthenticationType.WindowsPassport)
             {

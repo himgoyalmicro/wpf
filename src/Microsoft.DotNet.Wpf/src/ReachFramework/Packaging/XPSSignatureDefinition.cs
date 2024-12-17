@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -434,7 +434,7 @@ namespace System.Windows.Xps.Packaging
                         break;
 
                     case XmlNodeType.EndElement:
-                        if( ReadEndElement( reader ) )
+                        if(ReadEndElement( reader ) )
                         {
                             exitLoop = true;
                         }
@@ -562,8 +562,7 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        private
-        string
+        private static string
         ReadData( XmlReader reader )
         {
             string data = null;
@@ -595,8 +594,7 @@ namespace System.Windows.Xps.Packaging
         /// Returns true if it is the end of Signature Definition
         /// the requested fixed page.
         /// </returns>
-        private
-        bool
+        private static bool
         ReadEndElement( XmlReader reader )
         {
             bool ret = false;

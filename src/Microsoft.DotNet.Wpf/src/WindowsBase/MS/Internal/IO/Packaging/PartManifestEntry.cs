@@ -77,7 +77,7 @@ namespace MS.Internal.IO.Packaging
 
 #if DEBUG
 
-        private bool DoAllSelectorsHaveSameOwningPart(IEnumerable<PackageRelationshipSelector> relationshipSelectors)
+        private static bool DoAllSelectorsHaveSameOwningPart(IEnumerable<PackageRelationshipSelector> relationshipSelectors)
         {
             Uri owningPartUri = null;
             foreach (PackageRelationshipSelector selector in relationshipSelectors)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -275,7 +275,7 @@ namespace System.Windows.Documents
             return result;
         }
 
-        protected int _SpatialToAbsoluteComparison(SpatialComparison comparison)
+        protected static int _SpatialToAbsoluteComparison(SpatialComparison comparison)
         {
             int result=0;
             
@@ -300,7 +300,7 @@ namespace System.Windows.Documents
             return result;
         }
 
-        protected SpatialComparison _InvertSpatialComparison(SpatialComparison comparison)
+        protected static SpatialComparison _InvertSpatialComparison(SpatialComparison comparison)
         {
             SpatialComparison result = comparison;
             switch (comparison)

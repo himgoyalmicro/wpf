@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2401,7 +2401,7 @@ namespace System.Windows.Data
             return result;
         }
 
-        List<object> MergeErrors(List<object> list1, List<object> list2)
+        static List<object> MergeErrors(List<object> list1, List<object> list2)
         {
             if (list1 == null)
                 return list2;
@@ -2713,7 +2713,7 @@ namespace System.Windows.Data
 
         // find the DataSource object (if any) that produced the DataContext
         // for element d
-        object GetDataSourceForDataContext(DependencyObject d)
+        static object GetDataSourceForDataContext(DependencyObject d)
         {
             // look for ancestor that contributed the inherited value
             DependencyObject ancestor;

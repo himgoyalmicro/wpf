@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -130,7 +130,7 @@ namespace System.Windows.Media
                 // ------------------------------------------------------------------------------------
                 // 3) Compile the scene.
 
-                if (channel.IsConnected)
+                if (DUCE.Channel.IsConnected)
                 {
                     vVisual.Render(rc, 0);
                 }
@@ -223,7 +223,7 @@ namespace System.Windows.Media
         /// <summary>
         /// We initiate the layout on the tree rooted at the Visual to which VisualBrush points.
         /// </summary>
-        private void DoLayout(UIElement element)
+        private static void DoLayout(UIElement element)
         {
             Debug.Assert(element != null);
 

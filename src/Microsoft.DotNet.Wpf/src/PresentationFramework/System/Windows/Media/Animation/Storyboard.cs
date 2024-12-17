@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -366,7 +366,7 @@ namespace System.Windows.Media.Animation
     /// never been specified.  If we reach a leaf node clock and a needed attribute
     /// is still null, it is an error condition.  Otherwise we keep hoping they'll be found.
     /// </remarks>
-    private void ClockTreeWalkRecursive(
+    private static void ClockTreeWalkRecursive(
         Clock currentClock,                /* No two calls will have the same currentClock     */
         DependencyObject containingObject, /* Remains the same through all the recursive calls */
         INameScope nameScope,              /* Remains the same through all the recursive calls */
@@ -482,9 +482,9 @@ namespace System.Windows.Media.Animation
                 }
                 else // path.Length > 1
                 {
-                    // This is a multi-step property path that requires more extensive
-                    //  setup.
-                    ProcessComplexPath(clockMappings, targetObject, currentPropertyPath, animationClock, handoffBehavior, layer);
+                        // This is a multi-step property path that requires more extensive
+                        //  setup.
+                        ProcessComplexPath(clockMappings, targetObject, currentPropertyPath, animationClock, handoffBehavior, layer);
                 }
             }
         }
@@ -506,7 +506,7 @@ namespace System.Windows.Media.Animation
 
                 for( int i = 0; i < childrenClocks.Count; i++ )
                 {
-                    ClockTreeWalkRecursive(
+                        ClockTreeWalkRecursive(
                         childrenClocks[i],
                         containingObject,
                         nameScope,
@@ -802,7 +802,7 @@ namespace System.Windows.Media.Animation
     /// actually attach the clocks if the targetProperty points to a frozen
     /// Freezable.  More extensive handling will be required for that case.
     /// </summary>
-    private void ProcessComplexPath( HybridDictionary clockMappings, DependencyObject targetObject,
+    private static void ProcessComplexPath( HybridDictionary clockMappings, DependencyObject targetObject,
         PropertyPath path, AnimationClock animationClock, HandoffBehavior handoffBehavior, Int64 layer )
     {
         Debug.Assert(path.Length > 1, "This method shouldn't even be called for a simple property path.");
@@ -844,14 +844,14 @@ namespace System.Windows.Media.Animation
 
         VerifyAnimationIsValid(animatedProperty, animationClock);
 
-        if( PropertyCloningRequired( targetPropertyValue ) )
+        if(PropertyCloningRequired( targetPropertyValue ) )
         {
-            // Verify that property paths are supported for the specified
-            //  object and property.  If the property value query (usually in
-            //  GetValueCore) doesn't call into Storyboard code, then none of this
-            //  will have any effect.  (Silently do nothing.)
-            // Throwing here is for user's sake to alert that nothing will happen.
-            VerifyComplexPathSupport( targetObject );
+                // Verify that property paths are supported for the specified
+                //  object and property.  If the property value query (usually in
+                //  GetValueCore) doesn't call into Storyboard code, then none of this
+                //  will have any effect.  (Silently do nothing.)
+                // Throwing here is for user's sake to alert that nothing will happen.
+                VerifyComplexPathSupport( targetObject );
 
             // We need to clone the value of the target, and from here onwards
             //  try to pretend that it is the actual value.
@@ -891,7 +891,7 @@ namespace System.Windows.Media.Animation
         UpdateMappings( clockMappings, directApplyTarget, animationClock );
     }
 
-    private bool PropertyCloningRequired( object targetPropertyValue )
+    private static bool PropertyCloningRequired( object targetPropertyValue )
     {
         bool cloningRequired;
 
@@ -924,7 +924,7 @@ namespace System.Windows.Media.Animation
     ///     Check to see if the given object and property combination will be
     /// able to resolve complex paths.
     /// </summary>
-    private void VerifyComplexPathSupport( DependencyObject targetObject )
+    private static void VerifyComplexPathSupport( DependencyObject targetObject )
     {
         if(targetObject is FrameworkElement)
         {
@@ -1250,11 +1250,11 @@ namespace System.Windows.Media.Animation
         // Create (and Begin) a clock tree corresponding to this Storyboard timeline tree
         Clock storyboardClockTree = CreateClock(isControllable);
 
-        // We now have one or more clocks that are created from this storyboard.
-        //  However, the individual clocks are not necessarily intended for
-        //  the containing object so we need to do a tree walk and sort out
-        //  which clocks go on which objects and their properties.
-        ClockTreeWalkRecursive(
+            // We now have one or more clocks that are created from this storyboard.
+            //  However, the individual clocks are not necessarily intended for
+            //  the containing object so we need to do a tree walk and sort out
+            //  which clocks go on which objects and their properties.
+            ClockTreeWalkRecursive(
             storyboardClockTree,
             containingObject,
             nameScope,

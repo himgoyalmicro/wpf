@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -356,7 +356,7 @@ namespace System.Windows.Media.Imaging
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
                     HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                            factoryMaker.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             wicSource,
                             WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
                             out bitmapSource));
@@ -410,7 +410,7 @@ namespace System.Windows.Media.Imaging
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
                     HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromMemory(
-                            factoryMaker.ImagingFactoryPtr,
+                            FactoryMaker.ImagingFactoryPtr,
                             (uint)pixelWidth, (uint)pixelHeight,
                             ref guidFmt,
                             (uint)stride,

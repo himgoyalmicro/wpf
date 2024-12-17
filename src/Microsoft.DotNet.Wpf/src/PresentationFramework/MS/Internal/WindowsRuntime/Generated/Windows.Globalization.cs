@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -171,7 +171,7 @@ namespace MS.Internal.WindowsRuntime
 
         public string Script => _default.Script;
 
-        private bool IsOverridableInterface(Guid iid) => false;
+        private static bool IsOverridableInterface(Guid iid) => false;
 
         global::System.Runtime.InteropServices.CustomQueryInterfaceResult global::System.Runtime.InteropServices.ICustomQueryInterface.GetInterface(ref Guid iid, out IntPtr ppv)
         {

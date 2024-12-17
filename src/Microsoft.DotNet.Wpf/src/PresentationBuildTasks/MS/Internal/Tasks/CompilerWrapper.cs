@@ -178,7 +178,7 @@ namespace MS.Internal
         // It indicates whether any xaml file in current xaml list references internal types
         // from friend assembly or local target assembly.
         //
-        internal bool HasInternals
+        internal static bool HasInternals
         {
             get { return MarkupCompiler.HasInternals; }
         }
@@ -320,7 +320,7 @@ namespace MS.Internal
         //
         // Detect if the exception is xmlException
         //
-        private bool IsXmlException(Exception e)
+        private static bool IsXmlException(Exception e)
         {
             bool isXmlException = false;
 

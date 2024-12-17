@@ -330,7 +330,7 @@ namespace System.Xaml
                 }
             }
 
-            bool MemberRequiresNamespaceHoisting(XamlMember member)
+            static bool MemberRequiresNamespaceHoisting(XamlMember member)
             {
                 return (member.IsAttachable || (member.IsDirective && !XamlXmlWriter.IsImplicit(member)))
                     && (member.PreferredXamlNamespace != XamlLanguage.Xml1998Namespace);
@@ -1054,7 +1054,7 @@ namespace System.Xaml
                 }
             }
 
-            bool IsMemberOnlyDependentOnAttributableMembers(XamlMember member, HashSet<string> namesOfAttributableProperties)
+            static bool IsMemberOnlyDependentOnAttributableMembers(XamlMember member, HashSet<string> namesOfAttributableProperties)
             {
                 foreach (var dependingProperty in member.DependsOn)
                 {
@@ -1173,7 +1173,7 @@ namespace System.Xaml
                 }
             }
 
-            void FindNamespaceForTypeArguments(IList<XamlType> types, SerializerContext context)
+            static void FindNamespaceForTypeArguments(IList<XamlType> types, SerializerContext context)
             {
                 if (types is null || types.Count == 0)
                 {
@@ -1206,7 +1206,7 @@ namespace System.Xaml
                 }
             }
 
-            ParameterInfo[] GetMethodParams(MemberInfo memberInfo)
+            static ParameterInfo[] GetMethodParams(MemberInfo memberInfo)
             {
                 ParameterInfo[] methodParams = null;
                 MethodBase method = memberInfo as MethodBase;
@@ -1387,7 +1387,7 @@ namespace System.Xaml
                 AddRecordMembers(value, context, null);
             }
 
-            bool TryGetInstanceDescriptorInfo(object value, SerializerContext context, TypeConverter converter, out MemberInfo member, out ICollection arguments, out bool isComplete)
+            static bool TryGetInstanceDescriptorInfo(object value, SerializerContext context, TypeConverter converter, out MemberInfo member, out ICollection arguments, out bool isComplete)
             {
                 bool result = false;
                 member = null;
@@ -1403,7 +1403,7 @@ namespace System.Xaml
                 return result;
             }
 
-            void ConvertToInstanceDescriptor(SerializerContext context, object instance, TypeConverter converter,
+            static void ConvertToInstanceDescriptor(SerializerContext context, object instance, TypeConverter converter,
                 out MemberInfo member, out ICollection arguments, out bool isComplete)
             {
                 var descriptor = context.ConvertTo<InstanceDescriptor>(converter, instance);
@@ -1414,8 +1414,7 @@ namespace System.Xaml
                 isComplete = descriptor.IsComplete;
             }
 
-
-            bool TryGetDefaultConstructorInfo(XamlType type, out MemberInfo member, out ICollection arguments, out bool isComplete)
+            static bool TryGetDefaultConstructorInfo(XamlType type, out MemberInfo member, out ICollection arguments, out bool isComplete)
             {
                 arguments = null;
                 isComplete = false;
@@ -1583,7 +1582,7 @@ namespace System.Xaml
                 AddFactoryMethodAndValidateArguments(value.GetType(), member, arguments, context, out methodParams);
             }
 
-            bool IsPropertyContent(MemberMarkupInfo propertyInfo, XamlType containingType)
+            static bool IsPropertyContent(MemberMarkupInfo propertyInfo, XamlType containingType)
             {
                 var property = propertyInfo.XamlNode.Member;
                 if (property != containingType.ContentProperty)
@@ -1599,7 +1598,7 @@ namespace System.Xaml
                 return true;
             }
 
-            void GetConstructorInfo(object value, XamlType valueXamlType, SerializerContext context, out MemberInfo member, out ICollection arguments, out bool isComplete)
+            static void GetConstructorInfo(object value, XamlType valueXamlType, SerializerContext context, out MemberInfo member, out ICollection arguments, out bool isComplete)
             {
                 // Walk the constructors of the type and find the ones with signatures that match the types of
                 // the properties we found above and whose param names match the names we found above

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -721,12 +721,12 @@ namespace System.Windows.Documents
             }
         }
 
-        private bool _IsSpatiallyCombinable(FixedSOMSemanticBox box1, FixedSOMSemanticBox box2, double inflateH, double inflateV)
+        private static bool _IsSpatiallyCombinable(FixedSOMSemanticBox box1, FixedSOMSemanticBox box2, double inflateH, double inflateV)
         {
             return _IsSpatiallyCombinable(box1.BoundingRect, box2.BoundingRect, inflateH, inflateV);
         }
 
-        private bool _IsSpatiallyCombinable(Rect rect1, Rect rect2, double inflateH, double inflateV)
+        private static bool _IsSpatiallyCombinable(Rect rect1, Rect rect2, double inflateH, double inflateV)
         {
             //Do these rects intersect? If so, we can combine
             if (rect1.IntersectsWith(rect2))
@@ -1141,7 +1141,7 @@ namespace System.Windows.Documents
                     nextPageElement = container.SemanticBoxes[i] as FixedSOMPageElement;
                     Debug.Assert(nextPageElement != null);
 
-                    if (!( _IsSpatiallyCombinable(currentPageElement, nextPageElement, 0, 30) &&
+                    if (!(_IsSpatiallyCombinable(currentPageElement, nextPageElement, 0, 30) &&
                          nextPageElement.BoundingRect.Top >= currentPageElement.BoundingRect.Top))
                     {
                         currentGroup = new FixedSOMGroup(_fixedSOMPage);

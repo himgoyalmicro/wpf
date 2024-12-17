@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -205,7 +205,7 @@ namespace System.Windows.Media
             }
         }
 
-        private Point EndPointFromAngle(double angle)
+        private static Point EndPointFromAngle(double angle)
         {
             // Convert the angle from degrees to radians
             angle = angle * (1.0/180.0) * System.Math.PI;

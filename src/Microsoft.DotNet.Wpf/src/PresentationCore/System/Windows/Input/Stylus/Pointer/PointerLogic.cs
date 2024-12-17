@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -960,7 +960,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="stylusEventArgs">The current event</param>
         /// <returns>True if promotion should occur, false otherwise</returns>
-        private bool IsTouchPromotionEvent(StylusEventArgs stylusEventArgs)
+        private static bool IsTouchPromotionEvent(StylusEventArgs stylusEventArgs)
         {
             if (stylusEventArgs != null)
             {
@@ -980,7 +980,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="report">The input report to promote</param>
         /// <param name="e">The input event args</param>
-        private void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
+        private static void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
         {
             RoutedEvent routedEvent = StylusLogic.GetPreviewEventFromRawStylusActions(report.Actions);
 
@@ -1019,7 +1019,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a preview event to a main event if applicable.
         /// </summary>
-        private void PromotePreviewToMain(ProcessInputEventArgs e)
+        private static void PromotePreviewToMain(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
             {
@@ -1080,7 +1080,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main input to a touch event if not handled
         /// </summary>
-        private void PromoteMainToOther(ProcessInputEventArgs e)
+        private static void PromoteMainToOther(ProcessInputEventArgs e)
         {
             StylusEventArgs stylusEventArgs = e.StagingItem.Input as StylusEventArgs;
 
@@ -1119,7 +1119,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main input to the associated touch input
         /// </summary>
-        private void PromoteMainToTouch(ProcessInputEventArgs e, StylusEventArgs stylusEventArgs)
+        private static void PromoteMainToTouch(ProcessInputEventArgs e, StylusEventArgs stylusEventArgs)
         {
             PointerStylusDevice stylusDevice = stylusEventArgs.StylusDeviceImpl.As<PointerStylusDevice>();
 
@@ -1140,7 +1140,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main (stylus) down to a touch down
         /// </summary>
-        private void PromoteMainDownToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
+        private static void PromoteMainDownToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
 
@@ -1157,7 +1157,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main (stylus) move to a touch move
         /// </summary>
-        private void PromoteMainMoveToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
+        private static void PromoteMainMoveToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
 
@@ -1170,7 +1170,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Promotes a main (stylus) up to a touch up
         /// </summary>
-        private void PromoteMainUpToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
+        private static void PromoteMainUpToTouch(PointerStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
 

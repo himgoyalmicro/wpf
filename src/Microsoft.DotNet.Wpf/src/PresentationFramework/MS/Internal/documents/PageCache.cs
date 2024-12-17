@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -690,7 +690,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="start"></param>
         /// <param name="count"></param>
-        private void ValidatePaginationArgs(int start, int count)
+        private static void ValidatePaginationArgs(int start, int count)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(start);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);

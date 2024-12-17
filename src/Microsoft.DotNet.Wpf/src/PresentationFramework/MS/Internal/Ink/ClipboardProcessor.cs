@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -150,7 +150,7 @@ namespace MS.Internal.Ink
                 if ( strokes.Count != 0 )
                 {
                     // Transform the strokes first.
-                    inkCanvasSelection.TransformStrokes(strokes, transform);
+                    InkCanvasSelection.TransformStrokes(strokes, transform);
 
                     ClipboardData data = new ISFClipboardData(strokes);
                     data.CopyToDataObject(dataObject);
@@ -206,7 +206,7 @@ namespace MS.Internal.Ink
                                 // Otherwise, the new elements will be whatever data from the data object.
                                 if (elements.Count == 1 && elements[0] is InkCanvas inkCanvas)
                                 {
-                                    TearDownInkCanvasContainer(inkCanvas, ref newStrokes, ref newElements);
+                                        TearDownInkCanvasContainer(inkCanvas, ref newStrokes, ref newElements);
                                 }
                                 else
                                 {
@@ -368,7 +368,7 @@ namespace MS.Internal.Ink
                 return inkCanvas != null;
         }
 
-        private void TearDownInkCanvasContainer(InkCanvas rootInkCanvas, ref StrokeCollection newStrokes, ref List<UIElement> newElements)
+        private static void TearDownInkCanvasContainer(InkCanvas rootInkCanvas, ref StrokeCollection newStrokes, ref List<UIElement> newElements)
         {
             newStrokes = rootInkCanvas.Strokes;
 

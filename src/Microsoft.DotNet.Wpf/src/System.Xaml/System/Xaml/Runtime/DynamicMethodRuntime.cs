@@ -339,7 +339,7 @@ namespace MS.Internal.Xaml.Runtime
         }
 
         // load arguments from object[] args onto the evaluation stack
-        private LocalBuilder[] LoadArguments(ILGenerator ilGenerator, MethodBase method)
+        private static LocalBuilder[] LoadArguments(ILGenerator ilGenerator, MethodBase method)
         {
             ParameterInfo[] args = method.GetParameters();
             if (args.Length == 0)
@@ -379,7 +379,7 @@ namespace MS.Internal.Xaml.Runtime
         }
 
         // update object[] args from any variables passed by ref in LoadArguments
-        private void UnloadArguments(ILGenerator ilGenerator, LocalBuilder[] locals)
+        private static void UnloadArguments(ILGenerator ilGenerator, LocalBuilder[] locals)
         {
             if (locals is null)
             {
@@ -545,7 +545,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        private void Emit_LateBoundInvoke(ILGenerator ilGenerator, Type targetType, string methodName,
+        private static void Emit_LateBoundInvoke(ILGenerator ilGenerator, Type targetType, string methodName,
             BindingFlags bindingFlags, short targetArgNum, params short[] paramArgNums)
         {
             //Emits: typeof(targetType).InvokeMember(
@@ -581,7 +581,7 @@ namespace MS.Internal.Xaml.Runtime
             ilGenerator.Emit(OpCodes.Callvirt, s_InvokeMemberMethod);
         }
 
-        private void Emit_TypeOf(ILGenerator ilGenerator, Type type)
+        private static void Emit_TypeOf(ILGenerator ilGenerator, Type type)
         {
             ilGenerator.Emit(OpCodes.Ldtoken, type);
             if (s_GetTypeFromHandleMethod is null)

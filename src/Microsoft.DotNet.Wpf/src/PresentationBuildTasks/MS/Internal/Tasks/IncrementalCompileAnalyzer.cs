@@ -327,7 +327,7 @@ namespace MS.Internal.Tasks
         //
         // Compare two strings.
         //
-        private bool IsSettingModified(string textSource, string textTarget)
+        private static bool IsSettingModified(string textSource, string textTarget)
         {
             bool IsSettingModified;
 
@@ -590,7 +590,7 @@ namespace MS.Internal.Tasks
         }
 
         // A helper to detect if the list is not empty.
-        private bool ListIsNotEmpty(object [] list)
+        private static bool ListIsNotEmpty(object [] list)
         {
             bool isNotEmpty = false;
 

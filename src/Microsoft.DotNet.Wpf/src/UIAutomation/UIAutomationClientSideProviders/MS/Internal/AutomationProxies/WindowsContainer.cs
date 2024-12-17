@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -129,7 +129,7 @@ namespace MS.Internal.AutomationProxies
                 Misc.IsBitSet(style, NativeMethods.WS_POPUP);
         }
 
-        private bool HasTabPageStyle(IntPtr hwnd)
+        private static bool HasTabPageStyle(IntPtr hwnd)
         {
             int style = Misc.GetWindowStyle(hwnd);
             int exstyle = Misc.GetWindowExStyle(hwnd);
@@ -139,7 +139,7 @@ namespace MS.Internal.AutomationProxies
                    Misc.IsBitSet(exstyle, NativeMethods.WS_EX_CONTROLPARENT);
         }
 
-        private bool IsTabPage(IntPtr hwnd, out IntPtr hwndTab, out int item)
+        private static bool IsTabPage(IntPtr hwnd, out IntPtr hwndTab, out int item)
         {
             hwndTab = IntPtr.Zero;
             item = -1;

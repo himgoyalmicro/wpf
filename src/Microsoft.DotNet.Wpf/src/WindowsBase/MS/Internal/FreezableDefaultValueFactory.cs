@@ -109,7 +109,7 @@ namespace MS.Internal
 
                 // Remove this value from the DefaultValue cache so we stop
                 // handing it out as the default value now that it has changed.
-                metadata.ClearCachedDefaultValue(_owner, _property);
+                PropertyMetadata.ClearCachedDefaultValue(_owner, _property);
 
                 // Since Changed is raised when the user freezes the default
                 // value, we need to check before removing our handler.

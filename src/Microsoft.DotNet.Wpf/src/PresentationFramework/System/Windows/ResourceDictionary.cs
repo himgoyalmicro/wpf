@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -963,7 +963,7 @@ namespace System.Windows
 
         #region DeferContent
 
-        private bool CanCache(KeyRecord keyRecord, object value)
+        private static bool CanCache(KeyRecord keyRecord, object value)
         {
             if (keyRecord.SharedSet)
             {
@@ -2332,7 +2332,7 @@ namespace System.Windows
         }
 
         // add inheritance context to a value
-        private void AddInheritanceContext(DependencyObject inheritanceContext, object value)
+        private static void AddInheritanceContext(DependencyObject inheritanceContext, object value)
         {
             // The VisualBrush.Visual property is the "friendliest", i.e. the
             // most likely to be accepted by the resource as FEs need to accept

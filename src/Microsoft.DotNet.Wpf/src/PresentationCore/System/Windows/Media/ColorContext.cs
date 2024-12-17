@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -116,7 +116,7 @@ namespace System.Windows.Media
                             _colorContextHandle = null;
                             
                             if (HRESULT.Failed(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(
-                                factoryMaker.ImagingFactoryPtr, out _colorContextHandle))
+                                FactoryMaker.ImagingFactoryPtr, out _colorContextHandle))
                                 )
                             {
                                 return;
@@ -361,7 +361,7 @@ namespace System.Windows.Media
                 {
                     for (uint i = 0; i < numContexts; ++i)
                     {
-                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(factoryMaker.ImagingFactoryPtr, out colorContextHandles[i]));
+                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(FactoryMaker.ImagingFactoryPtr, out colorContextHandles[i]));
                     }
                 }
 
@@ -600,7 +600,7 @@ namespace System.Windows.Media
 
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {
-                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(factoryMaker.ImagingFactoryPtr, out _colorContextHandle));
+                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(FactoryMaker.ImagingFactoryPtr, out _colorContextHandle));
                         HRESULT.Check(IWICCC.InitializeFromMemory(_colorContextHandle, rawBytes, (uint)numBytesRead));
                     }
 

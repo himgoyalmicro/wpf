@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -851,7 +851,7 @@ namespace Microsoft.Windows.Themes
             }
         }
 
-        private DoubleCollection GetPixelSnappingGuidelines(double length, double thickness1, double thickness2, int steps)
+        private static DoubleCollection GetPixelSnappingGuidelines(double length, double thickness1, double thickness2, int steps)
         {
             DoubleCollection guidelines = new DoubleCollection();
 
@@ -1054,7 +1054,7 @@ namespace Microsoft.Windows.Themes
         #region Tab Styles
 
         // Is this a tab style
-        private bool IsTabStyle(ClassicBorderStyle style)
+        private static bool IsTabStyle(ClassicBorderStyle style)
         {
             return style == ClassicBorderStyle.TabLeft ||
                    style == ClassicBorderStyle.TabTop ||
@@ -1064,7 +1064,7 @@ namespace Microsoft.Windows.Themes
         }
 
         // The highlight  geometry is the top and left borders with rounded corners 
-        private Geometry GenerateTabTopHighlightGeometry(Rect bounds, bool outerBorder)
+        private static Geometry GenerateTabTopHighlightGeometry(Rect bounds, bool outerBorder)
         {
             double outerRadius = outerBorder ? 3.0 : 2.0;
             double innerRadius = outerRadius - 1.0;
@@ -1096,7 +1096,7 @@ namespace Microsoft.Windows.Themes
 
 
         // The shadow geometry is the right borders with top rounded corner 
-        private Geometry GenerateTabTopShadowGeometry(Rect bounds, bool outerBorder)
+        private static Geometry GenerateTabTopShadowGeometry(Rect bounds, bool outerBorder)
         {
             double outerRadius = outerBorder ? 3.0 : 2.0;
             double innerRadius = outerRadius - 1.0;

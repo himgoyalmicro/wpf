@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1118,7 +1118,7 @@ namespace System.Windows.Interop
         // return the Assembly for PresentationFramework.  Usually the root visual
         // of the given HwndSource is an object whose type is (or derives from)
         // a type in PF:  Window, PopupRoot, etc.
-        private Assembly GetPresentationFrameworkFromHwndSource(HwndSource hwndSource)
+        private static Assembly GetPresentationFrameworkFromHwndSource(HwndSource hwndSource)
         {
             DependencyObject rootVisual = hwndSource?.RootVisual;
 
@@ -1166,7 +1166,7 @@ namespace System.Windows.Interop
             }
         }
 
-        private IntPtr MakeLPARAM(int high, int low)
+        private static IntPtr MakeLPARAM(int high, int low)
         {
                return ((IntPtr)((high << 16) | (low & 0xffff)));
         }

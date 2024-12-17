@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1598,7 +1598,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="viewbox"></param>
         /// <param name="transform">Approximate transformation from Drawing to world space</param>
         /// <returns>True if the drawing is definitely opaque within viewbox</returns>
-        private bool IsDrawingOpaque(Primitive p, Geometry viewbox, Matrix transform)
+        private static bool IsDrawingOpaque(Primitive p, Geometry viewbox, Matrix transform)
         {
             if (p == null)
             {
@@ -1663,7 +1663,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// Fix bug 1505766: drawingToWorldTransformHint is used to transform primitives to world space before doing
         /// geometric comparisons. Comparing geometry that's too small may result in false emptiness detection.
         /// </remarks>
-        private bool IsDrawingTransparent(Primitive p, Geometry viewbox, Matrix drawingToWorldTransformHint)
+        private static bool IsDrawingTransparent(Primitive p, Geometry viewbox, Matrix drawingToWorldTransformHint)
         {
             if (p == null)
             {

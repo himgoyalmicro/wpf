@@ -149,7 +149,7 @@ namespace System.Xaml.Schema
             return typeName + KnownStrings.GraveQuote + paramNum;
         }
 
-        private Type[] ConvertArrayOfXamlTypesToTypes(XamlType[] typeArgs)
+        private static Type[] ConvertArrayOfXamlTypesToTypes(XamlType[] typeArgs)
         {
             var clrTypeArgs = new Type[typeArgs.Length];
             for (int n = 0; n < typeArgs.Length; n++)
@@ -281,6 +281,6 @@ namespace System.Xaml.Schema
             _assemblyNamespaces = assemblyNamespacesCopy;
         }
 
-        private string GetTypeExtensionName(string typeName) => typeName + KnownStrings.Extension;
+        private static string GetTypeExtensionName(string typeName) => typeName + KnownStrings.Extension;
     }
 }

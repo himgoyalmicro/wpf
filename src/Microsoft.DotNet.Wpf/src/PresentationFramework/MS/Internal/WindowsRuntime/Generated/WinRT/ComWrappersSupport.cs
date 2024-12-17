@@ -167,7 +167,7 @@ namespace WinRT
         {
             public Guid[] IIDs { get; }
             // WPF's usage of WinRT doesn't create any ccws, so we can return an empty string.
-            public string RuntimeClassName => "";
+            public static string RuntimeClassName => "";
 
             public InspectableInfo(Type type, Guid[] iids)
             {

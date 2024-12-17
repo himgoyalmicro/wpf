@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -72,7 +72,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="input">input stream to find the best compression for</param>
         /// <param name="testDelDel"></param>
-        internal byte FindPacketAlgoByte(int[] input, bool testDelDel)
+        internal static byte FindPacketAlgoByte(int[] input, bool testDelDel)
         {
             ArgumentNullException.ThrowIfNull(input);
 
@@ -175,7 +175,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// FindPropAlgoByte - find the best way to compress the input array
         /// </summary>
         /// <param name="input"></param>
-        internal byte FindPropAlgoByte(byte[] input)
+        internal static byte FindPropAlgoByte(byte[] input)
         {
             // Empty buffer case
             if(0 == input.Length)
@@ -326,7 +326,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="countPerItem"></param>
         /// <param name="bitCount"></param>
         /// <param name="padCount"></param>
-        internal void GetPropertyBitCount(byte algorithmByte, ref int countPerItem, ref int bitCount, ref int padCount)
+        internal static void GetPropertyBitCount(byte algorithmByte, ref int countPerItem, ref int bitCount, ref int padCount)
         {
             int index = 0;
             if (0 != (algorithmByte & 0x40))
@@ -356,7 +356,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="startInputIndex">offset into the input buffer</param>
         /// <param name="dtxf">data transform.  can be null</param>
         /// <param name="compressedData">The list of bytes to write the compressed input to</param>
-        internal void Compress(int bitCount, int[] input, int startInputIndex, DeltaDelta dtxf, List<byte> compressedData)
+        internal static void Compress(int bitCount, int[] input, int startInputIndex, DeltaDelta dtxf, List<byte> compressedData)
         {
             if (null == input || null == compressedData)
             {
@@ -404,7 +404,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="encodingType">int, short or byte?</param>
         /// <param name="unitsToEncode">number of logical units to encoded</param>
         /// <param name="compressedData">output write buffer</param>
-        internal void Compress(int bitCount, BitStreamReader reader, GorillaEncodingType encodingType, int unitsToEncode, List<byte> compressedData)
+        internal static void Compress(int bitCount, BitStreamReader reader, GorillaEncodingType encodingType, int unitsToEncode, List<byte> compressedData)
         {
             if (null == reader || null == compressedData)
             {
@@ -458,7 +458,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="reader"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        private int GetDataFromReader(BitStreamReader reader, GorillaEncodingType type)
+        private static int GetDataFromReader(BitStreamReader reader, GorillaEncodingType type)
         {
             switch (type)
             {
@@ -491,7 +491,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="dtxf">data xf, can be null</param>
         /// <param name="outputBuffer">output buffer that is prealloc'd to write to</param>
         /// <param name="outputBufferIndex">the index of the output buffer to write to</param>
-        internal uint Uncompress(int bitCount, byte[] input, int inputIndex, DeltaDelta dtxf, int[] outputBuffer, int outputBufferIndex)
+        internal static uint Uncompress(int bitCount, byte[] input, int inputIndex, DeltaDelta dtxf, int[] outputBuffer, int outputBufferIndex)
         {
             ArgumentNullException.ThrowIfNull(input);
             ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(inputIndex, input.Length);
@@ -567,7 +567,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="encodingType">int, short or byte?</param>
         /// <param name="unitsToDecode">number of logical units to decode</param>
         /// <returns>Uncompressed byte[]</returns>
-        internal byte[] Uncompress(int bitCount, BitStreamReader reader, GorillaEncodingType encodingType, int unitsToDecode)
+        internal static byte[] Uncompress(int bitCount, BitStreamReader reader, GorillaEncodingType encodingType, int unitsToDecode)
         {
             ArgumentNullException.ThrowIfNull(reader);
             ArgumentOutOfRangeException.ThrowIfNegative(bitCount);

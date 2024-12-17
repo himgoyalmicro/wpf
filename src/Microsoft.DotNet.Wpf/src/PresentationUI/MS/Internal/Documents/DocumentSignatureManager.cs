@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 // Description: 
@@ -1207,7 +1207,7 @@ namespace MS.Internal.Documents
         /// since it's not polite enough to make it publicly accessible to begin with.
         /// </summary>
         /// <returns></returns>
-        private int GetErrorCode(CryptographicException ce)
+        private static int GetErrorCode(CryptographicException ce)
         {
             int error = 0;
 

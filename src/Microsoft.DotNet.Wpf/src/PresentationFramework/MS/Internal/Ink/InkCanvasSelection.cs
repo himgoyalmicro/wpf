@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -482,7 +482,7 @@ namespace MS.Internal.Ink
             }
         }
 
-        internal void TransformStrokes(StrokeCollection strokes, Matrix matrix)
+        internal static void TransformStrokes(StrokeCollection strokes, Matrix matrix)
         {
             strokes.Transform(matrix, false /*Don't apply the transform to StylusTip*/);
         }

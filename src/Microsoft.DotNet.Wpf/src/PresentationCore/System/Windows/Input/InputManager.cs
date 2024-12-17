@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -286,7 +286,7 @@ namespace System.Windows.Input
         /// <see href="https://msdn.microsoft.com/library/dd901337(v=vs.90).aspx">here</see>.
         /// Once this is no longer officially supported, this can be removed.
         /// </summary>
-        internal StylusLogic StylusLogic
+        internal static StylusLogic StylusLogic
         {
             get { return StylusLogic.CurrentStylusLogic; }
         }

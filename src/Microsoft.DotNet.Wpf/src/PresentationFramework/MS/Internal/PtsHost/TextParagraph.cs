@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -225,7 +225,7 @@ namespace MS.Internal.PtsHost
         /// <param name="nFootnote">
         /// OUT: number of footnote references in the range
         /// </param>
-        internal void GetNumberFootnotes(
+        internal static void GetNumberFootnotes(
             int fsdcpStart,                     
             int fsdcpLim,                        
             out int nFootnote)                   
@@ -251,7 +251,7 @@ namespace MS.Internal.PtsHost
         /// <param name="mcsClient">
         /// OUT: margin collapsing state at bottom of text
         /// </param>
-        internal void FormatBottomText(
+        internal static void FormatBottomText(
             int iArea,                           
             uint fswdir,                         
             Line lastLine,                       
@@ -1541,7 +1541,7 @@ namespace MS.Internal.PtsHost
         /// <param name="objectsNew">
         /// Array of new embedded objects.
         /// </param>
-        private void SubmitEmbeddedObjects<T>(ref List<T> objectsCached, int dcpStart, int dcpLim, List<T> objectsNew) where T : EmbeddedObject
+        private static void SubmitEmbeddedObjects<T>(ref List<T> objectsCached, int dcpStart, int dcpLim, List<T> objectsNew) where T : EmbeddedObject
         {
             ErrorHandler.Assert(objectsNew == null || (objectsNew[0].Dcp >= dcpStart && objectsNew[objectsNew.Count-1].Dcp <= dcpLim), ErrorHandler.SubmitInvalidList);
 
@@ -1653,7 +1653,7 @@ namespace MS.Internal.PtsHost
         /// <param name="cchDiff">
         /// difference in characters count
         /// </param>
-        private void UpdateEmbeddedObjectsCache<T>(
+        private static void UpdateEmbeddedObjectsCache<T>(
             ref List<T> objectsCached,     
             int dcpStart,                    
             int cchDeleted,                  

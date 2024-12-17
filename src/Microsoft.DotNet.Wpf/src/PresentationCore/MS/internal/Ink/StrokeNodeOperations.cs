@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1296,7 +1296,7 @@ namespace MS.Internal.Ink
         /// <summary>
         /// Helper method used to determine if we came up with a bogus result during hit testing
         /// </summary>
-        protected bool IsInvalidCutTestResult(StrokeFIndices result)
+        protected static bool IsInvalidCutTestResult(StrokeFIndices result)
         {
             //
             // check for three invalid states

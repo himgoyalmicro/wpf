@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2169,7 +2169,7 @@ namespace System.Windows.Data
         }
 
         // can the group name(s) for an item change after we've grouped the item?
-        private bool CanGroupNamesChange
+        private static bool CanGroupNamesChange
         {
             // There's no way we can deduce this - the app has to tell us.
             // If this is true, removing a grouped item is quite difficult.
@@ -2441,7 +2441,7 @@ namespace System.Windows.Data
         #endregion Live Shaping
 
 
-        private void ValidateCollectionChangedEventArgs(NotifyCollectionChangedEventArgs e)
+        private static void ValidateCollectionChangedEventArgs(NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

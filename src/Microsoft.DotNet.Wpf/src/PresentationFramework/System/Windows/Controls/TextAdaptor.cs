@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -339,7 +339,7 @@ namespace MS.Internal.Automation
         /// <summary>
         /// Computes the bounds of the render scope area visible through all nested scroll areas.
         /// </summary>
-        private Rect GetVisibleRectangle(ITextView textView)
+        private static Rect GetVisibleRectangle(ITextView textView)
         {
             Rect visibleRect = new Rect(textView.RenderScope.RenderSize);
             Visual visual = VisualTreeHelper.GetParent(textView.RenderScope) as Visual;
@@ -372,7 +372,7 @@ namespace MS.Internal.Automation
         /// Convert a point from "client" coordinate space of a window into
         /// the coordinate space of the screen.
         /// </summary>
-        private Point ClientToScreen(Point point, Visual visual)
+        private static Point ClientToScreen(Point point, Visual visual)
         {
             if (System.Windows.AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)
             {
@@ -395,7 +395,7 @@ namespace MS.Internal.Automation
         /// There is a subtle bug in this version that manifests itself in High-DPI aware applications,
         /// and this version of the method should not used be except for compatibility purposes
         /// </summary>
-        private Point ObsoleteClientToScreen(Point point, Visual visual)
+        private static Point ObsoleteClientToScreen(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
             if (presentationSource != null)
@@ -413,7 +413,7 @@ namespace MS.Internal.Automation
         /// Convert a point from the coordinate space of the screen into
         /// the "client" coordinate space of a window.
         /// </summary>
-        private Point ScreenToClient(Point point, Visual visual)
+        private static Point ScreenToClient(Point point, Visual visual)
         {
             if (System.Windows.AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)
             {
@@ -435,7 +435,7 @@ namespace MS.Internal.Automation
         /// There is a subtle bug in this version that manifests itself in High-DPI aware applications,
         /// and this version of the method should not be used except for compatibility purposes.
         /// </summary>
-        private Point ObsoleteScreenToClient(Point point, Visual visual)
+        private static Point ObsoleteScreenToClient(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
             point = PointUtil.ScreenToClient(point, presentationSource);

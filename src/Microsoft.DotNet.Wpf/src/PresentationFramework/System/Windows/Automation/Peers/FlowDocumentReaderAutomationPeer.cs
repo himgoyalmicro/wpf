@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -151,7 +151,7 @@ namespace System.Windows.Automation.Peers
 
         #region Private Members
 
-        private int[] GetSupportedViews(bool single, bool facing, bool scroll)
+        private static int[] GetSupportedViews(bool single, bool facing, bool scroll)
         {
             int count = 0;
             if (single) { count++; }
@@ -168,7 +168,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// Converts viewing mode to view id.
         /// </summary>
-        private int ConvertModeToViewId(FlowDocumentReaderViewingMode mode)
+        private static int ConvertModeToViewId(FlowDocumentReaderViewingMode mode)
         {
             return (int)mode;
         }
@@ -176,7 +176,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// Converts view id to viewing mode.
         /// </summary>
-        private FlowDocumentReaderViewingMode ConvertViewIdToMode(int viewId)
+        private static FlowDocumentReaderViewingMode ConvertViewIdToMode(int viewId)
         {
             Invariant.Assert(viewId >= 0 && viewId <= 2);
             return (FlowDocumentReaderViewingMode)viewId;

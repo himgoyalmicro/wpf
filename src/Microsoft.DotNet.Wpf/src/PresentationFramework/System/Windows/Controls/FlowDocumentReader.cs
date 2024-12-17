@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1256,7 +1256,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Convert object value to FlowDocumentReaderViewingMode.
         /// </summary>
-        private bool ConvertToViewingMode(object value, out FlowDocumentReaderViewingMode mode)
+        private static bool ConvertToViewingMode(object value, out FlowDocumentReaderViewingMode mode)
         {
             bool success;
             if (value is FlowDocumentReaderViewingMode)
@@ -1394,7 +1394,7 @@ namespace System.Windows.Controls
                     // This command is enabled if the viewing mode is enabled, or the command
                     // has no parameters (will switch to the next available view).
                     FlowDocumentReaderViewingMode mode;
-                    if (viewer.ConvertToViewingMode(args.Parameter, out mode))
+                    if (ConvertToViewingMode(args.Parameter, out mode))
                     {
                         args.CanExecute = viewer.CanSwitchToViewingMode(mode);
                     }

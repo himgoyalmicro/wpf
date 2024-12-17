@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -203,7 +203,7 @@ namespace System.Windows.Input
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_Key(Key key)
+        private static void Validate_Key(Key key)
         {
             if( 256 <= (int)key || (int)key <= 0)
                 throw new  System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
@@ -223,7 +223,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsKeyDown(Key key)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Validate_Key(key);
             return IsKeyDown_private(key);
         }
@@ -233,7 +233,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsKeyUp(Key key)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Validate_Key(key);
             return (!IsKeyDown_private(key));
         }
@@ -243,7 +243,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsKeyToggled(Key key)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Validate_Key(key);
             return( ( GetKeyStatesFromSystem(key) & KeyStates.Toggled ) == KeyStates.Toggled );
         }
@@ -957,7 +957,7 @@ namespace System.Windows.Input
             }
         }
 
-        private RawKeyboardInputReport ExtractRawKeyboardInputReport(NotifyInputEventArgs e, RoutedEvent Event)
+        private static RawKeyboardInputReport ExtractRawKeyboardInputReport(NotifyInputEventArgs e, RoutedEvent Event)
         {
             RawKeyboardInputReport keyboardInput = null;
 

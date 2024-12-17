@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -128,14 +128,14 @@ namespace Microsoft.Build.Tasks.Windows
                 // ApplicationDefinition, Page, MarkupResource and Resource
                 //
 
-                RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
-                RemoveItemsByName(xmlProjectDoc, PAGENAME);
-                RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
-                RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, PAGENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
 
                 // Replace the Reference Item list with ReferencePath
 
-                RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
                 AddNewItems(xmlProjectDoc, ReferencePathTypeName, ReferencePath);
 
                 // Add GeneratedCodeFiles to Compile item list.
@@ -254,13 +254,13 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 // remove all the WinFX specific item lists
                 // ApplicationDefinition, Page, MarkupResource and Resource
-                RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
-                RemoveItemsByName(xmlProjectDoc, PAGENAME);
-                RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
-                RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, PAGENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
 
                 // Replace the Reference Item list with ReferencePath
-                RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
+                GenerateTemporaryTargetAssembly.RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
                 AddNewItems(xmlProjectDoc, ReferencePathTypeName, ReferencePath);
 
                 // Add GeneratedCodeFiles to Compile item list.
@@ -284,7 +284,7 @@ namespace Microsoft.Build.Tasks.Windows
                 };
 
                 //Removing duplicate AssemblyName
-                RemovePropertiesByName(xmlProjectDoc, nameof(AssemblyName));
+                GenerateTemporaryTargetAssembly.RemovePropertiesByName(xmlProjectDoc, nameof(AssemblyName));
 
                 AddNewProperties(xmlProjectDoc, properties);
 
@@ -585,7 +585,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Remove specific entity from project file.
         //
-        private void RemoveEntityByName(XmlDocument xmlProjectDoc, string sItemName, string groupName)
+        private static void RemoveEntityByName(XmlDocument xmlProjectDoc, string sItemName, string groupName)
         {
 
             if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName))
@@ -689,7 +689,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Remove specific items from project file. Every item should be under an ItemGroup.
         //
-        private void RemoveItemsByName(XmlDocument xmlProjectDoc, string sItemName)
+        private static void RemoveItemsByName(XmlDocument xmlProjectDoc, string sItemName)
         {
             RemoveEntityByName(xmlProjectDoc, sItemName, ITEMGROUP_NAME);
         }
@@ -697,7 +697,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Remove specific property from project file. Every property should be under an PropertyGroup.
         //
-        private void RemovePropertiesByName(XmlDocument xmlProjectDoc, string sPropertyName)
+        private static void RemovePropertiesByName(XmlDocument xmlProjectDoc, string sPropertyName)
         {
             RemoveEntityByName(xmlProjectDoc, sPropertyName, PROPERTYGROUP_NAME);
         }
@@ -705,7 +705,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Add a list of files into an Item in the project file, the ItemName is specified by sItemName.
         //
-        private void AddNewItems(XmlDocument xmlProjectDoc, string sItemName, ITaskItem[] pItemList)
+        private static void AddNewItems(XmlDocument xmlProjectDoc, string sItemName, ITaskItem[] pItemList)
         {
             if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName) || pItemList == null)
             {
@@ -760,7 +760,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
         }
 
-        private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
+        private static void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
         {
             if (xmlProjectDoc == null || properties == null )
             {

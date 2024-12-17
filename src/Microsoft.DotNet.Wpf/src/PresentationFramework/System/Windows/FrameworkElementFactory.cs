@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -876,7 +876,7 @@ namespace System.Windows
         //  children directly  under the Grid.
         //
 
-        private void AddNodeToParent( DependencyObject parent, FrameworkObject childFrameworkObject )
+        private static void AddNodeToParent( DependencyObject parent, FrameworkObject childFrameworkObject )
         {
             Grid parentGrid;
             ColumnDefinition childNodeColumnDefinition;
@@ -1137,12 +1137,12 @@ namespace System.Windows
 
         // This method is also used by XamlStyleSerializer to decide whether
         // or not to emit the Name attribute for a VisualTree node.
-        internal bool IsChildNameValid(string childName)
+        internal static bool IsChildNameValid(string childName)
         {
             return !childName.StartsWith(AutoGenChildNamePrefix, StringComparison.Ordinal);
         }
 
-        private string GenerateChildName()
+        private static string GenerateChildName()
         {
             string childName = AutoGenChildNamePrefix + AutoGenChildNamePostfix.ToString(CultureInfo.InvariantCulture);
 

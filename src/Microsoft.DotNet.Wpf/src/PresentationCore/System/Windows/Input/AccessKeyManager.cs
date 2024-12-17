@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -226,7 +226,7 @@ namespace System.Windows.Input
             return ProcessKey(targets, key, existsElsewhere, userInitiated);
         }
 
-        private ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
+        private static ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
         {
             if (targets != null)
             {
@@ -415,7 +415,7 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         /// <param name="key"></param>
         /// <returns>Scope for the given element, null means the context global scope</returns>
-        private AccessKeyInformation GetInfoForElement(IInputElement element, string key)
+        private static AccessKeyInformation GetInfoForElement(IInputElement element, string key)
         {
             AccessKeyInformation info = new AccessKeyInformation();
             if (element != null)
@@ -437,7 +437,7 @@ namespace System.Windows.Input
             return info;
         }
 
-        private PresentationSource GetSourceForElement(IInputElement element)
+        private static PresentationSource GetSourceForElement(IInputElement element)
         {
             PresentationSource source = null;
             DependencyObject elementDO = element as DependencyObject;
@@ -460,7 +460,7 @@ namespace System.Windows.Input
             return source;
         }
 
-        private PresentationSource GetActiveSource()
+        private static PresentationSource GetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
             if (hwnd != IntPtr.Zero)
@@ -469,7 +469,7 @@ namespace System.Windows.Input
             return null;
         }
 
-        private PresentationSource CriticalGetActiveSource()
+        private static PresentationSource CriticalGetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
             if (hwnd != IntPtr.Zero)
@@ -479,7 +479,7 @@ namespace System.Windows.Input
         }
 
         
-        private bool IsTargetable(IInputElement element)
+        private static bool IsTargetable(IInputElement element)
         {
             DependencyObject uielement = InputElement.GetContainingUIElement((DependencyObject)element);
 
@@ -648,10 +648,10 @@ namespace System.Windows.Input
 
         internal static string InternalGetAccessKeyCharacter(DependencyObject d)
         {
-            return Current.GetAccessKeyCharacter(d);
+            return GetAccessKeyCharacter(d);
         }
 
-        private string GetAccessKeyCharacter(DependencyObject d)
+        private static string GetAccessKeyCharacter(DependencyObject d)
         {
             // See what the local value for AccessKeyElement is first and start with that.
             WeakReference cachedElementWeakRef = (WeakReference)d.GetValue(AccessKeyElementProperty);

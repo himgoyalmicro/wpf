@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -88,7 +88,7 @@ namespace MS.Internal.Globalization
 
         // travese the tree and store the node in the arraylist in the same order as travesals.
         // it can also create a a new tree by give true to "toCopy"
-        private void CreateInternalIndex(ref BamlTreeNode parent, ref List<BamlTreeNode> nodeList, bool toCopy)
+        private static void CreateInternalIndex(ref BamlTreeNode parent, ref List<BamlTreeNode> nodeList, bool toCopy)
         {
             // gets the old children
             List<BamlTreeNode> children = parent.Children;

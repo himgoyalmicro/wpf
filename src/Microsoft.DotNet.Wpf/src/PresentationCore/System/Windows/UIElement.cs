@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1872,7 +1872,7 @@ namespace System.Windows
         }
 
         // When called, input processing will return to normal mode.
-        internal void CancelSynchronizedInput()
+        internal static void CancelSynchronizedInput()
         {
             InputManager.CancelSynchronizedInput();
         }

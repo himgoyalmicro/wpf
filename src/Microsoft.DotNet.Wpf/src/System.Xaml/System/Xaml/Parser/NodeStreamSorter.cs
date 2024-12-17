@@ -414,7 +414,7 @@ namespace MS.Internal.Xaml
             return isInstancingProperty;
         }
 
-        private bool IsCtorDirective(XamlMember member)
+        private static bool IsCtorDirective(XamlMember member)
         {
             if (!member.IsDirective)
             {
@@ -432,7 +432,7 @@ namespace MS.Internal.Xaml
             return false;
         }
 
-        private bool IsInstancingMember(XamlMember member)
+        private static bool IsInstancingMember(XamlMember member)
         {
             if (IsCtorDirective(member))
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1388,7 +1388,7 @@ namespace MS.Internal
         }
 
         // Combine namespace and className
-        private string GetFullClassName(string ns, string className)
+        private static string GetFullClassName(string ns, string className)
         {
             string fullClass = className;
 
@@ -1400,7 +1400,7 @@ namespace MS.Internal
             return fullClass;
         }
 
-        internal void ValidateFullSubClassName(ref string subClassFullName)
+        internal static void ValidateFullSubClassName(ref string subClassFullName)
         {
             bool isValid = false;
             int index = subClassFullName.LastIndexOf(DOTCHAR);
@@ -1424,7 +1424,7 @@ namespace MS.Internal
             }
         }
 
-        private bool CrackClassName(ref string className, out string ns)
+        private static bool CrackClassName(ref string className, out string ns)
         {
             bool isValid = true;
             ns = string.Empty;
@@ -1506,7 +1506,7 @@ namespace MS.Internal
             ctm.Comments.Add(ccs);
         }
 
-        private bool IsValidClassName(string className)
+        private static bool IsValidClassName(string className)
         {
             if (className.Length == 0 ||!NameValidationHelper.IsValidIdentifierName(className))
             {
@@ -1516,7 +1516,7 @@ namespace MS.Internal
             return true;
         }
 
-        private bool IsValidCLRNamespace(string ns, bool shouldThrow)
+        private static bool IsValidCLRNamespace(string ns, bool shouldThrow)
         {
             if (ns.Length > 0)
             {
@@ -1776,7 +1776,7 @@ namespace MS.Internal
 
 #region Property
 
-        private CodeExpression GetPropertyValueExpression(ITypeDescriptorContext ctx, Type typeToConvertTo, Object value, string attributeValue)
+        private static CodeExpression GetPropertyValueExpression(ITypeDescriptorContext ctx, Type typeToConvertTo, Object value, string attributeValue)
         {
             CodeExpression ce = null;
             InstanceDescriptor desc = null;
@@ -1886,7 +1886,7 @@ namespace MS.Internal
 
         // The given MemberInfo could either be an EventInfo for a Clr event or a
         // MethodInfo for a static Add{EventName}Handler helper for an attached event
-        private Type GetEventHandlerType(MemberInfo memberInfo)
+        private static Type GetEventHandlerType(MemberInfo memberInfo)
         {
             Type eventHandlerType = null;
             if (memberInfo is EventInfo)
@@ -1905,7 +1905,7 @@ namespace MS.Internal
             return eventHandlerType;
         }
 
-        private CodeFieldReferenceExpression GetEvent(MemberInfo miEvent, string eventName, string eventHandler)
+        private static CodeFieldReferenceExpression GetEvent(MemberInfo miEvent, string eventName, string eventHandler)
         {
             FieldInfo fiEvent = miEvent.DeclaringType.GetField(eventName + EVENT, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             if (fiEvent == null || fiEvent.FieldType != KnownTypes.Types[(int)KnownElements.RoutedEvent])
@@ -2491,7 +2491,7 @@ namespace MS.Internal
         {
             string ns = string.Empty;
             string baseClassName = string.Empty;
-            bool isValidClassName = CrackClassName(ref className, out ns);
+            bool isValidClassName = MarkupCompiler.CrackClassName(ref className, out ns);
 
             if (!string.IsNullOrEmpty(baseClassFullName))
             {

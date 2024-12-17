@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -602,7 +602,7 @@ namespace System.Windows.Documents
             // Table cell selection currently include the next adjacent cell start element so that
             // selection always contains the drop position even though the drop position is on the next cell.
             // This private method check the table range really contains the drop position or not.
-            private bool IsSelectionContainsDropPosition(ITextSelection selection, ITextPointer dropPosition)
+            private static bool IsSelectionContainsDropPosition(ITextSelection selection, ITextPointer dropPosition)
             {
                 bool selectionContainedDropPosition = selection.Contains(dropPosition);
 

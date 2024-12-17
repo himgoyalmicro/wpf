@@ -1141,7 +1141,7 @@ namespace System.IO.Packaging
             }
         }
 
-        private void ThrowIfRMEncryptionInfoInvalid(
+        private static void ThrowIfRMEncryptionInfoInvalid(
             PublishLicense publishLicense,
             CryptoProvider cryptoProvider)
         {

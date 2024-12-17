@@ -945,7 +945,7 @@ namespace System.IO.Packaging
         /// <param name="signatureId"></param>
         /// <param name="signatureObjects"></param>
         /// <param name="objectReferences"></param>
-        private void VerifySignArguments(IEnumerable<Uri> parts,
+        private static void VerifySignArguments(IEnumerable<Uri> parts,
             X509Certificate certificate,
             IEnumerable<PackageRelationshipSelector> relationshipSelectors,
             String signatureId,
@@ -998,7 +998,7 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="enumerable">may be null</param>
         /// <returns>true if enumerator is empty or null</returns>
-        private bool EnumeratorEmptyCheck(System.Collections.IEnumerable enumerable)
+        private static bool EnumeratorEmptyCheck(System.Collections.IEnumerable enumerable)
         {
             if (enumerable == null)
                 return true;            // null means empty
@@ -1064,7 +1064,7 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="relationships">collection of relationships to visit</param>
         /// <param name="visit">function to call with each relationship in the list</param>
-        private void SafeVisitRelationships(PackageRelationshipCollection relationships, RelationshipOperation visit)
+        private static void SafeVisitRelationships(PackageRelationshipCollection relationships, RelationshipOperation visit)
         {
             SafeVisitRelationships(relationships, visit, null);
         }
@@ -1075,7 +1075,7 @@ namespace System.IO.Packaging
         /// <param name="relationships">collection of relationships to visit</param>
         /// <param name="visit">function to call with each relationship in the list</param>
         /// <param name="context">context object - may be null</param>
-        private void SafeVisitRelationships(PackageRelationshipCollection relationships, RelationshipOperation visit, Object context)
+        private static void SafeVisitRelationships(PackageRelationshipCollection relationships, RelationshipOperation visit, Object context)
         {
             // make a local copy that will not be invalidated by any activity of the visitor function
             List<PackageRelationship> relationshipsToVisit = new List<PackageRelationship>(relationships);
@@ -1217,7 +1217,7 @@ namespace System.IO.Packaging
         /// Generate guid-based signature name to reduce chances of conflict in merging scenarios
         /// </summary>
         /// <returns></returns>
-        private Uri GenerateSignaturePartName()
+        private static Uri GenerateSignaturePartName()
         {
             return PackUriHelper.CreatePartUri(new Uri(_defaultSignaturePartNamePrefix +
                 Guid.NewGuid().ToString(_guidStorageFormatString, (IFormatProvider)null) + _defaultSignaturePartNameExtension, UriKind.Relative));

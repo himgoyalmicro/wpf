@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -243,7 +243,7 @@ namespace System.Windows.Input
         // add the handler to the CWT - this keeps the handler alive throughout
         // the lifetime of the target, without prolonging the lifetime of
         // the target
-        void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
+        static void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
         {
             object value;
             object target = handler.Target;

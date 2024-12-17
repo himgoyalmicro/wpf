@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -153,12 +153,12 @@ namespace System.Windows.Documents
         /// </summary>
         void IIndexedChild<Table>.OnExitParentTree()
         {
-            this.OnExitParentTree();
+            OnExitParentTree();
         }
 
         void IIndexedChild<Table>.OnAfterExitParentTree(Table parent)
         {
-            this.OnAfterExitParentTree(parent);
+            OnAfterExitParentTree(parent);
         }
 
         int IIndexedChild<Table>.Index
@@ -183,14 +183,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// Callback used to notify the RowGroup about exitting model tree.
         /// </summary>
-        internal void OnExitParentTree()
+        internal static void OnExitParentTree()
         {
         }
 
         /// <summary>
         /// Callback used to notify the RowGroup about exitting model tree.
         /// </summary>
-        internal void OnAfterExitParentTree(Table table)
+        internal static void OnAfterExitParentTree(Table table)
         {
             table.OnStructureChanged();
         }

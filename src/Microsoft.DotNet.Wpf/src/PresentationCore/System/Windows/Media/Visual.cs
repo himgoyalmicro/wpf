@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -615,7 +615,7 @@ namespace System.Windows.Media
         /// See above CalculateSubgraphBounds* methods for more detail.  This helper method
         /// goes with them.
         /// </summary>
-        private bool IsEmptyRenderBounds(ref Rect bounds)
+        private static bool IsEmptyRenderBounds(ref Rect bounds)
         {
             return (bounds.Width <= 0 || bounds.Height <= 0);
         }
@@ -717,8 +717,8 @@ namespace System.Windows.Media
                 if (   !CheckFlagsOr(VisualFlags.NodeIsCyclicBrushRoot)
                             // If we aren't a root of a CyclicBrush, then we aren't referenced
                             // at all and we can go away
-                    || !channel.IsConnected
-                            // If the channel isn't connected, there's no reason to keep things alive
+                    || !DUCE.Channel.IsConnected
+                    // If the channel isn't connected, there's no reason to keep things alive
                     || channel.IsSynchronous
                             // If the channel is synchronous, the node isn't going to stick around
                             // so just delete it. *** THIS IS DANGEROUS ***. See above for
@@ -1840,7 +1840,7 @@ namespace System.Windows.Media
                 return HitTestResultBehavior.Stop;
             }
 
-            internal HitTestFilterBehavior NoNested2DFilter(DependencyObject potentialHitTestTarget)
+            internal static HitTestFilterBehavior NoNested2DFilter(DependencyObject potentialHitTestTarget)
             {
                 if (potentialHitTestTarget is Viewport2DVisual3D)
                 {
@@ -1898,7 +1898,7 @@ namespace System.Windows.Media
 
             VisualTreeHelper.HitTest(
                 this,
-                include2DOn3D? null : new HitTestFilterCallback(result.NoNested2DFilter),
+                include2DOn3D? null : new HitTestFilterCallback(TopMostHitResult.NoNested2DFilter),
                 new HitTestResultCallback(result.HitTestResult),
                 new PointHitTestParameters(point));
 

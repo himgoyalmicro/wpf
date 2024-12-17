@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -302,7 +302,7 @@ namespace System.Windows.Interop
         /// <summary>
         /// Disables hyphen ligatures if user has exlicitly wants it
         /// </summary>
-        private void CheckAndDisableSpecialCharacterLigature()
+        private static void CheckAndDisableSpecialCharacterLigature()
         {
             NativeMethodsSetLastError.LsDisableSpecialCharacterLigature(CoreAppContextSwitches.DisableSpecialCharacterLigature);
         }
@@ -1492,7 +1492,7 @@ namespace System.Windows.Interop
         /// </param>
         /// <param name="handleRef">
         /// </param>
-        internal void AdjustForRightToLeft(ref NativeMethods.RECT rc, HandleRef handleRef)
+        internal static void AdjustForRightToLeft(ref NativeMethods.RECT rc, HandleRef handleRef)
         {
             int windowStyle = SafeNativeMethods.GetWindowStyle(handleRef, true);
 
@@ -1512,7 +1512,7 @@ namespace System.Windows.Interop
         /// (font smoothing settings, gamma correction, etc.)
         ///</summary>
         ///<returns>true if rerendering was forced</returns>
-        private bool OnSettingChange(Int32 firstParam)
+        private static bool OnSettingChange(Int32 firstParam)
         {
             if ( (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHING ||
                  (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHINGTYPE ||
@@ -1802,7 +1802,7 @@ namespace System.Windows.Interop
                 channel);
         }
 
-        private void RecursiveUpdateDpiFlagAndInvalidateMeasure(DependencyObject d, DpiRecursiveChangeArgs args)
+        private static void RecursiveUpdateDpiFlagAndInvalidateMeasure(DependencyObject d, DpiRecursiveChangeArgs args)
         {
             int childrenCount = VisualTreeHelper.GetChildrenCount(d);
             for (int i = 0; i < childrenCount; i++)
@@ -2486,7 +2486,7 @@ namespace System.Windows.Interop
         [ThreadStatic]
         private static NotificationWindowHelper _notificationWindowHelper;
 
-        private void EnsureNotificationWindow()
+        private static void EnsureNotificationWindow()
         {
             if (_notificationWindowHelper == null)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -140,7 +140,7 @@ namespace MS.Internal.Printing.Configuration
         /// <summary>
         /// Get the minimum number of copies the device can print per job
         /// </summary>
-        public int MinCopies
+        public static int MinCopies
         {
             get { return 1; }
         }
@@ -299,7 +299,7 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="mediaSizes">List of supported paperSize widths and heights</param>
         /// <param name="defaultPaperSize">Out parameter that recieves the default paper width and height</param>
         /// <returns>True if the call succeded</returns>
-        public bool GetDefaultPaperSize(DevMode defaultDevMode, IList<short> paperSizeCodes, IList<DC_PAPER_SIZE> paperSizes, out DC_PAPER_SIZE defaultPaperSize)
+        public static bool GetDefaultPaperSize(DevMode defaultDevMode, IList<short> paperSizeCodes, IList<DC_PAPER_SIZE> paperSizes, out DC_PAPER_SIZE defaultPaperSize)
         {
             defaultPaperSize = new DC_PAPER_SIZE();
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,7 +75,7 @@ namespace MS.Internal.Documents
         /// </summary>
         public override int GetPageNumber(ContentPosition contentPosition)
         {
-            return _document.GetPageNumber(contentPosition);
+            return FixedDocument.GetPageNumber(contentPosition);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace MS.Internal.Documents
         /// </summary>
         public override ContentPosition GetPagePosition(DocumentPage page)
         {
-            return _document.GetPagePosition(page);
+            return FixedDocument.GetPagePosition(page);
         }
 
         /// <summary>

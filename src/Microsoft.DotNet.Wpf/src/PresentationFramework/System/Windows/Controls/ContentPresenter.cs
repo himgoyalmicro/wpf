@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1049,7 +1049,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            private UIElement DefaultExpansion(object content, ContentPresenter container)
+            private static UIElement DefaultExpansion(object content, ContentPresenter container)
             {
                 if (content == null)
                     return null;
@@ -1070,7 +1070,7 @@ namespace System.Windows.Controls
                 return textBlock;
             }
 
-            private void DoDefaultExpansion(TextBlock textBlock, object content, ContentPresenter container)
+            private static void DoDefaultExpansion(TextBlock textBlock, object content, ContentPresenter container)
             {
                 Debug.Assert(!(content is String) && !(content is UIElement));  // these are handled by different templates
 

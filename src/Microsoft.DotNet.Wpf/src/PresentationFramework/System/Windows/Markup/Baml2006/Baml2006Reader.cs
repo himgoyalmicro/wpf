@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -924,7 +924,7 @@ namespace System.Windows.Baml2006
 
                 Common_Process_Property();
 
-                _xamlNodesWriter.WriteStartMember(BamlSchemaContext.ResourceDictionaryDeferredContentProperty);
+                _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.ResourceDictionaryDeferredContentProperty);
                 _xamlNodesWriter.WriteValue(binaryData);
                 _xamlNodesWriter.WriteEndMember();
             }
@@ -1002,7 +1002,7 @@ namespace System.Windows.Baml2006
             }
         }
 
-        private bool IsStringOnlyWhiteSpace(string value)
+        private static bool IsStringOnlyWhiteSpace(string value)
         {
             for (int i = 0; i < value.Length; i++)
             {
@@ -1366,7 +1366,7 @@ namespace System.Windows.Baml2006
             if (_context.CurrentFrame.XamlType.UnderlyingType == typeof(EventSetter))
             {
                 // Write Event=Property
-                _xamlNodesWriter.WriteStartMember(_context.SchemaContext.EventSetterEventProperty);
+                _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.EventSetterEventProperty);
                 XamlMember eventProperty = GetProperty(_binaryReader.ReadInt16(), false);
                 Type currentType = eventProperty.DeclaringType.UnderlyingType;
 
@@ -1383,7 +1383,7 @@ namespace System.Windows.Baml2006
                 _xamlNodesWriter.WriteEndMember();
 
                 // Write Handler=Value
-                _xamlNodesWriter.WriteStartMember(_context.SchemaContext.EventSetterHandlerProperty);
+                _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.EventSetterHandlerProperty);
                 _xamlNodesWriter.WriteValue(_binaryReader.ReadString());
                 _xamlNodesWriter.WriteEndMember();
             }
@@ -1769,7 +1769,7 @@ namespace System.Windows.Baml2006
                         // In BAML scenario, we want to pass MemberType directly along cuz it's optimal
                         if (ownerType != null)
                         {
-                            _xamlNodesWriter.WriteStartMember(BamlSchemaContext.StaticExtensionMemberTypeProperty);
+                            _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.StaticExtensionMemberTypeProperty);
                             _xamlNodesWriter.WriteValue(ownerType);
                             _xamlNodesWriter.WriteEndMember();
                         }
@@ -1780,7 +1780,7 @@ namespace System.Windows.Baml2006
                 {
                     // Special case for {x:Type ...} inside the main extension
                     _xamlNodesWriter.WriteStartObject(XamlLanguage.Type);
-                    _xamlNodesWriter.WriteStartMember(BamlSchemaContext.TypeExtensionTypeProperty);
+                    _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.TypeExtensionTypeProperty);
 
                     typeExtensionType = BamlSchemaContext.GetXamlType(valueId).UnderlyingType;
                     if (_isBinaryProvider)
@@ -1831,7 +1831,7 @@ namespace System.Windows.Baml2006
                 _xamlNodesWriter.WriteEndMember();
                 if (memberType != null)
                 {
-                    _xamlNodesWriter.WriteStartMember(BamlSchemaContext.StaticExtensionMemberTypeProperty);
+                    _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.StaticExtensionMemberTypeProperty);
                     _xamlNodesWriter.WriteValue(memberType);
                     _xamlNodesWriter.WriteEndMember();
                 }
@@ -1896,7 +1896,7 @@ namespace System.Windows.Baml2006
             }
 
             _xamlNodesWriter.WriteStartMember(property);
-            _xamlNodesWriter.WriteStartObject(BamlSchemaContext.StaticResourceExtensionType);
+            _xamlNodesWriter.WriteStartObject(Baml2006SchemaContext.StaticResourceExtensionType);
             _xamlNodesWriter.WriteStartMember(XamlLanguage.PositionalParameters);
 
             OptimizedStaticResource optimizedResource = resource as OptimizedStaticResource;
@@ -1920,7 +1920,7 @@ namespace System.Windows.Baml2006
                         _xamlNodesWriter.WriteEndMember();
                         if (memberType != null)
                         {
-                            _xamlNodesWriter.WriteStartMember(BamlSchemaContext.StaticExtensionMemberTypeProperty);
+                            _xamlNodesWriter.WriteStartMember(Baml2006SchemaContext.StaticExtensionMemberTypeProperty);
                             _xamlNodesWriter.WriteValue(memberType);
                             _xamlNodesWriter.WriteEndMember();
                         }
@@ -2388,7 +2388,7 @@ namespace System.Windows.Baml2006
                     // if we are NOT already spooling a template
                     if (_context.TemplateStartDepth < 0 && _isBinaryProvider)
                     {
-                        if (parentProperty == BamlSchemaContext.FrameworkTemplateTemplateProperty)
+                        if (parentProperty == Baml2006SchemaContext.FrameworkTemplateTemplateProperty)
                         {
                             // If this is a template then spool the template into a Node List.
                             _context.TemplateStartDepth = _context.CurrentFrame.Depth;
@@ -2680,7 +2680,7 @@ namespace System.Windows.Baml2006
             return currentText;
         }
 
-        private bool NodeListHasAKeySetOnTheRoot(XamlReader reader)
+        private static bool NodeListHasAKeySetOnTheRoot(XamlReader reader)
         {
             int depth = 0;
             while (reader.Read())

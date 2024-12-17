@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -426,17 +426,17 @@ namespace System.Windows.Automation.Text
         }
 
         #endregion Public Properties
-        
+
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // check an endpoint argument to see if it is valid.
-        void ValidateEndpointArgument(TextPatternRangeEndpoint endpoint, string name)
+        static void ValidateEndpointArgument(TextPatternRangeEndpoint endpoint, string name)
         {
             if (endpoint != TextPatternRangeEndpoint.Start && endpoint != TextPatternRangeEndpoint.End)
             {
@@ -461,7 +461,7 @@ namespace System.Windows.Automation.Text
 }
 
         // check an unit argument to see if it is valid.
-        void ValidateUnitArgument(TextUnit unit, string name)
+        static void ValidateUnitArgument(TextUnit unit, string name)
         {
             if (unit<TextUnit.Character || unit>TextUnit.Document)
             {

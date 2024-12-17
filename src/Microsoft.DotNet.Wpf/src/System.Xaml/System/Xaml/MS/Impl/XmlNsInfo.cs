@@ -181,7 +181,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadNsDefHelper(IList<XmlNsDefinition> result, string xmlns, string clrns, Assembly assembly)
+        static void LoadNsDefHelper(IList<XmlNsDefinition> result, string xmlns, string clrns, Assembly assembly)
         {
             if (String.IsNullOrEmpty(xmlns) || clrns is null)
             {
@@ -262,7 +262,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadInternalsVisibleToHelper(List<AssemblyName> result, string assemblyName, Assembly assembly)
+        static void LoadInternalsVisibleToHelper(List<AssemblyName> result, string assemblyName, Assembly assembly)
         {
             if (assemblyName is null)
             {
@@ -320,7 +320,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadOldToNewNsHelper(Dictionary<string, string> result, string oldns, string newns, Assembly assembly)
+        static void LoadOldToNewNsHelper(Dictionary<string, string> result, string oldns, string newns, Assembly assembly)
         {
             if (String.IsNullOrEmpty(newns) || String.IsNullOrEmpty(oldns))
             {
@@ -369,7 +369,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadPrefixesHelper(Dictionary<string, string> result, string xmlns, string prefix, Assembly assembly)
+        static void LoadPrefixesHelper(Dictionary<string, string> result, string xmlns, string prefix, Assembly assembly)
         {
             if (String.IsNullOrEmpty(prefix) || String.IsNullOrEmpty(xmlns))
             {
@@ -412,7 +412,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        void MakeListsImmutable(IDictionary<string, IList<string>> dict)
+        static void MakeListsImmutable(IDictionary<string, IList<string>> dict)
         {
             // Need to copy the keys because we can't change a dictionary while iterating
             string[] keys = new string[dict.Count];

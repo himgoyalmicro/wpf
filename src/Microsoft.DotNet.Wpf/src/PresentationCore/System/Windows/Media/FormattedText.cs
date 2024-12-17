@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1916,7 +1916,7 @@ namespace System.Windows.Media
         #endregion
 
         #region private methods
-        private void CombineGeometryRecursive(Drawing drawing, ref GeometryGroup accumulatedGeometry)
+        private static void CombineGeometryRecursive(Drawing drawing, ref GeometryGroup accumulatedGeometry)
         {
             DrawingGroup group = drawing as DrawingGroup;
             if (group != null)

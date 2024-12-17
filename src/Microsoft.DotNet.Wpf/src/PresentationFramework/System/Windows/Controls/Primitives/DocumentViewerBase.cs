@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -871,7 +871,7 @@ namespace System.Windows.Controls.Primitives
         /// c) unique PageNumbers for each active DocumentPageView,
         /// </summary>
         /// <param name="pageViews">Collection of DocumentPageViews to validate.</param>
-        private void VerifyDocumentPageViews(ReadOnlyCollection<DocumentPageView> pageViews)
+        private static void VerifyDocumentPageViews(ReadOnlyCollection<DocumentPageView> pageViews)
         {
             int index;
             bool hasMasterPage = false;
@@ -907,7 +907,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="root">FrameworkElement that is part of Control Template.</param>
         /// <param name="pageViews">Collection of DocumentPageViews; found elements are appended here.</param>
         /// <returns>Whether collection of DocumentPageViews has been updated.</returns>
-        private void FindDocumentPageViews(Visual root, List<DocumentPageView> pageViews)
+        private static void FindDocumentPageViews(Visual root, List<DocumentPageView> pageViews)
         {
             Invariant.Assert(root != null);
             Invariant.Assert(pageViews != null);
@@ -954,7 +954,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         /// <param name="root">FrameworkElement that is part of Control Template.</param>
         /// <returns>AdornerDecorator, if found.</returns>
-        private AdornerDecorator FindAdornerDecorator(Visual root)
+        private static AdornerDecorator FindAdornerDecorator(Visual root)
         {
             Invariant.Assert(root != null);
 

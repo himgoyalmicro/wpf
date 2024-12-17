@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -256,7 +256,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// </summary>
         /// <param name="selection">selection to verify</param>
         /// <returns>the selection cast to the necessary type</returns>
-        private ITextView VerifySelection(object selection)
+        private static ITextView VerifySelection(object selection)
         {
             ArgumentNullException.ThrowIfNull(selection);
 

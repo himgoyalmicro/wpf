@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -301,7 +301,7 @@ namespace System.Windows.Documents
         }
 
         // Check the text range whether it is empty or not without normalization.
-        private bool IsTextRangeEmpty(ITextRange textRange)
+        private static bool IsTextRangeEmpty(ITextRange textRange)
         {
             // We assume that TextRange.TextSegments property getter does not normalize a range,
             // thus we can avoid re-entrancy.

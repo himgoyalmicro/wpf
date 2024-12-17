@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -581,7 +581,7 @@ namespace System.Windows.Documents
             return adjacentElement;
         }
 
-        private TextTreeNode GetScopingNode(StaticTextPointer position)
+        private static TextTreeNode GetScopingNode(StaticTextPointer position)
         {
             TextTreeNode node = (TextTreeNode)position.Handle0;
             int nodeOffset = position.Handle1;
@@ -1472,7 +1472,7 @@ namespace System.Windows.Documents
         // of the entire process.
         //
         // Called from all public entry points.
-        internal void EmptyDeadPositionList()
+        internal static void EmptyDeadPositionList()
         {
 #if REFCOUNT_DEAD_TEXTPOINTERS
             TextPointer[] localList;
@@ -1544,7 +1544,7 @@ namespace System.Windows.Documents
             return length;
         }
 
-        internal void AssertTree()
+        internal static void AssertTree()
         {
 #if DEBUG_SLOW
             if (_rootNode != null && _rootNode.ContainedNode != null)
@@ -1627,7 +1627,7 @@ namespace System.Windows.Documents
             {
                 TextPointer startPosition;
 
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 EmptyDeadPositionList();
                 DemandCreatePositionState();
@@ -1658,7 +1658,7 @@ namespace System.Windows.Documents
             {
                 TextPointer endPosition;
 
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 EmptyDeadPositionList();
                 DemandCreatePositionState();
@@ -2057,7 +2057,7 @@ namespace System.Windows.Documents
         // Scans all the immediate contained nodes of a TextElementNode, and
         // calls AddLogicalChild methods if supported to alert the children
         // about a new parent.
-        private void ReparentLogicalChildren(SplayTreeNode containerNode, DependencyObject newParentLogicalNode, DependencyObject oldParentLogicalNode)
+        private static void ReparentLogicalChildren(SplayTreeNode containerNode, DependencyObject newParentLogicalNode, DependencyObject oldParentLogicalNode)
         {
             ReparentLogicalChildren(containerNode.GetFirstContainedNode(), null, newParentLogicalNode, oldParentLogicalNode);
         }
@@ -2065,7 +2065,7 @@ namespace System.Windows.Documents
         // Scans all the immediate contained nodes of a TextElementNode, and
         // calls AddLogicalChild methods if supported to alert the children
         // about a new parent.
-        private void ReparentLogicalChildren(SplayTreeNode firstChildNode, SplayTreeNode lastChildNode, DependencyObject newParentLogicalNode, DependencyObject oldParentLogicalNode)
+        private static void ReparentLogicalChildren(SplayTreeNode firstChildNode, SplayTreeNode lastChildNode, DependencyObject newParentLogicalNode, DependencyObject oldParentLogicalNode)
         {
             SplayTreeNode node;
             DependencyObject logicalTreeNode;
@@ -2145,7 +2145,7 @@ namespace System.Windows.Documents
         // In case B, if we're searching for the last character in the first
         // node, we want to return the second (zero-width) node. A TextPointer
         // could be at node2/AfterEnd but not node1/AfterEnd is invalid.
-        private SplayTreeNode AdjustForZeroWidthNode(SplayTreeNode node, ElementEdge edge)
+        private static SplayTreeNode AdjustForZeroWidthNode(SplayTreeNode node, ElementEdge edge)
         {
             TextTreeTextNode textNode;
             SplayTreeNode nextNode;
@@ -2225,7 +2225,7 @@ namespace System.Windows.Documents
 
         // Inserts an element node into a sibling tree.
         // Returns the symbol count of any contained nodes the elementNode covers.
-        private int InsertElementToSiblingTree(TextPointer startPosition, TextPointer endPosition, TextTreeTextElementNode elementNode)
+        private static int InsertElementToSiblingTree(TextPointer startPosition, TextPointer endPosition, TextTreeTextElementNode elementNode)
         {
             int childSymbolCount = 0;
             int childCharCount = 0;
@@ -2259,7 +2259,7 @@ namespace System.Windows.Documents
 
         // Inserts an element node into a sibling tree.  The node is expected to cover existing content.
         // Returns the symbol count of all contained nodes the elementNode covers.
-        private int InsertElementToSiblingTreeComplex(TextPointer startPosition, TextPointer endPosition, TextTreeTextElementNode elementNode,
+        private static int InsertElementToSiblingTreeComplex(TextPointer startPosition, TextPointer endPosition, TextTreeTextElementNode elementNode,
             out int childCharCount)
         {
             SplayTreeNode containingNode;
@@ -2471,9 +2471,9 @@ namespace System.Windows.Documents
                     tree = new TextContainer(null, false /* plainTextOnly */);
                     newTreeStart = tree.Start;
 
-                    tree.InsertElementToSiblingTree(newTreeStart, newTreeStart, elementNode);
+                    InsertElementToSiblingTree(newTreeStart, newTreeStart, elementNode);
                     Invariant.Assert(elementText.Length == elementNode.SymbolCount);
-                    tree.UpdateContainerSymbolCount(elementNode.GetContainingNode(), elementNode.SymbolCount, elementNode.IMECharCount);
+                    UpdateContainerSymbolCount(elementNode.GetContainingNode(), elementNode.SymbolCount, elementNode.IMECharCount);
                     tree.DemandCreateText();
                     TextTreeText.InsertText(tree.RootTextBlock, 1 /* symbolOffset */, elementText);
                     tree.NextGeneration(false /* deletedContent */);
@@ -2522,7 +2522,7 @@ namespace System.Windows.Documents
         // update the refs if a node is split.
         //
         // Called by DeleteContentFromSiblingTree and ExtractElementInternal.
-        private void AdjustRefCountsForContentDelete(ref TextTreeNode previousNode, ElementEdge previousEdge,
+        private static void AdjustRefCountsForContentDelete(ref TextTreeNode previousNode, ElementEdge previousEdge,
                                                      ref TextTreeNode nextNode, ElementEdge nextEdge,
                                                      TextTreeNode middleSubTree)
         {
@@ -2540,7 +2540,7 @@ namespace System.Windows.Documents
         }
 
         // Sums the reference counts for a node and all following or contained nodes.
-        private void GetReferenceCounts(TextTreeNode node, ref bool leftEdgeReferenceCount, ref bool rightEdgeReferenceCount)
+        private static void GetReferenceCounts(TextTreeNode node, ref bool leftEdgeReferenceCount, ref bool rightEdgeReferenceCount)
         {
             do
             {
@@ -2577,7 +2577,7 @@ namespace System.Windows.Documents
         // update the refs if a node is split.
         //
         // Called by ExtractElementFromSiblingTree.
-        private void AdjustRefCountsForShallowDelete(ref TextTreeNode previousNode, ElementEdge previousEdge,
+        private static void AdjustRefCountsForShallowDelete(ref TextTreeNode previousNode, ElementEdge previousEdge,
                                                      ref TextTreeNode nextNode,ElementEdge nextEdge,
                                                      ref TextTreeNode firstContainedNode, ref TextTreeNode lastContainedNode,
                                                      TextTreeTextElementNode extractedElementNode)
@@ -2615,7 +2615,7 @@ namespace System.Windows.Documents
         // TextPositions can find their way back to the original tree.
         //
         // Returns the symbol count of middleSubTree -- all the content between startPosition and endPosition.
-        private int CutContent(TextPointer startPosition, TextPointer endPosition, out int charCount, out SplayTreeNode leftSubTree, out SplayTreeNode middleSubTree, out SplayTreeNode rightSubTree)
+        private static int CutContent(TextPointer startPosition, TextPointer endPosition, out int charCount, out SplayTreeNode leftSubTree, out SplayTreeNode middleSubTree, out SplayTreeNode rightSubTree)
         {
             SplayTreeNode childNode;
             int symbolCount;
@@ -3187,7 +3187,7 @@ namespace System.Windows.Documents
         }
 
         // Updates the SymbolCount for node's container nodes -- all the way to the TextTree root.
-        private void UpdateContainerSymbolCount(SplayTreeNode containingNode, int symbolCount, int charCount)
+        private static void UpdateContainerSymbolCount(SplayTreeNode containingNode, int symbolCount, int charCount)
         {
             do
             {
@@ -3226,7 +3226,7 @@ namespace System.Windows.Documents
         // Copies a LocalValueEnumerator properties into an array of DependencyProperty.
         // This method is useful because LocalValueEnumerator does not support
         // setting or clearing local values while enumerating.
-        private DependencyProperty[] LocalValueEnumeratorToArray(LocalValueEnumerator valuesEnumerator)
+        private static DependencyProperty[] LocalValueEnumeratorToArray(LocalValueEnumerator valuesEnumerator)
         {
             DependencyProperty[] properties;
             int count;
@@ -3399,7 +3399,7 @@ namespace System.Windows.Documents
 
         // Returns the TextChange matching an ContentAdded, ContentRemoved,
         // or PropertyModified PrecursorTextChange.
-        private TextChangeType ConvertSimplePrecursorChangeToTextChange(PrecursorTextChangeType precursorTextChange)
+        private static TextChangeType ConvertSimplePrecursorChangeToTextChange(PrecursorTextChangeType precursorTextChange)
         {
             Invariant.Assert(precursorTextChange != PrecursorTextChangeType.ElementAdded && precursorTextChange != PrecursorTextChangeType.ElementExtracted);
             return (TextChangeType)precursorTextChange;
@@ -3410,7 +3410,7 @@ namespace System.Windows.Documents
         // returns the next sibling following endPositoin (the new head of the sibling
         // list).  The new head node is interesting because its IMELeftEdgeCharCount may
         // change because of its new position.
-        private TextTreeTextElementNode GetNextIMEVisibleNode(TextPointer startPosition, TextPointer endPosition)
+        private static TextTreeTextElementNode GetNextIMEVisibleNode(TextPointer startPosition, TextPointer endPosition)
         {
             TextTreeTextElementNode nextIMEVisibleNode = null;
 

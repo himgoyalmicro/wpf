@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -221,7 +221,7 @@ namespace System.Windows.Ink
 
 
         /// <summary> A transform might make the vertices in counter-clockwise order Fix it if this is the case.</summary>
-        private void FixCounterClockwiseVertices(Vector[] vertices)
+        private static void FixCounterClockwiseVertices(Vector[] vertices)
         {
             // The private method should only called for Rectangle case.
             System.Diagnostics.Debug.Assert(vertices.Length == 4);

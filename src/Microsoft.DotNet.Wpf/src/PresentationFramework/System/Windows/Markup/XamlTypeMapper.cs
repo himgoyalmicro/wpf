@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -302,7 +302,7 @@ namespace System.Windows.Markup
 #endif
 
 #if !PBTCOMPILER
-        private HybridDictionary CloneHybridDictionary(HybridDictionary dict)
+        private static HybridDictionary CloneHybridDictionary(HybridDictionary dict)
         {
             HybridDictionary newDict = new HybridDictionary(dict.Count);
             foreach ( DictionaryEntry de in dict )
@@ -314,7 +314,7 @@ namespace System.Windows.Markup
 #endif
 
 #if !PBTCOMPILER
-        private Dictionary<string, string> CloneStringDictionary(Dictionary<string, string> dict)
+        private static Dictionary<string, string> CloneStringDictionary(Dictionary<string, string> dict)
         {
             Dictionary<string, string> newDict = new Dictionary<string, string>();
             foreach (KeyValuePair<string, string> kvp in dict)
@@ -634,7 +634,7 @@ namespace System.Windows.Markup
             return obj;
         }
 
-        private string TypeConverterFailure( string value, string propName, string propType )
+        private static string TypeConverterFailure( string value, string propName, string propType )
         {
             string message;
 
@@ -782,7 +782,7 @@ namespace System.Windows.Markup
             if (MapTable != null)
             {
                 string fullName = owner.IsGenericType ? $"{owner.Namespace}.{owner.Name}" : owner.FullName;
-                object key = MapTable.GetAttributeInfoKey(fullName, propName);
+                object key = BamlMapTable.GetAttributeInfoKey(fullName, propName);
                 infoRecord = MapTable.GetHashTableData(key) as BamlAttributeInfoRecord;
 
                 if (infoRecord != null)
@@ -858,7 +858,7 @@ namespace System.Windows.Markup
             }
         }
 
-        private void UpdateAttachedPropertyMethdodInfo(BamlAttributeInfoRecord attributeInfo, bool isSetter)
+        private static void UpdateAttachedPropertyMethdodInfo(BamlAttributeInfoRecord attributeInfo, bool isSetter)
         {
             MethodInfo attachedPropertyInfo = null;
             Type propertyOwnerType = attributeInfo.OwnerType;
@@ -906,7 +906,7 @@ namespace System.Windows.Markup
             }
         }
 
-        internal void UpdateAttachedPropertySetter(BamlAttributeInfoRecord attributeInfo)
+        internal static void UpdateAttachedPropertySetter(BamlAttributeInfoRecord attributeInfo)
         {
             if (attributeInfo.AttachedPropertySetter == null)
             {
@@ -914,7 +914,7 @@ namespace System.Windows.Markup
             }
         }
 
-        internal void UpdateAttachedPropertyGetter(BamlAttributeInfoRecord attributeInfo)
+        internal static void UpdateAttachedPropertyGetter(BamlAttributeInfoRecord attributeInfo)
         {
             if (attributeInfo.AttachedPropertyGetter == null)
             {
@@ -1007,7 +1007,7 @@ namespace System.Windows.Markup
         }
 
         // Checks to see if a given field member is accessible.
-        private bool IsAllowedField(FieldInfo fi)
+        private static bool IsAllowedField(FieldInfo fi)
         {
             bool allowed = false;
 
@@ -1107,7 +1107,7 @@ namespace System.Windows.Markup
 #else
         // Checks to see if a given property's set method is public.
         // Used only in Xaml Load sceanrios.
-        internal bool IsAllowedPropertySet(PropertyInfo pi)
+        internal static bool IsAllowedPropertySet(PropertyInfo pi)
         {
             MethodInfo mi = pi.GetSetMethod(true);
             return (mi != null && mi.IsPublic);
@@ -1115,7 +1115,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's get method is public.
         // Used only in Xaml Load sceanrios.
-        internal bool IsAllowedPropertyGet(PropertyInfo pi)
+        internal static bool IsAllowedPropertyGet(PropertyInfo pi)
         {
             MethodInfo mi = pi.GetGetMethod(true);
             return (mi != null && mi.IsPublic);
@@ -2362,7 +2362,7 @@ namespace System.Windows.Markup
             return mi;
         }
 
-        private MemberInfo GetStaticMemberInfo(Type targetType, string memberName, bool fieldInfoOnly, bool tryInternal)
+        private static MemberInfo GetStaticMemberInfo(Type targetType, string memberName, bool fieldInfoOnly, bool tryInternal)
         {
             MemberInfo memberInfo = null;
             BindingFlags bf = BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static;
@@ -2661,7 +2661,7 @@ namespace System.Windows.Markup
             return type;
         }
 
-        internal int GetCustomBamlSerializerIdForType(Type objectType)
+        internal static int GetCustomBamlSerializerIdForType(Type objectType)
         {
             // support for xaml -> custom binary and custom binary -> object.
             if (objectType == KnownTypes.Types[(int)KnownElements.Brush])
@@ -2702,7 +2702,7 @@ namespace System.Windows.Markup
         /// Sees if type has a Xaml serializer attribute that gives the
         /// type name of the serializer and figure out the type.
         /// </summary>
-        internal Type GetXamlSerializerForType(Type objectType)
+        internal static Type GetXamlSerializerForType(Type objectType)
         {
             // support for xaml -> baml and baml -> objects
             if (objectType == KnownTypes.Types[(int)KnownElements.Style])
@@ -2828,7 +2828,7 @@ namespace System.Windows.Markup
 #endif
 
         // Return true if this is a locally compiled assembly
-        internal bool IsLocalAssembly(string namespaceUri)
+        internal static bool IsLocalAssembly(string namespaceUri)
         {
             bool localAssembly = false;
 #if PBTCOMPILER
@@ -3100,14 +3100,14 @@ namespace System.Windows.Markup
         /// to create it using the KnownTypes hardcoded constructors, so check that
         /// first before using the Activator.CreateInstance fallback.
         /// </remarks>
-        internal object CreateInstance(Type t)
+        internal static object CreateInstance(Type t)
         {
             object o = null;
 #if !PBTCOMPILER
             short typeId = BamlMapTable.GetKnownTypeIdFromType(t);
             if (typeId < 0)
             {
-                o = MapTable.CreateKnownTypeFromId(typeId);
+                o = BamlMapTable.CreateKnownTypeFromId(typeId);
             }
             else
             {
@@ -3449,7 +3449,7 @@ namespace System.Windows.Markup
             }
 
             // Check for known TypeConverters first. These are always public.
-            converterType = MapTable.GetKnownConverterTypeFromType(type);
+            converterType = BamlMapTable.GetKnownConverterTypeFromType(type);
             if (converterType == null)
             {
                 // If not found, next try looking for the TypeConverter for the type using reflection.
@@ -3511,7 +3511,7 @@ namespace System.Windows.Markup
 
         // Returns the Type of the TypeConverter applied to the given property itself.
         // Returns null if not found.
-        internal Type GetPropertyConverterType(Type propType, object dpOrPiOrMi)
+        internal static Type GetPropertyConverterType(Type propType, object dpOrPiOrMi)
         {
             Debug.Assert(null != propType, "Null passed for propType to GetPropertyConverterType");
             Type converterType = null;
@@ -3612,7 +3612,7 @@ namespace System.Windows.Markup
         /// Note that this can return null if the key is not resolved.  It is up to the caller
         /// to throw the appropriate error message in that case.
         /// </summary>
-        internal object GetDictionaryKey(string keyString, ParserContext context)
+        internal static object GetDictionaryKey(string keyString, ParserContext context)
         {
              if (keyString.Length > 0 &&
                  (Char.IsWhiteSpace(keyString[0]) ||
@@ -3740,7 +3740,7 @@ namespace System.Windows.Markup
         ///  Helper function for  use to find out the TrimSurroundingWhitespace
         ///  associated with a Type.
         /// </summary>
-        private bool GetTrimSurroundingWhitespace(Type type)
+        private static bool GetTrimSurroundingWhitespace(Type type)
         {
             Debug.Assert(null != type, "null value for type passed to GetWhitespace");
 

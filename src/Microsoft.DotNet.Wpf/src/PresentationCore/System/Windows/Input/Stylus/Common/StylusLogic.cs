@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -665,22 +665,22 @@ namespace System.Windows.Input
 
         #region Capture
 
-        protected bool ValidateUIElementForCapture(UIElement element)
+        protected static bool ValidateUIElementForCapture(UIElement element)
         {
             return element.IsEnabled && element.IsVisible && element.IsHitTestVisible;
         }
 
-        protected bool ValidateContentElementForCapture(ContentElement element)
+        protected static bool ValidateContentElementForCapture(ContentElement element)
         {
             return element.IsEnabled;
         }
 
-        protected bool ValidateUIElement3DForCapture(UIElement3D element)
+        protected static bool ValidateUIElement3DForCapture(UIElement3D element)
         {
             return element.IsEnabled && element.IsVisible && element.IsHitTestVisible;
         }
 
-        protected bool ValidateVisualForCapture(DependencyObject visual, StylusDeviceBase currentStylusDevice)
+        protected static bool ValidateVisualForCapture(DependencyObject visual, StylusDeviceBase currentStylusDevice)
         {
             if (visual == null)
                 return false;

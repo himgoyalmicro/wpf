@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -405,7 +405,7 @@ namespace System.Windows.Documents
         /// to an offscreen bitmap since the DrawingImage's previously rendered bits are not kept
         /// in memory.
         /// </summary>
-        private BitmapSource GetBitmapSourceFromImage(Image image)
+        private static BitmapSource GetBitmapSourceFromImage(Image image)
         {
             if (image.Source is BitmapSource)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -4755,7 +4755,7 @@ namespace System.Windows.Markup
         private static Assembly _asmCore;
         private static Assembly _asmBase;
 
-        public void Initialize(Assembly asmFramework, Assembly asmCore, Assembly asmBase)
+        public static void Initialize(Assembly asmFramework, Assembly asmCore, Assembly asmBase)
         {
             // Paramater validation
 
@@ -4773,7 +4773,7 @@ namespace System.Windows.Markup
         }
 
         //  Initialize the Known WCP types from basic WCP assemblies
-        private Type InitializeOneType(KnownElements knownElement)
+        private static Type InitializeOneType(KnownElements knownElement)
         {
             Type t = null;
             switch(knownElement)
@@ -5547,7 +5547,7 @@ namespace System.Windows.Markup
         }
 #else
         //  Initialize the Known WCP types from basic WCP assemblies
-        private Type InitializeOneType(KnownElements knownElement)
+        private static Type InitializeOneType(KnownElements knownElement)
         {
             Type t = null;
             switch(knownElement)

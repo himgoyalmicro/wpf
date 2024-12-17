@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -251,7 +251,7 @@ namespace System.Windows.Documents
         /// Copies an embedded UIElement into a ContentContainer.
         /// Returns the next node to examine.
         /// </summary>
-        private TextTreeNode CopyObjectNode(TextTreeObjectNode objectNode, out ContentContainer container)
+        private static TextTreeNode CopyObjectNode(TextTreeObjectNode objectNode, out ContentContainer container)
         {
 
             string xml = XamlWriter.Save(objectNode.EmbeddedElement);

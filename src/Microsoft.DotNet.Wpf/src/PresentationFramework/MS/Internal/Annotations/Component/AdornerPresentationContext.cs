@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -421,7 +421,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="adorner">the new adorner</param>
         /// <remarks>In most cases the AnnotationAdorners are already orderd so we expect that the new one
         /// will be added at the end of the list. That is why we start scaning from the end.</remarks>
-        private void AddAdorner(List<AnnotationAdorner> adorners, AnnotationAdorner adorner)
+        private static void AddAdorner(List<AnnotationAdorner> adorners, AnnotationAdorner adorner)
         {
             Debug.Assert((adorners != null) && (adorner != null), "null adorners list or adorner");
 

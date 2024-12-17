@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -499,7 +499,7 @@ namespace MS.Internal.Controls.StickyNote
         /// If the value is the same, no update is made.  If the new value is null
         /// the attribute is removed.
         /// </summary>
-        private void UpdateAttribute(XmlElement root, XmlToken token, string value)
+        private static void UpdateAttribute(XmlElement root, XmlToken token, string value)
         {
             string name = GetXmlName(token);
 
@@ -796,7 +796,7 @@ namespace MS.Internal.Controls.StickyNote
             if ((token & XmlToken.IsExpanded) != 0)
             {
                 bool expanded = snc.IsExpanded;
-                sncAnnotation.UpdateAttribute(root, XmlToken.IsExpanded, expanded.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.IsExpanded, expanded.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update Height
@@ -804,7 +804,7 @@ namespace MS.Internal.Controls.StickyNote
             {
                 Debug.Assert(snc.IsExpanded);
                 double height = (double)snc.GetValue(FrameworkElement.HeightProperty);
-                sncAnnotation.UpdateAttribute(root, XmlToken.Height, height.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.Height, height.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update Width
@@ -812,7 +812,7 @@ namespace MS.Internal.Controls.StickyNote
             {
                 Debug.Assert(snc.IsExpanded);
                 double width = (double)snc.GetValue(FrameworkElement.WidthProperty);
-                sncAnnotation.UpdateAttribute(root, XmlToken.Width, width.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.Width, width.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update Left
@@ -829,31 +829,31 @@ namespace MS.Internal.Controls.StickyNote
                 {
                     left = -(left + snc.Width);
                 }
-                sncAnnotation.UpdateAttribute(root, XmlToken.Left, left.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.Left, left.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update Top
             if ((token & XmlToken.Top) != 0)
             {
-                sncAnnotation.UpdateAttribute(root, XmlToken.Top, snc.PositionTransform.Y.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.Top, snc.PositionTransform.Y.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update XOffset
             if ((token & XmlToken.XOffset) != 0)
             {
-                sncAnnotation.UpdateAttribute(root, XmlToken.XOffset, snc.XOffset.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.XOffset, snc.XOffset.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update YOffset
             if ((token & XmlToken.YOffset) != 0)
             {
-                sncAnnotation.UpdateAttribute(root, XmlToken.YOffset, snc.YOffset.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.YOffset, snc.YOffset.ToString(CultureInfo.InvariantCulture));
             }
 
             // Update ZOrder
             if ((token & XmlToken.ZOrder) != 0)
             {
-                sncAnnotation.UpdateAttribute(root, XmlToken.ZOrder, ((IAnnotationComponent)snc).ZOrder.ToString(CultureInfo.InvariantCulture));
+                UpdateAttribute(root, XmlToken.ZOrder, ((IAnnotationComponent)snc).ZOrder.ToString(CultureInfo.InvariantCulture));
             }
 
             if (newRoot)

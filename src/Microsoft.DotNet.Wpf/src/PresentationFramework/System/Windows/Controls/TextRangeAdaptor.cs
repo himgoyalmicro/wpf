@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1244,7 +1244,7 @@ namespace MS.Internal.Automation
         /// <summary>
         /// Checks whether symbol type refers to element boundary.
         /// </summary>
-        private bool IsElementBoundary(TextPointerContext symbolType)
+        private static bool IsElementBoundary(TextPointerContext symbolType)
         {
             return ((symbolType == TextPointerContext.ElementStart) || (symbolType == TextPointerContext.ElementEnd));
         }
@@ -1416,7 +1416,7 @@ namespace MS.Internal.Automation
         /// <summary>
         /// Retrieves AutomationPeers from specified range.
         /// </summary>
-        private List<AutomationPeer> GetAutomationPeersFromRange(AutomationPeer peer, ITextPointer start, ITextPointer end)
+        private static List<AutomationPeer> GetAutomationPeersFromRange(AutomationPeer peer, ITextPointer start, ITextPointer end)
         {
             List<AutomationPeer> peers;
             Invariant.Assert(peer is TextAutomationPeer || peer is ContentTextAutomationPeer);
@@ -1502,7 +1502,7 @@ namespace MS.Internal.Automation
         /// Returns a normalized copy of a position -- the position at the closest legal
         /// caret position in a given direction.
         /// </summary>
-        private ITextPointer GetInsertionPosition(ITextPointer position, LogicalDirection direction)
+        private static ITextPointer GetInsertionPosition(ITextPointer position, LogicalDirection direction)
         {
             position = position.CreatePointer();
             MoveToInsertionPosition(position, direction);

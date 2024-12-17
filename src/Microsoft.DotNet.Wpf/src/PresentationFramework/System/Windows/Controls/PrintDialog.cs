@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -384,8 +384,7 @@ namespace System.Windows.Controls
 
         #region Private methods
 
-        private
-        PrintQueue
+        private static PrintQueue
         AcquireDefaultPrintQueue()
         {
             PrintQueue printQueue = null;
@@ -408,8 +407,7 @@ namespace System.Windows.Controls
             return printQueue;
         }
 
-        private
-        PrintTicket
+        private static PrintTicket
         AcquireDefaultPrintTicket(
             PrintQueue printQueue
             )

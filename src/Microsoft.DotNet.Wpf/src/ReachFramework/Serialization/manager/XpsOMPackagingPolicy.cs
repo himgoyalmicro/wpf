@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -800,8 +800,7 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        private
-        Uri
+        private static Uri
         GenerateUriForObfuscatedFont()
         {
             String uniqueUri = "/Resources/" + Guid.NewGuid().ToString() + XpsS0Markup.ObfuscatedFontExt;
@@ -836,8 +835,7 @@ namespace System.Windows.Xps.Packaging
             return printTicketResource;
         }
 
-        private 
-        XPS_IMAGE_TYPE
+        private static XPS_IMAGE_TYPE
         GetXpsImageTypeFromContentType(
             ContentType contentType
             )

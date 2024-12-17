@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -678,8 +678,7 @@ namespace System.Windows.Xps.Serialization
 
         }
 
-              
-        Size
+        static Size
         SimulateFixedPageSize(
             Visual visual,
             PrintTicket printTicket
@@ -784,7 +783,7 @@ namespace System.Windows.Xps.Serialization
 
         }
 
-        internal void SerializeLinksInFixedPage(FixedPage page)
+        internal static void SerializeLinksInFixedPage(FixedPage page)
         {
             System.Collections.IEnumerable enumerable = page.Children;
             foreach (object element in enumerable)
@@ -942,7 +941,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        private bool IsFragment(Uri uri)
+        private static bool IsFragment(Uri uri)
         {
             return uri.OriginalString.StartsWith(FRAGMENTMARKER,StringComparison.Ordinal);
         }
@@ -1008,7 +1007,7 @@ namespace System.Windows.Xps.Serialization
             writer.WriteEndElement();
         }
 
-        private void WriteAttribute(XmlWriter writer, string name, object value)
+        private static void WriteAttribute(XmlWriter writer, string name, object value)
         {
             writer.WriteAttributeString(name, TypeDescriptor.GetConverter(value).ConvertToInvariantString(value));
         }

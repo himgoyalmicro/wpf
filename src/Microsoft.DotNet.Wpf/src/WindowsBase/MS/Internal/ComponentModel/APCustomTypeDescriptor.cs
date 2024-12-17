@@ -218,7 +218,7 @@ namespace MS.Internal.ComponentModel
         ///     This method determines if the given property can be attached
         ///     to the given instance.
         /// </summary>
-        private bool CanAttachProperty(DependencyProperty dp, DependencyObject instance)
+        private static bool CanAttachProperty(DependencyProperty dp, DependencyObject instance)
         {
             AttachInfo info = DependencyObjectProvider.GetAttachInfo(dp);
             return info.CanAttach(instance);
@@ -239,7 +239,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns an array of all registered properties declared in the
         ///     system.  
         /// </summary>
-        private DependencyProperty[] GetRegisteredProperties() 
+        private static DependencyProperty[] GetRegisteredProperties() 
         {
             DependencyProperty[] registeredProperties;
 
