@@ -6401,7 +6401,16 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { 
+                System.Windows.Controls.ColumnDefinitionCollection columns = ((System.Windows.Controls.Grid)target).ColumnDefinitions;
+                columns.Clear();
+                foreach(System.Windows.Controls.ColumnDefinition column in (System.Windows.Controls.ColumnDefinitionCollection)value)
+                {
+                    columns.Add(column);
+                }
+            };
             bamlMember.IsWritePrivate = true;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6418,7 +6427,16 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { 
+                System.Windows.Controls.RowDefinitionCollection rows = ((System.Windows.Controls.Grid)target).RowDefinitions;
+                rows.Clear();
+                foreach(System.Windows.Controls.RowDefinition row in (System.Windows.Controls.RowDefinitionCollection)value)
+                {
+                    rows.Add(row);
+                }
+            };
             bamlMember.IsWritePrivate = true;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.RowDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
         }
