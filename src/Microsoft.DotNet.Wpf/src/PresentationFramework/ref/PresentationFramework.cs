@@ -3618,7 +3618,8 @@ namespace System.Windows.Controls
     }
     public sealed partial class ColumnDefinitionCollection : System.Collections.Generic.ICollection<System.Windows.Controls.ColumnDefinition>, System.Collections.Generic.IEnumerable<System.Windows.Controls.ColumnDefinition>, System.Collections.Generic.IList<System.Windows.Controls.ColumnDefinition>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
     {
-        internal ColumnDefinitionCollection() { }
+        internal ColumnDefinitionCollection(Grid owner) { }
+        public ColumnDefinitionCollection() {}
         public int Count { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public bool IsSynchronized { get { throw null; } }
@@ -6517,7 +6518,8 @@ namespace System.Windows.Controls
     }
     public sealed partial class RowDefinitionCollection : System.Collections.Generic.ICollection<System.Windows.Controls.RowDefinition>, System.Collections.Generic.IEnumerable<System.Windows.Controls.RowDefinition>, System.Collections.Generic.IList<System.Windows.Controls.RowDefinition>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
     {
-        internal RowDefinitionCollection() { }
+        internal RowDefinitionCollection(Grid owner) { }
+        public RowDefinitionCollection() { }
         public int Count { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public bool IsSynchronized { get { throw null; } }

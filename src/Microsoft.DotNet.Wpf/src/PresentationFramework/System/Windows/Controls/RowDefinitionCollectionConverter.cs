@@ -61,6 +61,19 @@ namespace System.Windows.Controls
             throw GetConvertFromException(value);
         }
 
+        /// <summary>
+        /// CanConvertTo - Returns whether or not this class can convert to a given type.
+        /// </summary>
+        /// <returns>
+        /// bool - True if this converter can convert to the provided type, false if not.
+        /// </returns>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="destinationType"> The Type being queried for support. </param>
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
+        {
+            return false;
+        }
+
         #endregion Public Methods
     }
 }

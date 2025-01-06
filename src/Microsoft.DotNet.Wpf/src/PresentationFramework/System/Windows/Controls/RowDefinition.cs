@@ -64,9 +64,14 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal RowDefinitionCollection(Grid owner = null)
+        internal RowDefinitionCollection(Grid owner)
         {
             _owner = owner;
+            PrivateOnModified();
+        }
+
+        public RowDefinitionCollection()
+        {
             PrivateOnModified();
         }
 

@@ -64,9 +64,14 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal ColumnDefinitionCollection(Grid owner = null)
+        internal ColumnDefinitionCollection(Grid owner)
         {
             _owner = owner;
+            PrivateOnModified();
+        }
+
+        public ColumnDefinitionCollection()
+        {
             PrivateOnModified();
         }
 
