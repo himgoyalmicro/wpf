@@ -70,6 +70,11 @@ namespace System.Windows.Controls
             PrivateOnModified();
         }
 
+        public RowDefinitionCollection()
+        {
+            PrivateOnModified();
+        }
+
         #endregion Constructors
 
         //------------------------------------------------------
@@ -393,6 +398,10 @@ namespace System.Windows.Controls
         {
             get
             {
+                if (_owner == null)
+                {
+                    return false;
+                }
                 return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
             }
@@ -406,6 +415,10 @@ namespace System.Windows.Controls
         {
             get
             {
+                if (_owner == null)
+                {
+                    return false;
+                }
                 return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
             }
@@ -512,6 +525,46 @@ namespace System.Windows.Controls
         #region Internal Properties
 
         /// <summary>
+        ///    Owner property.
+        /// </summary>
+        internal Grid Owner
+        {
+            get { return (_owner); }
+            set
+            {
+                if (_owner == value)
+                {
+                    return;
+                }
+
+                if (_owner == null)
+                {
+                    _owner = value;
+                    PrivateOnModified();
+                    for (int i = 0; i < _size; i++)
+                    {
+                        _owner.AddLogicalChild(_items[i]);
+                        _items[i].OnEnterParentTree();
+                    }
+                }
+                else if (value == null)
+                {
+                    PrivateOnModified();
+                    for (int i = 0; i < _size; i++)
+                    {
+                        _items[i].OnExitParentTree();
+                        _owner.RemoveLogicalChild(_items[i]);
+                    }
+                    _owner = null;
+                }
+                else
+                {
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
+                }
+            }
+        }
+
+        /// <summary>
         ///     Internal version of Count.
         /// </summary>
         internal int InternalCount
@@ -604,7 +657,7 @@ namespace System.Windows.Controls
             _items[index] = value;
             value.Index = index;
 
-            _owner.AddLogicalChild(value);
+            _owner?.AddLogicalChild(value);
             value.OnEnterParentTree();
         }
 
@@ -623,7 +676,7 @@ namespace System.Windows.Controls
             _items[value.Index] = null;
             value.Index = -1;
 
-            _owner.RemoveLogicalChild(value);
+            _owner?.RemoveLogicalChild(value);
         }
 
         /// <summary>
@@ -696,8 +749,11 @@ namespace System.Windows.Controls
         private void PrivateOnModified()
         {
             _version++;
-            _owner.RowDefinitionCollectionDirty = true;
-            _owner.Invalidate();
+            if (_owner != null)
+            {
+                _owner.RowDefinitionCollectionDirty = true;
+                _owner.Invalidate();
+            }
         }
 
         /// <summary>
@@ -731,7 +787,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields
-        private readonly Grid _owner;      //  owner of the collection
+        private Grid _owner;      //  owner of the collection
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection
