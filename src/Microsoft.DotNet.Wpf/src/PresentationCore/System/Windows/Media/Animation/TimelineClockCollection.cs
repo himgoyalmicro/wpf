@@ -285,7 +285,7 @@ namespace System.Windows.Media.Animation
 
                 if (list == null)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 return list[index];
