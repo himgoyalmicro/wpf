@@ -462,10 +462,8 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                if (root is XAML3.IComponentConnector connector)
-                {
-                    connector.Connect(connectionId, instance);
-                }
+                XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
+                connector?.Connect(connectionId, instance);
             }
             catch(Exception e)
             {

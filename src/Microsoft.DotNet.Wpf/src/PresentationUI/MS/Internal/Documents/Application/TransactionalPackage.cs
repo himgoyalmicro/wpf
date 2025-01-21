@@ -314,10 +314,7 @@ namespace MS.Internal.Documents.Application
     /// </remarks>
     protected override void FlushCore()
     {
-        if (_tempPackage != null)
-        {
-            _tempPackage.Flush();
-        }
+        _tempPackage?.Flush();
     }
 
     /// <summary>

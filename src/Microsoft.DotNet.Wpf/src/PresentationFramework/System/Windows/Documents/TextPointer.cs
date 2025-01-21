@@ -2168,7 +2168,7 @@ namespace System.Windows.Documents
             SyncToTreeGeneration();
 
             elementNode = GetAdjacentTextElementNodeSibling(direction);
-            return (elementNode == null) ? null : elementNode.TextElement;
+            return elementNode?.TextElement;
         }
 
         /// <summary>
@@ -2418,7 +2418,7 @@ namespace System.Windows.Documents
 
             element = GetElement(direction);
 
-            return element != null ? element.GetType() : null;
+            return element?.GetType();
         }
 
         bool ITextPointer.HasEqualScope(ITextPointer position)
@@ -3616,7 +3616,7 @@ namespace System.Windows.Documents
 
                 DependencyObject element = this.Parent;
 
-                return element != null ? element.GetType() : null;
+                return element?.GetType();
             }
         }
 
@@ -4122,7 +4122,7 @@ namespace System.Windows.Documents
 
             elementNode = GetAdjacentTextElementNode(direction);
 
-            return (elementNode == null) ? null : elementNode.TextElement;
+            return elementNode?.TextElement;
         }
 
         // Invariant.Strict only.  Asserts this position has good state.

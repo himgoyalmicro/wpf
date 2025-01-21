@@ -812,10 +812,8 @@ namespace System.Xaml
         private static void CleanupCollectedAssemblies(object schemaContextWeakRef)
         {
             WeakReference weakRef = (WeakReference)schemaContextWeakRef;
-            if (weakRef.Target is XamlSchemaContext schemaContext)
-            {
-                schemaContext.CleanupCollectedAssemblies();
-            }
+            XamlSchemaContext schemaContext = weakRef.Target as XamlSchemaContext;
+            schemaContext?.CleanupCollectedAssemblies();
         }
 
         // Iterate through any weak references we hold to dynamic assemblies, cleaning up references
@@ -1401,10 +1399,7 @@ namespace System.Xaml
             private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
             {
                 XamlSchemaContext schemaContext = (XamlSchemaContext)schemaContextRef.Target;
-                if (schemaContext is not null)
-                {
-                    schemaContext.SchemaContextAssemblyLoadEventHandler(sender, args);
-                }
+                schemaContext?.SchemaContextAssemblyLoadEventHandler(sender, args);
             }
 
             public void Hook()

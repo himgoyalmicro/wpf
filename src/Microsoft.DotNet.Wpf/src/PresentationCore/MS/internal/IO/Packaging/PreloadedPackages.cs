@@ -133,10 +133,7 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packagePairs != null)
-                {
-                    _packagePairs.Remove(uri);
-                }
+                _packagePairs?.Remove(uri);
             }
         }
 

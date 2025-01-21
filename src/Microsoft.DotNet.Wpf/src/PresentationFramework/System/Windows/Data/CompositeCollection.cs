@@ -591,10 +591,7 @@ namespace System.Windows.Data
             foreach (object o in InternalList)
             {
                 CollectionContainer cc = o as CollectionContainer;
-                if (cc != null)
-                {
-                    cc.GetCollectionChangedSources(level+1, format, sources);
-                }
+                cc?.GetCollectionChangedSources(level+1, format, sources);
             }
         }
 

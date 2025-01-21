@@ -658,10 +658,7 @@ namespace System.Windows.Controls
         {
             Point p = point;
             GeneralTransform transform = this.TransformToDescendant(toolBar);
-            if (transform != null)
-            {
-                transform.TryTransform(point, out p);
-            }
+            transform?.TryTransform(point, out p);
             return p;
         }
 

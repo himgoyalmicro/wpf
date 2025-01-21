@@ -1140,10 +1140,8 @@ namespace System.Windows
 
             // if the target is a Freezable, call FireChanged to kick off
             // notifications to the Freezable's parent chain.
-            if (this is Freezable freezable)
-            {
-                freezable.FireChanged();
-            }
+            Freezable freezable = this as Freezable;
+            freezable?.FireChanged();
         }
 
         /// <summary>

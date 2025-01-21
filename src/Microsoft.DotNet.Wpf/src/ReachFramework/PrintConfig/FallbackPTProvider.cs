@@ -350,10 +350,7 @@ namespace MS.Internal.Printing.Configuration
 
         public override void Release()
         {
-            if (_deviceHandle != null)
-            {
-                _deviceHandle.Dispose();
-            }
+            _deviceHandle?.Dispose();
 
             this._deviceHandle = null;
             this._deviceName = null;

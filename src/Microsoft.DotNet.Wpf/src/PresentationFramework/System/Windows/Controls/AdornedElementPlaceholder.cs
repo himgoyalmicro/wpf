@@ -189,8 +189,7 @@ namespace System.Windows.Controls
             Size desiredSize = AdornedElement.RenderSize;
             UIElement child = Child;
 
-            if (child != null)
-                child.Measure(desiredSize);
+            child?.Measure(desiredSize);
 
             return desiredSize;
         }
@@ -204,8 +203,7 @@ namespace System.Windows.Controls
         {
             UIElement child = Child;
 
-            if (child != null)
-                child.Arrange(new Rect(arrangeBounds));
+            child?.Arrange(new Rect(arrangeBounds));
 
             return arrangeBounds;
         }

@@ -265,10 +265,7 @@ namespace System.Windows.Media.Effects
                 (obj, args) =>
                 {
                     ShaderEffect eff = obj as ShaderEffect;
-                    if (eff != null)
-                    {
-                        eff.UpdateShaderConstant(args.Property, args.NewValue, floatRegisterIndex);
-                    }
+                    eff?.UpdateShaderConstant(args.Property, args.NewValue, floatRegisterIndex);
                 };
         }
 
@@ -767,10 +764,7 @@ namespace System.Windows.Media.Effects
                             SamplerData ss = ssn.Value;
 
                             DUCE.IResource brush = ss._brush as DUCE.IResource;
-                            if (brush != null)
-                            {
-                                brush.AddRefOnChannel(channel);
-                            }
+                            brush?.AddRefOnChannel(channel);
                         }
                     }
                 }
@@ -807,10 +801,7 @@ namespace System.Windows.Media.Effects
                             SamplerData ss = ssn.Value;
 
                             DUCE.IResource brush = ss._brush as DUCE.IResource;
-                            if (brush != null)
-                            {
-                                brush.ReleaseOnChannel(channel);
-                            }
+                            brush?.ReleaseOnChannel(channel);
                         }
                     }
                 }

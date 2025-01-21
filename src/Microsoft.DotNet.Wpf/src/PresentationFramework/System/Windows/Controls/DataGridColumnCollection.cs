@@ -1052,10 +1052,7 @@ namespace System.Windows.Controls
             // size of the row presenter
             VirtualizingStackPanel vsp = (DataGridOwner == null) ? null :
                     DataGridOwner.InternalItemsHost as VirtualizingStackPanel;
-            if (vsp != null)
-            {
-                vsp.ResetMaximumDesiredSize();
-            }
+            vsp?.ResetMaximumDesiredSize();
         }
 
         /// <summary>

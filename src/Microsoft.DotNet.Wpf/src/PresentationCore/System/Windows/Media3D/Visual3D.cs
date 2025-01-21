@@ -1676,10 +1676,7 @@ namespace System.Windows.Media.Media3D
                 if (gAsVisual3D != null)
                 {
                     Transform3D transform = gAsVisual3D.Transform;
-                    if (transform != null)
-                    {
-                        transform.Append(ref m);
-                    }
+                    transform?.Append(ref m);
 
                     lastVisual3D = gAsVisual3D;
                     g = VisualTreeHelper.GetParent(gAsVisual3D);
@@ -1754,10 +1751,7 @@ namespace System.Windows.Media.Media3D
                 }
             }
 
-            if (finalTransform != null)
-            {
-                finalTransform.Freeze();
-            }
+            finalTransform?.Freeze();
 
             return finalTransform;
         }

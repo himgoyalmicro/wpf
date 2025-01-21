@@ -253,12 +253,9 @@ namespace System.Windows
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
-            if (map != null)
-            {
-                // Iterate through all the items in the map (each representing a DP)
-                // and promote them to locally-set.
-                map.Iterate(null, _promotionCallback);
-            }
+            // Iterate through all the items in the map (each representing a DP)
+            // and promote them to locally-set.
+            map?.Iterate(null, _promotionCallback);
         }
 
         /// <summary>
@@ -315,11 +312,10 @@ namespace System.Windows
         /// <param name="value">The cached default</param>
         private static void DefaultValueCachePromotionCallback(ArrayList list, int key, object value)
         {
-            if (value is Freezable cachedDefault)
-            {
-                // The only way to promote a cached default is to fire its Changed event.
-                cachedDefault.FireChanged();
-            }
+            Freezable cachedDefault = value as Freezable;
+
+            // The only way to promote a cached default is to fire its Changed event.
+            cachedDefault?.FireChanged();
         }
 
 

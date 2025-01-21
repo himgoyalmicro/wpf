@@ -3701,7 +3701,7 @@ namespace System.Windows.Markup
                                             Debug.Assert(typeAndSerializer == null ||
                                                          typeAndSerializer.SerializerType == null ||
                                                          propertyType == typeAndSerializer.ObjectType);
-                                            serializerType = typeAndSerializer != null ? typeAndSerializer.SerializerType : null;
+                                            serializerType = typeAndSerializer?.SerializerType;
 
                                             CompileComplexProperty(dynamicObject, propertyType, serializerType,
                                                     depth, assemblyName, typeFullName, dynamicObjectName,

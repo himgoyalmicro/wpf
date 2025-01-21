@@ -2156,10 +2156,7 @@ namespace System.Windows.Baml2006
             _context.LineOffset = _binaryReader.ReadInt32();
             // We do this cast on every line info, but that is harmless for perf since line info is only in debug build
             IXamlLineInfoConsumer consumer = _xamlNodesWriter as IXamlLineInfoConsumer;
-            if (consumer != null)
-            {
-                consumer.SetLineInfo(_context.LineNumber, _context.LineOffset);
-            }
+            consumer?.SetLineInfo(_context.LineNumber, _context.LineOffset);
         }
 
         // (line, offset)
@@ -2169,10 +2166,7 @@ namespace System.Windows.Baml2006
             _context.LineOffset = _binaryReader.ReadInt32();
             // We do this cast on every line info, but that is harmless for perf since line info is only in debug build
             IXamlLineInfoConsumer consumer = _xamlNodesWriter as IXamlLineInfoConsumer;
-            if (consumer != null)
-            {
-                consumer.SetLineInfo(_context.LineNumber, _context.LineOffset);
-            }
+            consumer?.SetLineInfo(_context.LineNumber, _context.LineOffset);
         }
 
         private void Process_PIMapping()
@@ -2411,10 +2405,7 @@ namespace System.Windows.Baml2006
                                 // This is needed to ensure that template root element carries a line info
                                 // which can then be used when it is instantiated
                                 IXamlLineInfoConsumer consumer = _xamlNodesWriter as IXamlLineInfoConsumer;
-                                if (consumer != null)
-                                {
-                                    consumer.SetLineInfo(_context.LineNumber, _context.LineOffset);
-                                }
+                                consumer?.SetLineInfo(_context.LineNumber, _context.LineOffset);
                             }
                         }
                     }
@@ -2760,10 +2751,7 @@ namespace System.Windows.Baml2006
         Freezable IFreezeFreezables.TryGetFreezable(string value)
         {
             Freezable freezable = null;
-            if (_freezeCache != null)
-            {
-                _freezeCache.TryGetValue(value, out freezable);
-            }
+            _freezeCache?.TryGetValue(value, out freezable);
 
             return freezable;
         }

@@ -145,10 +145,7 @@ namespace System.Windows.Annotations
             {
                 foreach (XmlElement content in _contents)
                 {
-                    if (content != null)
-                    {
-                        content.WriteTo(writer);
-                    }
+                    content?.WriteTo(writer);
                 }
             }
         }

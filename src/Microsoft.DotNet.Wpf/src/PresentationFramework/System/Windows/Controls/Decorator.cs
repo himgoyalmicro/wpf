@@ -204,10 +204,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             UIElement child = Child;
-            if (child != null)
-            {
-                child.Arrange(new Rect(arrangeSize));
-            }
+            child?.Arrange(new Rect(arrangeSize));
             return (arrangeSize);
         }
 

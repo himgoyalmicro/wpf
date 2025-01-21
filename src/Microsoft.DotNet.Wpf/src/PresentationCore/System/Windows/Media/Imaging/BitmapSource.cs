@@ -894,8 +894,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIWicConverter != null)
-                                    pIWicConverter.Close();
+                                pIWicConverter?.Close();
                             }
                         }
                     }

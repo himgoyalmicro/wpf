@@ -567,10 +567,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 finally
                 {
-                    if (webResponse != null)
-                    {
-                        webResponse.Close();
-                    }
+                    webResponse?.Close();
 
                     // bytes requested are downloaded or errored out
                     //  inform the caller that these ranges are available

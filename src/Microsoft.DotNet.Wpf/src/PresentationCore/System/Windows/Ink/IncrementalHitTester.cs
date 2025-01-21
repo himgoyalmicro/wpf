@@ -253,10 +253,7 @@ namespace System.Windows.Ink
             {
                 StrokeInfo strokeInfo = _strokeInfos[x];
             
-                if (strokeInfo != null)
-                {
-                    strokeInfo.Detach();
-                }
+                strokeInfo?.Detach();
             }
 
             _strokeInfos = newStrokeInfos;

@@ -155,10 +155,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if (Table != null)
-            {
-                Table.OnStructureChanged();
-            }
+            Table?.OnStructureChanged();
         }
 
         /// <summary>
@@ -269,7 +266,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return (RowGroup != null ? RowGroup.Table : null); } }
+        internal Table Table { get { return (RowGroup?.Table); } }
 
         /// <summary>
         /// Returns the row's cell collection

@@ -127,11 +127,8 @@ namespace System.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packages != null)
-                {
-                    // If the key doesn't exist, it is no op
-                    _packages.Remove(uri);
-                }
+                // If the key doesn't exist, it is no op
+                _packages?.Remove(uri);
             }
         }
 

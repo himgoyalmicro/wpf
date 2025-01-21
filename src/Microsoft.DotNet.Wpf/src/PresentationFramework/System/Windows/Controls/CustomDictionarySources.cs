@@ -96,10 +96,7 @@ namespace System.Windows.Controls
             ValidateUri(item);
             _uriList.Insert(index, item);
             
-            if (Speller != null)
-            {
-                Speller.OnDictionaryUriAdded(item);
-            }
+            Speller?.OnDictionaryUriAdded(item);
         }
 
         void IList<Uri>.RemoveAt(int index)
@@ -107,10 +104,7 @@ namespace System.Windows.Controls
             Uri uri = _uriList[index];
             _uriList.RemoveAt(index);
             
-            if (Speller != null)
-            {
-                Speller.OnDictionaryUriRemoved(uri);
-            }
+            Speller?.OnDictionaryUriRemoved(uri);
         }
 
         /// <summary>
@@ -130,15 +124,9 @@ namespace System.Windows.Controls
             {
                 ValidateUri(value);
                 Uri oldUri = _uriList[index];
-                if (Speller != null)
-                {
-                    Speller.OnDictionaryUriRemoved(oldUri);
-                }                
+                Speller?.OnDictionaryUriRemoved(oldUri);                
                 _uriList[index] = value;
-                if (Speller != null)
-                {
-                    Speller.OnDictionaryUriAdded(value);
-                }
+                Speller?.OnDictionaryUriAdded(value);
             }
         }
 
@@ -159,19 +147,13 @@ namespace System.Windows.Controls
                 _uriList.Add(item);
             }
 
-            if (Speller != null)
-            {
-                Speller.OnDictionaryUriAdded(item);
-            }
+            Speller?.OnDictionaryUriAdded(item);
         }
 
         void ICollection<Uri>.Clear()
         {
             _uriList.Clear();
-            if (Speller != null)
-            {
-                Speller.OnDictionaryUriCollectionCleared();
-            }
+            Speller?.OnDictionaryUriCollectionCleared();
         }
 
         bool ICollection<Uri>.Contains(Uri item)

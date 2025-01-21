@@ -85,9 +85,9 @@ namespace MS.Internal.Media
             {
                 visual.SetFlagsToRoot(value, flags);
             }
-            else if (visual3D != null)
+            else
             {
-                visual3D.SetFlagsToRoot(value, flags);
+                visual3D?.SetFlagsToRoot(value, flags);
             }
         }
 
@@ -281,7 +281,7 @@ namespace MS.Internal.Media
             {
                 Debug.Fail(String.Format(
                                "'{0}' is not a Visual or Visual3D. Caller is responsible for guaranteeing that element is a Visual type.",
-                               element != null ? element.GetType() : null));
+                               element?.GetType()));
             }
 
             return castSucceeded;

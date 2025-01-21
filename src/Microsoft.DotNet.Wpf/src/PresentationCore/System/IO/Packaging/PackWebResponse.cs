@@ -528,10 +528,7 @@ namespace System.IO.Packaging
                             _responseAvailable.Close();     // this call can not throw an exception
 
                             // timer
-                            if (_timeoutTimer != null)
-                            {
-                                _timeoutTimer.Dispose();
-                            }
+                            _timeoutTimer?.Dispose();
 }
                         finally
                         {
@@ -693,8 +690,7 @@ namespace System.IO.Packaging
                     // Prevent recursion - this sync-protected member is safe to set in a CachedResponse
                     // mode because we have no other thread in operation.
                     _parent._disposed = true;
-                    if (_parent._responseStream != null)
-                        _parent._responseStream.Close();
+                    _parent._responseStream?.Close();
                 }
                 finally
                 {
@@ -766,8 +762,7 @@ namespace System.IO.Packaging
                     if (!_disposed)
                     {
                         // dispose the timer - it is no longer needed
-                        if (_timeoutTimer != null)
-                            _timeoutTimer.Dispose();
+                        _timeoutTimer?.Dispose();
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
@@ -900,10 +895,7 @@ namespace System.IO.Packaging
                     }
 #endif
                     // clean up
-                    if (_timeoutTimer != null)
-                    {
-                        _timeoutTimer.Dispose();
-                    }
+                    _timeoutTimer?.Dispose();
                 }
                 finally
                 {
