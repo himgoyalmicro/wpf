@@ -112,7 +112,7 @@ namespace System.Windows.Media
             if (newContent != null)
             {
                 // Propagate notification handlers.
-                newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);                
+                newContent.PropagateChangedHandler(ContentsChangedHandler, adding: true);                
             }
 
             _content = newContent;
