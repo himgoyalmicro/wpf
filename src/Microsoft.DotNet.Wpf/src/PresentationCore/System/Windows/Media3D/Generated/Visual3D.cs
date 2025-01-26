@@ -65,7 +65,7 @@ namespace System.Windows.Media.Media3D
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp);
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (clock != null
