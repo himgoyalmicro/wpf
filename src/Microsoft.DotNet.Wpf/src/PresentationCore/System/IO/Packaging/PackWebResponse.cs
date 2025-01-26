@@ -498,7 +498,8 @@ namespace System.IO.Packaging
                             // prevent recursion in our call to _responseStream.Close()
                             _disposed = true;
 
-                            if (_responseStream is not null)
+#pragma warning disable IDE0031
+                            if (_responseStream != null)
                             {
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
@@ -509,6 +510,7 @@ namespace System.IO.Packaging
 #endif
                                 _responseStream.Close();
                             }
+#pragma warning restore IDE0031
 
                             // FullResponse
                             if (_fullResponse != null)
