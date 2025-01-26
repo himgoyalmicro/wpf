@@ -498,7 +498,7 @@ namespace System.IO.Packaging
                             // prevent recursion in our call to _responseStream.Close()
                             _disposed = true;
 
-                            if (_responseStream != null)
+                            if (_responseStream is not null)
                             {
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
