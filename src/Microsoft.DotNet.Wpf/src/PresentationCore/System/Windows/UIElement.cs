@@ -3073,7 +3073,7 @@ namespace System.Windows
                 }
             }
 
-            ChangeVisualClip(clipGeometry, true /* dontSetWhenClose */);
+            ChangeVisualClip(clipGeometry, dontSetWhenClose: true);
         }
 
         /// <summary>
@@ -3146,7 +3146,7 @@ namespace System.Windows
                 // Remove the notification handlers.
                 //
 
-                oldContent.PropagateChangedHandler(ContentsChangedHandler, false /* remove */);
+                oldContent.PropagateChangedHandler(ContentsChangedHandler, adding: false);
 
 
                 //
@@ -3166,7 +3166,7 @@ namespace System.Windows
             if (newContent != null)
             {
                 // Propagate notification handlers.
-                newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);
+                newContent.PropagateChangedHandler(ContentsChangedHandler, adding: true);
             }
 
             _drawingContent = newContent;
@@ -4644,7 +4644,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ false);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: false);
             }
         }
 
@@ -4655,7 +4655,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ true);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: true);
             }
         }
 
@@ -4667,7 +4667,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ true);
+                return TouchDevice.GetTouchesOver(this, includeWithin: true);
             }
         }
 
@@ -4679,7 +4679,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ false);
+                return TouchDevice.GetTouchesOver(this, includeWithin: false);
             }
         }
 

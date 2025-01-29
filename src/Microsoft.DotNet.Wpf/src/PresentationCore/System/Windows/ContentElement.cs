@@ -937,7 +937,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ false);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: false);
             }
         }
 
@@ -948,7 +948,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ true);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: true);
             }
         }
 
@@ -960,7 +960,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ true);
+                return TouchDevice.GetTouchesOver(this, includeWithin: true);
             }
         }
 
@@ -972,7 +972,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ false);
+                return TouchDevice.GetTouchesOver(this, includeWithin: false);
             }
         }
 
