@@ -9,7 +9,6 @@ using System.Windows.Media.Composition;
 using MS.Win32;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
-using SR = MS.Internal.PresentationCore.SR;
 using MS.Internal.PresentationCore;
 using System.Runtime.CompilerServices;
 

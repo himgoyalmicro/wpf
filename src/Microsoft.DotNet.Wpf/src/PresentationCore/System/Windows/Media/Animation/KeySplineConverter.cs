@@ -9,7 +9,6 @@ using System.Globalization;
 using System.Reflection;
 using MS.Internal;
 
-using SR = MS.Internal.PresentationCore.SR;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows

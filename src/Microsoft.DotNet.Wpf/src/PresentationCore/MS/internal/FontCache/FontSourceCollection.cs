@@ -92,7 +92,7 @@ namespace MS.Internal.FontCache
                             fontSources = new List<IFontSource>(files.Length);
 
                             foreach (string file in files)
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, true));
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), true));
                         }
                         else
                         {
@@ -101,7 +101,7 @@ namespace MS.Internal.FontCache
                             foreach (string file in Util.EnumerateFontsInDirectory(_uri.LocalPath))
                             {
                                 bool isComposite = Util.IsCompositeFont(file);
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, isComposite));
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), isComposite));
                             }
                         }
                     }
@@ -109,7 +109,7 @@ namespace MS.Internal.FontCache
                     {
                         fontSources = new List<IFontSource>(1);
                         if (Util.IsSupportedFontExtension(Path.GetExtension(_uri.LocalPath.AsSpan()), out bool isComposite))
-                            fontSources.Add(new FontSource(new Uri(_uri.LocalPath, UriKind.Absolute), _isWindowsFonts, isComposite));
+                            fontSources.Add(new FontSource(new Uri(_uri.LocalPath, UriKind.Absolute), isComposite));
                     }
                 }
                 else
@@ -128,12 +128,12 @@ namespace MS.Internal.FontCache
                             if (string.IsNullOrEmpty(resourceName))
                             {
                                 bool isComposite = Util.IsCompositeFont(Path.GetExtension(_uri.AbsoluteUri.AsSpan()));
-                                fontSources.Add(new FontSource(_uri, _isWindowsFonts, isComposite));
+                                fontSources.Add(new FontSource(_uri, isComposite));
                             }
                             else
                             {
                                 bool isComposite = Util.IsCompositeFont(Path.GetExtension(resourceName.AsSpan()));
-                                fontSources.Add(new FontSource(new Uri(_uri, resourceName), _isWindowsFonts, isComposite));
+                                fontSources.Add(new FontSource(new Uri(_uri, resourceName), isComposite));
                             }
                         }
                     }
@@ -170,8 +170,6 @@ namespace MS.Internal.FontCache
     
 
         private Uri                          _uri;
-
-        private bool                         _isWindowsFonts;
 
         // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.
         private bool                         _isFileSystemFolder;

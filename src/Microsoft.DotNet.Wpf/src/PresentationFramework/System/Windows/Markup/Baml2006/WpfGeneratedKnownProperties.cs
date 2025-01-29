@@ -2053,13 +2053,15 @@ namespace System.Windows.Baml2006
             Type type = typeof(System.Windows.ContentElement);
             DependencyProperty  dp = System.Windows.ContentElement.FocusableWhenNotEnabledProperty;
             var bamlMember = new WpfKnownMember( this,  // Schema Context
-                this.GetXamlType(typeof(System.Windows.ContentElement)), // DeclaringType
-                "FocusableWhenNotEnabled", // Name
-                dp, // DependencyProperty
-                false, // IsReadOnly
-                false // IsAttachable
-            );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                            this.GetXamlType(typeof(System.Windows.ContentElement)), // DeclaringType
+                            "FocusableWhenNotEnabled", // Name
+                            dp, // DependencyProperty
+                            false, // IsReadOnly
+                            false // IsAttachable
+                        )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4175,13 +4177,15 @@ namespace System.Windows.Baml2006
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.FocusableWhenNotEnabledProperty;
             var bamlMember = new WpfKnownMember( this,  // Schema Context
-                this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
-                "FocusableWhenNotEnabled", // Name
-                dp, // DependencyProperty
-                false, // IsReadOnly
-                false // IsAttachable
-            );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                            this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
+                            "FocusableWhenNotEnabled", // Name
+                            dp, // DependencyProperty
+                            false, // IsReadOnly
+                            false // IsAttachable
+                        )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
