@@ -38,6 +38,7 @@ using System.Runtime.CompilerServices;
 [assembly: DependencyAttribute("WindowsBase,", LoadHint.Always)]
 [assembly: DependencyAttribute("PresentationCore,", LoadHint.Always)]
 [assembly: DependencyAttribute("System.Xaml,", LoadHint.Sometimes)]
+[assembly: InternalsVisibleTo($"PresentationFramework.Tests, PublicKey={BuildInfo.WCP_PUBLIC_KEY_STRING}")]
 
 // Due to the XBAP script interop feature, we take a dependency on System.Core for the use
 // of the dynamic pseudo-type, on BrowserInteropHelper.HostScript. The dynamic type really
