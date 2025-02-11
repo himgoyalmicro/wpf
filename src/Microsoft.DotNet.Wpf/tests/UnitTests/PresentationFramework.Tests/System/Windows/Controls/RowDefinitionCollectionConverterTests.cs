@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace System.Windows.Controls.Tests;
 
-public class ColumnDefinitionCollectionConverterTests
+public class RowDefinitionCollectionConverterTests
 {
     public static IEnumerable<object?[]> CanConvertTo_TestData()
     {
@@ -32,7 +32,7 @@ public class ColumnDefinitionCollectionConverterTests
     [MemberData(nameof(CanConvertTo_TestData))]
     public void CanConvertTo_Invoke_ReturnsExpected(ITypeDescriptorContext context, Type destinationType, bool expected)
     {
-        var converter = new ColumnDefinitionCollectionConverter();
+        var converter = new RowDefinitionCollectionConverter();
         Assert.Equal(expected, converter.CanConvertTo(context, destinationType));
     }
 
@@ -53,13 +53,13 @@ public class ColumnDefinitionCollectionConverterTests
     [MemberData(nameof(CanConvertFrom_TestData))]
     public void CanConvertFrom_Invoke_ReturnsExpected(ITypeDescriptorContext context, Type sourceType, bool expected)
     {
-        var converter = new ColumnDefinitionCollectionConverter();
+        var converter = new RowDefinitionCollectionConverter();
         Assert.Equal(expected, converter.CanConvertFrom(context, sourceType));
     }
 
     public static IEnumerable<object[]> ConvertFrom_TestData()
     {
-        // Valid possible inputs for Column Definition
+        // Valid possible inputs for Row Definition
         List<string> possibleInputs = new List<string> { "100", "Auto", "*", "2*" };
         int count = possibleInputs.Count;
 
@@ -67,14 +67,14 @@ public class ColumnDefinitionCollectionConverterTests
         for (int i = 1; i < (1 << count); i++)
         {
             List<string> subset = new List<string>();
-            ColumnDefinitionCollection expectedOutput = new ColumnDefinitionCollection();
+            RowDefinitionCollection expectedOutput = new RowDefinitionCollection();
 
             for (int j = 0; j < count; j++)
             {
                 if ((i & (1 << j)) != 0)
                 {
-                    // Add the Column Definition to the expected output
-                    expectedOutput.Add(new ColumnDefinition { Width = GridLengthConverter.FromString(possibleInputs[j], CultureInfo.InvariantCulture) });
+                    // Add the Row Definition to the expected output
+                    expectedOutput.Add(new RowDefinition { Height = GridLengthConverter.FromString(possibleInputs[j], CultureInfo.InvariantCulture) });
                     subset.Add(possibleInputs[j]);
                 }
             }
@@ -91,9 +91,9 @@ public class ColumnDefinitionCollectionConverterTests
         }
     }
 
-    private static bool CompareColumnDefinitions(ColumnDefinitionCollection col1, object? col)
+    private static bool CompareRowDefinitions(RowDefinitionCollection col1, object? col)
     {
-        if (col is not ColumnDefinitionCollection col2)
+        if (col is not RowDefinitionCollection col2)
             return false;
         
         if (col1.Count != col2.Count)
@@ -101,9 +101,9 @@ public class ColumnDefinitionCollectionConverterTests
 
         for (int i = 0; i < col1.Count; i++)
         {
-            if (col1[i].Width != col2[i].Width ||
-                col1[i].MinWidth != col2[i].MinWidth ||
-                col1[i].MaxWidth != col2[i].MaxWidth)
+            if (col1[i].Height != col2[i].Height ||
+                col1[i].MinHeight != col2[i].MinHeight ||
+                col1[i].MaxHeight != col2[i].MaxHeight)
             {
                 return false;
             }
@@ -113,21 +113,21 @@ public class ColumnDefinitionCollectionConverterTests
 
     [Theory]
     [MemberData(nameof(ConvertFrom_TestData))]
-    public void ConvertFrom_ReturnsExpected(string value, ColumnDefinitionCollection expected)
+    public void ConvertFrom_ReturnsExpected(string value, RowDefinitionCollection expected)
     {
-        var converter = new ColumnDefinitionCollectionConverter();
-        bool result = CompareColumnDefinitions(expected, converter.ConvertFrom(value));
-        Assert.True(result, "Expected Column Definitions to be same.");
-        result = CompareColumnDefinitions(expected, converter.ConvertFrom(null, null, value));
-        Assert.True(result, "Expected Column Definitions to be same.");
-        result = CompareColumnDefinitions(expected, converter.ConvertFrom(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, value));
-        Assert.True(result, "Expected Column Definitions to be same.");
+        var converter = new RowDefinitionCollectionConverter();
+        bool result = CompareRowDefinitions(expected, converter.ConvertFrom(value));
+        Assert.True(result, "Expected Row Definitions to be same.");
+        result = CompareRowDefinitions(expected, converter.ConvertFrom(null, null, value));
+        Assert.True(result, "Expected Row Definitions to be same.");
+        result = CompareRowDefinitions(expected, converter.ConvertFrom(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, value));
+        Assert.True(result, "Expected Row Definitions to be same.");
     }
 
     [Fact]
     public void ConvertFrom_NullValue_ThrowsNotSupportedException()
     {
-        var converter = new ColumnDefinitionCollectionConverter();
+        var converter = new RowDefinitionCollectionConverter();
         Assert.Throws<NotSupportedException>(() => converter.ConvertFrom(null!));
         Assert.Throws<NotSupportedException>(() => converter.ConvertFrom(null, null, null));
         Assert.Throws<NotSupportedException>(() => converter.ConvertFrom(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, null));
@@ -145,7 +145,7 @@ public class ColumnDefinitionCollectionConverterTests
     [MemberData(nameof(ConvertFrom_InvalidValue_TestData))]
     public void ConvertFrom_InvokeInvalidValue_ThrowsNotSupportedException(string value)
     {
-        var converter = new ColumnDefinitionCollectionConverter();
+        var converter = new RowDefinitionCollectionConverter();
         Assert.Throws<FormatException>(() => converter.ConvertFrom(value));
         Assert.Throws<FormatException>(() => converter.ConvertFrom(null, null, value));
         Assert.Throws<FormatException>(() => converter.ConvertFrom(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, value));
