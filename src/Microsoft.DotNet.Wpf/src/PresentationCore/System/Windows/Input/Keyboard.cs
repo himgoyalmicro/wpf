@@ -388,8 +388,7 @@ namespace System.Windows.Input
                 }
             }
 
-            if((bool)element.GetValue(UIElement.IsEnabledProperty) == false
-               && (bool)element.GetValue(UIElement.FocusableWhenNotEnabledProperty) == false)
+            if((bool)element.GetValue(UIElement.IsEnabledProperty) == false)
             {
                 return false;
             }

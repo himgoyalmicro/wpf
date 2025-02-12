@@ -353,11 +353,6 @@ namespace System.Windows
         /// </summary>
         bool Focusable { get; set; }
 
-        ///// <summary>
-        /////     Gettor and Settor for FocusableWhenNotEnabled Property
-        ///// </summary>
-        //bool FocusableWhenNotEnabled { get; set; }
-
         // Text
         
         /// <summary>

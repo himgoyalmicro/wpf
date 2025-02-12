@@ -1101,9 +1101,7 @@ namespace System.Windows.Markup
         XmlDataProvider_XmlSerializer,
         MaxProperty,
         TextBox_IsReadOnly,
-        RichTextBox_IsReadOnly,
-        UIElement_FocusableWhenNotEnabled,
-        ContentElement_FocusableWhenNotEnabled,
+        RichTextBox_IsReadOnly
     }
 
 #if !BAMLDASM
@@ -1710,8 +1708,6 @@ namespace System.Windows.Markup
                     return System.Windows.Controls.ContentControl.HasContentProperty;
                 case KnownProperties.ContentElement_Focusable:
                     return System.Windows.ContentElement.FocusableProperty;
-                case KnownProperties.ContentElement_FocusableWhenNotEnabled:
-                    return System.Windows.ContentElement.FocusableWhenNotEnabledProperty;
                 case KnownProperties.ContentPresenter_Content:
                     return System.Windows.Controls.ContentPresenter.ContentProperty;
                 case KnownProperties.ContentPresenter_ContentSource:
@@ -1946,8 +1942,6 @@ namespace System.Windows.Markup
                     return System.Windows.UIElement.ClipToBoundsProperty;
                 case KnownProperties.UIElement_Focusable:
                     return System.Windows.UIElement.FocusableProperty;
-                case KnownProperties.UIElement_FocusableWhenNotEnabled:
-                    return System.Windows.UIElement.FocusableWhenNotEnabledProperty;
                 case KnownProperties.UIElement_IsEnabled:
                     return System.Windows.UIElement.IsEnabledProperty;
                 case KnownProperties.UIElement_RenderTransform:
@@ -2023,7 +2017,6 @@ namespace System.Windows.Markup
                 case KnownProperties.ContentControl_HasContent:
                     return KnownElements.ContentControl;
                 case KnownProperties.ContentElement_Focusable:
-                case KnownProperties.ContentElement_FocusableWhenNotEnabled:
                     return KnownElements.ContentElement;
                 case KnownProperties.ContentPresenter_Content:
                 case KnownProperties.ContentPresenter_ContentSource:
@@ -2373,7 +2366,6 @@ namespace System.Windows.Markup
                     return KnownElements.Trigger;
                 case KnownProperties.UIElement_ClipToBounds:
                 case KnownProperties.UIElement_Focusable:
-                case KnownProperties.UIElement_FocusableWhenNotEnabled:
                 case KnownProperties.UIElement_IsEnabled:
                 case KnownProperties.UIElement_RenderTransform:
                 case KnownProperties.UIElement_Visibility:
@@ -2925,8 +2917,6 @@ namespace System.Windows.Markup
                 case KnownElements.ContentElement:
                     if (string.Equals(fieldName, "Focusable", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentElement_Focusable;
-                    if (string.Equals(fieldName, "FocusableWhenNotEnabled", StringComparison.Ordinal))
-                        return (short)KnownProperties.ContentElement_FocusableWhenNotEnabled;
                     break;
                 case KnownElements.ContentPresenter:
                     if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
@@ -3621,8 +3611,6 @@ namespace System.Windows.Markup
                         return (short)KnownProperties.UIElement_ClipToBounds;
                     if (string.Equals(fieldName, "Focusable", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_Focusable;
-                    if (string.Equals(fieldName, "FocusableWhenNotEnabled", StringComparison.Ordinal))
-                        return (short)KnownProperties.UIElement_FocusableWhenNotEnabled;
                     if (string.Equals(fieldName, "IsEnabled", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_IsEnabled;
                     if (string.Equals(fieldName, "RenderTransform", StringComparison.Ordinal))
