@@ -698,14 +698,14 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            ValueTokenizerHelper tokenizer = new(source, formatProvider);
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
             Int32Collection resource = new Int32Collection();
 
             int value;
 
-            while (tokenizer.NextToken())
+            while (th.NextToken())
             {
-                value = Int32.Parse(tokenizer.GetCurrentToken(), formatProvider);
+                value = Convert.ToInt32(th.GetCurrentToken(), formatProvider);
 
                 resource.Add(value);
             }

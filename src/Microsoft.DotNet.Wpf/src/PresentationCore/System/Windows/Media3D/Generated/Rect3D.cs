@@ -168,11 +168,11 @@ namespace System.Windows.Media.Media3D
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            ValueTokenizerHelper tokenizer = new(source, formatProvider);
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
 
             Rect3D value;
 
-            ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
+            String firstToken = th.NextTokenRequired();
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
@@ -182,16 +182,17 @@ namespace System.Windows.Media.Media3D
             }
             else
             {
-                value = new Rect3D(double.Parse(firstToken, formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
+                value = new Rect3D(
+                    Convert.ToDouble(firstToken, formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
             }
 
             // There should be no more tokens in this string.
-            tokenizer.LastTokenRequired();
+            th.LastTokenRequired();
 
             return value;
         }

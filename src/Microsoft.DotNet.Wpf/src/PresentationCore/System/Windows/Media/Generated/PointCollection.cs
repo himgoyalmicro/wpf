@@ -698,16 +698,16 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            ValueTokenizerHelper tokenizer = new(source, formatProvider);
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
             PointCollection resource = new PointCollection();
 
             Point value;
 
-            while (tokenizer.NextToken())
+            while (th.NextToken())
             {
                 value = new Point(
-                    double.Parse(tokenizer.GetCurrentToken(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
+                    Convert.ToDouble(th.GetCurrentToken(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }

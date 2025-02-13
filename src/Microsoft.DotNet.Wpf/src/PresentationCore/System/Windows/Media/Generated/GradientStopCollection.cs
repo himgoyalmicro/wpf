@@ -774,16 +774,16 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            ValueTokenizerHelper tokenizer = new(source, formatProvider);
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
             GradientStopCollection resource = new GradientStopCollection();
 
             GradientStop value;
 
-            while (tokenizer.NextToken())
+            while (th.NextToken())
             {
                 value = new GradientStop(
-                    Parsers.ParseColor(tokenizer.GetCurrentToken().ToString(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
+                    Parsers.ParseColor(th.GetCurrentToken(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }

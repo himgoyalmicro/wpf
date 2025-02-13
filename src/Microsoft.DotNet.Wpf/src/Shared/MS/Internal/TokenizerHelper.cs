@@ -19,26 +19,48 @@ namespace MS.Internal.Markup
 namespace MS.Internal
 #endif
 {
-    internal sealed class TokenizerHelper
+    internal class TokenizerHelper
     {
         /// <summary>
-        /// Constructor for <see cref="TokenizerHelper"/> which accepts an <see cref="IFormatProvider"/>.
-        /// If the <see cref="IFormatProvider"/> is <see langword="null"/>, we use the thread's <see cref="IFormatProvider"/> info.
-        /// We will use ',' as the list separator, unless it's the same as the decimal separator.
-        /// If it *is*, then we can't determine if, say, "23,5" is one number or two. In this case, we will use ";" as the separator.
+        /// Constructor for TokenizerHelper which accepts an IFormatProvider.
+        /// If the IFormatProvider is null, we use the thread's IFormatProvider info.
+        /// We will use ',' as the list separator, unless it's the same as the
+        /// decimal separator.  If it *is*, then we can't determine if, say, "23,5" is one
+        /// number or two.  In this case, we will use ";" as the separator.
         /// </summary>
         /// <param name="str"> The string which will be tokenized. </param>
-        /// <param name="formatProvider"> The <see cref="IFormatProvider"/> which controls this tokenization. </param>
-        internal TokenizerHelper(string str, IFormatProvider formatProvider) : this(str, '\'', GetNumericListSeparator(formatProvider)) { }
+        /// <param name="formatProvider"> The IFormatProvider which controls this tokenization. </param>
+        internal TokenizerHelper(string str, IFormatProvider formatProvider)
+        {
+            char numberSeparator = GetNumericListSeparator(formatProvider);
+
+            Initialize(str, '\'', numberSeparator);
+        }
 
         /// <summary>
-        /// Initialize the <see cref="TokenizerHelper"/> with the string to tokenize,
+        /// Initialize the TokenizerHelper with the string to tokenize,
         /// the char which represents quotes and the list separator.
         /// </summary>
         /// <param name="str"> The string to tokenize. </param>
         /// <param name="quoteChar"> The quote char. </param>
         /// <param name="separator"> The list separator. </param>
-        internal TokenizerHelper(string str, char quoteChar, char separator)
+        internal TokenizerHelper(string str,
+                                 char quoteChar,
+                                 char separator)
+        {
+            Initialize(str, quoteChar, separator);
+        }
+
+        /// <summary>
+        /// Initialize the TokenizerHelper with the string to tokenize,
+        /// the char which represents quotes and the list separator.
+        /// </summary>
+        /// <param name="str"> The string to tokenize. </param>
+        /// <param name="quoteChar"> The quote char. </param>
+        /// <param name="separator"> The list separator. </param>
+        private void Initialize(string str,
+                                char quoteChar,
+                                char separator)
         {
             _str = str;
             _strLen = str == null ? 0 : str.Length;
@@ -51,8 +73,10 @@ namespace MS.Internal
             // character of the next token.
             while (_charIndex < _strLen)
             {
-                if (!char.IsWhiteSpace(_str[_charIndex]))
+                if (!Char.IsWhiteSpace(_str, _charIndex))
+                {
                     break;
+                }
 
                 ++_charIndex;
             }
@@ -68,23 +92,7 @@ namespace MS.Internal
 
             return _str.Substring(_currentTokenIndex,_currentTokenLength);
         }
-
-        /// <summary>
-        /// Sibling to <see cref="GetCurrentToken"/> with a minor difference; if there's no token, it will return <see cref="ReadOnlySpan{char}.Empty"/>
-        /// instead of <see langword="null"/>. However, if used with <see cref="NextToken()"/>, this edge-case is never hit.
-        /// </summary>
-        /// <returns></returns>
-        internal ReadOnlySpan<char> GetCurrentTokenAsSpan()
-        {
-            // If there's no current token, return empty span
-            if (_currentTokenIndex < 0)
-            {
-                return ReadOnlySpan<char>.Empty;
-            }
-
-            return _str.AsSpan().Slice(_currentTokenIndex, _currentTokenLength);
-        }
-
+        
         /// <summary>
         /// Throws an exception if there is any non-whitespace left un-parsed.
         /// </summary>
@@ -92,7 +100,7 @@ namespace MS.Internal
         {
             if (_charIndex != _strLen)
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));
+                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));
             }
         }
 
@@ -113,24 +121,10 @@ namespace MS.Internal
         {
             if (!NextToken(false))
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
+                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
             }
 
             return GetCurrentToken();
-        }
-
-        /// <summary>
-        /// Sibling to <see cref="NextTokenRequired"/>; advances to the next token, throws an <see cref="InvalidOperationException"/> if not present.
-        /// </summary>
-        /// <returns>The next token found</returns>
-        internal ReadOnlySpan<char> NextTokenRequiredAsSpan()
-        {
-            if (!NextToken(false))
-            {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
-            }
-
-            return GetCurrentTokenAsSpan();
         }
 
         /// <summary>
@@ -141,7 +135,7 @@ namespace MS.Internal
         {
             if (!NextToken(allowQuotedToken))
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
+                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
             }
 
             return GetCurrentToken();
@@ -175,14 +169,15 @@ namespace MS.Internal
 
             char currentChar = _str[_charIndex];
 
-            Debug.Assert(!char.IsWhiteSpace(currentChar), "Token started on Whitespace");
+            Debug.Assert(!Char.IsWhiteSpace(currentChar),"Token started on Whitespace");
 
             // setup the quoteCount
             int quoteCount = 0;
 
             // If we are allowing a quoted token and this token begins with a quote,
             // set up the quote count and skip the initial quote
-            if (allowQuotedToken && _quoteChar == currentChar)
+            if (allowQuotedToken &&
+                currentChar == _quoteChar)
             {
                 quoteCount++; // increment quote count
                 ++_charIndex; // move to next character
@@ -215,7 +210,7 @@ namespace MS.Internal
                         }
                     }
                 }
-                else if (char.IsWhiteSpace(currentChar) || (currentChar == separator))
+                else if ((Char.IsWhiteSpace(currentChar)) || (currentChar == separator))
                 {
                     if (currentChar == separator)
                     {
@@ -232,7 +227,7 @@ namespace MS.Internal
             // before the ending quote
             if (quoteCount > 0)
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperMissingEndQuote, _str));                
+                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperMissingEndQuote, _str));                
             }
 
             ScanToNextToken(separator); // move so at the start of the nextToken for next call
@@ -243,18 +238,14 @@ namespace MS.Internal
 
             if (_currentTokenLength < 1)
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
+                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
             }
 
             return true;
         }
 
-        /// <summary>
-        /// Helper function to move the _charIndex to the next token or to the end of the string.
-        /// </summary>
-        /// <param name="separator"></param>
-        /// <exception cref="InvalidOperationException"></exception>
-        private void ScanToNextToken(char separator)
+        // helper to move the _charIndex to the next token or to the end of the string
+        void ScanToNextToken(char separator)
         {
             // if already at end of the string don't bother
             if (_charIndex < _strLen)
@@ -264,9 +255,10 @@ namespace MS.Internal
                 // check that the currentChar is a space or the separator.  If not
                 // we have an error. this can happen in the quote case
                 // that the char after the quotes string isn't a char.
-                if (!(char.IsWhiteSpace(currentChar) || (currentChar == separator)))
+                if (!(currentChar == separator) &&
+                    !Char.IsWhiteSpace(currentChar))
                 {
-                    throw new InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));                    
+                    throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));                    
                 }
 
                 // loop until hit a character that isn't
@@ -284,10 +276,10 @@ namespace MS.Internal
 
                         if (argSepCount > 1)
                         {
-                            throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
+                            throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
                         }
                     }
-                    else if (char.IsWhiteSpace(currentChar))
+                    else if (Char.IsWhiteSpace(currentChar))
                     {
                         ++_charIndex;
                     }
@@ -303,14 +295,14 @@ namespace MS.Internal
 
                 if (argSepCount > 0 && _charIndex >= _strLen)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
+                    throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
                 }
             }
         }
 
         // Helper to get the numeric list separator for a given IFormatProvider.
         // Separator is a comma [,] if the decimal separator is not a comma, or a semicolon [;] otherwise.
-        internal static char GetNumericListSeparator(IFormatProvider provider)
+        static internal char GetNumericListSeparator(IFormatProvider provider)
         {
             char numericSeparator = ',';
 
@@ -319,7 +311,7 @@ namespace MS.Internal
             // this method returns the current culture's NumberFormatInfo.
             NumberFormatInfo numberFormat = NumberFormatInfo.GetInstance(provider);
 
-            Debug.Assert(numberFormat != null);
+            Debug.Assert(null != numberFormat);
 
             // Is the decimal separator is the same as the list separator?
             // If so, we use the ";".
@@ -339,17 +331,13 @@ namespace MS.Internal
             }
         }
 
-        // Readonly fields
-        private readonly char _quoteChar;
-        private readonly char _argSeparator;
-        private readonly string _str;
-        private readonly int _strLen;
-
-        // State fields
-        private int _charIndex;
-        private bool _foundSeparator;
-
+        char _quoteChar;
+        char _argSeparator;
+        string _str;
+        int _strLen;
+        int _charIndex;
         internal int _currentTokenIndex;
         internal int _currentTokenLength;
+        bool _foundSeparator;
     }
 }

@@ -699,14 +699,14 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            ValueTokenizerHelper tokenizer = new(source, formatProvider);
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
             DoubleCollection resource = new DoubleCollection();
 
             double value;
 
-            while (tokenizer.NextToken())
+            while (th.NextToken())
             {
-                value = double.Parse(tokenizer.GetCurrentToken(), formatProvider);
+                value = Convert.ToDouble(th.GetCurrentToken(), formatProvider);
 
                 resource.Add(value);
             }

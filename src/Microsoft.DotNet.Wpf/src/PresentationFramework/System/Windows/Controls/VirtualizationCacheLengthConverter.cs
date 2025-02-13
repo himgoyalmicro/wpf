@@ -2,17 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel.Design.Serialization;
+//
+// Description: Virtualization cache length converter implementation
+//
+
+using MS.Internal;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
-using MS.Internal;
 
 namespace System.Windows.Controls
 {
     /// <summary>
-    /// Converter class for converting instances of other types to and from <see cref="VirtualizationCacheLength"/> instances.
-    /// </summary> 
+    /// VirtualizationCacheLengthConverter - Converter class for converting
+    /// instances of other types to and from VirtualizationCacheLength instances.
+    /// </summary>
     public class VirtualizationCacheLengthConverter : TypeConverter
     {
         #region Public Methods
@@ -21,10 +26,10 @@ namespace System.Windows.Controls
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.
+        /// bool - True if thie converter can convert from the provided type, false if not.
         /// </returns>
-        /// <param name="typeDescriptorContext">The <see cref="ITypeDescriptorContext"/> for this call.</param>
-        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="sourceType"> The Type being queried for support. </param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -59,7 +64,15 @@ namespace System.Windows.Controls
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
+            if (    destinationType == typeof(InstanceDescriptor)
+                ||  destinationType == typeof(string))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -80,14 +93,20 @@ namespace System.Windows.Controls
         /// <param name="source"> The object to convert to a VirtualizationCacheLength. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source is null)
-                throw GetConvertFromException(source);
-
-            if (source is string stringValue)
-                return FromString(stringValue, cultureInfo);
-
-            // Conversion from a numeric type
-            return new VirtualizationCacheLength(Convert.ToDouble(source, cultureInfo));
+            if (source != null)
+            {
+                if (source is string)
+                {
+                    return (FromString((string)source, cultureInfo));
+                }
+                else
+                {
+                    //  conversion from numeric type
+                    double value = Convert.ToDouble(source, cultureInfo);
+                    return new VirtualizationCacheLength(value);
+                }
+            }
+            throw GetConvertFromException(source);
         }
 
         /// <summary>
@@ -111,20 +130,23 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (value is not VirtualizationCacheLength cacheLength)
-                throw GetConvertToException(value, destinationType);
-
-            if (destinationType == typeof(string))
-                return ToString(cacheLength, cultureInfo);
-
-            if (destinationType == typeof(InstanceDescriptor))
+            if (value != null
+                && value is VirtualizationCacheLength)
             {
-                ConstructorInfo ci = typeof(VirtualizationCacheLength).GetConstructor(new Type[] { typeof(double), typeof(VirtualizationCacheLengthUnit) });
-                return new InstanceDescriptor(ci, new object[] { cacheLength.CacheBeforeViewport, cacheLength.CacheAfterViewport });
-            }
+                VirtualizationCacheLength gl = (VirtualizationCacheLength)value;
 
-            // This will just throw an exception but it is a pattern
-            return base.ConvertTo(typeDescriptorContext, cultureInfo, value, destinationType);
+                if (destinationType == typeof(string))
+                {
+                    return (ToString(gl, cultureInfo));
+                }
+
+                if (destinationType == typeof(InstanceDescriptor))
+                {
+                    ConstructorInfo ci = typeof(VirtualizationCacheLength).GetConstructor(new Type[] { typeof(double), typeof(VirtualizationCacheLengthUnit) });
+                    return (new InstanceDescriptor(ci, new object[] { gl.CacheBeforeViewport, gl.CacheAfterViewport }));
+                }
+            }
+            throw GetConvertToException(value, destinationType);
         }
 
 
@@ -148,40 +170,50 @@ namespace System.Windows.Controls
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
-            return string.Create(cultureInfo, stackalloc char[128], $"{cacheLength.CacheBeforeViewport}{listSeparator}{cacheLength.CacheAfterViewport}");
+            return string.Create(cultureInfo, stackalloc char[128],
+                $"{cacheLength.CacheBeforeViewport}{listSeparator}{cacheLength.CacheAfterViewport}");
         }
-
         /// <summary>
-        /// Parses a <see cref="VirtualizationCacheLength"/> from a <see cref="string"/> given the <see cref="CultureInfo"/>.
+        /// Parses a VirtualizationCacheLength from a string given the CultureInfo.
         /// </summary>
-        /// <param name="input"><see cref="string"/> to parse from.</param>
-        /// <param name="cultureInfo">The <see cref="CultureInfo"/> that is respected during parsing.</param>
-        /// <returns>A new instance of <see cref="VirtualizationCacheLength"/>.</returns>
-        internal static VirtualizationCacheLength FromString(string input, CultureInfo cultureInfo)
+        /// <param name="s">String to parse from.</param>
+        /// <param name="cultureInfo">Culture Info.</param>
+        /// <returns>Newly created VirtualizationCacheLength instance.</returns>
+        static internal VirtualizationCacheLength FromString(string s, CultureInfo cultureInfo)
         {
-            ValueTokenizerHelper tokenizer = new(input, cultureInfo);
-            Span<double> lengths = stackalloc double[2];
+            TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
+            double[] lengths = new double[2];
             int i = 0;
 
             // Peel off each double in the delimited list.
-            while (tokenizer.NextToken())
+            while (th.NextToken())
             {
                 if (i >= 2)
-                    throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, input));
+                {
+                    i = 3;    // Set i to a bad value.
+                    break;
+                }
 
-                lengths[i] = double.Parse(tokenizer.GetCurrentToken(), cultureInfo);
+                lengths[i] = Double.Parse(th.GetCurrentToken(), cultureInfo);
                 i++;
             }
 
-            return i switch
+            // We have a reasonable interpreation for one value (all four edges), two values (horizontal, vertical),
+            // and four values (left, top, right, bottom).
+            switch (i)
             {
-                1 => new VirtualizationCacheLength(lengths[0]),
-                2 => new VirtualizationCacheLength(lengths[0], lengths[1]),
-                _ => throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, input)),
-            };
+                case 1:
+                    return new VirtualizationCacheLength(lengths[0]);
+
+                case 2:
+                    // Should allowInfinity be false ??? (Rob)
+                    return new VirtualizationCacheLength(lengths[0], lengths[1]);
+            }
+
+            throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s));
         }
 
-        #endregion
+    #endregion
     }
 }
 

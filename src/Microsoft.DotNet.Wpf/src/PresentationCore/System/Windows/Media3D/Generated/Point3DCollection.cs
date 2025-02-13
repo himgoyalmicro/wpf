@@ -699,17 +699,17 @@ namespace System.Windows.Media.Media3D
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            ValueTokenizerHelper tokenizer = new(source, formatProvider);
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
             Point3DCollection resource = new Point3DCollection();
 
             Point3D value;
 
-            while (tokenizer.NextToken())
+            while (th.NextToken())
             {
                 value = new Point3D(
-                    double.Parse(tokenizer.GetCurrentToken(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider),
-                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
+                    Convert.ToDouble(th.GetCurrentToken(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }
