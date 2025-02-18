@@ -8,10 +8,9 @@
 //
 //
 
-using System;
 using System.IO;
-using System.Collections.Generic;
 
+using Microsoft.Win32;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache
@@ -46,13 +45,16 @@ namespace MS.Internal.FontCache
             _uri = folderUri;
             _tryGetCompositeFontsOnly = tryGetCompositeFontsOnly;
 
+            bool isComposite = false;
+
             // Check whether the given uri is a font file. In some cases we will construct a DWrite Font Collection by passing
             // a file path and not a directory path. In this case we need to construct a FontCollection that only holds this
             // file.
-            bool isSingleSupportedFile = Util.IsSupportedFontExtension(Util.GetUriExtension(_uri), out bool isComposite);
+            bool isSingleSupportedFile = Util.IsSupportedFontExtension(Util.GetUriExtension(_uri), out isComposite);
             if (isSingleSupportedFile || !Util.IsEnumerableFontUriScheme(_uri))
             {
-                _fontSources = new List<IFontSource>(1) { new FontSource(_uri, false, isComposite) };
+                _fontSources = new List<Text.TextInterface.IFontSource>(1);                
+                _fontSources.Add(new FontSource(_uri, isComposite));
             }
             else
             {
@@ -81,65 +83,74 @@ namespace MS.Internal.FontCache
 
             lock (this)
             {
-                List<IFontSource> fontSources;
+                List<Text.TextInterface.IFontSource> fontSources;
                 if (_uri.IsFile)
-                {              
+                {
+                    ICollection<string> files;
+                    bool isOnlyCompositeFontFiles = false;
                     if (_isFileSystemFolder)
                     {
                         if (_tryGetCompositeFontsOnly)
                         {
-                            string[] files = Directory.GetFiles(_uri.LocalPath, $"*{Util.CompositeFontExtension}");
-                            fontSources = new List<IFontSource>(files.Length);
-
-                            foreach (string file in files)
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), true));
+                            files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                            isOnlyCompositeFontFiles = true;                               
                         }
                         else
                         {
-                            fontSources = new List<IFontSource>(8);
-
-                            foreach (string file in Util.EnumerateFontsInDirectory(_uri.LocalPath))
-                            {
-                                bool isComposite = Util.IsCompositeFont(file);
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), isComposite));
-                            }
+                            files = Directory.GetFiles(_uri.LocalPath);
                         }
                     }
                     else
                     {
-                        fontSources = new List<IFontSource>(1);
-                        if (Util.IsSupportedFontExtension(Path.GetExtension(_uri.LocalPath.AsSpan()), out bool isComposite))
-                            fontSources.Add(new FontSource(new Uri(_uri.LocalPath, UriKind.Absolute), isComposite));
+                        files = new string[1] {_uri.LocalPath};
+                    }
+
+                    fontSources = new List<Text.TextInterface.IFontSource>(files.Count);
+                    if (isOnlyCompositeFontFiles)
+                    {
+                        foreach (string file in files)
+                        {
+                            fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), true));
+                        }
+                    }
+                    else
+                    {
+                        bool isComposite;
+                        foreach (string file in files)
+                        {                            
+                            if (Util.IsSupportedFontExtension(Path.GetExtension(file), out isComposite))
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), isComposite));
+                        }
                     }
                 }
                 else
                 {
                     List<string> resourceEntries = FontResourceCache.LookupFolder(_uri);
 
-                    if (resourceEntries is not null)
+                    if (resourceEntries == null)
+                        fontSources = new List<Text.TextInterface.IFontSource>(0);
+                    else
                     {
+                        bool isComposite = false;
+
                         // Enumerate application resources, content files and container structure.
-                        fontSources = new List<IFontSource>(resourceEntries.Count);
+                        fontSources = new List<Text.TextInterface.IFontSource>(resourceEntries.Count);
 
                         foreach (string resourceName in resourceEntries)
                         {
                             // If resourceName is an empty string, this means that the _uri is a full file name;
                             // otherwise resourceName is a file name within a folder.
-                            if (string.IsNullOrEmpty(resourceName))
+                            if (String.IsNullOrEmpty(resourceName))
                             {
-                                bool isComposite = Util.IsCompositeFont(Path.GetExtension(_uri.AbsoluteUri.AsSpan()));
+                                isComposite = Util.IsCompositeFont(Path.GetExtension(_uri.AbsoluteUri));
                                 fontSources.Add(new FontSource(_uri, isComposite));
                             }
                             else
                             {
-                                bool isComposite = Util.IsCompositeFont(Path.GetExtension(resourceName.AsSpan()));
+                                isComposite = Util.IsCompositeFont(Path.GetExtension(resourceName));
                                 fontSources.Add(new FontSource(new Uri(_uri, resourceName), isComposite));
                             }
                         }
-                    }
-                    else
-                    {
-                        fontSources = new List<IFontSource>(0);
                     }
                 }
 
@@ -150,10 +161,10 @@ namespace MS.Internal.FontCache
         
         #region IEnumerable<FontSource> Members
 
-        IEnumerator<IFontSource> IEnumerable<IFontSource>.GetEnumerator()
+        IEnumerator<Text.TextInterface.IFontSource> System.Collections.Generic.IEnumerable<Text.TextInterface.IFontSource>.GetEnumerator()
         {
             SetFontSources();
-            return _fontSources.GetEnumerator();
+            return (IEnumerator<Text.TextInterface.IFontSource>)_fontSources.GetEnumerator();
         }
 
         #endregion
@@ -169,13 +180,13 @@ namespace MS.Internal.FontCache
         #endregion
     
 
-        private Uri                          _uri;
+        private Uri                         _uri;
 
         // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.
-        private bool                         _isFileSystemFolder;
-        private volatile IList<IFontSource>  _fontSources;
+        private bool                                           _isFileSystemFolder;
+        private volatile IList<Text.TextInterface.IFontSource> _fontSources;
 
         // Flag to indicate that only composite fonts in the provided URI location should be retrieved.        
-        private bool                         _tryGetCompositeFontsOnly;
+        private bool                               _tryGetCompositeFontsOnly;
     }
 }
