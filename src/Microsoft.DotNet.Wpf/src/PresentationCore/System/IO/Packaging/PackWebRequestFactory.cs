@@ -62,9 +62,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequestFactory - responding to uri: " + uri);
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequestFactory - responding to uri: {uri}");
 #endif
             // only inspect cache if part name is present because cache only contains an object, not
             // the stream it was derived from
@@ -101,9 +99,7 @@ namespace System.IO.Packaging
 #if DEBUG
                     if (_traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " + 
-                                "PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
+                            $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
 #endif
                     // use the cached object
                     return new PackWebRequest(uri, packageUri, partUri, c, 
@@ -114,9 +110,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequestFactory - spawning regular PackWebRequest");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequestFactory - spawning regular PackWebRequest");
 #endif
             return new PackWebRequest(uri, packageUri, partUri);
         }

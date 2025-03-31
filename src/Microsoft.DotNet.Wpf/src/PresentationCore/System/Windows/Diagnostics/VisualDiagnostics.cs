@@ -376,7 +376,7 @@ namespace System.Windows.Diagnostics
 
             private const string c_enableVisualTreeNotificationsEnvironmentVariable = "ENABLE_XAML_DIAGNOSTICS_VISUAL_TREE_NOTIFICATIONS";
             private const string c_devmodeRegKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock";
-            private const string c_devmodeRegKeyFullPath = @"HKEY_LOCAL_MACHINE\" + c_devmodeRegKey;
+            private const string c_devmodeRegKeyFullPath = $@"HKEY_LOCAL_MACHINE\{c_devmodeRegKey}";
             private const string c_devmodeValueName = "AllowDevelopmentWithoutDevLicense";
         }
     }

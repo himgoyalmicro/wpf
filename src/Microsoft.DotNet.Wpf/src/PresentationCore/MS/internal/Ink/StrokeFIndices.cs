@@ -68,7 +68,7 @@ namespace MS.Internal.Ink
         /// </summary>
         public override string ToString()
         {
-            return "{" + GetStringRepresentation(_beginFIndex) + "," + GetStringRepresentation(_endFIndex) + "}";
+            return $"{{{GetStringRepresentation(_beginFIndex)},{GetStringRepresentation(_endFIndex)}}}";
 		}
 
         /// <summary>

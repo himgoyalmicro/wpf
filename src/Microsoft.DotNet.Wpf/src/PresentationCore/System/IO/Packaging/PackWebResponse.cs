@@ -64,9 +64,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "PackWebResponse - Creating response ");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse - Creating response ");
 #endif
             _innerUri = innerUri;
             _partName = partName;           // may be null
@@ -87,9 +85,7 @@ namespace System.IO.Packaging
 #if DEBUG
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "PackWebResponse() starting timeout timer " + innerRequest.Timeout + " ms");
+                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse() starting timeout timer {innerRequest.Timeout} ms");
 #endif
                 _timeoutTimer = new Timer(new TimerCallback(TimeoutCallback), null, innerRequest.Timeout, Timeout.Infinite);
             }
@@ -97,9 +93,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "PackWebResponse() BeginGetResponse()");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse() BeginGetResponse()");
 #endif
 
             // Issue the async request to get our "real" WebResponse
@@ -131,9 +125,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "PackWebResponse - Creating response from Package Cache");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse - Creating response from Package Cache");
 #endif
             _uri = uri;
             _innerUri = innerUri;
@@ -170,9 +162,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "PackWebResponse - GetResponseStream()");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse - GetResponseStream()");
 #endif
             // create and return only a single stream for multiple calls
             if (_responseStream == null)
@@ -192,9 +182,7 @@ namespace System.IO.Packaging
                 {
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " +
-                                "PackWebResponse - GetResponseStream() - stream length not available - disabling progressive download");
+                            $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse - GetResponseStream() - stream length not available - disabling progressive download");
                 }
 #endif
 
@@ -482,9 +470,7 @@ namespace System.IO.Packaging
 #if DEBUG
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " +
-                                "PackWebResponse.Close()");
+                            $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.Close()");
 #endif
                     // prevent async callback from accessing these resources while we are disposing them
                     lock (_lockObject)
@@ -503,9 +489,7 @@ namespace System.IO.Packaging
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                            System.Diagnostics.Trace.TraceInformation(
-                                   DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                   Environment.CurrentManagedThreadId + ": " +
-                                   "PackWebResponse.Close() - close stream");
+                               $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.Close() - close stream");
 #endif
                                 _responseStream.Close();
                             }
@@ -516,9 +500,7 @@ namespace System.IO.Packaging
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
-                                    DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    Environment.CurrentManagedThreadId + ": " +
-                                    "PackWebResponse.Close() - close response");
+                                $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.Close() - close response");
 #endif
                                 // always call Dispose to satisfy FxCop
                                 ((IDisposable)_fullResponse).Dispose();
@@ -539,9 +521,7 @@ namespace System.IO.Packaging
 #if DEBUG
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
-                                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        Environment.CurrentManagedThreadId + ": " +
-                                        "PackWebResponse.Close() - exiting");
+                                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.Close() - exiting");
 #endif
                         }
                     } // lock
@@ -598,9 +578,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "CachedResponse - Getting response stream");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: CachedResponse - Getting response stream");
 #endif
                     // only one copy
                     if (_parent._responseStream == null)
@@ -615,18 +593,14 @@ namespace System.IO.Packaging
 #if DEBUG
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
-                                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        Environment.CurrentManagedThreadId + ": " +
-                                        "CachedResponse - Getting part " + _parent._partName);
+                                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: CachedResponse - Getting part {_parent._partName}");
 #endif
                             // open the requested stream
                             PackagePart p = _cacheEntry.GetPart(_parent._partName);
 #if DEBUG
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
-                                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        Environment.CurrentManagedThreadId + ": " +
-                                        "CachedResponse - Getting part stream ");
+                                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: CachedResponse - Getting part stream ");
 #endif
                             Stream s = p.GetSeekableStream(FileMode.Open, FileAccess.Read);
 
@@ -642,9 +616,7 @@ namespace System.IO.Packaging
 #if DEBUG
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
-                                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        Environment.CurrentManagedThreadId + ": " +
-                                        "CachedResponse - Getting part contenttype");
+                                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: CachedResponse - Getting part contenttype");
 #endif
                             _parent._mimeType = new MS.Internal.ContentType(p.ContentType);
 
@@ -655,9 +627,7 @@ namespace System.IO.Packaging
 #if DEBUG
                                 if (PackWebRequestFactory._traceSwitch.Enabled)
                                     System.Diagnostics.Trace.TraceInformation(
-                                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                            Environment.CurrentManagedThreadId + ": " +
-                                            "CachedResponse - Length is available from stream");
+                                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: CachedResponse - Length is available from stream");
 #endif
                                 _parent._fullStreamLength = s.Length;
                             }
@@ -666,9 +636,7 @@ namespace System.IO.Packaging
                             {
                                 if (PackWebRequestFactory._traceSwitch.Enabled)
                                     System.Diagnostics.Trace.TraceInformation(
-                                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                            Environment.CurrentManagedThreadId + ": " +
-                                            "CachedResponse - Length is not available from stream" + _parent._partName);
+                                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: CachedResponse - Length is not available from stream{_parent._partName}");
                             }
 #endif
                             // re-use existing member variable
@@ -766,9 +734,7 @@ namespace System.IO.Packaging
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
-                                    DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    Environment.CurrentManagedThreadId + ": " +
-                                    "PackWebResponse.ResponseCallBack()");
+                                $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.ResponseCallBack()");
 #endif
                         // Dispose/Close waits on _responseAvailable so we know that these are available
                         // No need to lock.
@@ -788,9 +754,7 @@ namespace System.IO.Packaging
 #if DEBUG
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceError(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " +
-                                "PackWebResponse.ResponseCallBack() exception");
+                            $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.ResponseCallBack() exception");
 #endif
                     // inform other thread of error condition
                     _responseError = true;
@@ -803,9 +767,7 @@ namespace System.IO.Packaging
     #if DEBUG
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " +
-                                "PackWebResponse.ResponseCallBack() - signal response available");
+                            $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.ResponseCallBack() - signal response available");
     #endif
 
 // We need the original webRequest to get HttpStack information so that they can be used to make
@@ -832,9 +794,7 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "PackWebResponse.WaitForResponse()");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.WaitForResponse()");
 #endif
             // wait for the response callback
             _responseAvailable.WaitOne();
@@ -874,9 +834,7 @@ namespace System.IO.Packaging
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceError(
-                                    DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    Environment.CurrentManagedThreadId + ": " +
-                                    "PackWebResponse.TimerCallback() timeout - throwing exception");
+                                $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.TimerCallback() timeout - throwing exception");
 #endif
                         // caller is still blocked so need to throw to indicate timeout
                         // create exception to be thrown on client thread, then unblock the caller
@@ -889,9 +847,7 @@ namespace System.IO.Packaging
                     {
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
-                                    DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    Environment.CurrentManagedThreadId + ": " +
-                                    "PackWebResponse.TimerCallback() no timeout - ignoring callback");
+                                $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebResponse.TimerCallback() no timeout - ignoring callback");
                     }
 #endif
                     // clean up
