@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //  Synopsis: Implements class Parsers for internal use of type converters
@@ -196,10 +196,10 @@ namespace MS.Internal
             bool isContextColor;
             string trimmedColor = KnownColors.MatchColor(color, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
 
-            if ((isPossibleKnowColor == false) &&
-                (isNumericColor == false) &&
-                (isScRgbColor == false) &&
-                (isContextColor== false))
+            if ((!isPossibleKnowColor) &&
+                (!isNumericColor) &&
+                (!isScRgbColor) &&
+                (!isContextColor))
             {
                 throw new FormatException(SR.Parsers_IllegalToken);
             }

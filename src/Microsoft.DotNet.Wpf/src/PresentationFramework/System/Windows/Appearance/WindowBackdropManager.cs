@@ -30,7 +30,7 @@ internal static class WindowBackdropManager
         if (window is null ||
                 !IsSupported(backdropType) ||
                 window.AllowsTransparency ||
-                IsBackdropEnabled == false)
+!IsBackdropEnabled)
         {
             return false;
         }
