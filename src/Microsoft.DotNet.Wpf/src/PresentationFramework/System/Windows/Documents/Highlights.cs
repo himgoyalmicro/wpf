@@ -402,7 +402,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // EventArgs for the Changed event.
-        private class LayerHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class LayerHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal LayerHighlightChangedEventArgs(ReadOnlyCollection<TextSegment> ranges, Type ownerType)
@@ -412,7 +412,7 @@ namespace System.Windows.Documents
             }
 
             // List of changed ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {
