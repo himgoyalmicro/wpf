@@ -7,8 +7,6 @@ using System.Globalization;
 using System.Diagnostics;
 using MS.Internal;
 
-using SR = MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Input
 {
     /// <summary>
