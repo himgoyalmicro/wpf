@@ -1,18 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
-using System.Windows.Interop;
+using System.Collections;
 using System.Globalization;
-using System.Diagnostics;
+using System.Windows.Interop;
 using MS.Internal;
 
 namespace System.Windows.Input
 {
     /// <summary>
-    ///  <see cref="AccessKeyManager"/> object is created on demand and it is one per thread.
-    /// It attaches an event handler for PostProcessInput on <see cref="InputManager"/> and expose registration and 
-    /// unregistration of access keys. When the access key is pressed it calls OnAccessKey method on the target element
+    ///   AccessKeyManager object is created on demand and it is one per thread.
+    /// It attached an event handler for PostProcessInput on InputManager and expose registration and 
+    /// unregistration of access keys. When the access key is pressed in calls OnAccessKey method on the target element
     /// </summary>
     public sealed class AccessKeyManager
     {
@@ -27,20 +26,25 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
-            AccessKeyManager instance = AccessKeyManager.Current;
+            AccessKeyManager akm = AccessKeyManager.Current;
 
-            if (!instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
+            lock (akm._keyToElements)
             {
-                elements = new List<WeakReference<IInputElement>>(1);
-                instance._keyToElements[key] = elements;
-            }
-            else
-            {
-                // There were some elements there, remove dead ones
-                PurgeDead(elements, null);
-            }
+                ArrayList elements = (ArrayList)akm._keyToElements[key];
 
-            elements.Add(new WeakReference<IInputElement>(element));
+                if (elements == null)
+                {
+                    elements = new ArrayList(1);
+                    akm._keyToElements[key] = elements;
+                }
+                else
+                {
+                    // There were some elements there, remove dead ones
+                    PurgeDead(elements, null);
+                }
+
+                elements.Add(new WeakReference(element));
+            }
         }
 
         /// <summary>
@@ -53,15 +57,20 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
-            AccessKeyManager instance = AccessKeyManager.Current;
+            AccessKeyManager akm = AccessKeyManager.Current;
 
-            // Get all elements bound to this key and remove this element
-            if (instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
+            lock (akm._keyToElements)
             {
-                PurgeDead(elements, element);
-                if (elements.Count == 0)
+                // Get all elements bound to this key and remove this element
+                ArrayList elements = (ArrayList)akm._keyToElements[key];
+
+                if (elements != null)
                 {
-                    instance._keyToElements.Remove(key);
+                    PurgeDead(elements, element);
+                    if (elements.Count == 0)
+                    {
+                        akm._keyToElements.Remove(key);
+                    }
                 }
             }
         }
@@ -76,8 +85,9 @@ namespace System.Windows.Input
         {
             key = NormalizeKey(key);
 
-            List<IInputElement> targets = GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
-            return targets != null && targets.Count > 0;
+            AccessKeyManager akm = AccessKeyManager.Current;
+            List<IInputElement> targets = akm.GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
+            return (targets != null && targets.Count > 0);
         }
 
         /// <summary>
@@ -94,7 +104,8 @@ namespace System.Windows.Input
         {
             key = NormalizeKey(key);
 
-            return ProcessKeyForScope(scope, key, isMultiple, false) == ProcessKeyResult.MoreMatches;
+            AccessKeyManager akm = AccessKeyManager.Current;
+            return (akm.ProcessKeyForScope(scope, key, isMultiple,false) == ProcessKeyResult.MoreMatches);
         }
 
         /// <summary>
@@ -111,7 +122,7 @@ namespace System.Windows.Input
 
             if (key != firstCharacter)
             {
-                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, nameof(key)));
+                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, "key"));
             }
 
             return firstCharacter.ToUpperInvariant();
@@ -163,9 +174,9 @@ namespace System.Windows.Input
         {
             get 
             {
-                s_accessKeyManager ??= new AccessKeyManager();
-
-                return s_accessKeyManager;
+                if (_accessKeyManager == null)
+                    _accessKeyManager = new AccessKeyManager();
+                return _accessKeyManager;
             }
         }
 
@@ -180,10 +191,9 @@ namespace System.Windows.Input
             LastMatch
         }
 
-        private static void PostProcessInput(object sender, ProcessInputEventArgs e)
+        private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
-            if (e.StagingItem.Input.Handled)
-                return;
+            if (e.StagingItem.Input.Handled) return;
 
             if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent)
             {
@@ -196,7 +206,7 @@ namespace System.Windows.Input
 }
 
         // Assumes key is already a single unicode character
-        private static ProcessKeyResult ProcessKeyForSender(object sender, string key, bool existsElsewhere, bool userInitiated)
+        private ProcessKeyResult ProcessKeyForSender(object sender, string key, bool existsElsewhere, bool userInitiated)
         {
             // This comes from OnKeyDown or OnText and though it is a single character it might not be uppercased.
             key = key.ToUpperInvariant();
@@ -208,14 +218,14 @@ namespace System.Windows.Input
         }
 
         // Assumes key is already a single unicode character AND is uppercased
-        private static ProcessKeyResult ProcessKeyForScope(object scope, string key, bool existsElsewhere, bool userInitiated)
+        private ProcessKeyResult ProcessKeyForScope(object scope, string key, bool existsElsewhere, bool userInitiated)
         {
             List<IInputElement> targets = GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
 
             return ProcessKey(targets, key, existsElsewhere, userInitiated);
         }
 
-        private static ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
+        private ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
         {
             if (targets != null)
             {
@@ -270,36 +280,43 @@ namespace System.Windows.Input
             return ProcessKeyResult.NoMatch;
         }
 
-        private static void OnText(TextCompositionEventArgs e)
+        private void OnText(TextCompositionEventArgs e)
         {
             // AccessKeyManager handles both text and system text.
             string text = e.Text;
-            if (string.IsNullOrEmpty(text))
+            if ((text == null) || (text.Length == 0))
             {
                 text = e.SystemText;
             }
 
-            if (!string.IsNullOrEmpty(text))
+            if ((text != null) && (text.Length > 0))
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false, e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
             }
         }
 
-        private static void OnKeyDown(KeyEventArgs e)
+        private void OnKeyDown(KeyEventArgs e)
         {
-            string text = e.RealKey switch
-            {
-                Key.Enter => "\x000D",
-                Key.Escape => "\x001B",
-                _ => null
-            };
+            KeyboardDevice keyboard = (KeyboardDevice)e.Device;
 
-            if (text is not null)
+            string text = null;
+            switch (e.RealKey)
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false, e.UserInitiated) != ProcessKeyResult.NoMatch)
+                case Key.Enter :
+                     text = "\x000D";
+                     break;
+
+                case Key.Escape :
+                     text = "\x001B";
+                     break;
+            }
+
+            if (text != null)
+            {
+                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
@@ -313,7 +330,7 @@ namespace System.Windows.Input
         /// <param name="sender"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        private static List<IInputElement> GetTargetsForSender(IInputElement sender, string key)
+        private List<IInputElement> GetTargetsForSender(IInputElement sender, string key)
         {
             // Find the scope for the sender -- will be matched against the possible targets' scopes
             AccessKeyInformation senderInfo = GetInfoForElement(sender, key);
@@ -321,12 +338,12 @@ namespace System.Windows.Input
             return GetTargetsForScope(senderInfo.Scope, key, sender, senderInfo);
         }
         
-        private static List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
+        private List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
         {
             // null scope defaults to the active window
             if (scope == null)
             {
-                scope = GetActiveSource();
+                scope = CriticalGetActiveSource();
 
                 // if there is no active scope then give up
                 if (scope == null)
@@ -341,21 +358,21 @@ namespace System.Windows.Input
                 // If AltKey is required and it isnt pressed then dont match against any targets
                 return null;
             }
-
+            
             //Scoping:
             //    1) When key is pressed, find matching AKs -> S
             //    3) find scope for keyevent.Source
             //    4) find scope for everything in S. throw away those that don't match.
             //    5) Final selection uses S.  yay!
-            //
+            // 
+            // 
+            List<IInputElement> possibleElements;
+            lock (_keyToElements)
+            {
+                possibleElements = CopyAndPurgeDead(_keyToElements[key] as ArrayList);
+            }
 
-            AccessKeyManager instance = AccessKeyManager.Current;
-
-            if (!instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
-                return null;
-
-            // Returns a copy of strong references to IInputElements from the elements collection
-            List<IInputElement> possibleElements = CopyAndPurgeDead(elements);
+            if (possibleElements == null) return null;
 
             List<IInputElement> finalTargets = new List<IInputElement>(1);
 
@@ -369,12 +386,11 @@ namespace System.Windows.Input
                     {
                         AccessKeyInformation elementInfo = GetInfoForElement(element, key);
 
-                        if (elementInfo.Target is null)
-                            continue;
+                        if (elementInfo.target == null) continue;
 
                         if (scope == elementInfo.Scope)
                         {
-                            finalTargets.Add(elementInfo.Target);
+                            finalTargets.Add(elementInfo.target);
                         }
                     }
                 }
@@ -382,9 +398,9 @@ namespace System.Windows.Input
                 {
                     // This is the same element that sent the event so it must be in the same scope.  
                     // Just add it to the final targets
-                    if (senderInfo.Target is not null)
+                    if (senderInfo.target != null)
                     {
-                        finalTargets.Add(senderInfo.Target);
+                        finalTargets.Add(senderInfo.target);
                     }
                 }
             }
@@ -398,28 +414,37 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         /// <param name="key"></param>
         /// <returns>Scope for the given element, null means the context global scope</returns>
-        private static AccessKeyInformation GetInfoForElement(IInputElement element, string key)
+        private AccessKeyInformation GetInfoForElement(IInputElement element, string key)
         {
-            if (element is null)
-                return new AccessKeyInformation(GetActiveSource(), null);
-            
-            AccessKeyPressedEventArgs args = new(key);
-            element.RaiseEvent(args);
+            AccessKeyInformation info = new AccessKeyInformation();
+            if (element != null)
+            {
+                AccessKeyPressedEventArgs args = new AccessKeyPressedEventArgs(key);
 
-            if (args.Scope is not null)
-                return new AccessKeyInformation(args.Scope, args.Target);
-
-            return new AccessKeyInformation(GetSourceForElement(element), args.Target);  
+                element.RaiseEvent(args);
+                info.Scope = args.Scope;
+                info.target = args.Target;
+                if (info.Scope == null)
+                {
+                    info.Scope = GetSourceForElement(element);
+                }
+            }
+            else
+            {
+                info.Scope = CriticalGetActiveSource();
+            }
+            return info;
         }
 
-        private static PresentationSource GetSourceForElement(IInputElement element)
+        private PresentationSource GetSourceForElement(IInputElement element)
         {
             PresentationSource source = null;
+            DependencyObject elementDO = element as DependencyObject;
 
             // Use internal helpers to try to find the source of the element.
             // Because IInputElements can move around without notification we need to
             // look up the source every time.
-            if (element is DependencyObject elementDO)
+            if (elementDO != null)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(elementDO);
 
@@ -428,13 +453,13 @@ namespace System.Windows.Input
                     source = PresentationSource.CriticalFromVisual(containingVisual);
                 }
             }
-
+            
             // NOTE: source can be null but IsTargetable(element) == true if the
             // element is in an orphaned tree but the tree has not yet been garbage collected.  
             return source;
         }
 
-        private static PresentationSource GetActiveSource()
+        private PresentationSource GetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
             if (hwnd != IntPtr.Zero)
@@ -442,13 +467,30 @@ namespace System.Windows.Input
 
             return null;
         }
+
+        private PresentationSource CriticalGetActiveSource()
+        {
+            IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
+            if (hwnd != IntPtr.Zero)
+                return HwndSource.CriticalFromHwnd(hwnd);
+
+            return null;
+        }
+
         
-        private static bool IsTargetable(IInputElement element)
+        private bool IsTargetable(IInputElement element)
         {
             DependencyObject uielement = InputElement.GetContainingUIElement((DependencyObject)element);
 
             // For an element to be a valid target it must be visible and enabled
-            return uielement is not null && IsVisible(uielement) && IsEnabled(uielement);
+            if (uielement != null 
+                && IsVisible(uielement)
+                && IsEnabled(uielement))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private static bool IsVisible(DependencyObject element)
@@ -456,9 +498,11 @@ namespace System.Windows.Input
             while (element != null)
             {
                 Visibility visibility;
+                UIElement uiElem = element as UIElement;
                 UIElement3D uiElem3D = element as UIElement3D;
+                
+                if (uiElem != null)
 
-                if (element is UIElement uiElem)
                 {
                     visibility = uiElem.Visibility;
                 }
@@ -481,38 +525,46 @@ namespace System.Windows.Input
         // returns whether the given DO is enabled or not
         private static bool IsEnabled(DependencyObject element)
         {
-            return (bool)element.GetValue(UIElement.IsEnabledProperty);                               
+            return ((bool)element.GetValue(UIElement.IsEnabledProperty));                               
         }
 
-        private readonly struct AccessKeyInformation
+        private struct AccessKeyInformation
         {
-            public readonly object Scope { get; }
-            public readonly UIElement Target { get; }
-
-            /// <summary>
-            /// Represents an empty value where <see cref="Scope"/> and <see cref="Target"/> are <see langword="null"/>.
-            /// </summary>
-            public static AccessKeyInformation Empty => s_empty;
-
-            public AccessKeyInformation(object scope, UIElement target)
+            public object Scope
             {
-                Scope = scope;
-                Target = target;
+                get 
+                {
+                    return _scope;
+                }
+                set 
+                {
+                    _scope = value;
+                }
             }
 
-            /// <summary>
-            /// Holds the singleton for <see cref="AccessKeyInformation.Empty"/>.
-            /// </summary>
-            private static readonly AccessKeyInformation s_empty = new();
+            
+            public UIElement target;
 
+            private static AccessKeyInformation _empty = new AccessKeyInformation();
+            public static AccessKeyInformation Empty
+            {
+                get
+                {
+                    return _empty;
+                }
+            }
+
+            private object _scope;
         }
 
-        private static void PurgeDead(List<WeakReference<IInputElement>> elements, IInputElement elementToRemove)
+        private static void PurgeDead(ArrayList elements, object elementToRemove)
         {
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference<IInputElement> weakReference = elements[i];
-                if (!weakReference.TryGetTarget(out IInputElement element) || element == elementToRemove)
+                WeakReference weakReference = (WeakReference)elements[i];
+                object element = weakReference.Target;
+
+                if (element == null || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
                 }
@@ -524,24 +576,31 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        ///     Takes a List of WeakReferences, removes the dead references and returns
+        ///     Takes an ArrayList of WeakReferences, removes the dead references and returns
         ///     a generic List of IInputElements (strong references)
         /// </summary>
-        private static List<IInputElement> CopyAndPurgeDead(List<WeakReference<IInputElement>> elements)
+        private static List<IInputElement> CopyAndPurgeDead(ArrayList elements)
         {
+            if (elements == null)
+            {
+                return null;
+            }
+
             List<IInputElement> copy = new List<IInputElement>(elements.Count);
 
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference<IInputElement> weakReference = elements[i];
+                WeakReference weakReference = (WeakReference)elements[i];
+                object element = weakReference.Target;
 
-                if (!weakReference.TryGetTarget(out IInputElement element))
+                if (element == null)
                 {
                     elements.RemoveAt(i);
                 }
                 else
                 {
-                    copy.Add(element);
+                    Debug.Assert(element is IInputElement, "Element in AccessKeyManager store was not of type IInputElement");
+                    copy.Add((IInputElement)element);
                     i++;
                 }
             }
@@ -580,7 +639,7 @@ namespace System.Windows.Input
         ///     The primary access key element for an element.  This is stored as a WeakReference.
         /// </summary>
         private static readonly DependencyProperty AccessKeyElementProperty =
-            DependencyProperty.RegisterAttached("AccessKeyElement", typeof(WeakReference<IInputElement>), typeof(AccessKeyManager));
+            DependencyProperty.RegisterAttached("AccessKeyElement", typeof(WeakReference), typeof(AccessKeyManager));
 
         #endregion
 
@@ -588,16 +647,16 @@ namespace System.Windows.Input
 
         internal static string InternalGetAccessKeyCharacter(DependencyObject d)
         {
-            return GetAccessKeyCharacter(d);
+            return Current.GetAccessKeyCharacter(d);
         }
 
-        private static string GetAccessKeyCharacter(DependencyObject d)
+        private string GetAccessKeyCharacter(DependencyObject d)
         {
-            AccessKeyManager instance = AccessKeyManager.Current;
-
             // See what the local value for AccessKeyElement is first and start with that.
-            WeakReference<IInputElement> cachedElementWeakRef = (WeakReference<IInputElement>)d.GetValue(AccessKeyElementProperty);
-            if (cachedElementWeakRef.TryGetTarget(out IInputElement accessKeyElement))
+            WeakReference cachedElementWeakRef = (WeakReference)d.GetValue(AccessKeyElementProperty);
+            IInputElement accessKeyElement = (cachedElementWeakRef != null) ? (IInputElement)cachedElementWeakRef.Target : null;
+
+            if (accessKeyElement != null)
             {
                 // First figure out if the target of accessKeyElement is still "d", then go find
                 // the "primary" character for the accessKeyElement.  
@@ -611,17 +670,17 @@ namespace System.Windows.Input
                     // access keys and see if this access key element is still registered and what its
                     // "primary" character is.
                 
-                    foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in instance._keyToElements)
+                    foreach (DictionaryEntry entry in Current._keyToElements)
                     {
-                        List<WeakReference<IInputElement>> elements = entry.Value;
+                        ArrayList elements = (ArrayList)entry.Value;
                         for (int i = 0; i < elements.Count; i++)
                         {
                             // If this element matches accessKeyElement, then return the current character
-                            WeakReference<IInputElement> currentElementWeakRef = elements[i];
+                            WeakReference currentElementWeakRef = (WeakReference)elements[i];
 
-                            if (currentElementWeakRef.TryGetTarget(out IInputElement element) && element == accessKeyElement)
+                            if (currentElementWeakRef.Target == accessKeyElement)
                             {
-                                return entry.Key;
+                                return (string)entry.Key;
                             }
                         }
                     }
@@ -632,14 +691,16 @@ namespace System.Windows.Input
             // There was no access key stored or it no longer matched.  Clear out the cache and figure it out again.
             d.ClearValue(AccessKeyElementProperty);
 
-            foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in instance._keyToElements)
+            foreach (DictionaryEntry entry in Current._keyToElements)
             {
-                List<WeakReference<IInputElement>> elements = entry.Value;
+                ArrayList elements = (ArrayList)entry.Value;
                 for (int i = 0; i < elements.Count; i++)
                 {
                     // Determine the target for this element.  Cache the weak reference for the element on the target.
-                    WeakReference<IInputElement> currentElementWeakRef = elements[i];
-                    if (currentElementWeakRef.TryGetTarget(out IInputElement currentElement))
+                    WeakReference currentElementWeakRef = (WeakReference)elements[i];
+                    IInputElement currentElement = (IInputElement)currentElementWeakRef.Target;
+
+                    if (currentElement != null)
                     {
                         AccessKeyPressedEventArgs accessKeyPressedEventArgs = new AccessKeyPressedEventArgs();
                         currentElement.RaiseEvent(accessKeyPressedEventArgs);
@@ -652,27 +713,24 @@ namespace System.Windows.Input
 
                             if (accessKeyPressedEventArgs.Target == d)
                             {
-                                return entry.Key;
+                                return (string)entry.Key;
                             }
                         }
                     }
                 }
             }
 
-            return string.Empty;
+
+            return String.Empty;
         }
 
         #endregion
 
         #region Data
-        // Map: string -> List<WeakReference> to IInputElements
-        private readonly Dictionary<string, List<WeakReference<IInputElement>>> _keyToElements = new(10);
+        // Map: string -> ArrayList of WeakReferences to IInputElements
+        private Hashtable _keyToElements = new Hashtable(10);
 
-        /// <summary>
-        /// Holds a thread-specific instance of <see cref="AccessKeyManager"/>.
-        /// </summary>
-        [ThreadStatic]
-        private static AccessKeyManager s_accessKeyManager;
+        [ThreadStatic] private static AccessKeyManager _accessKeyManager;
 
         #endregion
     }
@@ -758,10 +816,9 @@ namespace System.Windows.Input
 
         #region Data
 
-        private readonly string _key;
-
-        private UIElement _target;
         private object _scope;
+        private UIElement _target;
+        private string _key;
 
         #endregion
     }
@@ -807,10 +864,10 @@ namespace System.Windows.Input
         {
             get { return _userInitiated; }
         }
+        
 
-        private readonly bool _isMultiple;
-        private readonly string _key;
-
+        private string _key;
+        private bool _isMultiple;
         private bool _userInitiated;
-    }
+}
 }
