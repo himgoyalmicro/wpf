@@ -165,6 +165,22 @@ namespace System.Windows.Automation.Provider
 
             UiaCoreProviderApi.UiaRaiseStructureChangedEvent(provider, e.StructureChangeType, e.GetRuntimeId());
         }
+
+        /// <summary>
+        /// Disconnects a provider from the UI Automation framework, causing the UIA
+        /// client-side to release its COM references to the provider. This should be
+        /// called when an element is removed from the tree so that its CCW ref count
+        /// can drop to zero and the managed objects can be garbage collected.
+        /// </summary>
+        /// <param name="provider">The provider to disconnect.</param>
+        public static void DisconnectProvider(IRawElementProviderSimple provider)
+        {
+            if (provider != null)
+            {
+                UiaCoreProviderApi.UiaDisconnectProvider(provider);
+            }
+        }
+
         #endregion Public Methods
 
 

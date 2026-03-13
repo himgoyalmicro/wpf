@@ -38,8 +38,7 @@ namespace MS.Internal.Automation
         // private ctor - the Wrap() pseudo-ctor is used instead.
         private ElementProxy(AutomationPeer peer)
         {
-            if ((AutomationInteropReferenceType == ReferenceType.Weak) && 
-                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer))
+            if ((AutomationInteropReferenceType == ReferenceType.Weak))
             {
                 _peer = new WeakReference(peer);
             }
