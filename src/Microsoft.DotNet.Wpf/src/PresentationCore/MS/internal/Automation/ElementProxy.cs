@@ -8,6 +8,7 @@
 //
 //
 
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -300,6 +301,17 @@ namespace MS.Internal.Automation
             }
         }
 
+        /// <summary>
+        /// Disconnects this provider from the UI Automation framework by calling
+        /// UiaDisconnectProvider.  This causes the UIA client-side to release its
+        /// COM references so the CCW ref count can drop to zero and the managed
+        /// objects can be garbage collected.
+        /// </summary>
+        internal void Disconnect()
+        {
+            UiaDisconnectProvider(this);
+        }
+
         #endregion Internal Methods
 
 
@@ -542,6 +554,9 @@ namespace MS.Internal.Automation
         #region Private Fields
 
         private readonly object _peer;
+
+        [DllImport("UIAutomationCore.dll", EntryPoint = "UiaDisconnectProvider", CharSet = CharSet.Unicode)]
+        private static extern int UiaDisconnectProvider(IRawElementProviderSimple provider);
 
         #endregion Private Fields
     }

@@ -1,5 +1,4 @@
 Compat issues with assembly UIAutomationProvider:
-MembersMustExist : Member 'public void System.Windows.Automation.Provider.AutomationInteropProvider.DisconnectProvider(System.Windows.Automation.Provider.IRawElementProviderSimple)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IDockProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IExpandCollapseProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IGridItemProvider' in the contract but not the implementation.
@@ -25,4 +24,4 @@ CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeA
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IValueProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IVirtualizedItemProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IWindowProvider' in the contract but not the implementation.
-Total Issues: 26
+Total Issues: 25

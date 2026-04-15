@@ -1863,7 +1863,7 @@ namespace System.Windows.Automation.Peers
                 ElementProxy proxy = proxyWeakRef.Target as ElementProxy;
                 if (proxy != null)
                 {
-                    AutomationInteropProvider.DisconnectProvider(proxy);
+                    proxy.Disconnect();
                 }
 
                 peer._elementProxyWeakReference = null;
