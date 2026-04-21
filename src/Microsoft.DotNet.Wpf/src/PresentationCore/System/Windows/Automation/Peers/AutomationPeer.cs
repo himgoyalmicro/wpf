@@ -1498,11 +1498,10 @@ namespace System.Windows.Automation.Peers
                 }
                 _childrenValid = true;
 
-                // Disconnect old children that are no longer in the new children list
-                // from the UIA framework.  This causes the UIA client to release its COM
-                // references to the ElementProxy CCWs so that the managed peers (and their
-                // visual sub-trees) can be garbage collected.
-                if (oldChildren != null)
+                // Queue removed children for deferred UIA disconnect, but only if
+                // UIA clients are actually listening — avoids the cost of diffing
+                // the old and new children lists when no automation client is present.
+                if (oldChildren != null && EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
                 {
                     HashSet<AutomationPeer> newSet = (_children != null)
                         ? new HashSet<AutomationPeer>(_children)
@@ -2110,7 +2109,20 @@ namespace System.Windows.Automation.Peers
                     PendingDisconnect entry = s_pendingDisconnects[i];
                     if (now - entry.EnqueuedTick >= DisconnectDelayMs)
                     {
-                        // Old enough — disconnect now.
+                        // Before disconnecting, verify the proxy is still stale.
+                        // ItemsControl can reuse/recycle peers and re-register their
+                        // proxy via StaticWrap → ElementProxyWeakReference.  If the
+                        // proxy's peer is still reachable and back in the tree, skip it.
+                        AutomationPeer peer = entry.Proxy.Peer;
+                        if (peer != null && peer.ElementProxyWeakReference != null
+                            && peer.ElementProxyWeakReference.Target == entry.Proxy)
+                        {
+                            // Proxy was re-attached to a live peer — don't disconnect.
+                            s_pendingDisconnects[writeIndex++] = entry;
+                            continue;
+                        }
+
+                        // Still stale — disconnect now.
                         UiaDisconnectProvider(entry.Proxy);
                     }
                     else
