@@ -4,6 +4,7 @@
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Windows.Automation.Provider;
 using MS.Internal;
@@ -1483,6 +1484,7 @@ namespace System.Windows.Automation.Peers
             // UpdateSubtree is not called on it yet.
             if (!_childrenValid || _ancestorsInvalid)
             {
+                List<AutomationPeer> oldChildren = _children;
                 _children = GetChildrenCore();
                 if (_children != null)
                 {
@@ -1495,6 +1497,26 @@ namespace System.Windows.Automation.Peers
                     }
                 }
                 _childrenValid = true;
+
+                // Disconnect old children that are no longer in the new children list
+                // from the UIA framework.  This causes the UIA client to release its COM
+                // references to the ElementProxy CCWs so that the managed peers (and their
+                // visual sub-trees) can be garbage collected.
+                if (oldChildren != null)
+                {
+                    HashSet<AutomationPeer> newSet = (_children != null)
+                        ? new HashSet<AutomationPeer>(_children)
+                        : null;
+
+                    for (int i = 0; i < oldChildren.Count; i++)
+                    {
+                        AutomationPeer oldChild = oldChildren[i];
+                        if (newSet == null || !newSet.Contains(oldChild))
+                        {
+                            QueuePeerForDeferredDisconnect(oldChild);
+                        }
+                    }
+                }
             }
         }
 
@@ -1892,10 +1914,6 @@ namespace System.Windows.Automation.Peers
             _childrenValid = false;
             EnsureChildren();
 
-            // Callers have only checked if automation clients are present so filter for any interest in this particular event.
-            if (!EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
-                return;
-
             //store old children in a hashset
             if(oldChildren != null)
             {
@@ -1933,9 +1951,25 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            //now the hs only has "removed" children. If the count does not yet
-            //calls for "bulk" notification, use per-child notification, otherwise use "bulk"
+            //now the hs only has "removed" children.
             int removedCount = (hs == null ? 0 : hs.Count);
+
+            // Disconnect removed children from UIA so the client-side releases its
+            // COM references to the ElementProxy CCWs.  Without this the CCW ref count
+            // never drops to zero, which prevents the managed peer (and its entire
+            // visual sub-tree) from being garbage collected.
+            // This must happen regardless of StructureChanged event registration.
+            if (removedCount > 0)
+            {
+                foreach (AutomationPeer removedChild in hs)
+                {
+                    QueuePeerForDeferredDisconnect(removedChild);
+                }
+            }
+
+            // Only raise StructureChanged events if there are registered listeners.
+            if (!EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
+                return;
 
             if(removedCount + addedCount > invalidateLimit) //bilk invalidation
             {
@@ -1995,6 +2029,132 @@ namespace System.Windows.Automation.Peers
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Collects ElementProxy CCWs from a removed peer and its cached subtree
+        /// and queues them for deferred disconnection from the UIA framework.
+        ///
+        /// Deferred disconnection avoids a race condition where UIA clients are
+        /// still iterating elements returned by a previous FindAll call when the
+        /// server-side DataGrid refreshes and removes old peers.  By delaying the
+        /// UiaDisconnectProvider call, we give in-flight client operations time to
+        /// finish before the COM references are invalidated.
+        /// </summary>
+        private static void QueuePeerForDeferredDisconnect(AutomationPeer peer)
+        {
+            if (peer == null)
+                return;
+
+            // Recursively process children first so that the entire subtree
+            // is queued.  Use the cached children list to avoid triggering a
+            // rebuild via EnsureChildren / GetChildrenCore.
+            List<AutomationPeer> children = peer._children;
+            if (children != null)
+            {
+                for (int i = 0; i < children.Count; i++)
+                {
+                    QueuePeerForDeferredDisconnect(children[i]);
+                }
+            }
+
+            // Queue the peer's ElementProxy CCW for deferred disconnect from UIA.
+            WeakReference proxyWeakRef = peer._elementProxyWeakReference;
+            if (proxyWeakRef != null)
+            {
+                ElementProxy proxy = proxyWeakRef.Target as ElementProxy;
+                if (proxy != null)
+                {
+                    lock (s_pendingDisconnects)
+                    {
+                        s_pendingDisconnects.Add(new PendingDisconnect(proxy, Environment.TickCount64));
+
+                        // Start the timer if not already running.
+                        if (s_disconnectTimer == null)
+                        {
+                            // Use the current peer's Dispatcher to create the timer.
+                            // All automation peers share the same UI thread dispatcher.
+                            Dispatcher dispatcher = peer.Dispatcher;
+                            if (dispatcher != null)
+                            {
+                                s_disconnectTimer = new DispatcherTimer(
+                                    DisconnectTimerInterval,
+                                    DispatcherPriority.Background,
+                                    ProcessPendingDisconnects,
+                                    dispatcher);
+                                s_disconnectTimer.Start();
+                            }
+                        }
+                    }
+                }
+
+                peer._elementProxyWeakReference = null;
+            }
+        }
+
+        /// <summary>
+        /// Timer callback that processes the pending disconnect queue.  Entries
+        /// older than <see cref="DisconnectDelayMs"/> are disconnected from UIA.
+        /// </summary>
+        private static void ProcessPendingDisconnects(object sender, EventArgs e)
+        {
+            long now = Environment.TickCount64;
+
+            lock (s_pendingDisconnects)
+            {
+                // Walk the list and disconnect entries that have aged out.
+                int writeIndex = 0;
+                for (int i = 0; i < s_pendingDisconnects.Count; i++)
+                {
+                    PendingDisconnect entry = s_pendingDisconnects[i];
+                    if (now - entry.EnqueuedTick >= DisconnectDelayMs)
+                    {
+                        // Old enough — disconnect now.
+                        UiaDisconnectProvider(entry.Proxy);
+                    }
+                    else
+                    {
+                        // Not yet — keep in the list.
+                        s_pendingDisconnects[writeIndex++] = entry;
+                    }
+                }
+
+                s_pendingDisconnects.RemoveRange(writeIndex, s_pendingDisconnects.Count - writeIndex);
+
+                // Stop the timer when the queue is empty to avoid unnecessary ticks.
+                if (s_pendingDisconnects.Count == 0 && s_disconnectTimer != null)
+                {
+                    s_disconnectTimer.Stop();
+                    s_disconnectTimer = null;
+                }
+            }
+        }
+
+        /// <summary>How long (in ms) to wait before disconnecting a queued provider.</summary>
+        private const long DisconnectDelayMs = 30_000;
+
+        /// <summary>How often the timer fires to process the queue.</summary>
+        private static readonly TimeSpan DisconnectTimerInterval = TimeSpan.FromSeconds(10);
+
+        /// <summary>Pending providers waiting to be disconnected.</summary>
+        private static readonly List<PendingDisconnect> s_pendingDisconnects = new List<PendingDisconnect>();
+
+        /// <summary>Timer that drives deferred disconnect processing (null when idle).</summary>
+        private static DispatcherTimer s_disconnectTimer;
+
+        [DllImport("UIAutomationCore.dll", EntryPoint = "UiaDisconnectProvider")]
+        private static extern int UiaDisconnectProvider(IRawElementProviderSimple provider);
+
+        private readonly struct PendingDisconnect
+        {
+            public readonly ElementProxy Proxy;
+            public readonly long EnqueuedTick;
+
+            public PendingDisconnect(ElementProxy proxy, long enqueuedTick)
+            {
+                Proxy = proxy;
+                EnqueuedTick = enqueuedTick;
             }
         }
 
