@@ -154,6 +154,8 @@ namespace MS.Internal.Automation
 
         internal static void RemoveEvent(int idEvent)
         {
+            bool allListenersGone = false;
+
             lock (_lock)
             {
                 if (_eventsTable != null)
@@ -171,10 +173,19 @@ namespace MS.Internal.Automation
                             if (_eventsTable.Count == 0)
                             {
                                 _eventsTable = null;
+                                allListenersGone = true;
                             }
                         }
                     }
                 }
+            }
+
+            // When the last automation client disconnects, notify AutomationPeer
+            // to flush all pending deferred disconnects immediately — there are no
+            // clients left to consume the providers, so holding them is pure leak.
+            if (allListenersGone)
+            {
+                AutomationPeer.FlushPendingDisconnects();
             }
         }
 

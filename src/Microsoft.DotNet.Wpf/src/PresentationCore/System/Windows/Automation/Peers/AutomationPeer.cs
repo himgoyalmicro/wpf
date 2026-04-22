@@ -1498,10 +1498,12 @@ namespace System.Windows.Automation.Peers
                 }
                 _childrenValid = true;
 
-                // Queue removed children for deferred UIA disconnect, but only if
-                // UIA clients are actually listening — avoids the cost of diffing
-                // the old and new children lists when no automation client is present.
-                if (oldChildren != null && EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
+                // Queue removed children for deferred UIA disconnect so that their
+                // ElementProxy CCW ref counts can eventually drop to zero.  No event
+                // guard here — the leak is query-driven (FindAll creates CCWs) and a
+                // client that queries without subscribing to StructureChanged events
+                // would still leak without this cleanup.
+                if (oldChildren != null)
                 {
                     HashSet<AutomationPeer> newSet = (_children != null)
                         ? new HashSet<AutomationPeer>(_children)
@@ -2059,36 +2061,40 @@ namespace System.Windows.Automation.Peers
             }
 
             // Queue the peer's ElementProxy CCW for deferred disconnect from UIA.
+            // We null _elementProxyWeakReference immediately so that if the peer is
+            // recycled (e.g., ItemsControl reuse), StaticWrap creates a fresh proxy
+            // rather than reusing the one that is queued for disconnect.
             WeakReference proxyWeakRef = peer._elementProxyWeakReference;
             if (proxyWeakRef != null)
             {
                 ElementProxy proxy = proxyWeakRef.Target as ElementProxy;
                 if (proxy != null)
                 {
-                    lock (s_pendingDisconnects)
-                    {
-                        s_pendingDisconnects.Add(new PendingDisconnect(proxy, Environment.TickCount64));
+                    peer._elementProxyWeakReference = null;
 
-                        // Start the timer if not already running.
-                        if (s_disconnectTimer == null)
+                    Dispatcher dispatcher = peer.Dispatcher;
+                    if (dispatcher != null)
+                    {
+                        DeferredDisconnectState state = GetOrCreateState(dispatcher);
+                        lock (state.SyncRoot)
                         {
-                            // Use the current peer's Dispatcher to create the timer.
-                            // All automation peers share the same UI thread dispatcher.
-                            Dispatcher dispatcher = peer.Dispatcher;
-                            if (dispatcher != null)
+                            // Use dictionary to deduplicate — if the same proxy is
+                            // queued again (detach/reattach/detach cycle), refresh
+                            // the timestamp so the grace period restarts.
+                            state.PendingDisconnects[proxy] = Environment.TickCount64;
+
+                            if (state.Timer == null)
                             {
-                                s_disconnectTimer = new DispatcherTimer(
+                                state.Timer = new DispatcherTimer(
                                     DisconnectTimerInterval,
                                     DispatcherPriority.Background,
-                                    ProcessPendingDisconnects,
+                                    (s, e) => ProcessPendingDisconnects(state),
                                     dispatcher);
-                                s_disconnectTimer.Start();
+                                state.Timer.Start();
                             }
                         }
                     }
                 }
-
-                peer._elementProxyWeakReference = null;
             }
         }
 
@@ -2096,49 +2102,58 @@ namespace System.Windows.Automation.Peers
         /// Timer callback that processes the pending disconnect queue.  Entries
         /// older than <see cref="DisconnectDelayMs"/> are disconnected from UIA.
         /// </summary>
-        private static void ProcessPendingDisconnects(object sender, EventArgs e)
+        private static void ProcessPendingDisconnects(DeferredDisconnectState state)
         {
             long now = Environment.TickCount64;
 
-            lock (s_pendingDisconnects)
+            lock (state.SyncRoot)
             {
-                // Walk the list and disconnect entries that have aged out.
-                int writeIndex = 0;
-                for (int i = 0; i < s_pendingDisconnects.Count; i++)
-                {
-                    PendingDisconnect entry = s_pendingDisconnects[i];
-                    if (now - entry.EnqueuedTick >= DisconnectDelayMs)
-                    {
-                        // Before disconnecting, verify the proxy is still stale.
-                        // ItemsControl can reuse/recycle peers and re-register their
-                        // proxy via StaticWrap → ElementProxyWeakReference.  If the
-                        // proxy's peer is still reachable and back in the tree, skip it.
-                        AutomationPeer peer = entry.Proxy.Peer;
-                        if (peer != null && peer.ElementProxyWeakReference != null
-                            && peer.ElementProxyWeakReference.Target == entry.Proxy)
-                        {
-                            // Proxy was re-attached to a live peer — don't disconnect.
-                            s_pendingDisconnects[writeIndex++] = entry;
-                            continue;
-                        }
+                List<ElementProxy> toRemove = null;
 
-                        // Still stale — disconnect now.
-                        UiaDisconnectProvider(entry.Proxy);
-                    }
-                    else
+                foreach (var kvp in state.PendingDisconnects)
+                {
+                    if (now - kvp.Value < DisconnectDelayMs)
+                        continue;
+
+                    ElementProxy proxy = kvp.Key;
+
+                    // Safety check: if the proxy's peer was recycled and
+                    // StaticWrap assigned a NEW proxy (different object), the
+                    // old proxy is safe to disconnect. If somehow the same
+                    // proxy object was re-attached, skip it.
+                    AutomationPeer peer = proxy.Peer;
+                    if (peer != null && peer._elementProxyWeakReference != null
+                        && peer._elementProxyWeakReference.Target == proxy)
                     {
-                        // Not yet — keep in the list.
-                        s_pendingDisconnects[writeIndex++] = entry;
+                        // Proxy was re-registered to a live peer — don't disconnect.
+                        toRemove ??= new List<ElementProxy>();
+                        toRemove.Add(proxy);
+                        continue;
+                    }
+
+                    // Stale — disconnect now.
+                    int hr = UiaDisconnectProvider(proxy);
+                    System.Diagnostics.Debug.WriteLineIf(
+                        hr < 0,
+                        $"UiaDisconnectProvider returned HRESULT 0x{hr:X8}");
+
+                    toRemove ??= new List<ElementProxy>();
+                    toRemove.Add(proxy);
+                }
+
+                if (toRemove != null)
+                {
+                    for (int i = 0; i < toRemove.Count; i++)
+                    {
+                        state.PendingDisconnects.Remove(toRemove[i]);
                     }
                 }
 
-                s_pendingDisconnects.RemoveRange(writeIndex, s_pendingDisconnects.Count - writeIndex);
-
                 // Stop the timer when the queue is empty to avoid unnecessary ticks.
-                if (s_pendingDisconnects.Count == 0 && s_disconnectTimer != null)
+                if (state.PendingDisconnects.Count == 0 && state.Timer != null)
                 {
-                    s_disconnectTimer.Stop();
-                    s_disconnectTimer = null;
+                    state.Timer.Stop();
+                    state.Timer = null;
                 }
             }
         }
@@ -2149,24 +2164,71 @@ namespace System.Windows.Automation.Peers
         /// <summary>How often the timer fires to process the queue.</summary>
         private static readonly TimeSpan DisconnectTimerInterval = TimeSpan.FromSeconds(10);
 
-        /// <summary>Pending providers waiting to be disconnected.</summary>
-        private static readonly List<PendingDisconnect> s_pendingDisconnects = new List<PendingDisconnect>();
-
-        /// <summary>Timer that drives deferred disconnect processing (null when idle).</summary>
-        private static DispatcherTimer s_disconnectTimer;
-
         [DllImport("UIAutomationCore.dll", EntryPoint = "UiaDisconnectProvider")]
         private static extern int UiaDisconnectProvider(IRawElementProviderSimple provider);
 
-        private readonly struct PendingDisconnect
+        /// <summary>
+        /// Per-Dispatcher state for deferred disconnect.  Each UI thread gets its
+        /// own queue and timer so that multi-dispatcher WPF apps (e.g. multiple
+        /// windows on separate threads) are handled correctly.
+        /// </summary>
+        private sealed class DeferredDisconnectState
         {
-            public readonly ElementProxy Proxy;
-            public readonly long EnqueuedTick;
+            public readonly object SyncRoot = new object();
+            public readonly Dictionary<ElementProxy, long> PendingDisconnects = new Dictionary<ElementProxy, long>();
+            public DispatcherTimer Timer;
+        }
 
-            public PendingDisconnect(ElementProxy proxy, long enqueuedTick)
+        private static readonly object s_stateLock = new object();
+        private static readonly Dictionary<Dispatcher, DeferredDisconnectState> s_perDispatcherState
+            = new Dictionary<Dispatcher, DeferredDisconnectState>();
+
+        private static DeferredDisconnectState GetOrCreateState(Dispatcher dispatcher)
+        {
+            lock (s_stateLock)
             {
-                Proxy = proxy;
-                EnqueuedTick = enqueuedTick;
+                if (!s_perDispatcherState.TryGetValue(dispatcher, out DeferredDisconnectState state))
+                {
+                    state = new DeferredDisconnectState();
+                    s_perDispatcherState[dispatcher] = state;
+                }
+                return state;
+            }
+        }
+
+        /// <summary>
+        /// Called by <see cref="EventMap"/> when the last automation client
+        /// disconnects.  Immediately disconnects all pending providers and
+        /// stops the timers — no clients remain to consume these providers,
+        /// so holding them is a pure memory leak.
+        /// </summary>
+        internal static void FlushPendingDisconnects()
+        {
+            List<DeferredDisconnectState> states;
+
+            lock (s_stateLock)
+            {
+                if (s_perDispatcherState.Count == 0)
+                    return;
+                states = new List<DeferredDisconnectState>(s_perDispatcherState.Values);
+            }
+
+            for (int i = 0; i < states.Count; i++)
+            {
+                DeferredDisconnectState state = states[i];
+                lock (state.SyncRoot)
+                {
+                    foreach (var kvp in state.PendingDisconnects)
+                    {
+                        int hr = UiaDisconnectProvider(kvp.Key);
+                        System.Diagnostics.Debug.WriteLineIf(
+                            hr < 0,
+                            $"UiaDisconnectProvider (flush) returned HRESULT 0x{hr:X8}");
+                    }
+                    state.PendingDisconnects.Clear();
+                    state.Timer?.Stop();
+                    state.Timer = null;
+                }
             }
         }
 
