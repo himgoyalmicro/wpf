@@ -4,6 +4,7 @@
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Windows.Automation.Provider;
 using MS.Internal;
@@ -1858,17 +1859,16 @@ namespace System.Windows.Automation.Peers
 
             // Disconnect the peer's own ElementProxy CCW from UIA.
             WeakReference proxyWeakRef = peer._elementProxyWeakReference;
-            if (proxyWeakRef != null)
+            if (proxyWeakRef?.Target is ElementProxy proxy)
             {
-                ElementProxy proxy = proxyWeakRef.Target as ElementProxy;
-                if (proxy != null)
-                {
-                    proxy.Disconnect();
-                }
-
-                peer._elementProxyWeakReference = null;
+                UiaDisconnectProvider(proxy);
             }
+
+            peer._elementProxyWeakReference = null;
         }
+
+        [DllImport("UIAutomationCore.dll", EntryPoint = "UiaDisconnectProvider", CharSet = CharSet.Unicode)]
+        private static extern int UiaDisconnectProvider(IRawElementProviderSimple provider);
 
         ///<Summary>
         /// When one AutomationPeer is using the pattern of another AutomationPeer instead of exposing
